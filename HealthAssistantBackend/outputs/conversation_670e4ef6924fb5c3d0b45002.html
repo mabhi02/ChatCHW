@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Assistant Conversation Log</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        h1, h2 {
+            color: #2c3e50;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .user {
+            background-color: #e3f2fd;
+            text-align: right;
+        }
+        .bot {
+            background-color: #f1f8e9;
+        }
+        .advice {
+            background-color: #fff3e0;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .citation {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+        .timestamp {
+            font-size: 0.8em;
+            color: #95a5a6;
+        }
+        .search-container {
+            margin-bottom: 20px;
+        }
+        .search-input {
+            width: 70%;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .search-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Health Assistant Conversation Log</h1>
+        <p><strong>Date and Time:</strong> <span id="timestamp"></span></p>
+        
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-input" placeholder="Search conversation...">
+            <button onclick="searchConversation()" class="search-button">Search</button>
+        </div>
+
+        <h2>Screening Answers</h2>
+        <ul id="screening-answers"></ul>
+        
+        <h2>Conversation</h2>
+        <div id="conversation-history"></div>
+        
+        <h2>Advice</h2>
+        <div id="advice"></div>
+    </div>
+
+    <script>
+        // This script will be populated with the conversation data by the server
+        const conversationData = {"conversation_history": [{"sender": "bot", "text": "Screening Summary:\nWhat is the patient\u0027s sex?: undefined\nWhat is the patient\u0027s age?: 12\nDoes the patient have a caregiver?: undefined\nWho is accompanying the patient?: 2\nWhat brings the patient here?: Severe wet cough"}, {"sender": "bot", "text": "How long has the severe wet cough been present?"}, {"sender": "user", "text": "4 days"}, {"sender": "bot", "text": "Has the patient\u0027s wet cough been producing yellow or green mucus for the past 4 days?"}, {"sender": "user", "text": "green mucus"}, {"sender": "bot", "text": "Is the green mucus thick and sticky or more watery and loose?"}, {"sender": "user", "text": "\nit is thick and sticky"}, {"sender": "bot", "text": "Does the thick and sticky mucus make it difficult to suction out of the nostrils when trying to clear the airway?"}, {"sender": "user", "text": "\nsometimes, but the person does breathing exercises"}, {"sender": "bot", "text": "How often does the person do the breathing exercises?"}, {"sender": "user", "text": "\nthey do them once a day"}, {"sender": "user", "text": "\nthey do them once a day"}, {"sender": "bot", "text": "Based on the provided information, I suggest a simple test to assess the patient\u0027s understanding of personal hygiene practices, specifically hand washing and tooth brushing.\n\nTest: Hand Washing and Tooth Brushing Assessment\n\nDescription: This test evaluates the patient\u0027s ability to demonstrate proper hand washing and tooth brushing techniques.\n\nInstructions:\n\n1. Ask the patient to wash their hands with soap and water, observing their technique to ensure they:\n\t* Wet their hands with water\n\t* Apply soap\n\t* Rub hands together to create a lather\n\t* Scrub all surfaces of the hands, including the nails, fingers, and between fingers\n\t* Rinse hands thoroughly with water\n2. Observe the patient\u0027s hand washing technique and note any deviations from the correct procedure.\n3. Next, ask the patient to demonstrate how they brush their teeth, observing their technique to ensure they:\n\t* Use a toothbrush with soft bristles\n\t* Apply toothpaste (if used)\n\t* Place the toothbrush at an angle to the teeth\n\t* Brush teeth in gentle circular motions, covering all surfaces\n\t* Brush the tongue to remove bacteria and food particles\n\t* Brush for the recommended 2 minutes\n4. Observe the patient\u0027s tooth brushing technique and note any deviations from the correct procedure.\n\nThis test is simple, non-invasive, and can help identify any deficits in the patient\u0027s personal hygiene practices, which may be contributing to their current health issues."}], "date_time": "2024-10-15 04:17:07", "main_symptom": "\nthey do them once a day", "screening_answers": [{"question": "What is the patient\u0027s sex?"}, {"answer": 12, "question": "What is the patient\u0027s age?"}, {"question": "Does the patient have a caregiver?"}, {"answer": ["2"], "question": "Who is accompanying the patient?"}, {"answer": "Severe wet cough", "question": "What brings the patient here?"}], "stage": "test"};
+        
+        document.getElementById('timestamp').textContent = conversationData.date_time;
+        
+        const screeningList = document.getElementById('screening-answers');
+        conversationData.screening_answers.forEach(answer => {
+            const li = document.createElement('li');
+            li.innerHTML = `<strong>${answer.question}:</strong> ${answer.answer}`;
+            screeningList.appendChild(li);
+        });
+        
+        const conversationHistory = document.getElementById('conversation-history');
+        conversationData.conversation_history.forEach(message => {
+            const div = document.createElement('div');
+            div.className = `message ${message.sender}`;
+            div.innerHTML = `<strong>${message.sender === 'user' ? 'User' : 'Bot'}:</strong> ${message.text}`;
+            conversationHistory.appendChild(div);
+        });
+        
+        const adviceSection = document.getElementById('advice');
+        if (conversationData.advice && conversationData.advice.length > 0) {
+            conversationData.advice.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'advice';
+                div.innerHTML = `
+                    <h3>Advice ${index + 1}</h3>
+                    <p>${item.advice}</p>
+                    <p class="citation">Citation: ${item.citation_summary}</p>
+                `;
+                adviceSection.appendChild(div);
+            });
+        } else {
+            adviceSection.innerHTML = '<p>No specific advice was generated during this conversation.</p>';
+        }
+
+        function searchConversation() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const elements = document.querySelectorAll('.message, .advice');
+            
+            elements.forEach(element => {
+                const text = element.innerText.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    element.innerHTML = element.innerHTML.replace(new RegExp(searchTerm, 'gi'), match => `<span class="highlight">${match}</span>`);
+                    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else {
+                    element.innerHTML = element.innerHTML.replace(/<span class="highlight">(.+?)<\/span>/g, '$1');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

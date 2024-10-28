@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Assistant Conversation Log</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #e0e0e0;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #121212;
+        }
+        h1, h2 {
+            color: #bb86fc;
+        }
+        .container {
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(255,255,255,0.1);
+        }
+        .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .user {
+            background-color: #1e3a5f;
+            text-align: right;
+        }
+        .bot {
+            background-color: #2e3c40;
+        }
+        .advice {
+            background-color: #3e2723;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .citation {
+            font-style: italic;
+            color: #9e9e9e;
+            margin-top: 5px;
+        }
+        .timestamp {
+            font-size: 0.8em;
+            color: #757575;
+        }
+        .search-container {
+            margin-bottom: 20px;
+        }
+        .search-input {
+            width: 70%;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #333;
+            color: #e0e0e0;
+            border: 1px solid #555;
+        }
+        .search-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #1976d2;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .highlight {
+            background-color: #ffd700;
+            color: #000;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Health Assistant Conversation Log</h1>
+        <p><strong>Date and Time:</strong> <span id="timestamp"></span></p>
+        
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-input" placeholder="Search conversation...">
+            <button onclick="searchConversation()" class="search-button">Search</button>
+        </div>
+
+        <h2>Screening Answers</h2>
+        <ul id="screening-answers"></ul>
+        
+        <h2>Conversation</h2>
+        <div id="conversation-history"></div>
+        
+        <h2>Advice</h2>
+        <div id="advice"></div>
+    </div>
+
+    <script>
+        // This script will be populated with the conversation data by the server
+        const conversationData = {"conversation_history": [{"sender": "bot", "text": "How long have you been experiencing blood in your stool?"}, {"sender": "bot", "text": "Screening Summary:\nWhat is the patient\u0027s sex?: undefined\nWhat is the patient\u0027s age?: 43\nDoes the patient have a caregiver?: undefined\nWho is accompanying the patient?: 2\nWhat brings the patient here?: There is blood in the stool"}, {"sender": "user", "text": "40 minutes"}, {"sender": "bot", "text": "How long ago did the bleeding start, approximately?"}, {"sender": "user", "text": "1 hour ago"}, {"sender": "bot", "text": "Did the bleeding occur only once, or is it ongoing?"}, {"sender": "user", "text": "ongoing"}, {"sender": "bot", "text": "Are you experiencing any other symptoms along with the bleeding, such as abdominal pain or dizziness?"}, {"sender": "user", "text": "I am feeling abdominal pain"}, {"sender": "bot", "text": "Can you describe the abdominal pain you\u0027re experiencing, such as its location, severity, and any factors that make it better or worse?"}, {"sender": "user", "text": "The location is in the central stomach"}, {"sender": "user", "text": "The location is in the central stomach"}, {"sender": "bot", "text": "Test: Abdominal Palpation\nDescription: A physical examination to assess the location and severity of abdominal pain and tenderness.\n\nInstructions:\n\n1. Ask the patient to lie down in a comfortable position, with their knees bent and feet flat on the examination table.\n2. Expose the patient\u0027s abdomen, ensuring that they are comfortable with the amount of exposure.\n3. Begin by gently placing your fingers on the patient\u0027s abdomen, starting from the upper right quadrant, just below the ribcage.\n4. Slowly and gently press down on the abdomen, palpating (feeling) for any areas of tenderness or pain.\n5. Ask the patient to report any discomfort or pain as you press on different areas of their abdomen.\n6. Palpate the entire abdomen, including the upper left quadrant, the epigastric region (just below the breastbone), and the lower quadrants (right and left).\n7. Pay particular attention to the central stomach area, as indicated by the patient\u0027s symptoms.\n8. Note any areas of guarding (muscle tension) or rebound tenderness, which may indicate underlying pathology.\n9. Compare the patient\u0027s abdominal tenderness and pain to their symptoms and medical history.\n\nThis test is non-invasive and can help identify potential causes of abdominal pain, such as inflammation, injury, or underlying disease. It is essential to perform this test with caution and respect for the patient\u0027s comfort and dignity."}], "date_time": "2024-10-15 04:28:24", "main_symptom": "The location is in the central stomach", "screening_answers": [{"question": "What is the patient\u0027s sex?"}, {"answer": 43, "question": "What is the patient\u0027s age?"}, {"question": "Does the patient have a caregiver?"}, {"answer": ["2"], "question": "Who is accompanying the patient?"}, {"answer": "There is blood in the stool", "question": "What brings the patient here?"}], "stage": "test"};
+        
+        document.getElementById('timestamp').textContent = conversationData.date_time;
+        
+        const screeningList = document.getElementById('screening-answers');
+        conversationData.screening_answers.forEach(answer => {
+            const li = document.createElement('li');
+            li.innerHTML = `<strong>${answer.question}:</strong> ${answer.answer}`;
+            screeningList.appendChild(li);
+        });
+        
+        const conversationHistory = document.getElementById('conversation-history');
+        conversationData.conversation_history.forEach(message => {
+            const div = document.createElement('div');
+            div.className = `message ${message.sender}`;
+            div.innerHTML = `<strong>${message.sender === 'user' ? 'User' : 'Bot'}:</strong> ${message.text}`;
+            conversationHistory.appendChild(div);
+        });
+        
+        const adviceSection = document.getElementById('advice');
+        if (conversationData.advice && conversationData.advice.length > 0) {
+            conversationData.advice.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'advice';
+                div.innerHTML = `
+                    <h3>Advice ${index + 1}</h3>
+                    <p>${item.advice}</p>
+                    <p class="citation">Citation: ${item.citation_summary}</p>
+                `;
+                adviceSection.appendChild(div);
+            });
+        } else {
+            adviceSection.innerHTML = '<p>No specific advice was generated during this conversation.</p>';
+        }
+
+        function searchConversation() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const elements = document.querySelectorAll('.message, .advice');
+            
+            elements.forEach(element => {
+                const text = element.innerText.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    element.innerHTML = element.innerHTML.replace(new RegExp(searchTerm, 'gi'), match => `<span class="highlight">${match}</span>`);
+                    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else {
+                    element.innerHTML = element.innerHTML.replace(/<span class="highlight">(.+?)<\/span>/g, '$1');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

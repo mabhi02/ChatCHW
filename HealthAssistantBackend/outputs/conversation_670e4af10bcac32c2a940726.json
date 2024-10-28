@@ -1,0 +1,35 @@
+{
+  "screening_answers": [
+    {
+      "question": "What is the patient's sex?"
+    },
+    {
+      "question": "What is the patient's age?",
+      "answer": 54
+    },
+    {
+      "question": "Does the patient have a caregiver?"
+    },
+    {
+      "question": "Who is accompanying the patient?",
+      "answer": [
+        "2"
+      ]
+    },
+    {
+      "question": "What brings the patient here?",
+      "answer": "There is blood in their stool"
+    }
+  ],
+  "conversation_history": [
+    {
+      "text": "There is blood in their stool",
+      "sender": "user"
+    },
+    {
+      "text": "How long has the patient been experiencing blood in their stool?",
+      "sender": "bot"
+    }
+  ],
+  "main_symptom": "There is blood in their stool",
+  "_id": 

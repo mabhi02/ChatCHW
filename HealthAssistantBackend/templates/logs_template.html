@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Assistant Logs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #e0e0e0;
+            background-color: #121212;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #bb86fc;
+        }
+        .search-container {
+            margin-bottom: 20px;
+        }
+        .search-input {
+            width: 70%;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #333;
+            color: #e0e0e0;
+            border: 1px solid #555;
+        }
+        .search-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #3700b3;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .log-item {
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .log-item h2 {
+            color: #03dac6;
+            margin-top: 0;
+        }
+        .log-item p {
+            margin: 5px 0;
+        }
+        .log-item a {
+            color: #bb86fc;
+            text-decoration: none;
+        }
+        .log-item a:hover {
+            text-decoration: underline;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .pagination a {
+            color: #bb86fc;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: background-color .3s;
+            border: 1px solid #333;
+            margin: 0 4px;
+        }
+        .pagination a.active {
+            background-color: #3700b3;
+            color: white;
+            border: 1px solid #3700b3;
+        }
+        .pagination a:hover:not(.active) {
+            background-color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Health Assistant Logs</h1>
+        
+        <div class="search-container">
+            <form action="{{ url_for('get_logs') }}" method="get">
+                <input type="text" name="query" placeholder="Search logs..." class="search-input" value="{{ search_query }}">
+                <button type="submit" class="search-button">Search</button>
+            </form>
+        </div>
+
+        {% for log in logs %}
+        <div class="log-item">
+            <h2>Conversation {{ loop.index + (page - 1) * per_page }}</h2>
+            <p><strong>Date:</strong> {{ log.date_time }}</p>
+            <p><strong>Main Symptom:</strong> {{ log.main_symptom }}</p>
+            <p><strong>Stage:</strong> {{ log.stage }}</p>
+            <a href="{{ url_for('get_specific_log', conversation_id=log._id['$oid']) }}">View Full Conversation</a>
+        </div>
+        {% endfor %}
+
+        <div class="pagination">
+            {% set total_pages = (total // per_page) + (1 if total % per_page else 0) %}
+            {% for p in range(1, total_pages + 1) %}
+                {% if p == page %}
+                    <a href="#" class="active">{{ p }}</a>
+                {% elif p == 1 or p == total_pages or (p >= page - 2 and p <= page + 2) %}
+                    <a href="{{ url_for('get_logs', page=p, query=search_query) }}">{{ p }}</a>
+                {% elif p == page - 3 or p == page + 3 %}
+                    <a href="#">...</a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        // Add any JavaScript functionality here if needed
+        document.addEventListener('DOMContentLoaded', function() {
+            // Example: Highlight the searched term in the logs
+            const searchQuery = '{{ search_query }}';
+            if (searchQuery) {
+                const regex = new RegExp(searchQuery, 'gi');
+                document.querySelectorAll('.log-item p').forEach(function(element) {
+                    element.innerHTML = element.innerHTML.replace(regex, function(match) {
+                        return '<mark>' + match + '</mark>';
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>

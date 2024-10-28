@@ -1,0 +1,87 @@
+{
+  "screening_answers": [
+    {
+      "question": "What is the patient's sex?"
+    },
+    {
+      "question": "What is the patient's age?",
+      "answer": 89
+    },
+    {
+      "question": "Does the patient have a caregiver?"
+    },
+    {
+      "question": "Who is accompanying the patient?",
+      "answer": [
+        "2"
+      ]
+    },
+    {
+      "question": "What brings the patient here?",
+      "answer": "There is blood in the stool"
+    }
+  ],
+  "conversation_history": [
+    {
+      "text": "Screening Summary:\nWhat is the patient's sex?: undefined\nWhat is the patient's age?: 89\nDoes the patient have a caregiver?: undefined\nWho is accompanying the patient?: 2\nWhat brings the patient here?: There is blood in the stool",
+      "sender": "bot"
+    },
+    {
+      "text": "How long have you been experiencing blood in your stool?",
+      "sender": "bot"
+    },
+    {
+      "text": "I have been experiencing blood in the stool for 8 hours",
+      "sender": "user"
+    },
+    {
+      "text": "Here is a suggested test:\n\nTest: Rectal Examination\n\nDescription: A rectal examination is a simple test to check for blood in the stool.\n\nInstructions:\n\n1. Put on a pair of gloves to prevent the spread of infection.\n2. Ask the patient to lie on their side with their knees bent and feet brought towards their chest.\n3. Gently insert a lubricated finger into the anus, taking care not to cause any discomfort or pain.\n4. Feel for any abnormalities in the rectal tone or masses.\n5. Check for blood in the stool by gently rotating your finger around the inside of the rectal cavity.\n6. Remove your finger and inspect it for any signs of blood or mucus.\n7. Remove your gloves and wash your hands thoroughly.\n\nThis test can help identify if the patient is experiencing gastrointestinal bleeding, which may be related to their symptoms of blood in the stool.",
+      "sender": "bot"
+    },
+    {
+      "text": "There is blood and mucus after doing the test",
+      "sender": "user"
+    },
+    {
+      "text": "Can you tell me more about the amount and consistency of the blood and mucus you observed during the rectal examination?",
+      "sender": "bot"
+    },
+    {
+      "text": "It is very thick",
+      "sender": "user"
+    },
+    {
+      "text": "Can you describe the color of the blood and mucus you observed during the rectal examination?",
+      "sender": "bot"
+    },
+    {
+      "text": "It is highly red",
+      "sender": "user"
+    },
+    {
+      "text": "Did you notice any pain or discomfort during the rectal examination, or is the bleeding painless?",
+      "sender": "bot"
+    },
+    {
+      "text": "They noticed pain",
+      "sender": "user"
+    },
+    {
+      "text": "Can you describe the location and nature of the pain they experienced during the rectal examination, and is the pain constant or does it come and go?",
+      "sender": "bot"
+    },
+    {
+      "text": "It is towards the end",
+      "sender": "user"
+    },
+    {
+      "text": "It is towards the end",
+      "sender": "user"
+    },
+    {
+      "text": "Can you elaborate on what you mean by \"towards the end\" - is the pain more pronounced near the anus or further inside the rectum?",
+      "sender": "bot"
+    }
+  ],
+  "main_symptom": "It is towards the end"
+}

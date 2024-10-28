@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Assistant Conversation Log</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        h1, h2 {
+            color: #2c3e50;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .user {
+            background-color: #e3f2fd;
+            text-align: right;
+        }
+        .bot {
+            background-color: #f1f8e9;
+        }
+        .advice {
+            background-color: #fff3e0;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .citation {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+        .timestamp {
+            font-size: 0.8em;
+            color: #95a5a6;
+        }
+        .search-container {
+            margin-bottom: 20px;
+        }
+        .search-input {
+            width: 70%;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .search-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Health Assistant Conversation Log</h1>
+        <p><strong>Date and Time:</strong> <span id="timestamp"></span></p>
+        
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-input" placeholder="Search conversation...">
+            <button onclick="searchConversation()" class="search-button">Search</button>
+        </div>
+
+        <h2>Screening Answers</h2>
+        <ul id="screening-answers"></ul>
+        
+        <h2>Conversation</h2>
+        <div id="conversation-history"></div>
+        
+        <h2>Advice</h2>
+        <div id="advice"></div>
+    </div>
+
+    <script>
+        // This script will be populated with the conversation data by the server
+        const conversationData = {"_id": {"$oid": "670e4e70924fb5c3d0b45000"}, "conversation_history": [{"sender": "user", "text": "There is lots of blood in my stool"}, {"sender": "bot", "text": "Have you experienced any abdominal pain or discomfort along with the bleeding in your stool?"}], "date_time": "2024-10-15 04:13:52", "main_symptom": "There is lots of blood in my stool", "screening_answers": [{"question": "What is the patient\u0027s sex?"}, {"answer": 43, "question": "What is the patient\u0027s age?"}, {"question": "Does the patient have a caregiver?"}, {"answer": ["2"], "question": "Who is accompanying the patient?"}, {"answer": "There is lots of blood in my stool", "question": "What brings the patient here?"}], "stage": "followup"};
+        
+        document.getElementById('timestamp').textContent = conversationData.date_time;
+        
+        const screeningList = document.getElementById('screening-answers');
+        conversationData.screening_answers.forEach(answer => {
+            const li = document.createElement('li');
+            li.innerHTML = `<strong>${answer.question}:</strong> ${answer.answer}`;
+            screeningList.appendChild(li);
+        });
+        
+        const conversationHistory = document.getElementById('conversation-history');
+        conversationData.conversation_history.forEach(message => {
+            const div = document.createElement('div');
+            div.className = `message ${message.sender}`;
+            div.innerHTML = `<strong>${message.sender === 'user' ? 'User' : 'Bot'}:</strong> ${message.text}`;
+            conversationHistory.appendChild(div);
+        });
+        
+        const adviceSection = document.getElementById('advice');
+        if (conversationData.advice && conversationData.advice.length > 0) {
+            conversationData.advice.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'advice';
+                div.innerHTML = `
+                    <h3>Advice ${index + 1}</h3>
+                    <p>${item.advice}</p>
+                    <p class="citation">Citation: ${item.citation_summary}</p>
+                `;
+                adviceSection.appendChild(div);
+            });
+        } else {
+            adviceSection.innerHTML = '<p>No specific advice was generated during this conversation.</p>';
+        }
+
+        function searchConversation() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const elements = document.querySelectorAll('.message, .advice');
+            
+            elements.forEach(element => {
+                const text = element.innerText.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    element.innerHTML = element.innerHTML.replace(new RegExp(searchTerm, 'gi'), match => `<span class="highlight">${match}</span>`);
+                    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else {
+                    element.innerHTML = element.innerHTML.replace(/<span class="highlight">(.+?)<\/span>/g, '$1');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
