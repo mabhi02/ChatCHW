@@ -62,10 +62,48 @@ questions_init = [
     },
     {
         "question": "What brings the patient here?",
-        "type": "FREE",
-        "options": []
+        "type": "MCM",  # Changed from FREE to MCM
+        "options": [
+            {"id": 1, "text": "Fever"},
+            {"id": 2, "text": "Cough"},
+            {"id": 3, "text": "Headache"},
+            {"id": 4, "text": "Body Pain"},
+            {"id": 5, "text": "Stomach Issues"},
+            {"id": 6, "text": "Breathing Problems"},
+            {"id": 7, "text": "Skin Problems"},
+            {"id": 8, "text": "Other"}
+        ]
     }
 ]
+
+# Helper function to validate and process multiple choice inputs
+def process_input(input_data, question_type, options=None):
+    if question_type == "MC":
+        choice_id = input_data
+        if any(opt["id"] == choice_id for opt in options):
+            return next(opt["text"] for opt in options if opt["id"] == choice_id)
+        raise ValueError("Invalid choice for MC question")
+    
+    elif question_type == "NUM":
+        value = int(input_data)
+        if 0 <= value <= 120:
+            return str(value)
+        raise ValueError("Invalid age value")
+    
+    elif question_type == "YN":
+        if input_data in ["yes", "no", "not_sure"]:
+            return next(opt["text"] for opt in options if opt["id"] == input_data)
+        raise ValueError("Invalid choice for YN question")
+    
+    elif question_type == "MCM":
+        if isinstance(input_data, list):
+            choice_ids = input_data
+            if all(any(opt["id"] == id for opt in options) for id in choice_ids):
+                selected_texts = [opt["text"] for opt in options if opt["id"] in choice_ids]
+                return ", ".join(selected_texts)
+        raise ValueError("Invalid choices for MCM question")
+    
+    return input_data
 
 def getIndex():
     pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
@@ -106,7 +144,14 @@ def generate_followup_question(main_symptom, screening_info, previous_questions,
     Consider this screening information: {screening_info}
     The question should be different from these previous questions: {previous_questions}
     Base your question on this relevant information: {relevant_quote['text']}
-    Provide only the question, nothing else."""
+    Format the response as a multiple choice question with 4 options.
+    Format:
+    Question: [Your question here]
+    Options:
+    1. [Option 1]
+    2. [Option 2]
+    3. [Option 3]
+    4. [Option 4]"""
     return groqCall(prompt)
 
 def generate_test(main_symptom, screening_info, symptom_info, relevant_quote, previous_tests):
@@ -115,16 +160,19 @@ def generate_test(main_symptom, screening_info, symptom_info, relevant_quote, pr
     And these symptoms: {symptom_info}
     The test should be different from these previous tests: {previous_tests}
     Base your suggestion on this relevant information: {relevant_quote['text']}
-    Provide the test description and step-by-step instructions on how to perform it.
-    Format your response as follows:
+    Format the response as a test with multiple choice results.
+    Format:
     Test: [Test Name]
     Description: [Brief description of the test]
     Instructions:
     1. [Step 1]
     2. [Step 2]
     3. [Step 3]
-    ...
-    """
+    Results:
+    1. Normal
+    2. Mild
+    3. Moderate
+    4. Severe"""
     return groqCall(prompt)
 
 def generate_advice(main_symptom, screening_info, symptom_info, test_results, relevant_quote):
@@ -142,15 +190,20 @@ def generate_advice(main_symptom, screening_info, symptom_info, test_results, re
     Citation summary: [Brief summary of the citation used for Advice 2]
     
     3. [Advice 3]
-    Citation summary: [Brief summary of the citation used for Advice 3]
-    """
+    Citation summary: [Brief summary of the citation used for Advice 3]"""
     return groqCall(prompt)
 
 def generate_conversation_followup(conversation_summary):
     prompt = f"""Based on this conversation summary: {conversation_summary}
     Generate a follow-up question or suggestion to continue the conversation.
-    This could be asking for more details about a symptom, suggesting a referral, or recommending a follow-up appointment.
-    Provide only the follow-up question or suggestion, nothing else."""
+    Format the response as a multiple choice question with 4 options.
+    Format:
+    Question: [Your question here]
+    Options:
+    1. [Option 1]
+    2. [Option 2]
+    3. [Option 3]
+    4. [Option 4]"""
     return groqCall(prompt)
 
 @app.route('/initial_questions', methods=['GET'])
@@ -160,44 +213,61 @@ def get_initial_questions():
 @app.route('/chat', methods=['POST'])
 def chat():
     data = request.json
-    message = data['message']
+    message = data['message']  # This will now be the selected option ID(s)
+    question_type = data.get('question_type', 'MCM')  # Default to MCM if not specified
+    options = data.get('options', [])
     screening_answers = data.get('screening_answers', [])
     conversation_history = data.get('conversation_history', [])
     
     try:
+        # Process the input based on the question type
+        processed_message = process_input(message, question_type, options)
+        
         index = getIndex()
-        symptom_embedding = get_embedding(message)
+        symptom_embedding = get_embedding(processed_message)
         relevant_quotes = vectorQuotes(symptom_embedding, index)
         
         screening_info = ", ".join([f"{a['question']}: {a['answer']}" for a in screening_answers])
         
-        # Determine the stage of the conversation
         if len(conversation_history) < 3:
-            # Follow-up questions stage
             previous_questions = [q['question'] for q in conversation_history]
-            response = generate_followup_question(message, screening_info, previous_questions, relevant_quotes[0])
-            return jsonify({"response": response, "type": "followup_question"})
+            response = generate_followup_question(processed_message, screening_info, previous_questions, relevant_quotes[0])
+            return jsonify({
+                "response": response,
+                "type": "followup_question",
+                "format": "multiple_choice"
+            })
         
         elif len(conversation_history) == 3:
-            # Test stage
             symptom_info = [f"Symptom: {q['question']} Answer: {q['answer']}" for q in conversation_history]
-            test = generate_test(message, screening_info, symptom_info, relevant_quotes[0], [])
-            return jsonify({"response": test, "type": "test"})
+            test = generate_test(processed_message, screening_info, symptom_info, relevant_quotes[0], [])
+            return jsonify({
+                "response": test,
+                "type": "test",
+                "format": "multiple_choice"
+            })
         
         elif len(conversation_history) == 4:
-            # Advice stage
             symptom_info = [f"Symptom: {q['question']} Answer: {q['answer']}" for q in conversation_history[:3]]
             test_result = conversation_history[3]['answer']
-            advice = generate_advice(message, screening_info, symptom_info, [test_result], relevant_quotes[0])
-            return jsonify({"response": advice, "type": "advice"})
+            advice = generate_advice(processed_message, screening_info, symptom_info, [test_result], relevant_quotes[0])
+            return jsonify({
+                "response": advice,
+                "type": "advice"
+            })
         
         else:
-            # Conversation follow-up stage
-            conversation_summary = f"Main symptom: {message}, Screening info: {screening_info}, " \
+            conversation_summary = f"Main symptom: {processed_message}, Screening info: {screening_info}, " \
                                    f"Conversation history: {conversation_history}"
             followup = generate_conversation_followup(conversation_summary)
-            return jsonify({"response": followup, "type": "conversation_followup"})
+            return jsonify({
+                "response": followup,
+                "type": "conversation_followup",
+                "format": "multiple_choice"
+            })
 
+    except ValueError as ve:
+        return jsonify({"error": str(ve)}), 400
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

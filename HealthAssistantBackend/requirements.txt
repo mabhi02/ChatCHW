@@ -103,3 +103,5 @@ accelerate
 groq
 python-dotenv
 scikit-learn
+cors
+flask_cors
