@@ -1,0 +1,47 @@
+{
+  "screening_answers": [
+    {
+      "question": "What is the patient's sex?",
+      "answer": "Female"
+    },
+    {
+      "question": "What is the patient's age?",
+      "answer": "20"
+    },
+    {
+      "question": "Does the patient have a caregiver?",
+      "answer": "Yes"
+    },
+    {
+      "question": "Who is accompanying the patient?",
+      "answer": "Friends"
+    },
+    {
+      "question": "What brings the patient here?",
+      "answer": "She has blood in her stool"
+    }
+  ],
+  "conversation_history": [
+    {
+      "question": "Has the patient been regularly taking Iron Folic Acid (IFA) tablets and if so, has she experienced any side effects such as constipation or black stools?",
+      "answer": "No has not taken iron folic acid regularly",
+      "type": "followup"
+    },
+    {
+      "question": "Has the patient experienced any other symptoms such as nausea, pain in abdomen, or tiredness along with the blood in her stool?",
+      "answer": "pain in abdomen",
+      "type": "followup"
+    },
+    {
+      "question": "Has the patient experienced any complications during previous pregnancies, such as abortion, still birth, neonatal death, or any issue that required surgery?",
+      "answer": "Has never been pregnant",
+      "type": "followup"
+    },
+    {
+      "question": "Test results",
+      "answer": "Positive for fecal occult blood test",
+      "type": "test"
+    }
+  ],
+  "final_advice": "1. Start Iron Folic Acid (IFA) supplementation: The patient should consider starting regular IFA supplementation. The consumption of IFA tablets can enhance her iron absorption, which can potentially address an underlying anemia that might be causing the blood in her stool. These tablets should ideally be taken in the morning on an empty stomach. Nausea and abdominal pain may be managed by taking the tablets after meals or at night. Despite common myths, IFA consumption does not affect a baby\u2019s complexion and should not be a reason for not taking the supplement. Black stools, a common side-effect, is normal and should not be a cause for worry. Regular intake of IFA can also make her feel less tired. (Citation: ASHA Module 6 Simple Skills that Save Lives)\n   \n2. Maintain a healthy diet: In addition to taking IFA tablets, she should consider drinking more water and adding more green leafy vegetables to her diet. These dietary changes can help manage constipation, another potential cause of blood in the stool. Foods high in Vitamin C like oranges and sweet limes should also be consumed, as they enhance the absorption of iron. The tablets should not be consumed with tea, coffee, milk, or calcium tablets as these can reduce the absorption of iron. (Citation: ASHA Module 6 Simple Skills that Save Lives)\n\n3. Seek further medical advice: Given the positive test for fecal occult blood, the patient should seek further medical advice. Presence of blood in the stool could indicate other serious health conditions. Any danger signs such as vaginal bleeding, loss of fetal movement, severe headaches or dizziness, blurred vision, or swollen face/hands, should immediately prompt a referral to a health facility. Similarly, if there are problems like severe anemia, night blindness, fever, painful urination, or any other issues, she should be referred to a health center. (Citation: ASHA Module 6 Simple Skills that Save Lives)"
+}

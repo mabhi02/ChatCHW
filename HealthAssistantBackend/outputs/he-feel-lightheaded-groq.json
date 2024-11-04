@@ -1,0 +1,47 @@
+{
+  "screening_answers": [
+    {
+      "question": "What is the patient's sex?",
+      "answer": "Male"
+    },
+    {
+      "question": "What is the patient's age?",
+      "answer": "40"
+    },
+    {
+      "question": "Does the patient have a caregiver?",
+      "answer": "No"
+    },
+    {
+      "question": "Who is accompanying the patient?",
+      "answer": "Relatives"
+    },
+    {
+      "question": "What brings the patient here?",
+      "answer": "He feel lightheaded and dizzy. He is sweating a lot and has thrown up."
+    }
+  ],
+  "conversation_history": [
+    {
+      "question": "Does the patient have a fever, and if so, for how long has it lasted?",
+      "answer": "Yes it seems he has a fever. It has lasted 2 days",
+      "type": "followup"
+    },
+    {
+      "question": "Does the patient have any underlying medical conditions that may be contributing to his lightheadedness, sweating, and vomiting?",
+      "answer": "No",
+      "type": "followup"
+    },
+    {
+      "question": "Has the patient been experiencing any other symptoms, such as headaches, dizziness, or abdominal pain, in addition to feeling lightheaded and dizzy?",
+      "answer": "Yes lots of headaches",
+      "type": "followup"
+    },
+    {
+      "question": "Test results",
+      "answer": "101 degree fever. Face hot to touch. Movement is okay but sluggish",
+      "type": "test"
+    }
+  ],
+  "final_advice": "Here are three pieces of advice for the 40-year-old male patient who is feeling lightheaded and dizzy, sweating a lot, and has thrown up:\n\n**Advice 1: Identify and address underlying conditions**\nCheck for anaemia, which can contribute to poor appetite, and start treatment if necessary. (Citation: \"Anaemia in the Young Child\" section, which highlights the importance of diagnosing and treating anaemia in children, but the principles can be applied to adults as well.)\n\n**Advice 2: Encourage hydration and nutrition**\nEnsure the patient is drinking enough fluids and eating nutrient-rich foods to prevent dehydration and malnutrition. (Citation: \"Community Level Care for a Malnourished Child\" section, which provides guidance on nutritional counselling and treatment for malnourished children, which can be adapted for adults.)\n\n**Advice 3: Seek prompt medical attention**\nIf the patient exhibits any danger signs, such as inability to drink or breastfeed, vomiting everything, having convulsions, or being lethargic or unconscious, seek immediate medical attention. (Citation: \"Assessing the Sick Child\" section, which highlights the importance of identifying danger signs and seeking prompt referral to a healthcare facility.)\n\nNote: These advice pieces are based on the provided information and may not be specific to the patient's condition. It's essential to consult a qualified healthcare professional for personalized advice and treatment."
+}

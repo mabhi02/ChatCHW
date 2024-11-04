@@ -1,0 +1,47 @@
+{
+  "screening_answers": [
+    {
+      "question": "What is the patient's sex?",
+      "answer": "Female"
+    },
+    {
+      "question": "What is the patient's age?",
+      "answer": "35"
+    },
+    {
+      "question": "Does the patient have a caregiver?",
+      "answer": "No"
+    },
+    {
+      "question": "Who is accompanying the patient?",
+      "answer": "Health Workers"
+    },
+    {
+      "question": "What brings the patient here?",
+      "answer": "Her shoulder looks dislocated and she can\u2019t move her hand"
+    }
+  ],
+  "conversation_history": [
+    {
+      "question": "How did the dislocation occur, and has she experienced any numbness or tingling sensations in her arm or hand?",
+      "answer": "Numb arm",
+      "type": "followup"
+    },
+    {
+      "question": "Is there any severe pain or swelling around the affected shoulder area?",
+      "answer": "No swelling but pain to touch",
+      "type": "followup"
+    },
+    {
+      "question": "Has she experienced any recent trauma or falls that might have contributed to the shoulder dislocation?",
+      "answer": "Yes she did recently fall",
+      "type": "followup"
+    },
+    {
+      "question": "Test results",
+      "answer": "Very ginger in simple movements with very high pain to touch of shoulder. Limited range of motion",
+      "type": "test"
+    }
+  ],
+  "final_advice": "Here are three pieces of advice for the patient with a dislocated shoulder and inability to move her hand:\n\n**Advice 1: Refer the patient to a hospital immediately**\n\nSummary: The patient's symptoms, such as numbness in her arm and high pain to touch in her shoulder, suggest a potentially severe injury that requires immediate medical attention. Given the severity of the symptoms, it is essential to refer the patient to a hospital for further evaluation and treatment.\n\n**Advice 2: Immobilize the affected shoulder area to prevent further injury**\n\nSummary: The patient's limited range of motion and high pain to touch in her shoulder suggest that the affected area needs to be immobilized to prevent further injury. Immobilizing the shoulder area can help reduce pain and prevent further complications.\n\n**Advice 3: Monitor the patient for signs of infection or other complications**\n\nSummary: The patient's recent fall and dislocation may increase the risk of infection or other complications. It is essential to monitor the patient for signs of infection, such as fever, swelling, or redness around the affected area, and to seek immediate medical attention if any of these signs appear.\n\nNote: These advice are based on the provided information and do not replace a medical professional's diagnosis and treatment plan. It is essential to consult a medical professional for proper evaluation and treatment."
+}

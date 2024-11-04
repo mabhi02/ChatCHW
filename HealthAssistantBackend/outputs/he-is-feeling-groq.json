@@ -1,0 +1,47 @@
+{
+  "screening_answers": [
+    {
+      "question": "What is the patient's sex?",
+      "answer": "Male"
+    },
+    {
+      "question": "What is the patient's age?",
+      "answer": "22"
+    },
+    {
+      "question": "Does the patient have a caregiver?",
+      "answer": "No"
+    },
+    {
+      "question": "Who is accompanying the patient?",
+      "answer": "None"
+    },
+    {
+      "question": "What brings the patient here?",
+      "answer": "He is feeling cramps in his leg muscles"
+    }
+  ],
+  "conversation_history": [
+    {
+      "question": "How long have you been experiencing these leg muscle cramps?",
+      "answer": "Just from 2 hours ago ",
+      "type": "followup"
+    },
+    {
+      "question": "Are you experiencing any other symptoms along with the leg muscle cramps, such as muscle weakness, numbness, or pain elsewhere in your body?",
+      "answer": "Hard do to walk and is constantly throbbing ",
+      "type": "followup"
+    },
+    {
+      "question": "Have you experienced muscle cramps in other parts of your body, or only in your legs?",
+      "answer": "just right leg",
+      "type": "followup"
+    },
+    {
+      "question": "Test results",
+      "answer": "There seems to be electrolyte imbalance",
+      "type": "test"
+    }
+  ],
+  "final_advice": "Here are three pieces of advice for the patient experiencing leg muscle cramps:\n\n**Advice 1: Rehydrate with electrolyte-rich fluids**\nDrink plenty of water and electrolyte-rich fluids like coconut water, sports drinks, or clear broth to help rebalance the electrolyte levels in your body.\n\nSummary: The patient's electrolyte imbalance is likely contributing to their muscle cramps. Rehydrating with electrolyte-rich fluids can help alleviate symptoms. (Source: Understanding the importance of rehydration in treating diarrhea and electrolyte imbalance)\n\n**Advice 2: Stretch and move regularly**\nGently stretch your leg muscles and engage in light physical activity to help reduce muscle cramping. Avoid overexerting yourself, and take regular breaks to rest and stretch.\n\nSummary: Muscle cramps can be caused by muscle fatigue and dehydration. Stretching and moving regularly can help reduce muscle cramping and alleviate symptoms. (Source: Aches and Pain, understanding muscle pain and fatigue)\n\n**Advice 3: Avoid triggers and maintain good hydration habits**\nAvoid triggers that may exacerbate muscle cramps, such as excessive physical activity, dehydration, or certain medications. Make sure to drink plenty of water throughout the day and maintain good hydration habits to prevent future muscle cramps.\n\nSummary: Identifying and avoiding triggers can help prevent muscle cramps. Maintaining good hydration habits is essential in preventing dehydration and electrolyte imbalance, which can contribute to muscle cramps. (Source: Preventing diarrhea and dehydration through good hygiene and hydration habits)"
+}

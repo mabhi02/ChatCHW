@@ -1,0 +1,47 @@
+{
+  "screening_answers": [
+    {
+      "question": "What is the patient's sex?",
+      "answer": "Male"
+    },
+    {
+      "question": "What is the patient's age?",
+      "answer": "12"
+    },
+    {
+      "question": "Does the patient have a caregiver?",
+      "answer": "Yes"
+    },
+    {
+      "question": "Who is accompanying the patient?",
+      "answer": "Relatives"
+    },
+    {
+      "question": "What brings the patient here?",
+      "answer": "He fell and hit his head, which is hurting him badly"
+    }
+  ],
+  "conversation_history": [
+    {
+      "question": "How long ago did the patient fall and hit his head?",
+      "answer": "It has been an hour",
+      "type": "followup"
+    },
+    {
+      "question": "Was the patient unconscious or disoriented after the fall?",
+      "answer": "Disoriented but now seems like his head is throbbing",
+      "type": "followup"
+    },
+    {
+      "question": "Is the patient experiencing any other symptoms like dizziness, nausea, or vomiting along with the headache?",
+      "answer": "Said he had a little dizziness but subsided now",
+      "type": "followup"
+    },
+    {
+      "question": "Test results",
+      "answer": "Sluggish motor and clear pause when speaking but eyes pass properly. Score of about 12",
+      "type": "test"
+    }
+  ],
+  "final_advice": "Here are three pieces of advice for the 12-year-old boy who fell and hit his head:\n\n**Advice 1: Monitor for signs of dehydration and provide plenty of fluids**\nThe patient should be given plenty of watery fluids like coconut water, rice-kanji, or light tea to prevent dehydration. (Citation: \"Give the baby a lot of watery foods like \u2018Sharbat\u2019, coconut water, rice-kanji, light tea etc.\")\n\n**Advice 2: Observe for severe dehydration and refer to PHC/CHC if necessary**\nThe caregiver should watch for signs of severe dehydration such as excessive thirst, dry mouth, and sunken eyes. If these symptoms occur, the patient should be referred to a higher healthcare facility. (Citation: \"If dehydration is severe. (Start fluids and then send)... REFER the child to the PHC/CHC where facilities for admission are available.\")\n\n**Advice 3: Monitor for worsening symptoms and refer to a doctor if necessary**\nThe caregiver should closely observe the patient for worsening symptoms such as convulsions, fever, or blood in stools. If any of these symptoms occur, the patient should be referred to a doctor for further evaluation and treatment. (Citation: \"In case of convulsions / If the child has fever. / If the child gets blood in stools. / REFER the child to the PHC/CHC where facilities for admission are available.\")\n\nNote: While the provided texts are about diarrhea and dehydration, some of the principles mentioned can be applied to the current situation, such as monitoring for dehydration and referring to a higher healthcare facility if necessary. However, the patient's head injury takes priority, and a medical professional should be consulted for proper evaluation and treatment."
+}

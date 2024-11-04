@@ -1,0 +1,47 @@
+{
+  "screening_answers": [
+    {
+      "question": "What is the patient's sex?",
+      "answer": "Female"
+    },
+    {
+      "question": "What is the patient's age?",
+      "answer": "40"
+    },
+    {
+      "question": "Does the patient have a caregiver?",
+      "answer": "No"
+    },
+    {
+      "question": "Who is accompanying the patient?",
+      "answer": "Other"
+    },
+    {
+      "question": "What brings the patient here?",
+      "answer": "She is coughing up blood and has a runny nose"
+    }
+  ],
+  "conversation_history": [
+    {
+      "question": "How long has she been experiencing symptoms of coughing up blood and having a runny nose?",
+      "answer": "This is the second day happening all of yesterday",
+      "type": "followup"
+    },
+    {
+      "question": "Has she recently traveled or been exposed to anyone with similar symptoms?",
+      "answer": "Yes just came back from a trip",
+      "type": "followup"
+    },
+    {
+      "question": "Has she experienced any difficulty breathing or shortness of breath in addition to coughing up blood and having a runny nose?",
+      "answer": "No is just throwing up and runny nose but can breathe if not actively throwing up properly",
+      "type": "followup"
+    },
+    {
+      "question": "Test results",
+      "answer": "No general signs of danger but lots of vomit",
+      "type": "test"
+    }
+  ],
+  "final_advice": "Here are three pieces of advice for the patient based on the provided information:\n\n**Advice 1: Continue feeding and provide extra fluids**\nSummary: The patient should continue feeding and provide extra fluids to manage diarrhea at home. This is based on Plan A for managing diarrhea at home, which recommends continuing breastfeeding or giving ORS solution and other available fluids, such as soups or coconut water, to help replace lost fluids and electrolytes. (Source: \"Managing Diarrhoea at Home\" section)\n\n**Advice 2: Monitor for danger signs and follow up in two days**\nSummary: The patient should be monitored for danger signs, such as fever, lethargy, or unconsciousness, and follow up in two days if symptoms do not improve. This is based on the classification of diarrhea signs and symptoms, which recommends referring the patient to a hospital if they show signs of severe dehydration or severe persistent diarrhea. (Source: \"Classify Diarrhoea Signs/Symptoms\" table)\n\n**Advice 3: Practice good hygiene to prevent diarrhea**\nSummary: The patient should practice good hygiene, such as washing hands with soap and water after defecating and before preparing food, to prevent diarrhea. This is based on the importance of good hygiene practices in preventing diarrhea, such as washing hands and disposing of feces properly. (Source: \"Prevention of Diarrhoea\" section)\n\nNote: These pieces of advice are based on the provided information and may not be applicable to all patients or situations. It's always best to consult a qualified healthcare professional for personalized advice."
+}

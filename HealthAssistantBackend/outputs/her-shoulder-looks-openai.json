@@ -1,0 +1,47 @@
+{
+  "screening_answers": [
+    {
+      "question": "What is the patient's sex?",
+      "answer": "Female"
+    },
+    {
+      "question": "What is the patient's age?",
+      "answer": "35"
+    },
+    {
+      "question": "Does the patient have a caregiver?",
+      "answer": "No"
+    },
+    {
+      "question": "Who is accompanying the patient?",
+      "answer": "Health Workers"
+    },
+    {
+      "question": "What brings the patient here?",
+      "answer": "Her shoulder looks dislocated and she can\u2019t move her hand"
+    }
+  ],
+  "conversation_history": [
+    {
+      "question": "How did the patient injure her shoulder, and when did this injury occur?",
+      "answer": "They fell from a 2 foot elevated platform on one hand",
+      "type": "followup"
+    },
+    {
+      "question": "Has she experienced any numbness or tingling sensation in her hand?",
+      "answer": "Yes is pretty numb",
+      "type": "followup"
+    },
+    {
+      "question": "Has she taken any medication or received any treatment since the shoulder dislocation occurred?",
+      "answer": "None",
+      "type": "followup"
+    },
+    {
+      "question": "Test results",
+      "answer": "Has limited range of motion, cannot touch her other shoulder. Gingerly moves her arm. Pain to touch",
+      "type": "test"
+    }
+  ],
+  "final_advice": "1) Urgent medical attention: The patient needs immediate medical attention considering the dislocated shoulder and the numbness in her hand. Given the signs of limited range of motion and significant pain, it is essential that she is taken to a hospital for further examination and treatment. (Symptoms and test results provided in the case)\n\n2) Avoid self-treatment: It's important for the patient not to attempt self-treatment or manipulation of the dislocated shoulder as it may lead to further damage. Proper medical treatment is required to ensure the shoulder is correctly repositioned and any potential nerve damage is addressed. (Symptoms and test results provided in the case)\n\n3) Pain Management: Once she has been examined by a professional, they may prescribe some pain management strategies and medication until the shoulder is repositioned. This can include over-the-counter pain relievers, ice packs to reduce swelling, and possibly a sling to immobilize the shoulder. However, she should not take any medication without a doctor's advice considering the numbness in her hand. (Relevant information regarding the need for proper medical advice and treatment)"
+}

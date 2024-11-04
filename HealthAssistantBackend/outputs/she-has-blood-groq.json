@@ -1,0 +1,47 @@
+{
+  "screening_answers": [
+    {
+      "question": "What is the patient's sex?",
+      "answer": "Female"
+    },
+    {
+      "question": "What is the patient's age?",
+      "answer": "20"
+    },
+    {
+      "question": "Does the patient have a caregiver?",
+      "answer": "Yes"
+    },
+    {
+      "question": "Who is accompanying the patient?",
+      "answer": "Friends"
+    },
+    {
+      "question": "What brings the patient here?",
+      "answer": "She has blood in her stool"
+    }
+  ],
+  "conversation_history": [
+    {
+      "question": "How long has she been experiencing blood in her stool?",
+      "answer": "Came in today afternoon",
+      "type": "followup"
+    },
+    {
+      "question": "Has she experienced any associated symptoms like abdominal pain, vomiting, or fever along with blood in her stool?",
+      "answer": "Abdominal pain",
+      "type": "followup"
+    },
+    {
+      "question": "Has she taken any iron supplements recently, and if so, how often and in what dosage?",
+      "answer": "No iron supplements taken",
+      "type": "followup"
+    },
+    {
+      "question": "Test results",
+      "answer": "There is a little blood on my glove",
+      "type": "test"
+    }
+  ],
+  "final_advice": "Here are three pieces of advice for the patient with blood in her stool, along with a brief summary of the citation used:\n\nAdvice 1: Consider taking iron supplements, especially with foods that enhance iron absorption like orange and sweet lime, to address the underlying cause of blood in the stool.\n\nCitation: None (general knowledge)\n\nAdvice 2: Complete the course of iron supplements as advised by the healthcare provider, even if you experience side effects like nausea, constipation, or black stools, as they are common and not serious.\n\nCitation: ASHA Module 6 Simple Skills that Save Lives, page 304 (counseling on IFA tablets)\n\nAdvice 3: Be aware of danger signs during pregnancy, such as bleeding from the vagina, loss of fetal movement, severe headache, and convulsions, and seek immediate referral to a health facility if you experience any of these symptoms.\n\nCitation: ASHA Module 6 Simple Skills that Save Lives, page 31 (danger signs during pregnancy)"
+}

@@ -1,0 +1,47 @@
+{
+  "screening_answers": [
+    {
+      "question": "What is the patient's sex?",
+      "answer": "Female"
+    },
+    {
+      "question": "What is the patient's age?",
+      "answer": "40"
+    },
+    {
+      "question": "Does the patient have a caregiver?",
+      "answer": "No"
+    },
+    {
+      "question": "Who is accompanying the patient?",
+      "answer": "Other"
+    },
+    {
+      "question": "What brings the patient here?",
+      "answer": "She is coughing up blood and has a runny nose"
+    }
+  ],
+  "conversation_history": [
+    {
+      "question": "Has the patient experienced any severe chest pain along with coughing up blood and a runny nose?",
+      "answer": "Mild chest pain when throwing up",
+      "type": "followup"
+    },
+    {
+      "question": "Does the patient also experience any difficulty in breathing along with coughing up blood and a runny nose?",
+      "answer": "Yes when coughing up blood hard to breathe",
+      "type": "followup"
+    },
+    {
+      "question": "Has the patient noticed any blood in her stools along with coughing up blood and a runny nose?",
+      "answer": "No blood in stool",
+      "type": "followup"
+    },
+    {
+      "question": "Test results",
+      "answer": "Lots of bacteria and very viscous",
+      "type": "test"
+    }
+  ],
+  "final_advice": "1. Seek immediate medical attention: The patient is experiencing coughing up blood, difficulty in breathing, and chest pain which could indicate severe illnesses such as pneumonia, bronchitis or even lung cancer. \n\n    Citation: The symptoms presented, including coughing up blood, difficulty breathing, and chest pain, are serious and potentially life-threatening. This advice is based on the provided screening information and symptoms.\n\n2. Increase fluid intake: It is advised that the patient should increase her fluid intake, especially water, to help thin the mucus and decrease the viscosity. \n\n    Citation: Based on the test result which shows 'Lots of bacteria and very viscous', increasing fluid intake can help thin the mucus.\n\n3. Use of medication: The patient may need to use antibiotics to control the bacterial infection as indicated by the test results. Paracetamol may also be needed to manage the fever if present.\n\n    Citation: According to the provided relevant information, paracetamol can be given if fever is high and the child is above 2 months of age. And if the fever has been present every day for more than seven days, it's advisable to refer the patient to a hospital."
+}

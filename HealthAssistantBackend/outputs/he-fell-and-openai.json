@@ -1,0 +1,47 @@
+{
+  "screening_answers": [
+    {
+      "question": "What is the patient's sex?",
+      "answer": "Male"
+    },
+    {
+      "question": "What is the patient's age?",
+      "answer": "12"
+    },
+    {
+      "question": "Does the patient have a caregiver?",
+      "answer": "Yes"
+    },
+    {
+      "question": "Who is accompanying the patient?",
+      "answer": "Relatives"
+    },
+    {
+      "question": "What brings the patient here?",
+      "answer": "He fell and hit his head, which is hurting him badly"
+    }
+  ],
+  "conversation_history": [
+    {
+      "question": "Has the child shown any signs of nausea or vomiting since the head injury?",
+      "answer": "No ",
+      "type": "followup"
+    },
+    {
+      "question": "Is the child showing any signs of dehydration following his fall and subsequent pain?",
+      "answer": "No he drank some water",
+      "type": "followup"
+    },
+    {
+      "question": "Given the fall and head injury, has the child shown any signs of diarrhea or unusual thirst which could indicate dehydration?",
+      "answer": "No ",
+      "type": "followup"
+    },
+    {
+      "question": "Test results",
+      "answer": "Hurts when I apply pressure to spot where it hurts. Moves neck gingerly but rest of motor conditions and responses are fine",
+      "type": "test"
+    }
+  ],
+  "final_advice": "1. Seek Immediate Medical Attention: It's crucial to take the child to a healthcare professional given the nature of his injury. Symptoms such as pain from a head injury, especially when pressure is applied, and difficulty moving the neck could indicate serious issues such as concussion or other forms of brain injury. This advice is based on the patient's symptoms, the fact that they hit their head and are in significant pain.\n\n2. Ensure Hydration: Although the child does not appear to be dehydrated, it's important to keep him well-hydrated, especially since he has had a traumatic event. Continue to offer him water and monitor for signs of dehydration such as excessive thirst or changes in urine color. This is based on the information regarding the importance of hydration, especially in traumatic situations.\n\n3. Monitor for Other Symptoms: In addition to pain and potential neck movement difficulties, other symptoms could arise following a head injury. These may include nausea, vomiting, confusion, changes in mood, or seizures. If the child shows any of these symptoms, they should be taken to a healthcare professional immediately. This advice is based on the information provided regarding the potential symptoms of head injury."
+}
