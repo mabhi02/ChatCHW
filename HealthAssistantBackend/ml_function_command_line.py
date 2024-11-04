@@ -6,12 +6,16 @@ import openai
 import json
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
+import pandas as pd
 
 # Initialize environment and API clients
 load_dotenv()
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+
+used_citations = set()  # Global set to store used citation IDs
+citation_data = pd.read_csv("chunks_with_pages.csv")
 
 # Initial screening questions
 questions_init = [
@@ -63,29 +67,125 @@ questions_init = [
     }
 ]
 
-# RAG Functions
 def getIndex():
     pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
-    index = pc.Index("final-asha")
+    index = pc.Index("asha-done")
     return index
 
 def get_embedding(text):
     response = openai.Embedding.create(input=text, engine="text-embedding-3-small")
     return response['data'][0]['embedding']
 
-def getRes(query_embedding, index):
-    res = index.query(vector=query_embedding, top_k=5, include_metadata=True)
-    return res
-
 def vectorQuotes(query_embedding, index):
-    similarity = getRes(query_embedding, index)
-    return [{"text": match['metadata']['text'], "id": match['id']} for match in similarity['matches']]
+    """Get relevant quotes with error handling and backup response"""
+    try:
+        similarity = getRes(query_embedding, index)
+        quotes = []
+        
+        # Check if we got any matches
+        if not similarity or not similarity.get('matches') or len(similarity['matches']) == 0:
+            print("\n⚠️ Warning: No matches found in database")
+            # Return default/fallback quotes
+            return [{
+                "text": "When assessing a patient, gather comprehensive information about their symptoms, including duration, severity, and any aggravating or alleviating factors.",
+                "id": "default_001"
+            },
+            {
+                "text": "Always check vital signs and basic health parameters as part of initial assessment.",
+                "id": "default_002"
+            }]
+            
+        # Process matches if we have them
+        for match in similarity['matches']:
+            if match.get('metadata') and match['metadata'].get('text'):
+                used_citations.add(match['id'])
+                quotes.append({
+                    "text": match['metadata']['text'],
+                    "id": match['id']
+                })
+        
+        if quotes:
+            print(f"Found {len(quotes)} relevant quotes")
+            return quotes
+        else:
+            print("\n⚠️ Warning: No valid quotes found in matches")
+            return [{
+                "text": "When assessing a patient, gather comprehensive information about their symptoms, including duration, severity, and any aggravating or alleviating factors.",
+                "id": "default_001"
+            },
+            {
+                "text": "Always check vital signs and basic health parameters as part of initial assessment.",
+                "id": "default_002"
+            }]
+            
+    except Exception as e:
+        print(f"\n⚠️ Warning: Error getting quotes: {str(e)}")
+        # Return default/fallback quotes
+        return [{
+            "text": "When assessing a patient, gather comprehensive information about their symptoms, including duration, severity, and any aggravating or alleviating factors.",
+            "id": "default_001"
+        },
+        {
+            "text": "Always check vital signs and basic health parameters as part of initial assessment.",
+            "id": "default_002"
+        }]
+
+def getRes(query_embedding, index):
+    """Get results from Pinecone with error handling"""
+    try:
+        res = index.query(
+            vector=query_embedding,
+            top_k=5,
+            include_metadata=True
+        )
+        
+        # Add debugging information
+        if res and res.get('matches'):
+            print(f"Retrieved {len(res['matches'])} matches from Pinecone")
+        else:
+            print("No matches retrieved from Pinecone")
+            
+        return res
+    except Exception as e:
+        print(f"\n⚠️ Warning: Pinecone query failed: {str(e)}")
+        return None
 
 def find_most_relevant_quote(query_embedding, quotes):
-    quote_embeddings = [get_embedding(quote['text']) for quote in quotes]
-    similarities = cosine_similarity([query_embedding], quote_embeddings)[0]
-    most_relevant_index = np.argmax(similarities)
-    return quotes[most_relevant_index]
+    """Find most relevant quote using cosine similarity with error handling"""
+    if not quotes:
+        raise ValueError("No quotes provided for comparison")
+        
+    try:
+        # Reshape query embedding to 2D array
+        query_embedding_2d = np.array(query_embedding).reshape(1, -1)
+        
+        # Get embeddings for all quotes
+        quote_embeddings = []
+        for quote in quotes:
+            try:
+                embedding = get_embedding(quote['text'])
+                quote_embeddings.append(embedding)
+            except Exception as e:
+                print(f"\n⚠️ Warning: Error getting embedding for quote: {str(e)}")
+                continue
+                
+        if not quote_embeddings:
+            print("\n⚠️ Warning: Could not generate embeddings for quotes")
+            return quotes[0]  # Return first quote as fallback
+            
+        # Convert to 2D numpy array
+        quote_embeddings_2d = np.array(quote_embeddings)
+        
+        # Calculate similarities
+        similarities = cosine_similarity(query_embedding_2d, quote_embeddings_2d)[0]
+        
+        # Find most relevant quote
+        most_relevant_index = np.argmax(similarities)
+        return quotes[most_relevant_index]
+        
+    except Exception as e:
+        print(f"\n⚠️ Warning: Error in similarity calculation: {str(e)}")
+        return quotes[0] if quotes else None
 
 def groqCall(prompt):
     try:
@@ -503,22 +603,32 @@ def parse_llm_response(response_text, main_symptom):
         }
 
 def gather_followup_symptoms(main_symptom, screening_info, symptom_embedding, relevant_quotes):
-    """Gather follow-up symptoms with enhanced question handling"""
+    """Gather follow-up symptoms with enhanced error handling"""
+    if not relevant_quotes:
+        print("\n⚠️ Warning: No relevant quotes available for follow-up questions")
+        return []
+        
     symptoms = []
     total_questions = 3
     print("\n=== Follow-up Assessment ===")
     
     for i in range(total_questions):
         print(f"\nQuestion {i+1}/{total_questions}")
-        symptom_quote = find_most_relevant_quote(symptom_embedding, relevant_quotes)
-        response = generate_followup_question(
-            main_symptom, 
-            screening_info, 
-            [s['question'] for s in symptoms], 
-            symptom_quote
-        )
-        
-        if response:
+        try:
+            # Use first quote if can't find most relevant
+            symptom_quote = find_most_relevant_quote(symptom_embedding, relevant_quotes) or relevant_quotes[0]
+            
+            response = generate_followup_question(
+                main_symptom, 
+                screening_info, 
+                [s['question'] for s in symptoms], 
+                symptom_quote
+            )
+            
+            if not response:
+                print("\n⚠️ Warning: Could not generate follow-up question")
+                continue
+                
             question_data = parse_llm_response(response, main_symptom)
             print(f"\n{question_data['question']}")
             print("\nOptions:")
@@ -547,6 +657,9 @@ def gather_followup_symptoms(main_symptom, screening_info, symptom_embedding, re
                         print("\n❌ Invalid option number.")
                 except ValueError:
                     print("\n❌ Please enter a valid number.")
+        except Exception as e:
+            print(f"\n⚠️ Warning: Error processing question {i+1}: {str(e)}")
+            continue
     
     return symptoms
 
@@ -572,70 +685,143 @@ def display_welcome():
     print("A custom option (5) is available for most responses.")
     input("\nPress Enter to begin...")
 
-# Main Function
+
+def print_citation_pages():
+    """Print all unique page numbers from used citations with detailed formatting"""
+    if not used_citations:
+        return
+    
+    try:
+        # Filter citation data for used IDs and get their page numbers
+        cited_rows = citation_data[citation_data['id'].isin(used_citations)]
+        
+        # Convert string representation of list to actual list and combine all page numbers
+        all_pages = []
+        citations_by_page = {}  # Dictionary to store text snippets by page
+        
+        for _, row in cited_rows.iterrows():
+            try:
+                pages = eval(row['page_numbers'])  # Convert string representation to list
+                text_snippet = row['text'][:100] + "..."  # Get first 100 characters of text
+                
+                if isinstance(pages, list):
+                    for page in pages:
+                        if page not in citations_by_page:
+                            citations_by_page[page] = []
+                        citations_by_page[page].append(text_snippet)
+                    all_pages.extend(pages)
+            except Exception as e:
+                print(f"\n⚠️ Warning: Error processing citation: {str(e)}")
+                continue
+        
+        # Remove duplicates and sort
+        unique_pages = sorted(list(set(all_pages)))
+        
+        if unique_pages:
+            print("\n=== Citation Summary ===")
+            print(f"Citations found on {len(unique_pages)} pages: {', '.join(map(str, unique_pages))}")
+            
+            # Print detailed citation information by page
+            print("\nDetailed Citations by Page:")
+            for page in unique_pages:
+                print(f"\nPage {page}:")
+                for i, citation in enumerate(citations_by_page.get(page, []), 1):
+                    print(f"  {i}. {citation}")
+        else:
+            print("\nNo citations were used in this session.")
+            
+    except Exception as e:
+        print(f"\n❌ Error processing citations: {str(e)}")
+
 def main():
-    """Main program loop"""
+    """Main program loop with comprehensive error handling and quote management"""
     display_welcome()
     conversation_data = {"conversations": []}
     index = getIndex()
+    session_active = True
     
-    while True:
-        print("\n=== New Patient Assessment ===")
-        screening_answers = []
-        
-        # Gather initial screening information
-        for question in questions_init:
-            print(f"\n{question['question']}")
-            answer = get_valid_input(
-                question['type'],
-                question.get('options'),
-                question.get('range')
-            )
-            screening_answers.append({"question": question['question'], "answer": answer})
-        
-        main_symptom = next((answer['answer'] for answer in screening_answers 
-                           if answer['question'] == "What brings the patient here?"), "")
-        
-        if main_symptom.upper() == 'STOP':
-            print("\n=== Session Ended ===")
-            print("Thank you for using the Health Worker Assistant. Goodbye!")
-            break
-        
-        conversation = {
-            "screening": screening_answers,
-            "followup_symptoms": [],
-            "tests": [],
-            "advice": [],
-            "conversation_followups": []
-        }
-        
+    while session_active:
         try:
+            print("\n=== New Patient Assessment ===")
+            screening_answers = []
+            
+            # Gather initial screening information
+            for question in questions_init:
+                print(f"\n{question['question']}")
+                answer = get_valid_input(
+                    question['type'],
+                    question.get('options'),
+                    question.get('range')
+                )
+                screening_answers.append({"question": question['question'], "answer": answer})
+            
+            main_symptom = next((answer['answer'] for answer in screening_answers 
+                               if answer['question'] == "What brings the patient here?"), "")
+            
+            if main_symptom.upper() == 'STOP':
+                print("\n=== Session Ended ===")
+                print_citation_pages()
+                print("Thank you for using the Health Worker Assistant. Goodbye!")
+                session_active = False
+                break
+            
+            conversation = {
+                "screening": screening_answers,
+                "followup_symptoms": [],
+                "tests": [],
+                "advice": [],
+                "conversation_followups": [],
+                "citations_used": list(used_citations)
+            }
+            
             print("\n=== Processing Information ===")
             symptom_embedding = get_embedding(main_symptom)
             relevant_quotes = vectorQuotes(symptom_embedding, index)
             screening_info = ", ".join([f"{a['question']}: {a['answer']}" for a in screening_answers])
+
+            # Process with either found quotes or fallback quotes
+            if relevant_quotes:
+                print(f"Processing assessment with {len(relevant_quotes)} supporting references")
+                
+                # Gather additional symptoms
+                followup_symptoms = gather_followup_symptoms(main_symptom, screening_info, symptom_embedding, relevant_quotes)
+                if followup_symptoms:
+                    conversation["followup_symptoms"] = followup_symptoms
+                    print(f"\n✓ Gathered {len(followup_symptoms)} follow-up responses")
+                else:
+                    print("\n⚠️ No follow-up symptoms recorded")
+                
+                # Perform tests
+                print("\n=== Conducting Tests ===")
+                tests = perform_tests(main_symptom, screening_info, followup_symptoms, symptom_embedding, relevant_quotes)
+                if tests:
+                    conversation["tests"] = tests
+                    print(f"\n✓ Completed {len(tests)} tests")
+                else:
+                    print("\n⚠️ No tests were performed")
+                
+                # Generate and display advice
+                print("\n=== Assessment Results and Recommendations ===")
+                advice = generate_final_advice(main_symptom, screening_info, followup_symptoms, tests, symptom_embedding, relevant_quotes)
+                if advice:
+                    conversation["advice"] = advice
+                    for i, item in enumerate(advice, 1):
+                        print(f"\nRecommendation {i}:")
+                        print(f"➤ {item['advice']}")
+                        if item.get('citation_summary'):
+                            print(f"   Citation: {item['citation_summary']}")
+                else:
+                    print("\n⚠️ No specific recommendations generated")
             
-            # Gather additional symptoms
-            followup_symptoms = gather_followup_symptoms(main_symptom, screening_info, symptom_embedding, relevant_quotes)
-            conversation["followup_symptoms"] = followup_symptoms
-            
-            # Perform tests
-            tests = perform_tests(main_symptom, screening_info, followup_symptoms, symptom_embedding, relevant_quotes)
-            conversation["tests"] = tests
-            
-            # Generate and display advice
-            print("\n=== Assessment Results and Recommendations ===")
-            advice = generate_final_advice(main_symptom, screening_info, followup_symptoms, tests, symptom_embedding, relevant_quotes)
-            conversation["advice"] = advice
-            
-            for i, item in enumerate(advice, 1):
-                print(f"\nRecommendation {i}:")
-                print(f"➤ {item['advice']}")
-                print(f"   Citation: {item['citation_summary']}")
-            
-            # Save conversation data
+            # Update and save conversation data
+            conversation["citations_used"] = list(used_citations)
             conversation_data["conversations"].append(conversation)
-            update_json(conversation_data)
+            
+            try:
+                update_json(conversation_data)
+                print("\n✓ Assessment data saved successfully")
+            except Exception as e:
+                print(f"\n⚠️ Warning: Could not save conversation data: {str(e)}")
             
             # Ask about continuing
             print("\n=== Session Complete ===")
@@ -649,8 +835,18 @@ def main():
             )
             
             if continue_answer == "Exit program":
+                print("\n=== Final Session Summary ===")
+                print_citation_pages()
                 print("\nThank you for using the Health Worker Assistant. Goodbye!")
+                session_active = False
                 break
+                
+        except KeyboardInterrupt:
+            print("\n\n=== Session Interrupted ===")
+            print_citation_pages()
+            print("\nThank you for using the Health Worker Assistant. Goodbye!")
+            session_active = False
+            break
             
         except Exception as e:
             print(f"\n❌ An error occurred: {str(e)}")
@@ -664,9 +860,11 @@ def main():
                 options=error_options
             )
             if error_answer == "Exit program":
+                print("\n=== Error Summary ===")
+                print_citation_pages()
                 print("\nThank you for using the Health Worker Assistant. Goodbye!")
+                session_active = False
                 break
 
 if __name__ == "__main__":
     main()
-
