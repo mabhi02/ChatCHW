@@ -1,0 +1,10 @@
+Citation steps
+
+1. Converted the pdf to .txt format
+2. Added page numbers as breaks 
+3. Chunked with same amount of tokens and chunk overlap as we did originally (increased number of chunks slightly from 211 to 237)
+    a. Made sure page and its number are not seperated 
+4. Upserted to pinecone with id number and text of the chunk
+5. Stored chunk, id number, and page numbers contained within the chunk in a csv
+6. When extract the chunk, match the id in the metadata to the csv. This gives us access to the page number column
+7. Aggregate all the page numbers used and display them at the end, thus creating citations.
