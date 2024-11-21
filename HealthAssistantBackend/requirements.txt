@@ -105,3 +105,8 @@ python-dotenv
 scikit-learn
 cors
 flask_cors
+dotenv
+datasets
+typing
+bitsandbytes
+peft
