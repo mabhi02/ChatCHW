@@ -1,46 +1,45 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Questionnaire from './components/Questionnaire';
-import Chats from './components/Chats';
+import QC2 from './components/QC2';
+import Chat2 from './components/Chat2';
 
-export type ScreeningAnswer = { question: string; answer: string | number | string[] };
+// Define the type for screening answers
+export type ScreeningAnswer = {
+  question: string;
+  answer: string | number | string[];
+};
 
+// Define the type for the navigation stack parameters
 export type RootStackParamList = {
-  Questionnaire: undefined;
-  Chats: { 
-    screeningAnswers: ScreeningAnswer[]; 
-    initialResponse?: string;
-    conversationId?: string;
+  QC2: undefined;
+  Chat2: {
+    screeningAnswers: ScreeningAnswer[];
+    initialResponse: string;
+    conversationId: string;
   };
 };
 
+// Create the stack navigator with the correct type
 const Stack = createStackNavigator<RootStackParamList>();
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator 
-        initialRouteName="Questionnaire"
+      <Stack.Navigator
+        initialRouteName="QC2"
         screenOptions={{
-          headerStyle: {
-            backgroundColor: '#1E88E5',
-          },
-          headerTintColor: '#FFFFFF',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
+          headerShown: false,
+          cardStyle: { backgroundColor: '#121212' }
         }}
       >
         <Stack.Screen 
-          name="Questionnaire" 
-          component={Questionnaire} 
-          options={{ title: 'Health Questionnaire' }}
+          name="QC2" 
+          component={QC2}
         />
         <Stack.Screen 
-          name="Chats" 
-          component={Chats} 
-          options={{ title: 'Health Assistant Chat' }}
+          name="Chat2" 
+          component={Chat2}
         />
       </Stack.Navigator>
     </NavigationContainer>
