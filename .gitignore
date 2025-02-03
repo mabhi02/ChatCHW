@@ -2,3 +2,4 @@ exenv
 frontend
 fine_tuned_llama
 results
+.env
