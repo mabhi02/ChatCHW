@@ -45,6 +45,7 @@ marisa-trie==1.1.1
 MarkupSafe==2.1.5
 marshmallow==3.21.2
 matplotlib-inline==0.1.7
+matplotlib
 multidict==6.0.5
 murmurhash==1.0.10
 mypy-extensions==1.0.0
@@ -80,6 +81,7 @@ spacy-legacy==3.0.12
 spacy-loggers==1.0.5
 SQLAlchemy==2.0.30
 srsly==2.4.8
+seaborn
 stack-data==0.6.3
 tenacity==8.3.0
 thinc==8.2.3
