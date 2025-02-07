@@ -9,6 +9,7 @@ ENV/
 matrix-env/
 **/matrix-env/
 ChatCHWEnv
+myenv
 
 # Python cache files
 __pycache__/
