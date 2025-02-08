@@ -1,0 +1,37 @@
+// This is your Prisma schema file
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Patient {
+  id              String           @id @default(cuid())
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  consultations   Consultation[]
+}
+
+model Consultation {
+  id              String           @id @default(cuid())
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  patientId       String
+  patient         Patient          @relation(fields: [patientId], references: [id])
+  initialResponses Json            // Stores the initial questionnaire responses
+  followupResponses Json?          // Stores follow-up responses
+  examResponses   Json?            // Stores examination responses
+  diagnosis       String?
+  treatment       String?
+  citations       Json?            // Stores citation data
+  status          ConsultationStatus @default(IN_PROGRESS)
+}
+
+enum ConsultationStatus {
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
