@@ -578,6 +578,7 @@ def get_followup_questions(initial_responses: List[Dict[str, Any]]) -> List[Dict
             {combined_context}
             
             Generate ONE focused, relevant follow-up question that is different from the previous questions.
+            Like do not ask both "How long have you had the pain?" and "How severe is the pain?", as they are too similar. It should only be like one or the other
             Follow standard medical assessment order:
             1. Duration and onset
             2. Characteristics and severity
