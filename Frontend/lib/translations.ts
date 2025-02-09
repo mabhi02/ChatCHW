@@ -1,6 +1,6 @@
 export const translations = {
     en: {
-      title: "ASHA Assistant",
+      title: "ChatCHW",
       subtitle: "AI-powered medical consultation and assistance for community health workers",
       questions: {
         sex: "What is the patient's sex?",

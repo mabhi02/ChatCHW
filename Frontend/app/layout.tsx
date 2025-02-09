@@ -19,7 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="relative flex min-h-screen flex-col">
             <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
               <div className="container flex h-14 items-center justify-between">
-                <h1 className="text-lg text-muted-foreground ml-4">Behavior Labs AI</h1>
+                <h1 className="text-lg text-muted-foreground ml-4">ChatCHW</h1>
                 <div className="flex items-center gap-2">
                   <ThemeToggle />
                   <NavMenu />

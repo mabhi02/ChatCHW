@@ -1,401 +1,418 @@
-import os
-import uuid
-from typing import Dict, List, Any
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from dotenv import load_dotenv
-
-# Import all the necessary libraries from cmdML
-from groq import Groq
 from pinecone import Pinecone
-import openai
-import torch
-
-# Import MATRIX components
-from AVM.MATRIX.matrix_core import MATRIX
-from AVM.MATRIX.decoder_tuner import DecoderTuner
-from AVM.MATRIX.attention_viz import AttentionVisualizer
-from AVM.MATRIX.pattern_analyzer import PatternAnalyzer
-from AVM.MATRIX.config import MATRIXConfig
-
-# Initialize environment and clients
-load_dotenv()
-groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
-pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
-openai.api_key = os.getenv("OPENAI_API_KEY")
-
-# Initialize MATRIX components
-matrix = MATRIX()
-decoder_tuner = DecoderTuner(matrix.meta_learner.decoder)
-visualizer = AttentionVisualizer()
-pattern_analyzer = PatternAnalyzer()
+import json
+from typing import Dict, List, Any, Optional
+import sys
+import os
+from chad import (
+    questions_init,
+    structured_questions_array,
+    examination_history,
+    get_embedding_batch,
+    vectorQuotesWithSource,
+    process_with_matrix,
+    judge,
+    judge_exam,
+    parse_examination_text,
+    get_diagnosis_and_treatment,
+    parse_question_data,
+    store_examination,
+    initialize_session,
+    get_session_data,
+    groq_client
+)
 
 app = Flask(__name__)
 CORS(app)
 
-# Store conversation state
-conversations: Dict[str, Dict[str, Any]] = {}
+pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
 
-@app.route("/health", methods=["GET"])
-def health_check():
-    return jsonify({"status": "healthy"})
 
-@app.route("/initial_questions", methods=["GET"])
-def get_initial_questions():
-    """Return initial screening questions from cmdML."""
-    return jsonify([
-        {
-            "question": "What is the patient's sex?",
-            "type": "MC",
-            "options": [
-                {"id": 1, "text": "Male"},
-                {"id": 2, "text": "Female"},
-                {"id": 3, "text": "Non-binary"},
-                {"id": 4, "text": "Other"},
-                {"id": 5, "text": "Other (please specify)"}
-            ]
-        },
-        {
-            "question": "What is the patient's age?",
-            "type": "NUM",
-            "range": {
-                "min": 0,
-                "max": 120,
-                "step": 1,
-                "unit": "years"
-            }
-        },
-        {
-            "question": "Does the patient have a caregiver?",
-            "type": "MC",
-            "options": [
-                {"id": 1, "text": "Yes"},
-                {"id": 2, "text": "No"},
-                {"id": 3, "text": "Not sure"},
-                {"id": 4, "text": "Sometimes"},
-                {"id": 5, "text": "Other (please specify)"}
-            ]
-        },
-        {
-            "question": "Who is accompanying the patient?",
-            "type": "MCM",
-            "options": [
-                {"id": 1, "text": "None"},
-                {"id": 2, "text": "Relatives"},
-                {"id": 3, "text": "Friends"},
-                {"id": 4, "text": "Health workers"},
-                {"id": 5, "text": "Other (please specify)"}
-            ]
-        },
-        {
-            "question": "Please describe what brings you here today",
-            "type": "FREE"
-        }
-    ])
+# Global state management
+sessions = {}
 
-@app.route("/chat", methods=["POST"])
-def chat():
-    """Main chat endpoint that handles the conversation flow."""
+@app.route('/api/start-assessment', methods=['POST'])
+def start_assessment():
+    """Initialize a new session and return first question"""
     try:
-        data = request.json or {}
-        message = data.get("message", "")
-        conversation_id = data.get("conversationId")
-        initial_responses = data.get("initialResponses", [])
-        stage = data.get("stage", "followup")  # Default to followup if we have initial responses
+        session_id = request.json.get('session_id', 'default')
+        session_data = get_session_data(session_id, sessions)
         
-        # If we have initial responses, store them and move to followup
-        if initial_responses:
-            if not conversation_id:
-                conversation_id = str(uuid.uuid4())
-            conversations[conversation_id] = {
-                "initial_responses": initial_responses,
-                "followup_responses": [],
-                "examination_responses": [],
-                "stage": "followup",
-                "question_index": 0
-            }
-
-        # Initialize new conversation if needed
-        if not conversation_id:
-            conversation_id = str(uuid.uuid4())
-            conversations[conversation_id] = {
-                "initial_responses": [],
-                "followup_responses": [],
-                "examination_responses": [],
-                "stage": "initial",
-                "question_index": 0
-            }
-
-        conversation = conversations[conversation_id]
-
-        # Skip initial questions if we already have them
-        if conversation["stage"] == "initial" and conversation.get("initial_responses"):
-            conversation["stage"] = "followup"
-            return generate_followup_question(conversation)
-
-        # Handle followup questions stage
-        elif conversation["stage"] == "followup":
-            if message:
-                # Store followup response
-                conversation["followup_responses"].append({
-                    "question": conversation.get("current_question", ""),
-                    "answer": message,
-                    "type": "MC"
-                })
-
-            # Check if we should move to examinations
-            if len(conversation["followup_responses"]) >= 3:
-                conversation["stage"] = "exam"
-                return generate_examination(conversation)
-
-            # Generate next followup question
-            return generate_followup_question(conversation)
-
-        # Handle examination stage
-        elif conversation["stage"] == "exam":
-            if message:
-                # Store examination response
-                conversation["examination_responses"].append({
-                    "examination": conversation.get("current_exam", ""),
-                    "result": message,
-                    "type": "EXAM"
-                })
-
-            # Check if we should move to diagnosis
-            if len(conversation["examination_responses"]) >= 2:
-                conversation["stage"] = "complete"
-                return generate_diagnosis(conversation)
-
-            # Generate next examination
-            return generate_examination(conversation)
-
-        return jsonify({"error": "Invalid conversation stage"})
-
-    except Exception as e:
-        print(f"Error in /chat: {str(e)}")
+        # Format first question for chat interface
+        first_question = questions_init[0]
+        question_text = first_question['question']
+        
+        if first_question['type'] in ['MC', 'MCM']:
+            options_text = "\n".join([f"{opt['id']}. {opt['text']}" for opt in first_question['options']])
+            output = f"{question_text}\n\n{options_text}"
+        else:
+            output = question_text
+            
         return jsonify({
-            "error": str(e),
-            "question": "An error occurred. Please choose:",
-            "type": "MC",
-            "options": [
-                {"id": "retry", "text": "Try again"},
-                {"id": "restart", "text": "Start over"}
-            ]
-        }), 500
-
-def generate_followup_question(conversation: Dict) -> Dict:
-    """Generate a follow-up question using cmdML's logic."""
+            "status": "success",
+            "output": output,
+            "metadata": {
+                "phase": "initial",
+                "question_type": first_question['type'],
+                "options": first_question.get('options', [])
+            }
+        })
+        
+    except Exception as e:
+        return jsonify({
+            "status": "error",
+            "message": str(e)
+        })
+@app.route('/api/input', methods=['POST'])
+def process_input():
+    """Process user input and return next question/response"""
     try:
-        # Get initial complaint
-        initial_complaint = next((
-            resp["answer"] for resp in conversation["initial_responses"]
-            if resp["question"] == "Please describe what brings you here today"
-        ), "")
+        data = request.json
+        session_id = data.get('session_id', 'default')
+        user_input = data.get('input')
+        
+        print(f"Received input: {user_input} for session: {session_id}")  # Debug print
+        
+        session_data = get_session_data(session_id, sessions)
+        print(f"Current phase: {session_data['phase']}")  # Debug print
+        
+        if session_data['phase'] == "initial":
+            try:
+                # Store initial response
+                current_question = questions_init[session_data['current_question_index']]
+                session_data['initial_responses'].append({
+                    "question": current_question['question'],
+                    "answer": user_input,
+                    "type": current_question['type']
+                })
+                
+                print(f"Stored response for question {session_data['current_question_index']}")  # Debug print
+                
+                # Move to next question or phase
+                session_data['current_question_index'] += 1
+                if session_data['current_question_index'] < len(questions_init):
+                    next_question = questions_init[session_data['current_question_index']]
+                    if next_question['type'] in ['MC', 'MCM']:
+                        options_text = "\n".join([f"{opt['id']}. {opt['text']}" for opt in next_question['options']])
+                        output = f"{next_question['question']}\n\n{options_text}"
+                    else:
+                        output = next_question['question']
+                        
+                    return jsonify({
+                        "status": "success",
+                        "output": output,
+                        "metadata": {
+                            "phase": session_data['phase'],
+                            "question_type": next_question['type'],
+                            "options": next_question.get('options', [])
+                        }
+                    })
+                else:
+                    print("Moving to followup phase")  # Debug print
+                    session_data['phase'] = "followup"
+                    return generate_followup_question(session_data)
+                    
+            except Exception as e:
+                print(f"Error in initial phase: {str(e)}")  # Debug print
+                raise
+                
+        elif session_data['phase'] == "followup":
+            try:
+                # Store followup response
+                if 'current_followup_question' in session_data:
+                    session_data['followup_responses'].append({
+                        "question": session_data['current_followup_question']['question'],
+                        "answer": user_input,
+                        "type": "MC"
+                    })
+                
+                # Generate next followup question or move to exam phase
+                if judge(session_data['followup_responses'], session_data['current_followup_question']['question']):
+                    session_data['phase'] = "exam"
+                    return generate_examination(session_data)
+                else:
+                    return generate_followup_question(session_data)
+                    
+            except Exception as e:
+                print(f"Error in followup phase: {str(e)}")  # Debug print
+                raise
+                
+        elif session_data['phase'] == "exam":
+            try:
+                # Store examination response
+                if 'current_examination' in session_data:
+                    store_examination(session_data['current_examination']['text'], int(user_input))
+                    session_data['exam_responses'].append({
+                        "examination": session_data['current_examination']['text'],
+                        "result": user_input,
+                        "type": "EXAM"
+                    })
+                
+                # Generate next examination or complete assessment
+                if judge_exam(session_data['exam_responses'], session_data['current_examination']['text']):
+                    return generate_final_results(session_data)
+                else:
+                    return generate_examination(session_data)
+                    
+            except Exception as e:
+                print(f"Error in exam phase: {str(e)}")  # Debug print
+                raise
+                
+    except Exception as e:
+        print(f"Error in process_input: {str(e)}")  # Debug print
+        return jsonify({
+            "status": "error",
+            "message": str(e)
+        })
 
-        # Use groq to generate question
-        context = f'''Initial complaint: {initial_complaint}
-Previous responses: {str(conversation["followup_responses"])}'''
-
-        question_prompt = f'''Based on the medical context: "{context}"
-Generate ONE focused follow-up question following standard medical assessment:
-1. Duration and onset
-2. Characteristics and severity
-3. Associated symptoms
-4. Impact on daily life
-Return only the question text.'''
-
+def generate_followup_question(session_data):
+    """Generate and format followup question"""
+    try:
+        print("Starting generate_followup_question")  # Debug print
+        initial_complaint = next((resp['answer'] for resp in session_data['initial_responses'] 
+                            if resp['question'] == "Please describe what brings you here today"), "")
+        
+        print(f"Initial complaint: {initial_complaint}")  # Debug print
+        
+        context = f"Initial complaint: {initial_complaint}\n"
+        if session_data['followup_responses']:
+            context += "Previous responses:\n"
+            for resp in session_data['followup_responses']:
+                context += f"Q: {resp['question']}\nA: {resp['answer']}\n"
+        
+        # Get embeddings and relevant documents
+        index = pc.Index("final-asha")
+        embedding = get_embedding_batch([context])[0]
+        
+        print("Got embedding")  # Debug print
+        
+        relevant_docs = vectorQuotesWithSource(embedding, index)
+        
+        print(f"Got {len(relevant_docs)} relevant docs")  # Debug print
+        
+        if not relevant_docs:
+            raise Exception("Could not generate relevant question")
+        
+        combined_context = " ".join([doc["text"] for doc in relevant_docs[:2]])
+        
+        previous_questions = "\n".join([f"- {resp['question']}" for resp in session_data['followup_responses']])
+        prompt = f'''Based on the patient's initial complaint: "{initial_complaint}"
+        
+        Previous questions asked:
+        {previous_questions if session_data['followup_responses'] else "No previous questions yet"}
+        
+        Relevant medical context:
+        {combined_context}
+        
+        Generate ONE focused, relevant follow-up question that is different from the previous questions.
+        Like do not ask both "How long have you had the pain?" and "How severe is the pain?", as they are too similar. It should only be like one or the other
+        Follow standard medical assessment order:
+        1. Duration and onset
+        2. Characteristics and severity
+        3. Associated symptoms
+        4. Impact on daily life
+        
+        Return only the question text.'''
+        
+        print("Sending prompt to Groq")  # Debug print
+        
         completion = groq_client.chat.completions.create(
-            messages=[{"role": "system", "content": question_prompt}],
+            messages=[{"role": "system", "content": prompt}],
             model="llama-3.3-70b-versatile",
             temperature=0.3,
             max_tokens=150
         )
-
+        
         question = completion.choices[0].message.content.strip()
-        conversation["current_question"] = question
-
+        print(f"Got question: {question}")  # Debug print
+        
         # Generate options
-        options_prompt = f'''Generate 4 concise, clinically relevant answers for: "{question}"
-Each option should be clear and mutually exclusive.
-Return each option on a new line (1-4).'''
-
+        options_prompt = f'''Generate 4 concise answers for: "{question}"
+        Clear, mutually exclusive options.
+        Return each option on a new line (1-4).'''
+        
         options_completion = groq_client.chat.completions.create(
             messages=[{"role": "system", "content": options_prompt}],
             model="llama-3.3-70b-versatile",
             temperature=0.2,
             max_tokens=100
         )
-
+        
         options = []
         for i, opt in enumerate(options_completion.choices[0].message.content.strip().split('\n')):
             if opt.strip():
                 text = opt.strip()
-                if text[0].isdigit() and text[1] in ['.', '-', ')']:
+                if text[0].isdigit() and text[1] in ['.','-',')']:
                     text = text[2:].strip()
-                options.append({"id": i + 1, "text": text})
-
+                options.append({"id": i+1, "text": text})
+        
         options.append({"id": 5, "text": "Other (please specify)"})
-
-        return jsonify({
+        
+        print(f"Generated {len(options)} options")  # Debug print
+        
+        # Store the generated question in session
+        session_data['current_followup_question'] = {
             "question": question,
-            "type": "MC",
             "options": options
-        })
-
-    except Exception as e:
-        print(f"Error generating followup: {e}")
+        }
+        
+        # Format output for chat interface
+        options_text = "\n".join([f"{opt['id']}. {opt['text']}" for opt in options])
+        output = f"{question}\n\n{options_text}"
+        
         return jsonify({
-            "error": str(e),
-            "type": "MC",
-            "options": [
-                {"id": "retry", "text": "Try again"},
-                {"id": "restart", "text": "Start over"}
-            ]
+            "status": "success",
+            "output": output,
+            "metadata": {
+                "phase": "followup",
+                "question_type": "MC",
+                "options": options
+            }
         })
-
-def generate_examination(conversation: Dict) -> Dict:
-    """Generate examination recommendations using cmdML's logic."""
+        
+    except Exception as e:
+        print(f"Error in generate_followup_question: {str(e)}")  # Debug print
+        import traceback
+        traceback.print_exc()  # This will print the full stack trace
+        return jsonify({
+            "status": "error",
+            "message": str(e)
+        })
+     
+def generate_examination(session_data):
+    """Generate examination using embeddings for context matching"""
     try:
-        initial_complaint = next((
-            resp["answer"] for resp in conversation["initial_responses"]
-            if resp["question"] == "Please describe what brings you here today"
-        ), "")
+        initial_complaint = next((resp['answer'] for resp in session_data['initial_responses'] 
+                            if resp['question'] == "Please describe what brings you here today"), "")
+        
+        # Get embeddings for complaint and key symptoms
+        context_items = [initial_complaint]
+        symptoms = []
+        for resp in session_data['followup_responses']:
+            answer = resp['answer'].lower()
+            if any(symptom in answer for symptom in 
+                  ['pain', 'fever', 'cough', 'fatigue', 'weakness', 'swelling', 
+                   'headache', 'nausea', 'dizziness', 'rash']):
+                symptoms.append(answer)
+                context_items.append(answer)
+        
+        # Get embeddings for all context items
+        embeddings = get_embedding_batch(context_items)
+        
+        # Get relevant documents using embeddings
+        index = pc.Index("final-asha")
+        relevant_matches = []
+        for emb in embeddings:
+            matches = vectorQuotesWithSource(emb, index, top_k=1)
+            if matches:
+                relevant_matches.extend(matches)
+        
+        # Sort matches by relevance score
+        relevant_matches.sort(key=lambda x: x['score'], reverse=True)
+        top_match = relevant_matches[0] if relevant_matches else None
+        
+        # Build a compact prompt with very explicit formatting instructions
+        symptoms_summary = ", ".join(symptoms[:3])
+        
+        prompt = f'''For a patient with: "{initial_complaint}"
+Key symptoms: {symptoms_summary}
+Most relevant condition (score {top_match["score"]:.2f}): {top_match["text"][:100] if top_match else "None"}
 
-        # Generate exam based on complaint
-        prompt = f'''Based on the patient's complaint: "{initial_complaint}"
-Generate ONE essential medical examination recommendation:
-1. Address reported symptoms directly
-2. Use basic medical equipment
-3. Be specific and detailed
+Generate ONE physical examination using EXACTLY this format (include the #: symbols before each finding):
 
-Format:
-Examination: [name]
-Procedure: [detailed steps in a numbered list]'''
+Digital Rectal Examination
+Careful inspection and palpation of the anal area and lower rectum
+#:Normal anal tone, no visible hemorrhoids or fissures
+#:External hemorrhoids visible with signs of bleeding
+#:Internal hemorrhoids palpable with active bleeding
+#:Anal fissure present with severe inflammation
+
+YOUR EXAMINATION MUST:
+1. Start with examination name
+2. Then procedure description
+3. Then EXACTLY 4 findings, each starting with #:
+4. Findings should range from normal to severe'''
 
         completion = groq_client.chat.completions.create(
-            messages=[{"role": "system", "content": prompt}],
+            messages=[
+                {"role": "system", "content": "You are a medical AI. Always follow the exact format provided with #: before each finding."},
+                {"role": "user", "content": prompt}
+            ],
             model="llama-3.3-70b-versatile",
             temperature=0.3,
-            max_tokens=200
+            max_tokens=150
         )
-
-        examination = completion.choices[0].message.content.strip()
-        conversation["current_exam"] = examination
-
-        # Generate findings options
-        findings_prompt = f'''For the following examination:
-{examination}
-
-Generate 4 possible clinical findings that could result from this examination.
-Include both normal and abnormal results.'''
-
-        findings_completion = groq_client.chat.completions.create(
-            messages=[{"role": "system", "content": findings_prompt}],
-            model="llama-3.3-70b-versatile",
-            temperature=0.2,
-            max_tokens=200
-        )
-
-        options = []
-        findings = findings_completion.choices[0].message.content.strip().split('\n')
-        for i, finding in enumerate(findings):
-            if finding.strip():
-                text = finding.strip()
-                if text[0].isdigit() and text[1] in ['.', '-', ')']:
-                    text = text[2:].strip()
-                options.append({"id": i + 1, "text": text})
-
+        
+        examination_text = completion.choices[0].message.content.strip()
+        print(f"Generated examination text: {examination_text}")  # Debug print
+        
+        examination, option_texts = parse_examination_text(examination_text)
+        
+        options = [{"id": i+1, "text": text} for i, text in enumerate(option_texts[:4])]
         options.append({"id": 5, "text": "Other (please specify)"})
-
-        return jsonify({
-            "examination": examination,
-            "type": "EXAM",
+        
+        session_data['current_examination'] = {
+            "text": examination_text,
             "options": options
-        })
-
-    except Exception as e:
-        print(f"Error generating examination: {e}")
+        }
+        
+        options_text = "\n".join([f"{opt['id']}. {opt['text']}" for opt in options])
+        output = f"Recommended Examination:\n{examination}\n\nFindings:\n{options_text}"
+        
         return jsonify({
-            "error": str(e),
-            "type": "MC",
-            "options": [
-                {"id": "retry", "text": "Try again"},
-                {"id": "restart", "text": "Start over"}
-            ]
+            "status": "success",
+            "output": output,
+            "metadata": {
+                "phase": "exam",
+                "question_type": "EXAM",
+                "options": options
+            }
+        })
+        
+    except Exception as e:
+        print(f"Error in generate_examination: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({
+            "status": "error",
+            "message": str(e)
         })
 
-def generate_diagnosis(conversation: Dict) -> Dict:
-    """Generate final diagnosis and treatment plan using cmdML's logic."""
+def generate_final_results(session_data):
+    """Generate and format final results"""
     try:
-        initial_complaint = next((
-            resp["answer"] for resp in conversation["initial_responses"]
-            if resp["question"] == "Please describe what brings you here today"
-        ), "")
-
-        findings = []
-        for resp in conversation["followup_responses"] + conversation["examination_responses"]:
-            if isinstance(resp.get("answer"), str):
-                findings.append(resp["answer"])
-            elif isinstance(resp.get("result"), str):
-                findings.append(resp["result"])
-
-        diagnosis_prompt = f'''Based on:
-Initial complaint: "{initial_complaint}"
-Key findings: {'; '.join(findings[-3:])}
-
-Generate a concise clinical assessment including:
-1. Top 2-3 possible diagnoses
-2. Reasoning for each
-3. Level of certainty
-
-Format as a clear medical assessment.'''
-
-        diagnosis_completion = groq_client.chat.completions.create(
-            messages=[{"role": "system", "content": diagnosis_prompt}],
-            model="llama-3.3-70b-versatile",
-            temperature=0.3,
-            max_tokens=200
+        results = get_diagnosis_and_treatment(
+            session_data['initial_responses'],
+            session_data['followup_responses'],
+            session_data['exam_responses']
         )
+        
+        # Format results for chat interface
+        output = f"""Assessment Complete
 
-        diagnosis = diagnosis_completion.choices[0].message.content.strip()
+Diagnosis:
+{results['diagnosis']}
 
-        treatment_prompt = f'''Based on the assessment:
-{diagnosis}
+Treatment Plan:
+{results['treatment']}
 
-Provide a treatment plan including:
-1. Immediate care steps
-2. Medications/supplements if needed
-3. Home care instructions
-4. Follow-up recommendations
-5. When to seek emergency care
-
-Format in clear sections.'''
-
-        treatment_completion = groq_client.chat.completions.create(
-            messages=[{"role": "system", "content": treatment_prompt}],
-            model="llama-3.3-70b-versatile",
-            temperature=0.2,
-            max_tokens=300
-        )
-
-        treatment = treatment_completion.choices[0].message.content.strip()
-
+Key References:
+{chr(10).join([f"- {cite['source']} (relevance: {cite['score']:.2f})" for cite in results['citations']])}"""
+        
         return jsonify({
-            "diagnosis": diagnosis,
-            "treatment": treatment,
-            "type": "COMPLETE"
+            "status": "success",
+            "output": output,
+            "metadata": {
+                "phase": "complete"
+            }
         })
-
+        
     except Exception as e:
-        print(f"Error generating diagnosis: {e}")
         return jsonify({
-            "error": str(e),
-            "type": "MC",
-            "options": [
-                {"id": "retry", "text": "Try again"},
-                {"id": "restart", "text": "Start over"}
-            ]
+            "status": "error",
+            "message": str(e)
         })
 
-if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=5000)
+if __name__ == '__main__':
+    app.run(debug=True)

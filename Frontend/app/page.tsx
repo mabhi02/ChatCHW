@@ -11,9 +11,9 @@ export default function HomePage() {
             <HeartPulse className="w-8 h-8 text-primary" />
           </div>
           <div className="space-y-2">
-            <CardTitle className="text-4xl font-bold">ASHA Assistant</CardTitle>
+            <CardTitle className="text-4xl font-bold">ChatCHW</CardTitle>
             <CardDescription className="text-lg">
-              AI-powered medical consultation and assistance for community health workers
+              Next.JS AI-powered medical assistance for community health workers
             </CardDescription>
           </div>
         </CardHeader>
@@ -26,7 +26,7 @@ export default function HomePage() {
       </Card>
 
       <div className="text-center text-sm text-muted-foreground">
-        <p>© 2024 ASHA Assistant. Developed for Community Health Workers.</p>
+        <p>AVM's Version</p>
       </div>
     </div>
   )
