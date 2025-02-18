@@ -846,7 +846,7 @@ def tprint(text: str, target_language: str) -> None:
     and the translated text (Hindi) directly underneath.
     """
     translated_text = translate(text, target_language)
-    print(text)
+    #print(text)
     print("\n")
     print(translated_text)
     # return translated_text or (text, translated_text) or whatever format you want
