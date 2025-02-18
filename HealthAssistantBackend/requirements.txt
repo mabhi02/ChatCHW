@@ -108,3 +108,4 @@ python-dotenv
 scikit-learn
 flask
 Flask-Cors
+elevenlabs
