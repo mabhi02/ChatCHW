@@ -114,6 +114,25 @@ def vectorQuotesWithSource(query_embedding: List[float], index, top_k: int = 5) 
         print(f"Error searching vector DB: {e}")
         return []
 
+
+def get_openai_completion(prompt: str, max_tokens: int = 150, temperature: float = 0.3) -> str:
+    """
+    Get completion from OpenAI's GPT-4 API.
+    """
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-4-0125-preview",  # Using GPT-4-mini
+            messages=[
+                {"role": "system", "content": prompt}
+            ],
+            max_tokens=max_tokens,
+            temperature=temperature
+        )
+        return response.choices[0].message.content.strip()
+    except Exception as e:
+        print(f"Error in OpenAI API call: {e}")
+        return ""
+
 def compress_medical_context(responses: List[Dict[str, Any]], 
                            embeddings: Optional[List[List[float]]] = None) -> Tuple[str, List[Dict[str, Any]]]:
     """Compress medical context by using embeddings to find key information."""
@@ -574,7 +593,6 @@ def store_examination(examination_text: str, selected_option: int):
 def get_diagnosis_and_treatment(initial_responses: List[Dict[str, Any]], 
                               followup_responses: List[Dict[str, Any]], 
                               exam_responses: List[Dict[str, Any]]) -> Dict[str, Any]:
-    """Get diagnosis and treatment with citations, using smaller chunked requests."""
     try:
         initial_complaint = next((resp['answer'] for resp in initial_responses 
                             if resp['question'] == "Please describe what brings you here today"), "")
@@ -598,14 +616,11 @@ Reference: {diagnosis_context[:200]}
 
 List top 3-4 possible diagnoses based on symptoms.'''
 
-        diagnosis_completion = groq_client.chat.completions.create(
-            messages=[{"role": "system", "content": short_diagnosis_prompt}],
-            model="llama-3.3-70b-versatile",
-            temperature=0.2,
-            max_tokens=100
+        diagnosis = get_openai_completion(
+            prompt=short_diagnosis_prompt,
+            max_tokens=100,
+            temperature=0.2
         )
-        
-        diagnosis = diagnosis_completion.choices[0].message.content.strip()
         
         # Then, get treatment recommendations in separate calls
         treatment_parts = []
@@ -620,13 +635,12 @@ List top 3-4 possible diagnoses based on symptoms.'''
             immediate_prompt = f'''Based on: {immediate_docs[0]["text"][:200]}
 Provide 2-3 immediate care steps for {initial_complaint}.'''
             
-            immediate_completion = groq_client.chat.completions.create(
-                messages=[{"role": "system", "content": immediate_prompt}],
-                model="llama-3.3-70b-versatile",
-                temperature=0.2,
-                max_tokens=100
+            immediate_care = get_openai_completion(
+                prompt=immediate_prompt,
+                max_tokens=100,
+                temperature=0.2
             )
-            treatment_parts.append("Immediate Care:\n" + immediate_completion.choices[0].message.content.strip())
+            treatment_parts.append("Immediate Care:\n" + immediate_care)
         
         # 2. Medications
         med_embedding = get_embedding_batch([initial_complaint + " medications treatment"])[0]
@@ -637,13 +651,12 @@ Provide 2-3 immediate care steps for {initial_complaint}.'''
             med_prompt = f'''Based on: {med_docs[0]["text"][:200]}
 List 2-3 key medications or supplements for {initial_complaint}.'''
             
-            med_completion = groq_client.chat.completions.create(
-                messages=[{"role": "system", "content": med_prompt}],
-                model="llama-3.3-70b-versatile",
-                temperature=0.2,
-                max_tokens=100
+            medications = get_openai_completion(
+                prompt=med_prompt,
+                max_tokens=100,
+                temperature=0.2
             )
-            treatment_parts.append("\nMedications/Supplements:\n" + med_completion.choices[0].message.content.strip())
+            treatment_parts.append("\nMedications/Supplements:\n" + medications)
         
         # 3. Home Care
         home_embedding = get_embedding_batch([initial_complaint + " home care follow up"])[0]
@@ -654,13 +667,12 @@ List 2-3 key medications or supplements for {initial_complaint}.'''
             home_prompt = f'''Based on: {home_docs[0]["text"][:200]}
 List 2-3 home care instructions for {initial_complaint}.'''
             
-            home_completion = groq_client.chat.completions.create(
-                messages=[{"role": "system", "content": home_prompt}],
-                model="llama-3.3-70b-versatile",
-                temperature=0.2,
-                max_tokens=100
+            home_care = get_openai_completion(
+                prompt=home_prompt,
+                max_tokens=100,
+                temperature=0.2
             )
-            treatment_parts.append("\nHome Care:\n" + home_completion.choices[0].message.content.strip())
+            treatment_parts.append("\nHome Care:\n" + home_care)
         
         # Combine all parts
         treatment = "\n".join(treatment_parts)
@@ -681,14 +693,13 @@ List 2-3 home care instructions for {initial_complaint}.'''
         try:
             # Fallback to simpler request if the detailed one fails
             minimal_prompt = f"List possible diagnoses for: {initial_complaint}"
-            fallback_completion = groq_client.chat.completions.create(
-                messages=[{"role": "system", "content": minimal_prompt}],
-                model="llama-3.3-70b-versatile",
-                temperature=0.2,
-                max_tokens=50
+            fallback_diagnosis = get_openai_completion(
+                prompt=minimal_prompt,
+                max_tokens=50,
+                temperature=0.2
             )
             return {
-                "diagnosis": fallback_completion.choices[0].message.content.strip(),
+                "diagnosis": fallback_diagnosis,
                 "treatment": "Please consult a healthcare provider for specific treatment recommendations.",
                 "citations": []
             }
@@ -699,14 +710,6 @@ List 2-3 home care instructions for {initial_complaint}.'''
                 "treatment": "Error generating treatment",
                 "citations": []
             }
-            
-    except Exception as e:
-        print(f"Error in diagnosis/treatment: {e}")
-        return {
-            "diagnosis": "Error generating diagnosis",
-            "treatment": "Error generating treatment",
-            "citations": []
-        }
 
 def print_global_arrays():
     """Print both global arrays with proper formatting."""
@@ -801,6 +804,11 @@ def extract_examination_and_options(examinations: List[Dict[str, Any]], exam_num
     return examVals
 
 """"""
+
+
+
+
+
 
 def main():
     try:
@@ -933,29 +941,25 @@ def main():
                 
                 Return only the question text.'''
                 
-                completion = groq_client.chat.completions.create(
-                    messages=[{"role": "system", "content": prompt}],
-                    model="llama-3.3-70b-versatile",
-                    temperature=0.3,
-                    max_tokens=150
+                question = get_openai_completion(
+                    prompt=prompt,
+                    max_tokens=150,
+                    temperature=0.3
                 )
-                
-                question = completion.choices[0].message.content.strip()
                 
                 # Generate options
                 options_prompt = f'''Generate 4 concise answers for: "{question}"
                 Clear, mutually exclusive options.
                 Return each option on a new line (1-4).'''
                 
-                options_completion = groq_client.chat.completions.create(
-                    messages=[{"role": "system", "content": options_prompt}],
-                    model="llama-3.3-70b-versatile",
-                    temperature=0.2,
-                    max_tokens=100
+                options_text = get_openai_completion(
+                    prompt=options_prompt,
+                    max_tokens=100,
+                    temperature=0.2
                 )
                 
                 options = []
-                for i, opt in enumerate(options_completion.choices[0].message.content.strip().split('\n')):
+                for i, opt in enumerate(options_text.strip().split('\n')):
                     if opt.strip():
                         text = opt.strip()
                         if text[0].isdigit() and text[1] in ['.','-',')']:
@@ -1064,14 +1068,11 @@ Recommend ONE essential examination in this format (should not be first world ex
 #:[Third possible finding]
 #:[Fourth possible finding]'''
 
-                completion = groq_client.chat.completions.create(
-                    messages=[{"role": "system", "content": prompt}],
-                    model="llama-3.3-70b-versatile",
-                    temperature=0.3,
-                    max_tokens=200
+                examination_text = get_openai_completion(
+                    prompt=prompt,
+                    max_tokens=200,
+                    temperature=0.3
                 )
-                
-                examination_text = completion.choices[0].message.content.strip()
                 
                 if judge_exam(exam_responses, examination_text):
                     break
@@ -1178,6 +1179,7 @@ Recommend ONE essential examination in this format (should not be first world ex
     except Exception as e:
         print(f"\nAn error occurred: {str(e)}")
         sys.exit(1)
-
+        
+        
 if __name__ == "__main__":
     main()
