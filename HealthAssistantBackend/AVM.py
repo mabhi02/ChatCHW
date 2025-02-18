@@ -396,7 +396,7 @@ def run_exam_assessment(initial_responses: List[Dict[str, Any]],
             f'Based on:\nInitial complaint: "{initial_complaint}"\n'
             f'Key symptoms: {", ".join(symptoms)}\n\n'
             f'Previous exams: {str([exam["examination"] for exam in exam_responses]) if exam_responses else "None"}\n\n'
-            'Recommend ONE essential examination in this format (avoid high–tech exams such as MRI, CT, etc.):\n'
+            'Recommend ONE essential examination in this format for third world countries(avoid high–tech exams such as MRI, CT, etc.):\n'
             '[Examination name and procedure]\n'
             '#:[First possible finding]\n'
             '#:[Second possible finding]\n'
