@@ -415,5 +415,8 @@ Key References:
             "message": str(e)
         })
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    # Get the port from Render's environment variable
+    port = int(os.environ.get("PORT", 10000))
+    # Bind to 0.0.0.0 to allow external access
+    app.run(host="0.0.0.0", port=port)
