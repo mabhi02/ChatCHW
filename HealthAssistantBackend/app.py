@@ -24,7 +24,8 @@ from chad import (
 )
 
 app = Flask(__name__)
-CORS(app)
+frontend_url = os.environ.get('FRONTEND_URL')
+CORS(app, origins=[frontend_url])
 
 pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
 
