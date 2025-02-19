@@ -9,11 +9,11 @@ export default function HomePage() {
         <CardHeader className="text-center space-y-4">
           <div className="mx-auto bg-primary/10 w-fit p-3 rounded-full">
             <HeartPulse className="w-8 h-8 text-primary" />
-          </div>
+          </div>  
           <div className="space-y-2">
             <CardTitle className="text-4xl font-bold">ChatCHW</CardTitle>
             <CardDescription className="text-lg">
-              Next.JS AI-powered medical assistance for community health workers
+              AI-powered medical assistance for Community Health Workers
             </CardDescription>
           </div>
         </CardHeader>
@@ -26,7 +26,7 @@ export default function HomePage() {
       </Card>
 
       <div className="text-center text-sm text-muted-foreground">
-        <p>AVM's Version</p>
+        <p>AVM</p>
       </div>
     </div>
   )

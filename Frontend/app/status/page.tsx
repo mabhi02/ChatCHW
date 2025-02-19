@@ -1,34 +1,72 @@
-import { CronMonitor } from "@/components/cron-monitor"
-import { LogViewer } from "@/components/log-viewer"
+// app/status/page.tsx
+'use client'
+
+import { useEffect, useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { ActivitySquare } from "lucide-react"
-import prisma from "@/lib/prisma"
+import { ActivitySquare, Users, Clock, MessageSquare, Languages, Volume2 } from "lucide-react"
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell
+} from 'recharts'
 
-export const dynamic = "force-dynamic"
-export const revalidate = 60 // Revalidate every minute
-
-async function getConsultations() {
-  try {
-    const consultations = await prisma.consultation.findMany({
-      orderBy: {
-        createdAt: 'desc'
-      },
-      take: 10, // Last 10 consultations
-    });
-    return consultations;
-  } catch (error) {
-    console.error('Failed to fetch consultations:', error);
-    return [];
+interface ConsultationData {
+  id: string
+  createdAt: Date
+  status: string
+  language: string
+  initialResponses: any
+  followupResponses: any[]
+  analytics?: {
+    totalDuration: number
+    messageCount: number
+    languageChanges: number
+    voiceInteractions: number
+    completionStatus: string
   }
 }
 
-export default async function StatusPage() {
-  const consultations = await getConsultations();
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+
+export default function StatusPage() {
+  const [consultations, setConsultations] = useState<ConsultationData[]>([]);
+  const [analytics, setAnalytics] = useState({
+    totalConsultations: 0,
+    activeConsultations: 0,
+    averageDuration: 0,
+    completionRate: 0,
+    languageDistribution: {} as Record<string, number>,
+    consultationTrend: [] as { date: string; count: number }[]
+  });
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch('/api/consultations');
+      const data = await response.json();
+      setConsultations(data.consultations);
+      setAnalytics(data.analytics);
+    } catch (error) {
+      console.error('Failed to fetch data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+    const interval = setInterval(fetchData, 10000); // Refresh every 10 seconds
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <div className="container py-8 max-w-5xl mx-auto space-y-8">
+    <div className="container py-8 max-w-7xl mx-auto space-y-8">
       <Card className="border-none shadow-none bg-transparent">
         <CardHeader className="text-center space-y-4">
           <div className="mx-auto bg-primary/10 w-fit p-3 rounded-full">
@@ -37,16 +75,121 @@ export default async function StatusPage() {
           <div className="space-y-2">
             <CardTitle className="text-4xl font-bold">System Status</CardTitle>
             <CardDescription className="text-lg">
-              Monitor system health and view application logs
+              Real-time monitoring and analytics
             </CardDescription>
           </div>
         </CardHeader>
       </Card>
 
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <Card>
+          <CardContent className="pt-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium">Total Consultations</p>
+                <p className="text-2xl font-bold">{analytics.totalConsultations}</p>
+              </div>
+              <Users className="w-8 h-8 text-primary/60" />
+            </div>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardContent className="pt-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium">Active Sessions</p>
+                <p className="text-2xl font-bold">{analytics.activeConsultations}</p>
+              </div>
+              <Clock className="w-8 h-8 text-primary/60" />
+            </div>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardContent className="pt-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium">Avg. Duration</p>
+                <p className="text-2xl font-bold">{Math.round(analytics.averageDuration / 60)}m</p>
+              </div>
+              <MessageSquare className="w-8 h-8 text-primary/60" />
+            </div>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardContent className="pt-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium">Completion Rate</p>
+                <p className="text-2xl font-bold">{Math.round(analytics.completionRate * 100)}%</p>
+              </div>
+              <Languages className="w-8 h-8 text-primary/60" />
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <Card className="border shadow-md">
+          <CardHeader>
+            <CardTitle>Consultation Trend</CardTitle>
+            <CardDescription>Number of consultations over time</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="h-[300px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={analytics.consultationTrend}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="date" />
+                  <YAxis />
+                  <Tooltip />
+                  <Line type="monotone" dataKey="count" stroke="#8884d8" />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="border shadow-md">
+          <CardHeader>
+            <CardTitle>Language Distribution</CardTitle>
+            <CardDescription>Usage across different languages</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="h-[300px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={Object.entries(analytics.languageDistribution).map(([name, value]) => ({
+                      name,
+                      value
+                    }))}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={60}
+                    outerRadius={80}
+                    fill="#8884d8"
+                    paddingAngle={5}
+                    dataKey="value"
+                  >
+                    {Object.entries(analytics.languageDistribution).map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
       <Card className="border shadow-md">
         <CardHeader>
           <CardTitle>Recent Consultations</CardTitle>
-          <CardDescription>View recent patient consultation history</CardDescription>
+          <CardDescription>View recent consultation history and analytics</CardDescription>
         </CardHeader>
         <CardContent>
           <ScrollArea className="h-[400px] pr-4">
@@ -57,7 +200,7 @@ export default async function StatusPage() {
                     <div className="flex justify-between items-start">
                       <div>
                         <div className="font-medium">
-                          Consultation ID: {consultation.id}
+                          ID: {consultation.id}
                         </div>
                         <div className="text-sm text-muted-foreground">
                           {new Date(consultation.createdAt).toLocaleString()}
@@ -74,10 +217,33 @@ export default async function StatusPage() {
                       </div>
                     </div>
 
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-2">
+                      <div className="text-sm">
+                        <span className="text-muted-foreground">Messages:</span>
+                        <br />
+                        {consultation.analytics?.messageCount || 0}
+                      </div>
+                      <div className="text-sm">
+                        <span className="text-muted-foreground">Duration:</span>
+                        <br />
+                        {Math.round((consultation.analytics?.totalDuration || 0) / 60)}m
+                      </div>
+                      <div className="text-sm">
+                        <span className="text-muted-foreground">Language Changes:</span>
+                        <br />
+                        {consultation.analytics?.languageChanges || 0}
+                      </div>
+                      <div className="text-sm">
+                        <span className="text-muted-foreground">Voice Interactions:</span>
+                        <br />
+                        {consultation.analytics?.voiceInteractions || 0}
+                      </div>
+                    </div>
+
                     <Alert>
                       <AlertDescription>
-                        <div className="font-medium mb-2">Patient Information</div>
-                        {Object.entries(consultation.initialResponses).map(([key, value]) => (
+                        <div className="font-medium mb-2">Initial Responses</div>
+                        {Object.entries(consultation.initialResponses).map(([key, value]: [string, any]) => (
                           <div key={key} className="text-sm">
                             {value.question}: {
                               Array.isArray(value.answer) 
@@ -93,7 +259,7 @@ export default async function StatusPage() {
                       <div className="mt-4">
                         <div className="font-medium mb-2">Follow-up Responses</div>
                         <div className="space-y-2">
-                          {consultation.followupResponses.map((response, index) => (
+                          {consultation.followupResponses.map((response: any, index: number) => (
                             <div key={index} className="text-sm">
                               Q: {response.question}
                               <br />
@@ -108,26 +274,6 @@ export default async function StatusPage() {
               ))}
             </div>
           </ScrollArea>
-        </CardContent>
-      </Card>
-
-      <Card className="border shadow-md">
-        <CardHeader>
-          <CardTitle>Cron Job Status</CardTitle>
-          <CardDescription>Monitor the health of scheduled tasks</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <CronMonitor />
-        </CardContent>
-      </Card>
-
-      <Card className="border shadow-md">
-        <CardHeader>
-          <CardTitle>System Logs</CardTitle>
-          <CardDescription>View detailed application logs</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <LogViewer />
         </CardContent>
       </Card>
     </div>
