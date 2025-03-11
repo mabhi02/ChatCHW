@@ -7,7 +7,7 @@ gunicorn==21.2.0
 # API Clients
 groq==0.4.1
 openai==0.28.0
-pinecone-client==4.0.0
+pinecone-client==2.2.2
 
 # Data processing
 numpy==1.26.4
