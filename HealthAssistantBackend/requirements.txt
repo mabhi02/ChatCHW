@@ -5,6 +5,7 @@ python-dotenv==1.0.1
 gunicorn==21.2.0
 
 # API Clients
+groq
 openai==0.28.0
 pinecone==4.0.0
 
