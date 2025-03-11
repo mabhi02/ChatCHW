@@ -12,13 +12,13 @@ def cleanup_torch():
         # Directories to remove from torch
         dirs_to_remove = [
             'test',
-            'testing',
+            # 'testing',  # Preserved for PyTorch functionality
             'optim/test',
             'nn/test',
             'distributions/test',
-            'cuda',  # Remove CUDA support as we're using CPU only
+            # 'cuda',  # Preserved for PyTorch functionality
             'utils/cpp_extension.py',  # Remove C++ extension utilities
-            'distributed',  # Remove distributed training support if not needed
+            # 'distributed',  # Preserved for PyTorch functionality
         ]
         
         for dir_name in dirs_to_remove:
@@ -120,8 +120,6 @@ def cleanup_pyc_files():
         print(f"Removed {count} .pyc files")
     except Exception as e:
         print(f"Error in cleanup_pyc_files: {e}")
-
-
 
 if __name__ == '__main__':
     print("Starting cleanup...")
