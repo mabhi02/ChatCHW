@@ -1,14 +1,10 @@
-from typing import Dict, List, Any, Optional, Tuple
+from typing import Dict, List, Any, Optional
 import sys
 import os
 from dotenv import load_dotenv
 from groq import Groq
 from pinecone import Pinecone
 import openai
-import torch
-import torch.nn as nn
-import json
-
 
 # Load environment variables and initialize clients
 load_dotenv()
@@ -16,7 +12,7 @@ groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-# Initial screening questions
+# Keep existing questions_init list...
 questions_init = [
     {
         "question": "What is the patient's sex?",
@@ -67,59 +63,8 @@ questions_init = [
     }
 ]
 
-def get_embedding_batch(texts: List[str]) -> List[List[float]]:
-    """Get embeddings for a batch of texts using OpenAI's API."""
-    try:
-        response = openai.Embedding.create(
-            input=texts,
-            engine="text-embedding-3-small"
-        )
-        return [item['embedding'] for item in response['data']]
-    except Exception as e:
-        print(f"Error getting embeddings: {e}")
-        return [[] for _ in texts]
-
-def vectorQuotesWithSource(query_embedding: List[float], index, top_k: int = 5) -> List[Dict[str, Any]]:
-    """Search vector DB and return relevant matches with source information."""
-    try:
-        results = index.query(
-            vector=query_embedding,
-            top_k=top_k,
-            include_metadata=True
-        )
-        return [{
-            "text": match['metadata']['text'],
-            "id": match['id'],
-            "source": match['metadata'].get('source', 'Unknown'),
-            "score": match['score']
-        } for match in results['matches']]
-    except Exception as e:
-        print(f"Error searching vector DB: {e}")
-        return []
-
-def compress_medical_context(responses: List[Dict[str, Any]], 
-                           embeddings: Optional[List[List[float]]] = None) -> Tuple[str, List[Dict[str, Any]]]:
-    """Compress medical context by using embeddings to find key information."""
-    text_chunks = []
-    for resp in responses:
-        if isinstance(resp.get('answer'), str):
-            text_chunks.append(f"{resp['question']}: {resp['answer']}")
-        elif isinstance(resp.get('answer'), list):
-            text_chunks.append(f"{resp['question']}: {', '.join(resp['answer'])}")
-    
-    if not embeddings:
-        embeddings = get_embedding_batch(text_chunks)
-    
-    # Use embeddings to find most relevant chunks
-    compressed_chunks = []
-    seen_content = set()
-    
-    for chunk, embedding in zip(text_chunks, embeddings):
-        if chunk not in seen_content:
-            compressed_chunks.append(chunk)
-            seen_content.add(chunk)
-    
-    return "\n".join(compressed_chunks[:5]), []
+# Initialize array to store exam names and procedures
+runExamNames = []
 
 def print_options(options: List[Dict[str, Any]]) -> None:
     """Print formatted options for multiple choice questions."""
@@ -218,276 +163,99 @@ def get_initial_responses() -> List[Dict[str, Any]]:
     
     return responses
 
-
-def generate_question_with_options(input_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-    """
-    Generate a follow-up question with options based on patient input.
-    Uses predefined templates to avoid API rate limits.
-    """
+def get_embedding(text: str) -> List[float]:
+    """Get embedding for text using OpenAI's API."""
     try:
-        # Get initial complaint
-        initial_complaint = next((resp['answer'] for resp in input_data 
-                            if resp['question'] == "Please describe what brings you here today"), "").lower()
-
-        # Common question patterns based on symptoms
-        pain_questions = [
-            {
-                "question": "How long have you been experiencing this pain?",
-                "options": [
-                    {"id": 1, "text": "Less than 24 hours"},
-                    {"id": 2, "text": "1-7 days"},
-                    {"id": 3, "text": "1-4 weeks"},
-                    {"id": 4, "text": "More than a month"},
-                    {"id": 5, "text": "Other (please specify)"}
-                ]
-            },
-            {
-                "question": "How would you describe the severity of the pain?",
-                "options": [
-                    {"id": 1, "text": "Mild - noticeable but not interfering with activities"},
-                    {"id": 2, "text": "Moderate - somewhat interfering with activities"},
-                    {"id": 3, "text": "Severe - significantly interfering with activities"},
-                    {"id": 4, "text": "Very severe - unable to perform activities"},
-                    {"id": 5, "text": "Other (please specify)"}
-                ]
-            },
-            {
-                "question": "What makes the pain worse?",
-                "options": [
-                    {"id": 1, "text": "Movement or physical activity"},
-                    {"id": 2, "text": "Pressure or touch"},
-                    {"id": 3, "text": "Specific positions"},
-                    {"id": 4, "text": "Nothing specific"},
-                    {"id": 5, "text": "Other (please specify)"}
-                ]
-            }
-        ]
-
-        general_questions = [
-            {
-                "question": "When did your symptoms first begin?",
-                "options": [
-                    {"id": 1, "text": "Within the last 24 hours"},
-                    {"id": 2, "text": "In the past week"},
-                    {"id": 3, "text": "Several weeks ago"},
-                    {"id": 4, "text": "More than a month ago"},
-                    {"id": 5, "text": "Other (please specify)"}
-                ]
-            },
-            {
-                "question": "How often do you experience these symptoms?",
-                "options": [
-                    {"id": 1, "text": "Constantly"},
-                    {"id": 2, "text": "Several times a day"},
-                    {"id": 3, "text": "A few times a week"},
-                    {"id": 4, "text": "Occasionally"},
-                    {"id": 5, "text": "Other (please specify)"}
-                ]
-            },
-            {
-                "question": "How does this affect your daily activities?",
-                "options": [
-                    {"id": 1, "text": "Not at all"},
-                    {"id": 2, "text": "Slightly limiting"},
-                    {"id": 3, "text": "Moderately limiting"},
-                    {"id": 4, "text": "Severely limiting"},
-                    {"id": 5, "text": "Other (please specify)"}
-                ]
-            }
-        ]
-
-        # Determine which question set to use
-        if "pain" in initial_complaint:
-            questions = pain_questions
-        else:
-            questions = general_questions
-
-        # Get previous questions
-        asked_questions = set(resp.get('question', '') for resp in input_data if resp.get('question'))
-
-        # Find first unused question
-        for question_data in questions:
-            if question_data['question'] not in asked_questions:
-                return {
-                    "question": question_data['question'],
-                    "options": question_data['options'],
-                    "type": "MC"
-                }
-
-        # If all questions used, return a general follow-up
-        return {
-            "question": "Are you experiencing any other symptoms?",
-            "options": [
-                {"id": 1, "text": "No other symptoms"},
-                {"id": 2, "text": "Yes, mild additional symptoms"},
-                {"id": 3, "text": "Yes, moderate additional symptoms"},
-                {"id": 4, "text": "Yes, severe additional symptoms"},
-                {"id": 5, "text": "Other (please specify)"}
-            ],
-            "type": "MC"
-        }
-
+        response = openai.Embedding.create(
+            input=text,
+            engine="text-embedding-3-small"
+        )
+        return response['data'][0]['embedding']
     except Exception as e:
-        print(f"Error generating question: {e}")
-        # Return a fallback question if there's an error
-        return {
-            "question": "How long have you been experiencing these symptoms?",
-            "options": [
-                {"id": 1, "text": "Less than 24 hours"},
-                {"id": 2, "text": "1-7 days"},
-                {"id": 3, "text": "1-4 weeks"},
-                {"id": 4, "text": "More than a month"},
-                {"id": 5, "text": "Other (please specify)"}
-            ],
-            "type": "MC"
-        }
+        print(f"Error getting embedding: {e}")
+        return []
 
-def process_with_matrix(current_text: str, previous_responses: List[Dict], 
-                       context_text: str = "") -> Dict[str, Any]:
-    """Process input through MATRIX system with enhanced error handling."""
+def vectorQuotes(query_embedding: List[float], index, top_k: int = 5) -> List[Dict[str, Any]]:
+    """Search vector DB and return relevant matches."""
     try:
-        patterns = pattern_analyzer.analyze_patterns(current_text)
-        print(f"Pattern Analysis - Optimist: {patterns['optimist_confidence']:.2f}, "
-              f"Pessimist: {patterns['pessimist_confidence']:.2f}")
-        
-        state = matrix.state_encoder.encode_state(
-            [],
-            previous_responses,
-            current_text
+        results = index.query(
+            vector=query_embedding,
+            top_k=top_k,
+            include_metadata=True
         )
-        
-        if len(state.shape) == 2:
-            state = state.unsqueeze(0)
-        if len(state.shape) == 4:
-            state = state.squeeze(1)
-            
-        optimist_view = matrix.optimist.evaluate(
-            state,
-            context_text if context_text else current_text
-        )
-        pessimist_view = matrix.pessimist.evaluate(
-            state,
-            context_text if context_text else current_text
-        )
-        
-        matrix_output = matrix.process_state(
-            [], 
-            previous_responses,
-            current_text
-        )
-        
-        return matrix_output
-        
+        return [{"text": match['metadata']['text'], "id": match['id']} for match in results['matches']]
     except Exception as e:
-        print(f"Warning: MATRIX processing error: {e}")
-        return {
-            "confidence": 0.5,
-            "selected_agent": "optimist",
-            "weights": {"optimist": 0.5, "pessimist": 0.5}
-        }
+        print(f"Error searching vector DB: {e}")
+        return []
 
 def judge(followup_responses: List[Dict[str, Any]], current_question: str) -> bool:
-    """Judge if the current question is too similar using MATRIX."""
-    if len(followup_responses) >= MATRIXConfig.MAX_QUESTIONS:
-        print("\nReached maximum number of questions.")
-        return True
-        
+    """Judge if the current question is too similar to previous questions."""
     if not followup_responses:
         return False
         
     try:
-        matrix_output = process_with_matrix(
-            current_question, 
-            followup_responses
-        )
-        
-        print(f"\nQuestion Assessment:")
-        print(f"- Confidence: {matrix_output['confidence']:.2f}")
-        print(f"- Selected Agent: {matrix_output['selected_agent']}")
-        print(f"- Optimist Weight: {matrix_output['weights']['optimist']:.2f}")
-        print(f"- Pessimist Weight: {matrix_output['weights']['pessimist']:.2f}")
-        
-        should_stop = (
-            matrix_output["confidence"] > MATRIXConfig.SIMILARITY_THRESHOLD or
-            len(followup_responses) >= MATRIXConfig.MAX_FOLLOWUPS or
-            matrix_output["weights"]["optimist"] > 0.7
-        )
-        
-        if should_stop:
-            print("\nMATRIX suggests sufficient information gathered.")
+        current_embedding = get_embedding(current_question)
+        if not current_embedding:
+            return False
             
-        return should_stop
+        total_similarity = 0
+        for resp in followup_responses:
+            prev_question = resp['question']
+            prev_embedding = get_embedding(prev_question)
+            if prev_embedding:
+                similarity = sum(a * b for a, b in zip(current_embedding, prev_embedding))
+                magnitude1 = sum(a * a for a in current_embedding) ** 0.5
+                magnitude2 = sum(b * b for b in prev_embedding) ** 0.5
+                if magnitude1 * magnitude2 != 0:
+                    similarity = similarity / (magnitude1 * magnitude2)
+                    total_similarity += similarity
+                    print(f"Similarity score with '{prev_question}': {similarity:.3f}")
+                    
+        print(f"Total similarity score: {total_similarity:.3f}")
+        return total_similarity > 2.8
         
     except Exception as e:
-        print(f"Warning: Similarity check falling back to basic method: {e}")
-        return len(followup_responses) >= 5
+        print(f"Error in judge function: {e}")
+        return False
 
 def judge_exam(previous_exams: List[Dict[str, Any]], current_exam: str) -> bool:
-    """Judge examination similarity with improved duplicate detection."""
+    """
+    Judge if the current examination is too similar to previous ones or if enough exams have been conducted.
+    Returns True if should stop asking for exams.
+    """
     if not previous_exams:
         return False
         
     try:
-        if len(previous_exams) >= MATRIXConfig.MAX_EXAMS:
-            print("\nReached maximum number of examinations.")
-            return True
+        # Get embedding for current exam
+        current_embedding = get_embedding(current_exam)
+        if not current_embedding:
+            return False
             
-        exam_lines = current_exam.split('\n')
-        current_exam_name = ""
-        current_procedure = ""
-        
-        for line in exam_lines:
-            if line.startswith("Examination:"):
-                current_exam_name = line.split('Examination:')[1].strip().lower()
-            elif line.startswith("Procedure:"):
-                current_procedure = line.split('Procedure:')[1].strip().lower()
-        
+        # Calculate similarity with all previous exams
+        total_similarity = 0
         for exam in previous_exams:
-            prev_exam_lines = exam['examination'].split('\n')
-            prev_name = ""
-            prev_procedure = ""
-            
-            for line in prev_exam_lines:
-                if line.startswith("Examination:"):
-                    prev_name = line.split('Examination:')[1].strip().lower()
-                elif line.startswith("Procedure:"):
-                    prev_procedure = line.split('Procedure:')[1].strip().lower()
-            
-            if (prev_name in current_exam_name or current_exam_name in prev_name):
-                print(f"\nSimilar examination '{current_exam_name}' has already been performed.")
-                return True
-                
-            if len(prev_procedure) > 0 and len(current_procedure) > 0:
-                words1 = set(prev_procedure.split())
-                words2 = set(current_procedure.split())
-                similarity = len(words1.intersection(words2)) / len(words1.union(words2))
-                
-                if similarity > 0.7:
-                    print(f"\nVery similar procedure has already been performed.")
-                    return True
+            prev_exam = exam['examination']
+            prev_embedding = get_embedding(prev_exam)
+            if prev_embedding:
+                similarity = sum(a * b for a, b in zip(current_embedding, prev_embedding))
+                magnitude1 = sum(a * a for a in current_embedding) ** 0.5
+                magnitude2 = sum(b * b for b in prev_embedding) ** 0.5
+                if magnitude1 * magnitude2 != 0:
+                    similarity = similarity / (magnitude1 * magnitude2)
+                    total_similarity += similarity
+                    print(f"Similarity score with '{prev_exam}': {similarity:.3f}")
         
-        matrix_output = process_with_matrix(
-            current_exam, 
-            previous_exams
-        )
+        print(f"Total similarity score: {total_similarity:.3f}")
+        # More stringent similarity threshold for exams
+        return total_similarity > 1.5 or len(previous_exams) >= 5
         
-        should_end = (
-            matrix_output["confidence"] > MATRIXConfig.EXAM_SIMILARITY_THRESHOLD or
-            len(previous_exams) >= MATRIXConfig.MAX_EXAMS or
-            matrix_output["weights"]["optimist"] > 0.8
-        )
-        
-        if should_end:
-            print("\nSufficient examinations completed based on comprehensive analysis.")
-            
-        return should_end
-                
     except Exception as e:
-        print(f"Warning: Exam similarity check falling back to basic method: {e}")
-        return len(previous_exams) >= MATRIXConfig.MAX_EXAMS
+        print(f"Error in judge_exam function: {e}")
+        return False
 
 def get_followup_questions(initial_responses: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    """Generate and ask follow-up questions with enhanced processing and citations."""
+    """Generate and ask follow-up questions based on initial responses."""
     followup_responses = []
     initial_complaint = next((resp['answer'] for resp in initial_responses 
                             if resp['question'] == "Please describe what brings you here today"), "")
@@ -495,7 +263,6 @@ def get_followup_questions(initial_responses: List[Dict[str, Any]]) -> List[Dict
     print("\nBased on your responses, I'll ask some follow-up questions.")
     
     index = pc.Index("final-asha")
-    question_citations = []
     
     while True:
         try:
@@ -505,15 +272,13 @@ def get_followup_questions(initial_responses: List[Dict[str, Any]]) -> List[Dict
                 for resp in followup_responses:
                     context += f"Q: {resp['question']}\nA: {resp['answer']}\n"
             
-            embedding = get_embedding_batch([context])[0]
-            relevant_docs = vectorQuotesWithSource(embedding, index)
+            embedding = get_embedding(context)
+            relevant_docs = vectorQuotes(embedding, index)
             
             if not relevant_docs:
                 print("Error: Could not generate relevant question.")
                 continue
                 
-            # Track citations
-            question_citations.extend(relevant_docs)
             combined_context = " ".join([doc["text"] for doc in relevant_docs[:2]])
             
             previous_questions = "\n".join([f"- {resp['question']}" for resp in followup_responses])
@@ -521,9 +286,6 @@ def get_followup_questions(initial_responses: List[Dict[str, Any]]) -> List[Dict
             
             Previous questions asked:
             {previous_questions if followup_responses else "No previous questions yet"}
-            
-            Relevant medical context:
-            {combined_context}
             
             Generate ONE focused, relevant follow-up question that is different from the previous questions.
             Follow standard medical assessment order:
@@ -536,28 +298,28 @@ def get_followup_questions(initial_responses: List[Dict[str, Any]]) -> List[Dict
             
             completion = groq_client.chat.completions.create(
                 messages=[{"role": "system", "content": prompt}],
-                model="llama-3.3-70b-versatile",
-                temperature=0.3,
-                max_tokens=150  # Limit response size
+                model="mixtral-8x7b-32768",
+                temperature=0.3
             )
             
             question = completion.choices[0].message.content.strip()
             
-            # Use MATRIX to judge similarity
             if judge(followup_responses, question):
                 print("\nSufficient information gathered. Moving to next phase...")
                 break
             
-            # Generate shorter options prompt
-            options_prompt = f'''Generate 4 concise answers for: "{question}"
-            Clear, mutually exclusive options.
-            Return each option on a new line (1-4).'''
+            options_prompt = f'''Generate 4 possible answers for: "{question}"
+            Requirements:
+            - Clear, concise options
+            - Mutually exclusive
+            - Cover likely scenarios
+            - Include severity levels if applicable
+            Return each option on a new line starting with a number (1-4).'''
             
             options_completion = groq_client.chat.completions.create(
                 messages=[{"role": "system", "content": options_prompt}],
-                model="llama-3.3-70b-versatile",
-                temperature=0.2,
-                max_tokens=100  # Limit response size
+                model="mixtral-8x7b-32768",
+                temperature=0.2
             )
             
             options = []
@@ -582,16 +344,14 @@ def get_followup_questions(initial_responses: List[Dict[str, Any]]) -> List[Dict
                         followup_responses.append({
                             "question": question,
                             "answer": custom_answer,
-                            "type": "MC",
-                            "citations": question_citations[-5:]  # Keep last 5 citations
+                            "type": "MC"
                         })
                     else:
                         selected_text = next(opt['text'] for opt in options if str(opt['id']) == answer)
                         followup_responses.append({
                             "question": question,
                             "answer": selected_text,
-                            "type": "MC",
-                            "citations": question_citations[-5:]
+                            "type": "MC"
                         })
                     break
                 print("Invalid input, please try again.")
@@ -602,86 +362,103 @@ def get_followup_questions(initial_responses: List[Dict[str, Any]]) -> List[Dict
             
     return followup_responses
 
-def get_followup_exams(initial_responses: List[Dict[str, Any]], 
-                      followup_responses: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    """Generate and recommend examinations with citations."""
+def get_followup_exams(initial_responses: List[Dict[str, Any]], followup_responses: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """Generate and recommend basic medical examinations based on responses."""
     exam_responses = []
     initial_complaint = next((resp['answer'] for resp in initial_responses 
                             if resp['question'] == "Please describe what brings you here today"), "")
     
-    print("\nBased on your responses, I'll recommend appropriate examinations.")
+    print("\nBased on your responses, I'll recommend some basic examinations.")
     
     index = pc.Index("final-asha")
-    exam_citations = []
-    
-    # Track symptoms
-    symptoms = set()
-    for resp in followup_responses:
-        answer = resp['answer'].lower()
-        for symptom in ['pain', 'fever', 'cough', 'fatigue', 'weakness', 'swelling', 
-                       'headache', 'nausea', 'dizziness', 'rash']:
-            if symptom in answer:
-                symptoms.add(symptom)
     
     while True:
         try:
-            # Compress context for examination recommendations
-            context = f"""Initial complaint: {initial_complaint}
-Key symptoms: {', '.join(symptoms)}
-Previous findings: {str([exam['examination'] for exam in exam_responses]) if exam_responses else "None"}"""
-
-            embedding = get_embedding_batch([context])[0]
-            relevant_docs = vectorQuotesWithSource(embedding, index)
+            # Build context including initial complaint and all previous responses
+            context = f"Initial complaint: {initial_complaint}\n"
+            context += "Previous responses:\n"
+            for resp in followup_responses:
+                context += f"Q: {resp['question']}\nA: {resp['answer']}\n"
+            
+            if exam_responses:
+                context += "Previous examinations:\n"
+                for exam in exam_responses:
+                    context += f"Exam: {exam['examination']}\nResult: {exam['result']}\n"
+            
+            # Add context about previously run exams
+            if runExamNames:
+                context += "\nPreviously conducted exams:\n"
+                for exam in runExamNames:
+                    context += f"Exam: {exam['name']}\nProcedure: {exam['procedure']}\n"
+            
+            embedding = get_embedding(context)
+            relevant_docs = vectorQuotes(embedding, index)
             
             if not relevant_docs:
                 print("Error: Could not generate relevant examination.")
                 continue
             
-            # Track citations
-            exam_citations.extend(relevant_docs)
             combined_context = " ".join([doc["text"] for doc in relevant_docs[:2]])
             
-            # Shorter examination prompt
-            prompt = f'''Based on:
-Initial complaint: "{initial_complaint}"
-Key symptoms: {', '.join(symptoms)}
-
-Previous exams: {str([exam['examination'] for exam in exam_responses]) if exam_responses else "None"}
-
-Recommend ONE essential examination:
-1. Addresses reported symptoms
-2. Uses basic equipment
-3. Not yet performed
-
-Format:
-Examination: [name]
-Procedure: [steps]'''
-
+            previous_exams = "\n".join([f"- {exam['examination']}" for exam in exam_responses])
+            prompt = f'''Based on the patient's initial complaint: "{initial_complaint}" and previous examinations:
+            {previous_exams if exam_responses else "No examinations yet"}
+            
+            Already conducted exams:
+            {str(runExamNames) if runExamNames else "No exams conducted yet"}
+            
+            Consider this is a resource-constrained setting in a developing country.
+            Recommend ONE basic examination that:
+            1. Requires minimal equipment
+            2. Can be performed in a basic clinic
+            3. Is essential for diagnosis
+            4. Does not require advanced technology
+            5. Has not been conducted yet (check already conducted exams)
+            
+            Return in this exact format:
+            Examination: [name]
+            Procedure: [detailed step by step procedure]'''
+            
             completion = groq_client.chat.completions.create(
                 messages=[{"role": "system", "content": prompt}],
-                model="llama-3.3-70b-versatile",
-                temperature=0.3,
-                max_tokens=200
+                model="mixtral-8x7b-32768",
+                temperature=0.3
             )
             
             examination = completion.choices[0].message.content.strip()
             
-            if judge_exam(exam_responses, examination):
-                break
+            # Get similarity score
+            should_end = judge_exam(exam_responses, examination)
+            
+            
+            # Parse examination name and procedure
+            try:
+                exam_lines = examination.split('\n')
+                exam_name = exam_lines[0].split('Examination:')[1].strip()
+                exam_procedure = '\n'.join(exam_lines[1:]).split('Procedure:')[1].strip()
                 
-            # Shorter findings prompt
-            results_prompt = f'''For examination:
-"{examination}"
-
-Generate 4 possible findings.
-Include normal and abnormal results.
-One per line (1-4).'''
+                # Store in runExamNames
+                runExamNames.append({
+                    "name": exam_name,
+                    "procedure": exam_procedure
+                })
+            except:
+                print("Error parsing examination format")
+                continue
+            
+            # Generate possible findings/results
+            results_prompt = f'''Generate 4 possible findings for the examination: "{exam_name}"
+            Requirements:
+            - Include normal finding
+            - Include common abnormal findings
+            - Clear, observable results
+            - Avoid technical jargon
+            Return each finding on a new line starting with a number (1-4).'''
             
             results_completion = groq_client.chat.completions.create(
                 messages=[{"role": "system", "content": results_prompt}],
-                model="llama-3.3-70b-versatile",
-                temperature=0.2,
-                max_tokens=100
+                model="mixtral-8x7b-32768",
+                temperature=0.2
             )
             
             options = []
@@ -694,9 +471,9 @@ One per line (1-4).'''
             
             options.append({"id": 5, "text": "Other (please specify)"})
             
-            print(f"\nRecommended Examination:")
-            print(examination)
-            print("\nSelect the finding:")
+            print(f"\nRecommended Examination:\nExamination: {exam_name}")
+            print(f"Procedure: {exam_procedure}")
+            print("\nPlease select the finding/result:")
             print_options(options)
             
             while True:
@@ -708,17 +485,19 @@ One per line (1-4).'''
                         exam_responses.append({
                             "examination": examination,
                             "result": custom_result,
-                            "type": "EXAM",
-                            "citations": exam_citations[-5:]
+                            "type": "EXAM"
                         })
                     else:
                         selected_text = next(opt['text'] for opt in options if str(opt['id']) == answer)
                         exam_responses.append({
                             "examination": examination,
                             "result": selected_text,
-                            "type": "EXAM",
-                            "citations": exam_citations[-5:]
+                            "type": "EXAM"
                         })
+                    # If this was the last exam (similarity threshold reached), break the outer loop
+                    if should_end:
+                        print("\nSufficient examinations completed. Moving to next phase...")
+                        return exam_responses
                     break
                 print("Invalid input, please try again.")
                 
@@ -728,204 +507,121 @@ One per line (1-4).'''
             
     return exam_responses
 
-def get_diagnosis_and_treatment(initial_responses: List[Dict[str, Any]], 
-                              followup_responses: List[Dict[str, Any]], 
-                              exam_responses: List[Dict[str, Any]]) -> Dict[str, Any]:
-    """Get diagnosis and treatment with citations, using smaller chunked requests."""
-    try:
-        initial_complaint = next((resp['answer'] for resp in initial_responses 
-                            if resp['question'] == "Please describe what brings you here today"), "")
-        
-        # Get only the most relevant findings for context
-        key_findings = []
-        for resp in followup_responses + exam_responses:
-            if isinstance(resp.get('answer'), str):
-                key_findings.append(f"{resp['answer']}")
-        key_findings = key_findings[-3:]  # Only keep last 3 findings
-        
-        # First, get diagnosis using minimal context
-        index = pc.Index("final-asha")
-        diagnosis_embedding = get_embedding_batch([initial_complaint + " diagnosis"])[0]
-        diagnosis_docs = vectorQuotesWithSource(diagnosis_embedding, index, top_k=2)
-        
-        diagnosis_context = " ".join([doc["text"] for doc in diagnosis_docs])
-        short_diagnosis_prompt = f'''Patient complaint: {initial_complaint}
-Key findings: {"; ".join(key_findings)}
-Reference: {diagnosis_context[:200]}
-
-List top 3-4 possible diagnoses based on symptoms.'''
-
-        diagnosis_completion = groq_client.chat.completions.create(
-            messages=[{"role": "system", "content": short_diagnosis_prompt}],
-            model="llama-3.3-70b-versatile",
-            temperature=0.2,
-            max_tokens=100
-        )
-        
-        diagnosis = diagnosis_completion.choices[0].message.content.strip()
-        
-        # Then, get treatment recommendations in separate calls
-        treatment_parts = []
-        treatment_docs = []
-        
-        # 1. Immediate Care
-        immediate_embedding = get_embedding_batch([initial_complaint + " immediate care steps"])[0]
-        immediate_docs = vectorQuotesWithSource(immediate_embedding, index, top_k=1)
-        treatment_docs.extend(immediate_docs)
-        
-        if immediate_docs:
-            immediate_prompt = f'''Based on: {immediate_docs[0]["text"][:200]}
-Provide 2-3 immediate care steps for {initial_complaint}.'''
-            
-            immediate_completion = groq_client.chat.completions.create(
-                messages=[{"role": "system", "content": immediate_prompt}],
-                model="llama-3.3-70b-versatile",
-                temperature=0.2,
-                max_tokens=100
-            )
-            treatment_parts.append("Immediate Care:\n" + immediate_completion.choices[0].message.content.strip())
-        
-        # 2. Medications
-        med_embedding = get_embedding_batch([initial_complaint + " medications treatment"])[0]
-        med_docs = vectorQuotesWithSource(med_embedding, index, top_k=1)
-        treatment_docs.extend(med_docs)
-        
-        if med_docs:
-            med_prompt = f'''Based on: {med_docs[0]["text"][:200]}
-List 2-3 key medications or supplements for {initial_complaint}.'''
-            
-            med_completion = groq_client.chat.completions.create(
-                messages=[{"role": "system", "content": med_prompt}],
-                model="llama-3.3-70b-versatile",
-                temperature=0.2,
-                max_tokens=100
-            )
-            treatment_parts.append("\nMedications/Supplements:\n" + med_completion.choices[0].message.content.strip())
-        
-        # 3. Home Care
-        home_embedding = get_embedding_batch([initial_complaint + " home care follow up"])[0]
-        home_docs = vectorQuotesWithSource(home_embedding, index, top_k=1)
-        treatment_docs.extend(home_docs)
-        
-        if home_docs:
-            home_prompt = f'''Based on: {home_docs[0]["text"][:200]}
-List 2-3 home care instructions for {initial_complaint}.'''
-            
-            home_completion = groq_client.chat.completions.create(
-                messages=[{"role": "system", "content": home_prompt}],
-                model="llama-3.3-70b-versatile",
-                temperature=0.2,
-                max_tokens=100
-            )
-            treatment_parts.append("\nHome Care:\n" + home_completion.choices[0].message.content.strip())
-        
-        # Combine all parts
-        treatment = "\n".join(treatment_parts)
-        
-        # Collect relevant citations
-        citations = []
-        citations.extend(diagnosis_docs)
-        citations.extend(treatment_docs)
-        
-        return {
-            "diagnosis": diagnosis,
-            "treatment": treatment,
-            "citations": citations
-        }
-            
-    except Exception as e:
-        print(f"Error in diagnosis/treatment: {e}")
-        try:
-            # Fallback to simpler request if the detailed one fails
-            minimal_prompt = f"List possible diagnoses for: {initial_complaint}"
-            fallback_completion = groq_client.chat.completions.create(
-                messages=[{"role": "system", "content": minimal_prompt}],
-                model="llama-3.3-70b-versatile",
-                temperature=0.2,
-                max_tokens=50
-            )
-            return {
-                "diagnosis": fallback_completion.choices[0].message.content.strip(),
-                "treatment": "Please consult a healthcare provider for specific treatment recommendations.",
-                "citations": []
-            }
-        except Exception as e2:
-            print(f"Fallback also failed: {e2}")
-            return {
-                "diagnosis": "Error generating diagnosis",
-                "treatment": "Error generating treatment",
-                "citations": []
-            }
-            
-    except Exception as e:
-        print(f"Error in diagnosis/treatment: {e}")
-        return {
-            "diagnosis": "Error generating diagnosis",
-            "treatment": "Error generating treatment",
-            "citations": []
-        }
-
-
-
 def main():
     try:
+        # Get initial responses
         initial_responses = get_initial_responses()
         print("\nThank you for providing your information. Here's what we recorded:\n")
         for resp in initial_responses:
             print(f"Q: {resp['question']}")
             print(f"A: {resp['answer']}\n")
         
+        # Get follow-up responses
         followup_responses = get_followup_questions(initial_responses)
+        
         print("\nFollow-up responses recorded:\n")
         for resp in followup_responses:
             print(f"Q: {resp['question']}")
             print(f"A: {resp['answer']}\n")
-            if "citations" in resp:
-                print("Sources consulted:")
-                for cite in resp["citations"]:
-                    print(f"- {cite['source']} (relevance: {cite['score']:.2f})")
-            print()
         
+        # Get examination responses
         exam_responses = get_followup_exams(initial_responses, followup_responses)
+        
         print("\nExamination findings recorded:\n")
         for exam in exam_responses:
             print(f"Examination: {exam['examination']}")
-            print(f"Finding: {exam['result']}")
-            if "citations" in exam:
-                print("Sources consulted:")
-                for cite in exam["citations"]:
-                    print(f"- {cite['source']} (relevance: {cite['score']:.2f})")
-            print()
+            print(f"Finding: {exam['result']}\n")
 
-        results = get_diagnosis_and_treatment(
-            initial_responses,
-            followup_responses,
-            exam_responses
+        # Prepare context for diagnosis
+        initial_complaint = next((resp['answer'] for resp in initial_responses 
+                            if resp['question'] == "Please describe what brings you here today"), "")
+        
+        # Get relevant documents for diagnosis
+        embedding = get_embedding(initial_complaint)
+        relevant_docs = vectorQuotes(embedding, pc.Index("final-asha"))
+        context_chunks = " ".join([doc["text"] for doc in relevant_docs[:3]])
+
+        # Create diagnosis prompt
+        diagnosis_context = {
+            "complaint": initial_complaint,
+            "responses": {
+                "initial": initial_responses,
+                "followup": followup_responses,
+                "exams": exam_responses
+            }
+        }
+
+        diagnosis_prompt = f'''Based on the following patient information, provide a clear and specific diagnosis.
+
+Patient's initial complaint: "{initial_complaint}"
+
+Follow-up responses:
+{', '.join([f"Q: {resp['question']} A: {resp['answer']}" for resp in followup_responses])}
+
+Examination findings:
+{', '.join([f"Exam: {exam['examination']} Finding: {exam['result']}" for exam in exam_responses])}
+
+Additional context:
+{context_chunks}
+
+Return ONLY the most likely diagnosis in a clear, concise manner. No explanations or additional information.'''
+
+        # Get diagnosis
+        diagnosis_completion = groq_client.chat.completions.create(
+            messages=[{"role": "system", "content": diagnosis_prompt}],
+            model="mixtral-8x7b-32768",
+            temperature=0.2
         )
         
+        diagnosis = diagnosis_completion.choices[0].message.content.strip()
         print("\nDiagnosis:")
         print("==========")
-        print(results["diagnosis"])
+        print(diagnosis)
 
+        # Get relevant documents for treatment based on diagnosis
+        diagnosis_embedding = get_embedding(diagnosis)
+        treatment_docs = vectorQuotes(diagnosis_embedding, pc.Index("final-asha"))
+        treatment_chunks = " ".join([doc["text"] for doc in treatment_docs[:3]])
+
+        # Create treatment prompt
+        treatment_prompt = f'''Based on the diagnosis and patient information, recommend appropriate treatments.
+
+Diagnosis: {diagnosis}
+
+Patient context:
+- Initial complaint: {initial_complaint}
+- Age: {next((resp['answer'] for resp in initial_responses if resp['question'] == "What is the patient's age?"), "Unknown")}
+- Findings: {', '.join([f"{exam['examination']}: {exam['result']}" for exam in exam_responses])}
+
+Relevant medical context:
+{treatment_chunks}
+
+Provide a clear treatment plan considering this is a resource-constrained setting.
+Focus on:
+1. Immediate interventions
+2. Medications (if needed)
+3. Home care instructions
+4. Follow-up recommendations'''
+
+        # Get treatment plan
+        treatment_completion = groq_client.chat.completions.create(
+            messages=[{"role": "system", "content": treatment_prompt}],
+            model="mixtral-8x7b-32768",
+            temperature=0.3
+        )
+
+        treatment = treatment_completion.choices[0].message.content.strip()
         print("\nRecommended Treatment Plan:")
         print("=========================")
-        print(results["treatment"])
+        print(treatment)
         
-        print("\nKey References:")
-        print("==============")
-        seen_sources = set()
-        for citation in results["citations"]:
-            if citation['source'] not in seen_sources:
-                print(f"- {citation['source']} (relevance: {citation['score']:.2f})")
-                seen_sources.add(citation['source'])
-            
+        # Return all responses including diagnosis and treatment
         return {
             "initial_responses": initial_responses,
             "followup_responses": followup_responses,
             "examination_responses": exam_responses,
-            "diagnosis": results["diagnosis"],
-            "treatment": results["treatment"],
-            "citations": results["citations"]
+            "diagnosis": diagnosis,
+            "treatment": treatment
         }
             
     except KeyboardInterrupt:
