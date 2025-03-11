@@ -5,8 +5,35 @@ from dotenv import load_dotenv
 from groq import Groq
 import pinecone
 import openai
-import torch
+
+# Import torch without cuda dependency
 import torch.nn as nn
+try:
+    import torch
+except ImportError as e:
+    if "torch.cuda" in str(e):
+        # If the error is related to torch.cuda, we need a custom import approach
+        import importlib.util
+        import sys
+        
+        # Create a fake torch.cuda module to prevent import errors
+        class DummyCuda:
+            is_available = lambda: False
+            
+        # Import torch without cuda
+        spec = importlib.util.find_spec("torch")
+        torch = importlib.util.module_from_spec(spec)
+        sys.modules["torch"] = torch
+        
+        # Add the dummy cuda module
+        sys.modules["torch.cuda"] = DummyCuda()
+        
+        # Continue with torch import
+        spec.loader.exec_module(torch)
+    else:
+        # If it's a different error, raise it
+        raise e
+
 import json
 
 from AVM.MATRIX.matrix_core import MATRIX

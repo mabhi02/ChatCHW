@@ -21,8 +21,9 @@ RUN pip install --no-cache-dir -r requirements.txt \
 RUN find /usr/local/lib/python3.9/site-packages -type d -name "tests" -exec rm -rf {} + 2>/dev/null || true \
     && find /usr/local/lib/python3.9/site-packages -type d -name "test" -exec rm -rf {} + 2>/dev/null || true
 
-# Remove torch cuda files since we're using CPU only
-RUN rm -rf /usr/local/lib/python3.9/site-packages/torch/cuda
+# Setup torch.cuda for CPU-only installations
+RUN mkdir -p /usr/local/lib/python3.9/site-packages/torch/cuda \
+    && echo "def is_available():\n    return False\n\ndef device_count():\n    return 0" > /usr/local/lib/python3.9/site-packages/torch/cuda/__init__.py
 
 # Copy application code
 COPY . .

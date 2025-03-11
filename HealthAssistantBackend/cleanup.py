@@ -4,10 +4,26 @@ import site
 import sys
 
 def cleanup_torch():
-    """Remove unnecessary torch components to reduce size"""
+    """Remove unnecessary torch components to reduce size BUT keep necessary structure"""
     try:
         site_packages = site.getsitepackages()[0]
         torch_path = os.path.join(site_packages, 'torch')
+        
+        # Create empty torch.cuda directory with __init__.py if it doesn't exist
+        cuda_path = os.path.join(torch_path, 'cuda')
+        if not os.path.exists(cuda_path):
+            os.makedirs(cuda_path, exist_ok=True)
+            
+        # Create a minimal __init__.py for torch.cuda that provides basic functionality
+        init_file = os.path.join(cuda_path, '__init__.py')
+        with open(init_file, 'w') as f:
+            f.write("""
+def is_available():
+    return False
+
+def device_count():
+    return 0
+""")
         
         # Directories to remove from torch
         dirs_to_remove = [
@@ -16,7 +32,6 @@ def cleanup_torch():
             'optim/test',
             'nn/test',
             'distributions/test',
-            'cuda',  # Remove CUDA support as we're using CPU only
             'utils/cpp_extension.py',  # Remove C++ extension utilities
             'distributed',  # Remove distributed training support if not needed
         ]
@@ -120,6 +135,8 @@ def cleanup_pyc_files():
         print(f"Removed {count} .pyc files")
     except Exception as e:
         print(f"Error in cleanup_pyc_files: {e}")
+
+
 
 if __name__ == '__main__':
     print("Starting cleanup...")
