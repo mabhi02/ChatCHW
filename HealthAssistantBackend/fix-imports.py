@@ -12,7 +12,7 @@ def fix_pinecone_imports():
         
         # Replace 'from pinecone import Pinecone' with 'import pinecone'
         modified_content = content.replace('from pinecone import Pinecone', 'import pinecone')
-        # Replace 'pc = Pinecone(' with 'pc = pinecone.Pinecone('
+        # Replace 'pc = Pinecone(' with 'pc = pinecone.init('
         modified_content = modified_content.replace('pc = Pinecone(', 'pc = pinecone.init(')
         
         with open(app_path, 'w') as f:
