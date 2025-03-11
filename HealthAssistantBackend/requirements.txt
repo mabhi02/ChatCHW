@@ -11,6 +11,7 @@ pinecone==4.0.0
 
 # Data processing
 numpy==1.26.4
+matplotlib
 pandas==2.2.2
 
 # ML/AI
