@@ -2,7 +2,6 @@ from typing import Dict, List, Any, Optional, Tuple
 import sys
 import os
 from dotenv import load_dotenv
-from groq import Groq
 from pinecone import Pinecone
 import openai
 import torch
@@ -23,7 +22,6 @@ structured_questions_array = []
 
 # Load environment variables and initialize clients
 load_dotenv()
-groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
