@@ -1,9 +1,8 @@
 import os
-import re
 
 def fix_pinecone_imports():
-    app_path = os.path.join('HealthAssistantBackend', 'app.py')
-    chad_path = os.path.join('HealthAssistantBackend', 'chad.py')
+    app_path = 'app.py'
+    chad_path = 'chad.py'
     
     # Fix app.py
     if os.path.exists(app_path):
@@ -18,6 +17,8 @@ def fix_pinecone_imports():
         with open(app_path, 'w') as f:
             f.write(modified_content)
         print(f"Fixed imports in {app_path}")
+    else:
+        print(f"Could not find {app_path}")
     
     # Fix chad.py
     if os.path.exists(chad_path):
@@ -32,6 +33,10 @@ def fix_pinecone_imports():
         with open(chad_path, 'w') as f:
             f.write(modified_content)
         print(f"Fixed imports in {chad_path}")
+    else:
+        print(f"Could not find {chad_path}")
 
 if __name__ == "__main__":
+    print("Starting to fix imports...")
     fix_pinecone_imports()
+    print("Done!")

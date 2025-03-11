@@ -3,7 +3,7 @@ import sys
 import os
 from dotenv import load_dotenv
 from groq import Groq
-from pinecone import Pinecone
+import pinecone
 import openai
 import torch
 import torch.nn as nn
@@ -24,7 +24,7 @@ structured_questions_array = []
 # Load environment variables and initialize clients
 load_dotenv()
 groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
-pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
+pc = pinecone.init(api_key=os.getenv("PINECONE_API_KEY"))
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Initialize MATRIX system and components

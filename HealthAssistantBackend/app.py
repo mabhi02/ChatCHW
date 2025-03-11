@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from pinecone import Pinecone
+import pinecone
 import json
 from typing import Dict, List, Any, Optional
 import sys
@@ -26,7 +26,7 @@ from chad import (
 app = Flask(__name__)
 CORS(app)
 
-pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
+pc = pinecone.init(api_key=os.getenv("PINECONE_API_KEY"))
 
 
 # Global state management
