@@ -14,12 +14,21 @@ numpy==1.26.4
 matplotlib
 pandas==2.2.2
 seaborn
+scikit-learn==1.4.2
 
 # ML/AI
 torch==2.2.1 --index-url https://download.pytorch.org/whl/cpu
 transformers==4.37.2
+tqdm==4.66.4
 
 # Utilities
 requests==2.31.0
 typing-extensions==4.11.0
 Jinja2==3.1.4
+
+#Extra
+pymongo==4.7.2
+scipy==1.13.0
+pytz==2024.1
+aiohttp==3.9.5
+python-dateutil==2.9.0.post0
