@@ -5,6 +5,7 @@ import json
 from typing import Dict, List, Any, Optional
 import sys
 import os
+import openai
 from chad import (
     questions_init,
     structured_questions_array,
@@ -20,12 +21,12 @@ from chad import (
     store_examination,
     initialize_session,
     get_session_data,
-    groq_client
 )
 
 app = Flask(__name__)
 frontend_url = os.environ.get('FRONTEND_URL')
-CORS(app, origins=[frontend_url])
+CORS(app, origins=["http://localhost:3000"])
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
 
@@ -65,6 +66,7 @@ def start_assessment():
             "status": "error",
             "message": str(e)
         })
+        
 @app.route('/api/input', methods=['POST'])
 def process_input():
     """Process user input and return next question/response"""
@@ -143,7 +145,17 @@ def process_input():
             try:
                 # Store examination response
                 if 'current_examination' in session_data:
-                    store_examination(session_data['current_examination']['text'], int(user_input))
+                    # Fix: Match the text to the option ID
+                    selected_option = 1  # Default to first option
+                    
+                    # Try to find which option was selected by matching the text
+                    if 'options' in session_data['current_examination']:
+                        for option in session_data['current_examination']['options']:
+                            if option['text'] == user_input:
+                                selected_option = option['id']
+                                break
+                    
+                    store_examination(session_data['current_examination']['text'], selected_option)
                     session_data['exam_responses'].append({
                         "examination": session_data['current_examination']['text'],
                         "result": user_input,
@@ -216,8 +228,9 @@ def generate_followup_question(session_data):
         
         Return only the question text.'''
         
-        print("Sending prompt to Groq")  # Debug print
+        print("Sending prompt to OpenAI")  # Debug print
         
+        """
         completion = groq_client.chat.completions.create(
             messages=[{"role": "system", "content": prompt}],
             model="llama-3.3-70b-versatile",
@@ -226,6 +239,19 @@ def generate_followup_question(session_data):
         )
         
         question = completion.choices[0].message.content.strip()
+        """
+
+        response = openai.ChatCompletion.create(
+            model="gpt-4-0125-preview",  # Using GPT-4-mini
+            messages=[
+                {"role": "system", "content": prompt}
+            ],
+            max_tokens=150,
+            temperature=0.3
+        )
+        question = response.choices[0].message.content.strip()
+
+
         print(f"Got question: {question}")  # Debug print
         
         # Generate options
@@ -233,11 +259,13 @@ def generate_followup_question(session_data):
         Clear, mutually exclusive options.
         Return each option on a new line (1-4).'''
         
-        options_completion = groq_client.chat.completions.create(
-            messages=[{"role": "system", "content": options_prompt}],
-            model="llama-3.3-70b-versatile",
-            temperature=0.2,
-            max_tokens=100
+        options_completion = openai.ChatCompletion.create(
+            model="gpt-4-0125-preview",  # Using GPT-4-mini
+            messages=[
+                {"role": "system", "content": options_prompt}
+            ],
+            max_tokens=150,
+            temperature=0.3
         )
         
         options = []
@@ -335,6 +363,7 @@ YOUR EXAMINATION MUST:
 3. Then EXACTLY 4 findings, each starting with #:
 4. Findings should range from normal to severe'''
 
+        """
         completion = groq_client.chat.completions.create(
             messages=[
                 {"role": "system", "content": "You are a medical AI. Always follow the exact format provided with #: before each finding."},
@@ -343,6 +372,18 @@ YOUR EXAMINATION MUST:
             model="llama-3.3-70b-versatile",
             temperature=0.3,
             max_tokens=150
+        )
+        """
+        
+
+        completion = openai.ChatCompletion.create(
+            model="gpt-4-0125-preview",  # Using GPT-4-mini
+            messages=[
+                {"role": "system", "content": "You are a medical AI. Always follow the exact format provided with #: before each finding."},
+                {"role": "user", "content": prompt}
+            ],
+            max_tokens=150,
+            temperature=0.3
         )
         
         examination_text = completion.choices[0].message.content.strip()
