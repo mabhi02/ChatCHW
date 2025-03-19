@@ -131,29 +131,6 @@ def get_openai_completion(prompt: str, max_tokens: int = 150, temperature: float
         print(f"Error in OpenAI API call: {e}")
         return ""
 
-def compress_medical_context(responses: List[Dict[str, Any]], 
-                           embeddings: Optional[List[List[float]]] = None) -> Tuple[str, List[Dict[str, Any]]]:
-    """Compress medical context by using embeddings to find key information."""
-    text_chunks = []
-    for resp in responses:
-        if isinstance(resp.get('answer'), str):
-            text_chunks.append(f"{resp['question']}: {resp['answer']}")
-        elif isinstance(resp.get('answer'), list):
-            text_chunks.append(f"{resp['question']}: {', '.join(resp['answer'])}")
-    
-    if not embeddings:
-        embeddings = get_embedding_batch(text_chunks)
-    
-    # Use embeddings to find most relevant chunks
-    compressed_chunks = []
-    seen_content = set()
-    
-    for chunk, embedding in zip(text_chunks, embeddings):
-        if chunk not in seen_content:
-            compressed_chunks.append(chunk)
-            seen_content.add(chunk)
-    
-    return "\n".join(compressed_chunks[:5]), []
 
 def print_options(options: List[Dict[str, Any]]) -> None:
     """Print formatted options for multiple choice questions."""
