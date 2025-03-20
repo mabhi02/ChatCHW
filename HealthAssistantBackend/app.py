@@ -25,7 +25,8 @@ from chad import (
 
 app = Flask(__name__)
 frontend_url = os.environ.get('FRONTEND_URL')
-CORS(app, origins=["http://localhost:3000"])
+frontend_url = os.environ.get('FRONTEND_URL', 'https://chatchw.onrender.com')
+CORS(app, origins=["http://localhost:3000", frontend_url])
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
