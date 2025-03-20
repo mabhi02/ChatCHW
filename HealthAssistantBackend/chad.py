@@ -2,38 +2,10 @@ from typing import Dict, List, Any, Optional, Tuple
 import sys
 import os
 from dotenv import load_dotenv
-from groq import Groq
-import pinecone
+from pinecone import Pinecone
 import openai
-
-# Import torch without cuda dependency
+import torch
 import torch.nn as nn
-try:
-    import torch
-except ImportError as e:
-    if "torch.cuda" in str(e):
-        # If the error is related to torch.cuda, we need a custom import approach
-        import importlib.util
-        import sys
-        
-        # Create a fake torch.cuda module to prevent import errors
-        class DummyCuda:
-            is_available = lambda: False
-            
-        # Import torch without cuda
-        spec = importlib.util.find_spec("torch")
-        torch = importlib.util.module_from_spec(spec)
-        sys.modules["torch"] = torch
-        
-        # Add the dummy cuda module
-        sys.modules["torch.cuda"] = DummyCuda()
-        
-        # Continue with torch import
-        spec.loader.exec_module(torch)
-    else:
-        # If it's a different error, raise it
-        raise e
-
 import json
 
 from AVM.MATRIX.matrix_core import MATRIX
@@ -50,8 +22,7 @@ structured_questions_array = []
 
 # Load environment variables and initialize clients
 load_dotenv()
-groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
-pc = pinecone.init(api_key=os.getenv("PINECONE_API_KEY"))
+pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Initialize MATRIX system and components
@@ -160,29 +131,6 @@ def get_openai_completion(prompt: str, max_tokens: int = 150, temperature: float
         print(f"Error in OpenAI API call: {e}")
         return ""
 
-def compress_medical_context(responses: List[Dict[str, Any]], 
-                           embeddings: Optional[List[List[float]]] = None) -> Tuple[str, List[Dict[str, Any]]]:
-    """Compress medical context by using embeddings to find key information."""
-    text_chunks = []
-    for resp in responses:
-        if isinstance(resp.get('answer'), str):
-            text_chunks.append(f"{resp['question']}: {resp['answer']}")
-        elif isinstance(resp.get('answer'), list):
-            text_chunks.append(f"{resp['question']}: {', '.join(resp['answer'])}")
-    
-    if not embeddings:
-        embeddings = get_embedding_batch(text_chunks)
-    
-    # Use embeddings to find most relevant chunks
-    compressed_chunks = []
-    seen_content = set()
-    
-    for chunk, embedding in zip(text_chunks, embeddings):
-        if chunk not in seen_content:
-            compressed_chunks.append(chunk)
-            seen_content.add(chunk)
-    
-    return "\n".join(compressed_chunks[:5]), []
 
 def print_options(options: List[Dict[str, Any]]) -> None:
     """Print formatted options for multiple choice questions."""

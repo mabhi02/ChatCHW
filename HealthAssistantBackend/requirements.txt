@@ -1,14 +1,30 @@
-flask==2.0.1
-werkzeug==2.0.1
-flask-cors==3.0.10
-python-dotenv==0.19.0
-pinecone-client==2.2.2
-groq==0.4.0
-openai==0.28.1
-torch==2.0.1 --index-url https://download.pytorch.org/whl/cpu
-gunicorn==20.1.0
-numpy==1.23.5
-matplotlib==3.7.1
-seaborn==0.12.2
-scikit-learn==1.2.2
-requests==2.28.1
+# Core application
+Flask==3.0.3
+Flask-Cors==4.0.0
+python-dotenv==1.0.1
+gunicorn==21.2.0
+
+# API Clients
+groq
+openai==0.28.0
+pinecone==4.0.0
+
+# Data processing
+numpy==1.26.4
+matplotlib
+pandas==2.2.2
+seaborn
+scikit-learn==1.4.2
+
+# ML/AI
+torch==2.2.1 --index-url https://download.pytorch.org/whl/cpu
+transformers==4.37.2
+tqdm==4.66.4
+
+# Utilities
+requests==2.31.0
+typing-extensions==4.11.0
+Jinja2==3.1.4
+pymongo==4.6.1
+bson
+psutil
