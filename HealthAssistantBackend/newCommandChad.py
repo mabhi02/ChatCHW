@@ -870,7 +870,7 @@ def get_diagnosis_and_treatment(chat_name: str, initial_responses: List[Dict[str
         key_findings = key_findings[-3:]  # Only keep last 3 findings
         
         # First, get diagnosis using minimal context
-        index = pc.Index("final-asha")
+        index = pc.Index("who-guide")
         diagnosis_embedding = get_embedding_batch([initial_complaint + " diagnosis"])[0]
         diagnosis_docs = vectorQuotesWithSource(diagnosis_embedding, index, top_k=2)
         

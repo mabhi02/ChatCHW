@@ -15,7 +15,7 @@ import logging
 import os
 
 # Import the updated functions from commandChad instead of chad
-from commandChad import (
+from newCommandChad import (
     questions_init,
     get_embedding_batch,
     vectorQuotesWithSource,
