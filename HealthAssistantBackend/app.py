@@ -197,7 +197,7 @@ def generate_followup_question(session_data):
                 context += f"Q: {resp['question']}\nA: {resp['answer']}\n"
         
         # Get embeddings and relevant documents
-        index = pc.Index("final-asha")
+        index = pc.Index("who-guide")
         embedding = get_embedding_batch([context])[0]
         
         print("Got embedding")  # Debug print
@@ -219,16 +219,14 @@ def generate_followup_question(session_data):
         
         Relevant medical context:
         {combined_context}
-        
+
         Generate ONE focused, relevant follow-up question that is different from the previous questions.
         Like do not ask both "How long have you had the pain?" and "How severe is the pain?", as they are too similar. It should only be like one or the other
-        Follow standard medical assessment order:
-        1. Duration and onset
-        2. Characteristics and severity
-        3. Associated symptoms
-        4. Impact on daily life
-        
-        Return only the question text.'''
+        Do not as about compound questions like "Do you have fever and cough?" or "Do you have pain in your chest or abdomen?". It should be one or the other like "Do you have fever" or "Do you have pain in your chest?".
+        There should be no "or" or "and" in the question as ask about one specific metric not compounded one.
+                
+        Return only the question text.
+        '''
         
         print("Sending prompt to OpenAI")  # Debug print
         
@@ -248,7 +246,7 @@ def generate_followup_question(session_data):
             messages=[
                 {"role": "system", "content": prompt}
             ],
-            max_tokens=150,
+            max_tokens=1500,
             temperature=0.3
         )
         question = response.choices[0].message.content.strip()
@@ -266,7 +264,7 @@ def generate_followup_question(session_data):
             messages=[
                 {"role": "system", "content": options_prompt}
             ],
-            max_tokens=150,
+            max_tokens=1500,
             temperature=0.3
         )
         
@@ -332,7 +330,7 @@ def generate_examination(session_data):
         embeddings = get_embedding_batch(context_items)
         
         # Get relevant documents using embeddings
-        index = pc.Index("final-asha")
+        index = pc.Index("who-guide")
         relevant_matches = []
         for emb in embeddings:
             matches = vectorQuotesWithSource(emb, index, top_k=1)
@@ -352,18 +350,15 @@ Most relevant condition (score {top_match["score"]:.2f}): {top_match["text"][:10
 
 Generate ONE physical examination using EXACTLY this format (include the #: symbols before each finding):
 
-Digital Rectal Examination
-Careful inspection and palpation of the anal area and lower rectum
-#:Normal anal tone, no visible hemorrhoids or fissures
-#:External hemorrhoids visible with signs of bleeding
-#:Internal hemorrhoids palpable with active bleeding
-#:Anal fissure present with severe inflammation
-
 YOUR EXAMINATION MUST:
 1. Start with examination name
 2. Then procedure description
 3. Then EXACTLY 4 findings, each starting with #:
-4. Findings should range from normal to severe'''
+    a. # Finding 1
+    b. # Finding 2
+    c. # Finding 3
+    d. # Finding 4
+'''
 
         """
         completion = groq_client.chat.completions.create(
@@ -384,7 +379,7 @@ YOUR EXAMINATION MUST:
                 {"role": "system", "content": "You are a medical AI. Always follow the exact format provided with #: before each finding."},
                 {"role": "user", "content": prompt}
             ],
-            max_tokens=150,
+            max_tokens=1500,
             temperature=0.3
         )
         

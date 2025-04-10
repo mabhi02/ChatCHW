@@ -525,24 +525,48 @@ def parse_question_data(question: str, options: list, answer: str, matrix_output
     return question_data
 
 
-def parse_examination_text(examination_text: str) -> tuple[str, list[str]]:
+def parse_examination_text(text):
     """
-    Parse examination text using "#:" delimiter.
-    Returns tuple of (examination text, list of options).
+    Parse examination text to extract the examination description and findings.
+    Handles both '#:' and '#' delimiter formats.
+    
+    Args:
+        text (str): The examination text to parse
+    
+    Returns:
+        tuple: (examination_description, list_of_findings)
     """
-    # Split on "#:" delimiter
-    parts = examination_text.split("#:")
+    # Split the text by lines
+    lines = text.strip().split('\n')
     
-    if len(parts) < 2:
-        raise ValueError("Invalid examination format - missing '#:' delimiter")
-        
-    # First part is the examination text
-    examination = parts[0].strip()
+    # Extract examination description (everything before the first finding)
+    examination_lines = []
+    findings = []
     
-    # Remaining parts are options
-    options = [opt.strip() for opt in parts[1:] if opt.strip()]
+    in_examination = True
     
-    return examination, options
+    for line in lines:
+        line = line.strip()
+        # Check for both '#:' and '#' formats
+        if line.startswith('#:') or (line.startswith('#') and not line.startswith('#:')):
+            in_examination = False
+            # Extract the finding text by removing the delimiter
+            if line.startswith('#:'):
+                finding = line[2:].strip()
+            else:
+                finding = line[1:].strip()
+            findings.append(finding)
+        elif in_examination and line:
+            examination_lines.append(line)
+    
+    # Join the examination lines
+    examination = '\n'.join(examination_lines)
+    
+    # Ensure we have at least one finding
+    if not findings:
+        raise ValueError("No findings detected in the examination text")
+    
+    return examination, findings
 
 def store_examination(examination_text: str, selected_option: int):
     """Store examination data in the global examination history."""
@@ -580,7 +604,7 @@ def get_diagnosis_and_treatment(initial_responses: List[Dict[str, Any]],
         key_findings = key_findings[-3:]  # Only keep last 3 findings
         
         # First, get diagnosis using minimal context
-        index = pc.Index("final-asha")
+        index = pc.Index("who-guide")
         diagnosis_embedding = get_embedding_batch([initial_complaint + " diagnosis"])[0]
         diagnosis_docs = vectorQuotesWithSource(diagnosis_embedding, index, top_k=2)
         
@@ -878,7 +902,7 @@ def main():
                             if resp['question'] == "Please describe what brings you here today"), "")
         
         print("\nBased on your responses, I'll ask some follow-up questions.")
-        index = pc.Index("final-asha")
+        index = pc.Index("who-guide")
         
         while True:
             try:
@@ -908,11 +932,8 @@ def main():
                 
                 Generate ONE focused, relevant follow-up question that is different from the previous questions.
                 Like do not ask both "How long have you had the pain?" and "How severe is the pain?", as they are too similar. It should only be like one or the other
-                Follow standard medical assessment order:
-                1. Duration and onset
-                2. Characteristics and severity
-                3. Associated symptoms
-                4. Impact on daily life
+                Do not as about compound questions like "Do you have fever and cough?" or "Do you have pain in your chest or abdomen?". It should be one or the other like "Do you have fever" or "Do you have pain in your chest?".
+                There should be no "or" or "and" in the question as ask about one specific metric not compounded one.
                 
                 Return only the question text.'''
                 
