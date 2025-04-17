@@ -357,8 +357,9 @@ Key symptoms: {symptoms_summary}
 Most relevant condition (score {top_match["score"]:.2f}): {top_match["text"][:100] if top_match else "None"}
 
 Generate ONE physical examination using EXACTLY this format (include the #: symbols before each finding):
-Do not use complicated medical terminology, use simple language. Rely heavily on the context provided. Do not revert to first world country medical practices as this is not available.
-Explain it like the patient is a 5 year old child. Use simple language and avoid complex medical terms. Like palpatation is not a word that a 5 year old child would understand. Everything more complicated than that should not be used.
+Do not use complicated medical terminology, use simple language. Rely only on the context provided. 
+If there is no relevant context to generating a test, say I don't know. If you choose to say I don't know, please say it in the format of "I don't know" and not "I don't know" for each finding.
+
 
 YOUR EXAMINATION MUST:
 1. Start with examination name

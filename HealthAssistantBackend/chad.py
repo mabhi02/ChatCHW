@@ -613,7 +613,9 @@ def get_diagnosis_and_treatment(initial_responses: List[Dict[str, Any]],
 Key findings: {"; ".join(key_findings)}
 Reference: {diagnosis_context[:200]}
 
-List top 3-4 possible diagnoses based on symptoms.'''
+List top 3-4 possible diagnoses based on symptoms. Only use the context and chunks to make a decison do not rely on your pretraining to generate the answer.
+If the chunks do not contain any relevant information to making a diagnosis, say visit a health professional and I do not know.
+'''
 
         diagnosis = get_openai_completion(
             prompt=short_diagnosis_prompt,
