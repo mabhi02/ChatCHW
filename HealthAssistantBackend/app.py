@@ -205,6 +205,12 @@ def generate_followup_question(session_data):
         relevant_docs = vectorQuotesWithSource(embedding, index)
         
         print(f"Got {len(relevant_docs)} relevant docs")  # Debug print
+        print("Relevant docs:")  # Debug print
+        print("" + "-"*50)  # Debug print
+        for doc in relevant_docs:   
+            print(f"Doc: {doc['text']} (score: {doc['score']})")    # Debug print 
+            print("" + "+"*50)  # Debug print
+        print("-"*50)  # Debug print
         
         if not relevant_docs:
             raise Exception("Could not generate relevant question")
@@ -336,6 +342,8 @@ def generate_examination(session_data):
             matches = vectorQuotesWithSource(emb, index, top_k=1)
             if matches:
                 relevant_matches.extend(matches)
+        print("Here are the chunks that got matched")
+        print(relevant_matches)  # Debug print
         
         # Sort matches by relevance score
         relevant_matches.sort(key=lambda x: x['score'], reverse=True)
@@ -349,6 +357,8 @@ Key symptoms: {symptoms_summary}
 Most relevant condition (score {top_match["score"]:.2f}): {top_match["text"][:100] if top_match else "None"}
 
 Generate ONE physical examination using EXACTLY this format (include the #: symbols before each finding):
+Do not use complicated medical terminology, use simple language. Rely heavily on the context provided. Do not revert to first world country medical practices as this is not available.
+Explain it like the patient is a 5 year old child. Use simple language and avoid complex medical terms. Like palpatation is not a word that a 5 year old child would understand. Everything more complicated than that should not be used.
 
 YOUR EXAMINATION MUST:
 1. Start with examination name
@@ -437,7 +447,9 @@ Treatment Plan:
 {results['treatment']}
 
 Key References:
-{chr(10).join([f"- {cite['source']} (relevance: {cite['score']:.2f})" for cite in results['citations']])}"""
+{chr(10).join([f"- {cite['source']} (relevance: {cite['score']:.2f})" for cite in results['citations']])}
+
+"""
         
         return jsonify({
             "status": "success",
