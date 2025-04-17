@@ -346,6 +346,31 @@ export function MedicalChat(): JSX.Element {
           originalContent: data.output
         }]);
 
+        // Check if we need to skip questions based on previous answers
+        if (data.metadata?.phase === 'initial') {
+          // Check if user just answered "No" to caregiver question
+          const caregiverQuestion = "Does the patient have a caregiver?";
+          const lastUserMessage = messages[messages.length - 1];
+          const lastQuestion = messages.length >= 2 ? messages[messages.length - 2] : null;
+          
+          if (lastQuestion && 
+              lastQuestion.type === 'bot' && 
+              lastQuestion.originalContent.includes(caregiverQuestion) &&
+              (input.toLowerCase() === 'no' || input === '2')) {
+            
+            // User said no to caregiver, skip the next question about who is accompanying
+            console.log("Skipping 'Who is accompanying the patient?' question");
+            
+            // Send an automatic "None" response to the next question
+            setTimeout(() => {
+              handleSubmission("None");
+            }, 500);
+            
+            // Return early to avoid setting metadata for the skipped question
+            return;
+          }
+        }
+
         if (data.metadata?.options) {
           const translatedOptions = await Promise.all(
             data.metadata.options.map(async (option: any) => {
@@ -598,15 +623,38 @@ export function MedicalChat(): JSX.Element {
               if (!inputText.trim() || isProcessing) return;
               handleSubmission(inputText);
             }} className="flex space-x-2">
-              <Input
-                value={inputText}
-                onChange={(e) => setInputText(e.target.value)}
-                placeholder={showOtherInput 
-                  ? LANGUAGE_CONFIG[selectedLanguage].commonPhrases['Please specify']
-                  : LANGUAGE_CONFIG[selectedLanguage].commonPhrases['Type your response']}
-                className="flex-1"
-                disabled={isProcessing || isListening}
-              />
+              {currentMetadata?.question_type === 'NUM' && 
+               messages.length > 0 && 
+               messages[messages.length - 1].originalContent.includes("age") ? (
+                // Age slider component
+                <div className="flex-1 flex flex-col space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span>1</span>
+                    <span className="font-medium">{inputText || "50"} years</span>
+                    <span>100</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="1"
+                    max="100"
+                    value={inputText || "50"}
+                    onChange={(e) => setInputText(e.target.value)}
+                    className="w-full h-2 bg-primary/20 rounded-lg appearance-none cursor-pointer accent-primary"
+                    disabled={isProcessing}
+                  />
+                </div>
+              ) : (
+                <Input
+                  value={inputText}
+                  onChange={(e) => setInputText(e.target.value)}
+                  placeholder={showOtherInput 
+                    ? LANGUAGE_CONFIG[selectedLanguage].commonPhrases['Please specify']
+                    : LANGUAGE_CONFIG[selectedLanguage].commonPhrases['Type your response']}
+                  className="flex-1"
+                  disabled={isProcessing || isListening}
+                />
+              )}
+              
               <Button
                 type="button"
                 variant="ghost"
