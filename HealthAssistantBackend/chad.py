@@ -525,45 +525,113 @@ def parse_question_data(question: str, options: list, answer: str, matrix_output
     return question_data
 
 
-def parse_examination_text(examination_text: str) -> tuple[str, list[str]]:
+def parse_examination_text(text):
     """
-    Parse examination text using "#:" delimiter.
-    Returns tuple of (examination text, list of options).
+    Parse examination text to extract the examination description and findings.
+    Handles three scenarios:
+    1. Clear examination procedure with findings
+    2. No examination information available
+    3. Partial/informal examination information
+    
+    Args:
+        text (str): The examination text to parse
+    
+    Returns:
+        tuple: (examination_description, list_of_findings)
     """
-    # Split on "#:" delimiter
-    parts = examination_text.split("#:")
+    # Process empty or very short responses
+    if not text or len(text.strip()) < 10:
+        examination = "No examination information provided in the medical guide."
+        findings = [
+            "No specific finding available - refer to higher facility",
+            "Unable to perform examination based on medical guide",
+            "Need additional clinical assessment",
+            "Consider general observation only"
+        ]
+        return examination, findings
     
-    if len(parts) < 2:
-        raise ValueError("Invalid examination format - missing '#:' delimiter")
-        
-    # First part is the examination text
-    examination = parts[0].strip()
+    # Common phrases indicating no information is available
+    no_info_phrases = [
+        "does not provide", "no information", "no examination", 
+        "no specific examination", "doesn't provide", "isn't provided",
+        "the guide doesn't provide", "not available in the guide",
+        "not included in the guide", "not mentioned in the guide",
+        "doesn't contain", "does not mention"
+    ]
     
-    # Remaining parts are options
-    options = [opt.strip() for opt in parts[1:] if opt.strip()]
+    # SCENARIO 1: Check if the response indicates no examination information is available
+    if any(phrase in text.lower() for phrase in no_info_phrases):
+        # Return a standardized "No examination" response with default findings
+        examination = text.strip()
+        findings = [
+            "No specific finding available - refer to higher facility",
+            "Unable to perform examination based on medical guide",
+            "Need additional clinical assessment",
+            "Consider general observation only"
+        ]
+        return examination, findings
     
-    return examination, options
-
-def store_examination(examination_text: str, selected_option: int):
-    """Store examination data in the global examination history."""
-    global examination_history
+    # SCENARIO 2: Check if there's some useful information but not a formal procedure
+    if ("relevant information" in text.lower() or "some information" in text.lower() or 
+        "general guidance" in text.lower() or "may be helpful" in text.lower() or
+        not any(line.startswith('#') or line.startswith('#:') for line in text.strip().split('\n'))):
+        
+        # Extract the useful information
+        examination = "PARTIAL INFORMATION (Not a formal examination procedure):\n" + text.strip()
+        findings = [
+            "Consider referring to medical professional for proper examination",
+            "Use this information as supplementary guidance only",
+            "Document observations based on general assessment",
+            "Consult with supervisor about next steps"
+        ]
+        return examination, findings
     
-    try:
-        # Parse examination and options
-        examination, options = parse_examination_text(examination_text)
-        
-        # Create examination entry
-        examination_entry = {
-            "examination": examination,
-            "options": options,
-            "selected_option": selected_option
-        }
-        
-        examination_history.append(examination_entry)
-        
-    except Exception as e:
-        print(f"Error storing examination: {e}")
-
+    # SCENARIO 3: Regular parsing for normal examination text with findings
+    # Split the text by lines
+    lines = text.strip().split('\n')
+    
+    # Extract examination description (everything before the first finding)
+    examination_lines = []
+    findings = []
+    
+    in_examination = True
+    
+    for line in lines:
+        line = line.strip()
+        # Check for both '#:' and '#' formats
+        if line.startswith('#:') or (line.startswith('#') and not line.startswith('#:')):
+            in_examination = False
+            # Extract the finding text by removing the delimiter
+            if line.startswith('#:'):
+                finding = line[2:].strip()
+            else:
+                finding = line[1:].strip()
+            findings.append(finding)
+        elif in_examination and line:
+            examination_lines.append(line)
+    
+    # Join the examination lines
+    examination = '\n'.join(examination_lines)
+    
+    # If we didn't find any findings but have examination text, create default findings
+    if not findings and examination:
+        findings = [
+            "Normal finding",
+            "Abnormal finding requiring further assessment",
+            "Inconclusive finding - may need additional tests",
+            "Unable to determine based on current examination"
+        ]
+    # If we don't have examination text or findings, provide a fallback response
+    elif not findings and not examination:
+        examination = "The response from the medical guide was incomplete or invalid."
+        findings = [
+            "No specific finding available - refer to higher facility",
+            "Unable to perform examination based on medical guide",
+            "Need additional clinical assessment",
+            "Consider general observation only"
+        ]
+    
+    return examination, findings
 
 def get_diagnosis_and_treatment(initial_responses: List[Dict[str, Any]], 
                               followup_responses: List[Dict[str, Any]], 
@@ -580,110 +648,189 @@ def get_diagnosis_and_treatment(initial_responses: List[Dict[str, Any]],
         key_findings = key_findings[-3:]  # Only keep last 3 findings
         
         # First, get diagnosis using minimal context
-        index = pc.Index("final-asha")
+        index = pc.Index("who-guide")
         diagnosis_embedding = get_embedding_batch([initial_complaint + " diagnosis"])[0]
-        diagnosis_docs = vectorQuotesWithSource(diagnosis_embedding, index, top_k=2)
+        diagnosis_docs = vectorQuotesWithSource(diagnosis_embedding, index, top_k=3)  # Increased to get more context
         
-        diagnosis_context = " ".join([doc["text"] for doc in diagnosis_docs])
-        short_diagnosis_prompt = f'''Patient complaint: {initial_complaint}
+        if not diagnosis_docs:
+            return {
+                "diagnosis": "Unable to provide diagnosis. No relevant information found in the medical guide. Please refer the patient to the nearest health facility.",
+                "treatment": "Unable to provide treatment recommendations. No relevant information found in the medical guide. Please refer the patient to the nearest health facility.",
+                "citations": [],
+                "chunks_used": []
+            }
+        
+        # Save all chunks to return them
+        all_chunks_used = []
+        all_chunks_used.extend(diagnosis_docs)
+        
+        # Format medical guide information without exposing sources
+        diagnosis_content = "\n\n".join([doc['text'] for doc in diagnosis_docs])
+        
+        short_diagnosis_prompt = f'''Patient information:
+Initial complaint: {initial_complaint}
 Key findings: {"; ".join(key_findings)}
-Reference: {diagnosis_context[:200]}
 
-List top 3-4 possible diagnoses based on symptoms.'''
+THE FOLLOWING MEDICAL GUIDE INFORMATION IS YOUR ONLY SOURCE OF KNOWLEDGE:
+{diagnosis_content}
+
+IMPORTANT INSTRUCTIONS:
+1. ONLY use information contained in the medical guide above to formulate your response.
+2. Do NOT add any medical knowledge from your pretraining.
+3. If the medical guide doesn't contain sufficient information for a specific aspect, simply say the guide doesn't provide that information.
+4. Format your response to be helpful to a community health worker exactly as shown in the medical guide.
+5. Use the same terminology and recommendations as presented in the medical guide.
+6. Do not alter or simplify the medical guidance provided in the guide - present it as written.
+
+What likely conditions might explain the patient's symptoms, based ONLY on the medical guide information?
+'''
 
         diagnosis = get_openai_completion(
             prompt=short_diagnosis_prompt,
-            max_tokens=100,
+            max_tokens=300,
             temperature=0.2
         )
         
-        # Then, get treatment recommendations in separate calls
+        # Get treatment recommendations in separate calls
         treatment_parts = []
         treatment_docs = []
         
         # 1. Immediate Care
         immediate_embedding = get_embedding_batch([initial_complaint + " immediate care steps"])[0]
-        immediate_docs = vectorQuotesWithSource(immediate_embedding, index, top_k=1)
+        immediate_docs = vectorQuotesWithSource(immediate_embedding, index, top_k=2)
         treatment_docs.extend(immediate_docs)
+        all_chunks_used.extend(immediate_docs)
         
         if immediate_docs:
-            immediate_prompt = f'''Based on: {immediate_docs[0]["text"][:200]}
-Provide 2-3 immediate care steps for {initial_complaint}.'''
+            immediate_content = "\n\n".join([doc['text'] for doc in immediate_docs])
+            immediate_prompt = f'''THE FOLLOWING MEDICAL GUIDE INFORMATION IS YOUR ONLY SOURCE OF KNOWLEDGE:
+{immediate_content}
+
+IMPORTANT INSTRUCTIONS:
+1. ONLY use information contained in the medical guide above to formulate your response.
+2. Do NOT add any medical knowledge from your pretraining.
+3. If the medical guide doesn't contain sufficient information for immediate care, simply say the guide doesn't provide that information.
+4. Present the immediate care steps exactly as described in the medical guide for a patient with: {initial_complaint}
+5. Use the same terminology and recommendations as presented in the medical guide.
+6. Do not alter or simplify the medical guidance provided in the guide - present it as written.
+
+Based ONLY on the medical guide information, what immediate care steps should be taken?
+'''
             
             immediate_care = get_openai_completion(
                 prompt=immediate_prompt,
-                max_tokens=100,
+                max_tokens=200,
                 temperature=0.2
             )
-            treatment_parts.append("Immediate Care:\n" + immediate_care)
+            treatment_parts.append("Immediate Care Steps:\n" + immediate_care)
         
-        # 2. Medications
-        med_embedding = get_embedding_batch([initial_complaint + " medications treatment"])[0]
-        med_docs = vectorQuotesWithSource(med_embedding, index, top_k=1)
-        treatment_docs.extend(med_docs)
-        
-        if med_docs:
-            med_prompt = f'''Based on: {med_docs[0]["text"][:200]}
-List 2-3 key medications or supplements for {initial_complaint}.'''
-            
-            medications = get_openai_completion(
-                prompt=med_prompt,
-                max_tokens=100,
-                temperature=0.2
-            )
-            treatment_parts.append("\nMedications/Supplements:\n" + medications)
-        
-        # 3. Home Care
-        home_embedding = get_embedding_batch([initial_complaint + " home care follow up"])[0]
-        home_docs = vectorQuotesWithSource(home_embedding, index, top_k=1)
+        # 2. Home Care
+        home_embedding = get_embedding_batch([initial_complaint + " home care advice"])[0]
+        home_docs = vectorQuotesWithSource(home_embedding, index, top_k=2)
         treatment_docs.extend(home_docs)
+        all_chunks_used.extend(home_docs)
         
         if home_docs:
-            home_prompt = f'''Based on: {home_docs[0]["text"][:200]}
-List 2-3 home care instructions for {initial_complaint}.'''
+            home_content = "\n\n".join([doc['text'] for doc in home_docs])
+            home_prompt = f'''THE FOLLOWING MEDICAL GUIDE INFORMATION IS YOUR ONLY SOURCE OF KNOWLEDGE:
+{home_content}
+
+IMPORTANT INSTRUCTIONS:
+1. ONLY use information contained in the medical guide above to formulate your response.
+2. Do NOT add any medical knowledge from your pretraining.
+3. If the medical guide doesn't contain specific home care information, simply say the guide doesn't provide that information.
+4. Present the home care instructions exactly as described in the medical guide for a patient with: {initial_complaint}
+5. Use the same terminology and recommendations as presented in the medical guide.
+6. Do not alter or simplify the medical guidance provided in the guide - present it as written.
+
+Based ONLY on the medical guide information, what home care instructions should be provided?
+'''
             
             home_care = get_openai_completion(
                 prompt=home_prompt,
-                max_tokens=100,
+                max_tokens=200,
                 temperature=0.2
             )
             treatment_parts.append("\nHome Care:\n" + home_care)
         
+        # 3. When to Refer 
+        referral_embedding = get_embedding_batch([initial_complaint + " when to refer"])[0]
+        referral_docs = vectorQuotesWithSource(referral_embedding, index, top_k=2)
+        treatment_docs.extend(referral_docs)
+        all_chunks_used.extend(referral_docs)
+        
+        referral_content = "\n\n".join([doc['text'] for doc in (referral_docs if referral_docs else diagnosis_docs)])
+        referral_prompt = f'''THE FOLLOWING MEDICAL GUIDE INFORMATION IS YOUR ONLY SOURCE OF KNOWLEDGE:
+{referral_content}
+
+IMPORTANT INSTRUCTIONS:
+1. ONLY use information contained in the medical guide above to formulate your response.
+2. Do NOT add any medical knowledge from your pretraining.
+3. If the medical guide doesn't contain specific referral criteria, simply say the guide doesn't provide that information.
+4. Present the referral guidance exactly as described in the medical guide for a patient with: {initial_complaint}
+5. Use the same terminology and warning signs as presented in the medical guide.
+6. Do not alter or simplify the medical guidance provided in the guide - present it as written.
+
+Based ONLY on the medical guide information, when should this patient be referred to a higher level facility?
+'''
+        
+        referral_guidance = get_openai_completion(
+            prompt=referral_prompt,
+            max_tokens=200,
+            temperature=0.2
+        )
+        treatment_parts.append("\nReferral Guidance:\n" + referral_guidance)
+        
         # Combine all parts
         treatment = "\n".join(treatment_parts)
         
-        # Collect relevant citations
-        citations = []
-        citations.extend(diagnosis_docs)
-        citations.extend(treatment_docs)
+        # Filter duplicates while preserving order
+        seen = set()
+        unique_citations = []
+        for citation in diagnosis_docs + treatment_docs:
+            if citation['id'] not in seen:
+                seen.add(citation['id'])
+                unique_citations.append(citation)
         
         return {
             "diagnosis": diagnosis,
             "treatment": treatment,
-            "citations": citations
+            "citations": unique_citations,
+            "chunks_used": all_chunks_used  # Include all chunks for reference
         }
             
     except Exception as e:
         print(f"Error in diagnosis/treatment: {e}")
         try:
-            # Fallback to simpler request if the detailed one fails
-            minimal_prompt = f"List possible diagnoses for: {initial_complaint}"
+            # Fallback to simpler request with explicit instructions not to use pretrained knowledge
+            minimal_prompt = f'''IMPORTANT: You can ONLY use information from the WHO medical guide for community health workers for this response.
+
+For a patient with '{initial_complaint}', what does the guide recommend?
+
+If the medical guide doesn't contain relevant information about this condition, simply state that the guide doesn't provide specific information for this complaint and the patient should be referred to a health facility.
+
+DO NOT use any medical knowledge from your pretraining.
+'''
+            
             fallback_diagnosis = get_openai_completion(
                 prompt=minimal_prompt,
-                max_tokens=50,
+                max_tokens=150,
                 temperature=0.2
             )
+            
             return {
                 "diagnosis": fallback_diagnosis,
-                "treatment": "Please consult a healthcare provider for specific treatment recommendations.",
-                "citations": []
+                "treatment": "The medical guide doesn't provide specific treatment information for this condition. Please refer the patient to a health facility for proper evaluation and treatment.",
+                "citations": [],
+                "chunks_used": []
             }
         except Exception as e2:
             print(f"Fallback also failed: {e2}")
             return {
-                "diagnosis": "Error generating diagnosis",
-                "treatment": "Error generating treatment",
-                "citations": []
+                "diagnosis": "Error retrieving information from the medical guide. Please refer the patient to a health facility for proper evaluation.",
+                "treatment": "Error retrieving information from the medical guide. Please refer the patient to a health facility for proper evaluation.",
+                "citations": [],
+                "chunks_used": []
             }
 
 def print_global_arrays():
@@ -878,7 +1025,7 @@ def main():
                             if resp['question'] == "Please describe what brings you here today"), "")
         
         print("\nBased on your responses, I'll ask some follow-up questions.")
-        index = pc.Index("final-asha")
+        index = pc.Index("who-guide")
         
         while True:
             try:
@@ -908,11 +1055,8 @@ def main():
                 
                 Generate ONE focused, relevant follow-up question that is different from the previous questions.
                 Like do not ask both "How long have you had the pain?" and "How severe is the pain?", as they are too similar. It should only be like one or the other
-                Follow standard medical assessment order:
-                1. Duration and onset
-                2. Characteristics and severity
-                3. Associated symptoms
-                4. Impact on daily life
+                Do not as about compound questions like "Do you have fever and cough?" or "Do you have pain in your chest or abdomen?". It should be one or the other like "Do you have fever" or "Do you have pain in your chest?".
+                There should be no "or" or "and" in the question as ask about one specific metric not compounded one.
                 
                 Return only the question text.'''
                 

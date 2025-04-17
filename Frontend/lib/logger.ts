@@ -15,11 +15,14 @@ const getBaseUrl = () => {
 
 export async function log(message: string, type: "crawler" | "ai_summary" | "ai_analysis") {
   try {
+    // Create a specific timestamp in ISO format
+    const now = new Date().toISOString();
+    
     // When running in serverless function, we need to make a direct DB call instead of an HTTP request
     if (typeof window === "undefined") {
       const { neon } = await import("@neondatabase/serverless");
       const sql = neon(process.env.DATABASE_URL!);
-      await sql`INSERT INTO logs (message, type) VALUES (${message}, ${type})`;
+      await sql`INSERT INTO logs (timestamp, message, type) VALUES (${now}, ${message}, ${type})`;
       return;
     }
 
