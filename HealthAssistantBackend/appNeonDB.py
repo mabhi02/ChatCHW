@@ -37,7 +37,8 @@ from chad import (
 
 
 # PostgreSQL/NeonDB Connection Setup
-DB_URL = "postgresql://neondb_owner:npg_RvG4KaDUcOp9@ep-broad-frost-a5ovvl94-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require"
+DB_URL = "postgresql://ChatCHW-Test_owner:npg_3IXKAYLWFo7g@ep-broad-truth-a646rqhc-pooler.us-west-2.aws.neon.tech/ChatCHW-Test?sslmode=require"
+# DB_URL = "postgresql://neondb_owner:npg_RvG4KaDUcOp9@ep-broad-frost-a5ovvl94-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require"
 
 # Database Functions
 
@@ -285,6 +286,23 @@ def store_current_examination(session_id: str, examination_data: Dict[str, Any])
     finally:
         conn.close()
 
+def increment_question_index(chat_name: str, current_question_index):
+    """Update current_question_index."""
+    conn = get_db_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                "UPDATE sessions SET current_question_index = %s WHERE chat_name = %s",
+                (current_question_index, chat_name)
+            )
+            conn.commit()
+    except Exception as e:
+        conn.rollback()
+        print(f"Database error: {e}")
+    finally:
+        conn.close()
+
+
 def store_final_results(results, session_id):
     # Store diagnosis and treatment in database
         conn = get_db_connection()
@@ -413,6 +431,9 @@ def process_input():
                 
                 print(f"Stored response for question {session_data['current_question_index']}")  # Debug print
                 
+                increment_question_index()
+                session_data = create_or_get_session(session_id)
+
                 # Move to next question or phase
                 if session_data['current_question_index'] < len(questions_init):
                     next_question = questions_init[session_data['current_question_index']]
@@ -813,4 +834,5 @@ if __name__ == "__main__":
     # Get the port from Render's environment variable
     port = int(os.environ.get("PORT", 10000))
     # Bind to 0.0.0.0 to allow external access
+    print(">>> Running NeonDB backend <<<")
     app.run(host="0.0.0.0", port=port)
