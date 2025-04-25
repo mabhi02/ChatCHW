@@ -104,7 +104,6 @@ def get_db_connection():
     conn.autocommit = False
     return conn
 
-
 def create_or_get_session(chat_name: str) -> Dict[str, Any]:
     """Create a new session or get an existing session for the given chat name."""
     conn = get_db_connection()
@@ -217,7 +216,7 @@ def store_question(chat_name: str, question_data: Dict[str, Any]) -> int:
     finally:
         conn.close()
 
-def store_examination(chat_name: str, examination_data: Dict[str, Any]) -> int:
+def store_examination_db(chat_name: str, examination_data: Dict[str, Any]) -> int:
     """Store examination data in the examinations table."""
     conn = get_db_connection()
     try:
@@ -246,6 +245,65 @@ def store_examination(chat_name: str, examination_data: Dict[str, Any]) -> int:
         return -1
     finally:
         conn.close()
+
+def store_examination(examination_text: str, selected_option: int, session_id: str = "default"):
+    """Store examination data in the database."""
+    try:
+        # Parse examination and options
+        examination, options = parse_examination_text(examination_text)
+        
+        # Create examination entry
+        examination_entry = {
+            "examination": examination,
+            "options": options,
+            "selected_option": selected_option
+        }
+        
+        # Store in database
+        store_examination_db(session_id, examination_entry)
+        
+    except Exception as e:
+        print(f"Error storing examination: {e}")
+
+def store_current_examination(session_id: str, examination_data: Dict[str, Any]) -> None:
+    """Store current examination in the session record."""
+    conn = get_db_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                UPDATE sessions 
+                SET current_examination = %s
+                WHERE chat_name = %s
+                """,
+                (Json(examination_data), session_id)
+            )
+            conn.commit()
+    except Exception as e:
+        conn.rollback()
+        print(f"Error updating current examination: {e}")
+    finally:
+        conn.close()
+
+def store_final_results(results, session_id):
+    # Store diagnosis and treatment in database
+        conn = get_db_connection()
+        try:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    UPDATE sessions 
+                    SET diagnosis = %s, treatment = %s, phase = 'complete'
+                    WHERE chat_name = %s
+                    """,
+                    (results['diagnosis'], results['treatment'], session_id)
+                )
+                conn.commit()
+        except Exception as e:
+            conn.rollback()
+            print(f"Error updating diagnosis/treatment: {e}")
+        finally:
+            conn.close()
 
 def get_structured_questions(chat_name: str) -> List[Dict[str, Any]]:
     """Get all structured questions for a chat session."""
@@ -292,15 +350,14 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
 
 
-# Global state management
-sessions = {}
-
 @app.route('/api/start-assessment', methods=['POST'])
 def start_assessment():
     """Initialize a new session and return first question"""
     try:
+        setup_database()
+
         session_id = request.json.get('session_id', 'default')
-        session_data = get_session_data(session_id, sessions)
+        session_data = create_or_get_session(session_id)
         
         # Format first question for chat interface
         first_question = questions_init[0]
@@ -338,23 +395,25 @@ def process_input():
         
         print(f"Received input: {user_input} for session: {session_id}")  # Debug print
         
-        session_data = get_session_data(session_id, sessions)
+        session_data = create_or_get_session(session_id)
         print(f"Current phase: {session_data['phase']}")  # Debug print
         
         if session_data['phase'] == "initial":
             try:
                 # Store initial response
                 current_question = questions_init[session_data['current_question_index']]
-                session_data['initial_responses'].append({
+                response_data = {
                     "question": current_question['question'],
                     "answer": user_input,
                     "type": current_question['type']
-                })
+                }
+
+                # Update database with response
+                update_session_responses(session_id, "initial_responses", response_data)
                 
                 print(f"Stored response for question {session_data['current_question_index']}")  # Debug print
                 
                 # Move to next question or phase
-                session_data['current_question_index'] += 1
                 if session_data['current_question_index'] < len(questions_init):
                     next_question = questions_init[session_data['current_question_index']]
                     if next_question['type'] in ['MC', 'MCM']:
@@ -374,8 +433,9 @@ def process_input():
                     })
                 else:
                     print("Moving to followup phase")  # Debug print
+                    update_session_phase(session_id, "followup")
                     session_data['phase'] = "followup"
-                    return generate_followup_question(session_data)
+                    return generate_followup_question(session_data, session_id)
                     
             except Exception as e:
                 print(f"Error in initial phase: {str(e)}")  # Debug print
@@ -385,15 +445,19 @@ def process_input():
             try:
                 # Store followup response
                 if 'current_followup_question' in session_data:
-                    session_data['followup_responses'].append({
+                    response_data = {
                         "question": session_data['current_followup_question']['question'],
                         "answer": user_input,
                         "type": "MC"
-                    })
+                    }
+                    update_session_responses(session_id, "followup_responses", response_data)
                 
+                # Get updated session data after storing the response
+                session_data = create_or_get_session(session_id)
+
                 # Generate next followup question or move to exam phase
                 if judge(session_data['followup_responses'], session_data['current_followup_question']['question']):
-                    session_data['phase'] = "exam"
+                    update_session_phase(session_id, "exam")
                     return generate_examination(session_data)
                 else:
                     return generate_followup_question(session_data)
@@ -416,15 +480,21 @@ def process_input():
                                 selected_option = option['id']
                                 break
                     
-                    store_examination(session_data['current_examination']['text'], selected_option)
-                    session_data['exam_responses'].append({
+                    store_examination(session_data['current_examination']['text'], selected_option, session_id)
+                    
+                    response_data = {
                         "examination": session_data['current_examination']['text'],
                         "result": user_input,
                         "type": "EXAM"
-                    })
+                    }
+                    update_session_responses(session_id, "exam_responses", response_data)
                 
+                # Get updated session data after storing the response
+                session_data = create_or_get_session(session_id)
+
                 # Generate next examination or complete assessment
                 if judge_exam(session_data['exam_responses'], session_data['current_examination']['text']):
+                    update_session_phase(session_id, "diagnosis")
                     return generate_final_results(session_data)
                 else:
                     return generate_examination(session_data)
@@ -440,7 +510,7 @@ def process_input():
             "message": str(e)
         })
 
-def generate_followup_question(session_data):
+def generate_followup_question(session_data, session_id="default"):
     """Generate and format followup question"""
     try:
         print("Starting generate_followup_question")  # Debug print
@@ -539,12 +609,32 @@ def generate_followup_question(session_data):
         
         print(f"Generated {len(options)} options")  # Debug print
         
-        # Store the generated question in session
-        session_data['current_followup_question'] = {
+        # Store the generated question in session (using database)
+        # We'll now store this information in a temporary variable for the current request
+        current_followup_question = {
             "question": question,
             "options": options
         }
-        
+
+        # Store this in the database as a JSON field to track the current question
+        conn = get_db_connection()
+        try:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    UPDATE sessions 
+                    SET current_followup_question = %s
+                    WHERE chat_name = %s
+                    """,
+                    (Json(current_followup_question), session_id)
+                )
+                conn.commit()
+        except Exception as e:
+            conn.rollback()
+            print(f"Error updating current followup question: {e}")
+        finally:
+            conn.close()
+
         # Format output for chat interface
         options_text = "\n".join([f"{opt['id']}. {opt['text']}" for opt in options])
         output = f"{question}\n\n{options_text}"
@@ -568,7 +658,7 @@ def generate_followup_question(session_data):
             "message": str(e)
         })
      
-def generate_examination(session_data):
+def generate_examination(session_data, session_id="default"):
     """Generate examination using embeddings for context matching"""
     try:
         initial_complaint = next((resp['answer'] for resp in session_data['initial_responses'] 
@@ -655,6 +745,11 @@ YOUR EXAMINATION MUST:
             "options": options
         }
         
+        store_current_examination(session_id, {
+            "text": examination_text,
+            "options": options
+        })
+
         options_text = "\n".join([f"{opt['id']}. {opt['text']}" for opt in options])
         output = f"Recommended Examination:\n{examination}\n\nFindings:\n{options_text}"
         
@@ -677,7 +772,7 @@ YOUR EXAMINATION MUST:
             "message": str(e)
         })
 
-def generate_final_results(session_data):
+def generate_final_results(session_data, session_id="default"):
     """Generate and format final results"""
     try:
         results = get_diagnosis_and_treatment(
@@ -686,6 +781,8 @@ def generate_final_results(session_data):
             session_data['exam_responses']
         )
         
+        store_final_results(results, session_id)
+
         # Format results for chat interface
         output = f"""Assessment Complete
 
