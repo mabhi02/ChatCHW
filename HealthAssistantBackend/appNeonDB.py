@@ -539,9 +539,9 @@ def process_input():
                 # Generate next followup question or move to exam phase
                 if judge(session_data['followup_responses'], session_data['current_followup_question']['question']):
                     update_session_phase(session_id, "exam")
-                    return generate_examination(session_data)
+                    return generate_examination(session_id, session_data)
                 else:
-                    return generate_followup_question(session_data)
+                    return generate_followup_question(session_data, session_id)
                     
             except Exception as e:
                 print(f"Error in followup phase: {str(e)}")  # Debug print
@@ -578,7 +578,7 @@ def process_input():
                     update_session_phase(session_id, "diagnosis")
                     return generate_final_results(session_data)
                 else:
-                    return generate_examination(session_data)
+                    return generate_examination(session_id, session_data)
                     
             except Exception as e:
                 print(f"Error in exam phase: {str(e)}")  # Debug print
