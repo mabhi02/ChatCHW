@@ -41,11 +41,38 @@ DB_URL = "postgresql://ChatCHW-Test_owner:npg_3IXKAYLWFo7g@ep-broad-truth-a646rq
 # DB_URL = "postgresql://neondb_owner:npg_RvG4KaDUcOp9@ep-broad-frost-a5ovvl94-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require"
 
 # Database Functions
+def patch_schema_column():
+    conn = get_db_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("""
+                DO $$
+                BEGIN
+                    IF EXISTS (
+                        SELECT 1 FROM information_schema.columns
+                        WHERE table_name='sessions'
+                        AND column_name='current_followup_question'
+                        AND data_type='text'
+                    ) THEN
+                        ALTER TABLE sessions DROP COLUMN current_followup_question;
+                        ALTER TABLE sessions ADD COLUMN current_followup_question JSONB DEFAULT NULL;
+                    END IF;
+                END;
+                $$;
+            """)
+            conn.commit()
+            print("Patched current_followup_question column to JSONB.")
+    except Exception as e:
+        conn.rollback()
+        print(f"Schema patch error: {e}")
+    finally:
+        conn.close()
 
 def setup_database():
     """Set up the PostgreSQL database schema."""
     conn = psycopg2.connect(DB_URL)
     cur = conn.cursor()
+    patch_schema_column()
     
     try:
         # Create sessions table
@@ -59,9 +86,12 @@ def setup_database():
             current_question_index INTEGER DEFAULT 0,
             phase TEXT DEFAULT 'initial',
             diagnosis TEXT,
-            treatment TEXT
+            treatment TEXT,
+            current_followup_question JSONB DEFAULT NULL,
+            current_examination JSONB DEFAULT NULL
         )
         """)
+        # I added the last two fields
         
         # Create questions table
         cur.execute("""
@@ -98,6 +128,7 @@ def setup_database():
     finally:
         cur.close()
         conn.close()
+        
 
 def get_db_connection():
     """Create a database connection."""
@@ -208,6 +239,7 @@ def store_question(chat_name: str, question_data: Dict[str, Any]) -> int:
                 )
             )
             question_id = cur.fetchone()[0]
+
             conn.commit()
             return question_id
     except Exception as e:
@@ -286,6 +318,7 @@ def store_current_examination(session_id: str, examination_data: Dict[str, Any])
     finally:
         conn.close()
 
+# new function
 def increment_question_index(chat_name: str, current_question_index):
     """Update current_question_index."""
     conn = get_db_connection()
@@ -302,6 +335,26 @@ def increment_question_index(chat_name: str, current_question_index):
     finally:
         conn.close()
 
+# new function
+def store_current_question(chat_name, current_followup_question):
+    # Store this in the database as a JSON field to track the current question
+        conn = get_db_connection()
+        try:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    UPDATE sessions 
+                    SET current_followup_question = %s
+                    WHERE chat_name = %s
+                    """,
+                    (Json(current_followup_question), chat_name)
+                )
+                conn.commit()
+        except Exception as e:
+            conn.rollback()
+            print(f"Error updating current followup question: {e}")
+        finally:
+            conn.close()
 
 def store_final_results(results, session_id):
     # Store diagnosis and treatment in database
@@ -426,12 +479,19 @@ def process_input():
                     "type": current_question['type']
                 }
 
+                current_followup_question = {
+                    "question": current_question['question'],
+                    "options": current_question.get('options', [])
+                }
+
+                store_current_question(session_id, current_followup_question)
+
                 # Update database with response
                 update_session_responses(session_id, "initial_responses", response_data)
                 
                 print(f"Stored response for question {session_data['current_question_index']}")  # Debug print
                 
-                increment_question_index()
+                increment_question_index(session_id, session_data['current_question_index'] + 1)
                 session_data = create_or_get_session(session_id)
 
                 # Move to next question or phase
@@ -472,7 +532,7 @@ def process_input():
                         "type": "MC"
                     }
                     update_session_responses(session_id, "followup_responses", response_data)
-                
+
                 # Get updated session data after storing the response
                 session_data = create_or_get_session(session_id)
 
@@ -637,24 +697,7 @@ def generate_followup_question(session_data, session_id="default"):
             "options": options
         }
 
-        # Store this in the database as a JSON field to track the current question
-        conn = get_db_connection()
-        try:
-            with conn.cursor() as cur:
-                cur.execute(
-                    """
-                    UPDATE sessions 
-                    SET current_followup_question = %s
-                    WHERE chat_name = %s
-                    """,
-                    (Json(current_followup_question), session_id)
-                )
-                conn.commit()
-        except Exception as e:
-            conn.rollback()
-            print(f"Error updating current followup question: {e}")
-        finally:
-            conn.close()
+        store_current_question(session_id, current_followup_question)
 
         # Format output for chat interface
         options_text = "\n".join([f"{opt['id']}. {opt['text']}" for opt in options])
