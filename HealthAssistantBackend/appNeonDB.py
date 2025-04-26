@@ -45,9 +45,11 @@ def patch_schema_column():
     conn = get_db_connection()
     try:
         with conn.cursor() as cur:
+            # Check if columns exist and fix type if needed
             cur.execute("""
                 DO $$
                 BEGIN
+                    -- Check if current_followup_question column exists and fix type if needed
                     IF EXISTS (
                         SELECT 1 FROM information_schema.columns
                         WHERE table_name='sessions'
@@ -57,11 +59,29 @@ def patch_schema_column():
                         ALTER TABLE sessions DROP COLUMN current_followup_question;
                         ALTER TABLE sessions ADD COLUMN current_followup_question JSONB DEFAULT NULL;
                     END IF;
+                    
+                    -- Add current_followup_question if it doesn't exist
+                    IF NOT EXISTS (
+                        SELECT 1 FROM information_schema.columns
+                        WHERE table_name='sessions'
+                        AND column_name='current_followup_question'
+                    ) THEN
+                        ALTER TABLE sessions ADD COLUMN current_followup_question JSONB DEFAULT NULL;
+                    END IF;
+                    
+                    -- Add current_examination if it doesn't exist
+                    IF NOT EXISTS (
+                        SELECT 1 FROM information_schema.columns
+                        WHERE table_name='sessions'
+                        AND column_name='current_examination'
+                    ) THEN
+                        ALTER TABLE sessions ADD COLUMN current_examination JSONB DEFAULT NULL;
+                    END IF;
                 END;
                 $$;
             """)
             conn.commit()
-            print("Patched current_followup_question column to JSONB.")
+            print("Patched schema columns.")
     except Exception as e:
         conn.rollback()
         print(f"Schema patch error: {e}")
@@ -127,8 +147,7 @@ def setup_database():
         print(f"Database setup error: {e}")
     finally:
         cur.close()
-        conn.close()
-        
+        conn.close()   
 
 def get_db_connection():
     """Create a database connection."""
@@ -159,7 +178,19 @@ def create_or_get_session(chat_name: str) -> Dict[str, Any]:
                 session = cur.fetchone()
                 conn.commit()
             
-            return dict(session)
+            # Parse JSON fields to Python objects
+            session_dict = dict(session)
+            for field in ['initial_responses', 'followup_responses', 'exam_responses', 
+                         'current_followup_question', 'current_examination']:
+                if field in session_dict and session_dict[field] is not None:
+                    # If it's already a dict/list, leave it alone
+                    if not isinstance(session_dict[field], (dict, list)):
+                        try:
+                            session_dict[field] = json.loads(session_dict[field]) if isinstance(session_dict[field], str) else session_dict[field]
+                        except:
+                            pass  # If parsing fails, leave as is
+
+            return session_dict
     except Exception as e:
         conn.rollback()
         print(f"Database error: {e}")
@@ -356,25 +387,87 @@ def store_current_question(chat_name, current_followup_question):
         finally:
             conn.close()
 
-def store_final_results(results, session_id):
-    # Store diagnosis and treatment in database
+def store_selected_option_in_questions(question_id, user_input, session_data):
+    # If we have a question ID, update the selected option
+    if question_id:
+        # Find which option was selected by matching the text
+        selected_option = 1  # Default to first option
+        for i, option in enumerate(session_data['current_followup_question']['options']):
+            if option['text'] == user_input:
+                selected_option = option['id']
+                break
+        
+        # Update the question in the database
         conn = get_db_connection()
         try:
             with conn.cursor() as cur:
                 cur.execute(
                     """
-                    UPDATE sessions 
-                    SET diagnosis = %s, treatment = %s, phase = 'complete'
-                    WHERE chat_name = %s
+                    UPDATE questions 
+                    SET selected_option = %s
+                    WHERE id = %s
                     """,
-                    (results['diagnosis'], results['treatment'], session_id)
+                    (selected_option, question_id)
                 )
                 conn.commit()
         except Exception as e:
             conn.rollback()
-            print(f"Error updating diagnosis/treatment: {e}")
+            print(f"Error updating question selected option: {e}")
         finally:
             conn.close()
+
+
+def store_final_results(results, session_id):
+    """Store diagnosis and treatment in database with better error handling and verification."""
+    conn = get_db_connection()
+    try:
+        with conn.cursor() as cur:
+            # Print values for debugging
+            print(f"Storing diagnosis: {results['diagnosis'][:50]}...")
+            print(f"Storing treatment: {results['treatment'][:50]}...")
+            
+            # Execute the update
+            cur.execute(
+                """
+                UPDATE sessions 
+                SET diagnosis = %s, treatment = %s, phase = 'complete'
+                WHERE chat_name = %s
+                RETURNING id
+                """,
+                (results['diagnosis'], results['treatment'], session_id)
+            )
+            
+            # Verify the update succeeded
+            updated_row = cur.fetchone()
+            if updated_row:
+                conn.commit()
+                print(f"Successfully updated session {session_id}, row ID: {updated_row[0]}")
+            else:
+                conn.rollback()
+                print(f"No session found with chat_name = {session_id}")
+                
+            # Verify the data was actually stored
+            cur.execute(
+                """
+                SELECT diagnosis, treatment FROM sessions WHERE chat_name = %s
+                """,
+                (session_id,)
+            )
+            stored_data = cur.fetchone()
+            if stored_data:
+                print(f"Verified stored diagnosis: {stored_data[0][:20]}...")
+                print(f"Verified stored treatment: {stored_data[1][:20]}...")
+            else:
+                print("Failed to verify stored data")
+                
+    except Exception as e:
+        conn.rollback()
+        print(f"Error updating diagnosis/treatment: {e}")
+        print(f"Error type: {type(e).__name__}")
+        import traceback
+        traceback.print_exc()
+    finally:
+        conn.close()
 
 def get_structured_questions(chat_name: str) -> List[Dict[str, Any]]:
     """Get all structured questions for a chat session."""
@@ -533,13 +626,18 @@ def process_input():
                     }
                     update_session_responses(session_id, "followup_responses", response_data)
 
+                # Get the question ID from current_followup_question
+                question_id = session_data['current_followup_question'].get('question_id')
+                
+                store_selected_option_in_questions(question_id, user_input, session_data)
+
                 # Get updated session data after storing the response
                 session_data = create_or_get_session(session_id)
 
                 # Generate next followup question or move to exam phase
                 if judge(session_data['followup_responses'], session_data['current_followup_question']['question']):
                     update_session_phase(session_id, "exam")
-                    return generate_examination(session_id, session_data)
+                    return generate_examination(session_data, session_id)
                 else:
                     return generate_followup_question(session_data, session_id)
                     
@@ -576,9 +674,9 @@ def process_input():
                 # Generate next examination or complete assessment
                 if judge_exam(session_data['exam_responses'], session_data['current_examination']['text']):
                     update_session_phase(session_id, "diagnosis")
-                    return generate_final_results(session_data)
+                    return generate_final_results(session_data, session_id)
                 else:
-                    return generate_examination(session_id, session_data)
+                    return generate_examination(session_data, session_id)
                     
             except Exception as e:
                 print(f"Error in exam phase: {str(e)}")  # Debug print
@@ -690,11 +788,33 @@ def generate_followup_question(session_data, session_id="default"):
         
         print(f"Generated {len(options)} options")  # Debug print
         
+
+        # Use process_with_matrix to get the confidence and weights
+        matrix_output = process_with_matrix(question, session_data['followup_responses'])
+        
+        # Prepare the question data for storing
+        question_data = {
+            "question": question,
+            "options": options,
+            "selected_option": None,  # This will be updated later when the user answers
+            "pattern": matrix_output.get('weights', {}).get('optimist', 0.5),
+            "confidence": matrix_output.get('confidence', 0.5),
+            "selected_agent": matrix_output.get('selected_agent', 'optimist'),
+            "weights": matrix_output.get('weights', {}),
+            "sources": relevant_docs[:5]  # Store the top 5 relevant documents as sources
+        }
+        
+        # Store the question in the questions table
+        question_id = store_question(session_id, question_data)
+        print(f"Stored question with ID: {question_id}")
+
         # Store the generated question in session (using database)
         # We'll now store this information in a temporary variable for the current request
         current_followup_question = {
             "question": question,
-            "options": options
+            "options": options,
+            "question_id": question_id  # Store the question ID for later reference
+
         }
 
         store_current_question(session_id, current_followup_question)
@@ -725,12 +845,14 @@ def generate_followup_question(session_data, session_id="default"):
 def generate_examination(session_data, session_id="default"):
     """Generate examination using embeddings for context matching"""
     try:
+
         initial_complaint = next((resp['answer'] for resp in session_data['initial_responses'] 
                             if resp['question'] == "Please describe what brings you here today"), "")
         
         # Get embeddings for complaint and key symptoms
         context_items = [initial_complaint]
         symptoms = []
+
         for resp in session_data['followup_responses']:
             answer = resp['answer'].lower()
             if any(symptom in answer for symptom in 
