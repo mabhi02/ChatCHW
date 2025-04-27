@@ -44,6 +44,17 @@ load_dotenv()
 # Access the database URL
 DB_URL = os.getenv("NEON_DATABASE_URL")
 
+def print_masked_db_url(db_url):
+    if db_url and '://' in db_url:
+        parts = db_url.split('://')
+        if '@' in parts[1]:
+            credentials, host_info = parts[1].split('@', 1)
+            print(f"Using database: {parts[0]}://****@{host_info}")
+        else:
+            print(f"Using database: {parts[0]}://**** (credentials masked)")
+    else:
+        print("Database URL format unrecognized")
+
 # Database Functions
 def patch_schema_column():
     conn = get_db_connection()
@@ -95,6 +106,7 @@ def patch_schema_column():
 def setup_database():
     """Set up the PostgreSQL database schema."""
     conn = psycopg2.connect(DB_URL)
+    print_masked_db_url(DB_URL)
     cur = conn.cursor()
     patch_schema_column()
     
@@ -154,10 +166,18 @@ def setup_database():
         conn.close()   
 
 def get_db_connection():
-    """Create a database connection."""
-    conn = psycopg2.connect(DB_URL)
-    conn.autocommit = False
-    return conn
+    """Create a database connection with better error handling."""
+    try:
+        print("Attempting to connect to database...")
+        conn = psycopg2.connect(DB_URL)
+        conn.autocommit = False
+        print("Database connection established successfully.")
+        return conn
+    except Exception as e:
+        print(f"ERROR connecting to database: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        raise
 
 def create_or_get_session(chat_name: str) -> Dict[str, Any]:
     """Create a new session or get an existing session for the given chat name."""
@@ -420,16 +440,16 @@ def store_selected_option_in_questions(question_id, user_input, session_data):
         finally:
             conn.close()
 
-
 def store_final_results(results, session_id):
     """Store diagnosis and treatment in database with better error handling and verification."""
-    conn = get_db_connection()
+    conn = None
     try:
+        print(f"Attempting to store results for session: {session_id}")
+        print(f"Diagnosis length: {len(results['diagnosis'])}")
+        print(f"Treatment length: {len(results['treatment'])}")
+        
+        conn = get_db_connection()
         with conn.cursor() as cur:
-            # Print values for debugging
-            print(f"Storing diagnosis: {results['diagnosis'][:50]}...")
-            print(f"Storing treatment: {results['treatment'][:50]}...")
-            
             # Execute the update
             cur.execute(
                 """
@@ -444,34 +464,25 @@ def store_final_results(results, session_id):
             # Verify the update succeeded
             updated_row = cur.fetchone()
             if updated_row:
+                print(f"Update successful, now committing transaction...")
                 conn.commit()
-                print(f"Successfully updated session {session_id}, row ID: {updated_row[0]}")
+                print(f"Transaction committed for session {session_id}, row ID: {updated_row[0]}")
             else:
+                print(f"WARNING: No session found with chat_name = {session_id}")
                 conn.rollback()
-                print(f"No session found with chat_name = {session_id}")
-                
-            # Verify the data was actually stored
-            cur.execute(
-                """
-                SELECT diagnosis, treatment FROM sessions WHERE chat_name = %s
-                """,
-                (session_id,)
-            )
-            stored_data = cur.fetchone()
-            if stored_data:
-                print(f"Verified stored diagnosis: {stored_data[0][:20]}...")
-                print(f"Verified stored treatment: {stored_data[1][:20]}...")
-            else:
-                print("Failed to verify stored data")
                 
     except Exception as e:
-        conn.rollback()
-        print(f"Error updating diagnosis/treatment: {e}")
+        if conn:
+            conn.rollback()
+        print(f"ERROR storing results: {str(e)}")
         print(f"Error type: {type(e).__name__}")
         import traceback
         traceback.print_exc()
     finally:
-        conn.close()
+        if conn:
+            print("Closing connection...")
+            conn.close()
+            print("Connection closed.")
 
 def get_structured_questions(chat_name: str) -> List[Dict[str, Any]]:
     """Get all structured questions for a chat session."""
@@ -517,6 +528,24 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
 
+@app.route('/api/check-db', methods=['GET'])
+def check_database():
+    """Simple endpoint to verify database connectivity"""
+    try:
+        conn = get_db_connection()
+        with conn.cursor() as cur:
+            cur.execute("SELECT 1")
+            result = cur.fetchone()
+        conn.close()
+        return jsonify({
+            "status": "success",
+            "message": "Database connection successful"
+        })
+    except Exception as e:
+        return jsonify({
+            "status": "error",
+            "message": f"Database connection failed: {str(e)}"
+        })
 
 @app.route('/api/start-assessment', methods=['POST'])
 def start_assessment():
