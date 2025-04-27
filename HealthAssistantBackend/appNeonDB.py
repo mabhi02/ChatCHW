@@ -17,6 +17,7 @@ import json
 from typing import Dict, List, Any, Optional
 import sys
 import os
+from dotenv import load_dotenv
 import openai
 from chad import (
     questions_init,
@@ -37,8 +38,11 @@ from chad import (
 
 
 # PostgreSQL/NeonDB Connection Setup
-DB_URL = "postgresql://ChatCHW-Test_owner:npg_3IXKAYLWFo7g@ep-broad-truth-a646rqhc-pooler.us-west-2.aws.neon.tech/ChatCHW-Test?sslmode=require"
-# DB_URL = "postgresql://neondb_owner:npg_RvG4KaDUcOp9@ep-broad-frost-a5ovvl94-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require"
+
+load_dotenv()
+
+# Access the database URL
+DB_URL = os.getenv("NEON_DATABASE_URL")
 
 # Database Functions
 def patch_schema_column():
