@@ -629,7 +629,7 @@ def generate_followup_question(session_data):
                 context += f"Q: {resp['question']}\nA: {resp['answer']}\n"
         
         # Get embeddings and relevant documents
-        index = pc.Index("who-guide")
+        index = pc.Index("who-guide-old")
         embedding = get_embedding_batch([context])[0]
         
         print("Got embedding")  # Debug print
@@ -884,7 +884,7 @@ def generate_examination(session_data):
         embeddings = get_embedding_batch(context_items)
         
         # Get relevant documents using embeddings
-        index = pc.Index("who-guide")
+        index = pc.Index("who-guide-old")
         relevant_matches = []
         for emb in embeddings:
             matches = vectorQuotesWithSource(emb, index, top_k=2)

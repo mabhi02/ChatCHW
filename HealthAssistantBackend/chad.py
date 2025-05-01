@@ -648,7 +648,7 @@ def get_diagnosis_and_treatment(initial_responses: List[Dict[str, Any]],
         key_findings = key_findings[-3:]  # Only keep last 3 findings
         
         # First, get diagnosis using minimal context
-        index = pc.Index("who-guide")
+        index = pc.Index("who-guide-old")
         diagnosis_embedding = get_embedding_batch([initial_complaint + " diagnosis"])[0]
         diagnosis_docs = vectorQuotesWithSource(diagnosis_embedding, index, top_k=3)  # Increased to get more context
         
@@ -1025,7 +1025,7 @@ def main():
                             if resp['question'] == "Please describe what brings you here today"), "")
         
         print("\nBased on your responses, I'll ask some follow-up questions.")
-        index = pc.Index("who-guide")
+        index = pc.Index("who-guide-old")
         
         while True:
             try:
