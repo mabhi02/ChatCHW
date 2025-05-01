@@ -40,7 +40,7 @@ except ImportError:
 
 app = Flask(__name__)
 # Set frontend URL with fallback to your deployed frontend
-frontend_url = os.environ.get('FRONTEND_URL', 'https://chatchw.onrender.com')
+frontend_url = os.environ.get('FRONTEND_URL', 'https://chw-demo.onrender.com')
 # Configure CORS to allow requests from both localhost and your deployed frontend
 CORS(app, origins=["http://localhost:3000", frontend_url], supports_credentials=True)
 openai.api_key = os.getenv("OPENAI_API_KEY")
