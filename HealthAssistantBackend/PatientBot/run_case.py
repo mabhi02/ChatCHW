@@ -38,16 +38,13 @@ from chad import (
 # Import the EXACT examination generation functions from app.py
 sys.path.append('../HealthAssistantBackend')
 try:
-    from app import generate_examination
-    print("✅ Successfully imported generate_examination from app.py")
+    # Import core functions but create standalone versions
+    import openai
+    openai.api_key = os.getenv("OPENAI_API_KEY")
+    print("✅ Successfully imported OpenAI for standalone examination generation")
 except ImportError as e:
-    print(f"❌ Failed to import generate_examination from app.py: {e}")
-    # Create a minimal fallback version
-    def generate_examination(session_data):
-        return {
-            "status": "error",
-            "output": "Examination generation not available"
-        }
+    print(f"❌ Failed to import OpenAI: {e}")
+    openai = None
 
 class SimplePatientRunner:
     def __init__(self):
@@ -134,13 +131,21 @@ CRITICAL RULES:
 1. If patient says "Yes" and there are multiple Yes options (like options 1,2,3), pick the MOST SPECIFIC/APPROPRIATE one based on the patient's case
 2. If patient says a duration like "2 days", match it to the closest duration option, NOT option 5
 3. If patient says "Female/Male", pick the exact gender option, NOT option 5
-4. Only use option 5 (Other) if the response truly doesn't match ANY of the specific options 1-4
-5. Be SMART about medical context - use the patient's complaint/symptoms to pick the best match
+4. IMPORTANT: If the patient response is a DURATION (like "2 days") but the question is NOT about duration/time, then select option 5 (Other) with the response as specific answer
+5. Only use option 5 (Other) if the response truly doesn't match ANY of the specific options 1-4
+6. Be SMART about medical context - use the patient's complaint/symptoms to pick the best match
+
+Context Analysis:
+- If question asks about FEVER/TEMPERATURE and patient says "2 days", this is WRONG context → option 5
+- If question asks about COUGH DURATION and patient says "2 days", this is CORRECT context → match closest duration
+- If question asks about BREATHING/SYMPTOMS and patient says "2 days", this is WRONG context → option 5
+- If question asks about YES/NO and patient says duration, this is WRONG context → option 5
 
 Examples:
-- Patient with "Cough" complaint + says "Yes" to breathing difficulty → pick the breathing-related yes option
-- Patient says "2 days" → pick closest duration match (e.g., "3 days" option)
-- Patient says "Female" → pick option 2 (Female), not option 5
+- Q: "Has child had fever?" + A: "2 days" → option 5 (duration doesn't answer yes/no)
+- Q: "How long has fever lasted?" + A: "2 days" → match closest duration option
+- Q: "Any difficulty breathing?" + A: "2 days" → option 5 (duration doesn't answer yes/no)
+- Patient with "Cough" complaint + says "Yes" to breathing difficulty → pick breathing-related yes option
 
 Return ONLY the option number (e.g., "2")."""
 
@@ -442,7 +447,7 @@ Return ONLY the option number (e.g., "2")."""
                 }
                 
                 # Use the EXACT same generate_examination function from app.py
-                examination_result = generate_examination(session_data)
+                examination_result = self.generate_standalone_examination(session_data)
                 
                 if examination_result.get('status') != 'success':
                     print(f"❌ Examination generation failed: {examination_result.get('message', 'Unknown error')}")
@@ -573,6 +578,193 @@ Return ONLY the option number (e.g., "2")."""
         
         print(f"\n💾 Results saved to: {filepath}")
         print("\n✅ CHW WORKFLOW COMPLETE!")
+
+    def generate_standalone_examination(self, session_data):
+        """Standalone version of generate_examination without Flask dependencies"""
+        try:
+            initial_complaint = next((resp['answer'] for resp in session_data['initial_responses'] 
+                                if resp['question'] == "Please describe what brings you here today"), "")
+            
+            # Extract patient info
+            patient_info = {}
+            sex_response = next((resp for resp in session_data['initial_responses'] 
+                            if "sex" in resp['question'].lower()), None)
+            if sex_response:
+                patient_info['sex'] = sex_response['answer']
+                
+            age_response = next((resp for resp in session_data['initial_responses'] 
+                            if "age" in resp['question'].lower()), None)
+            if age_response:
+                patient_info['age'] = age_response['answer']
+            
+            # Get previous exams
+            previous_exams = []
+            if 'exam_responses' in session_data and session_data['exam_responses']:
+                for exam in session_data['exam_responses']:
+                    if 'examination' in exam:
+                        previous_exams.append(exam['examination'])
+            
+            # Build context
+            context_items = [initial_complaint]
+            context_items.append(f"Patient: {patient_info}")
+            
+            # Get symptoms from followup responses
+            symptoms = []
+            for resp in session_data['followup_responses']:
+                answer = resp['answer'].lower()
+                if any(symptom in answer for symptom in 
+                      ['pain', 'fever', 'cough', 'fatigue', 'weakness', 'swelling', 
+                       'headache', 'nausea', 'dizziness', 'rash']):
+                    symptoms.append(answer)
+            
+            context_items.extend(symptoms)
+            
+            # Get embeddings and relevant docs
+            embeddings = get_embedding_batch(context_items)
+            index = pc.Index("who-guide-old")
+            relevant_matches = []
+            for emb in embeddings:
+                matches = vectorQuotesWithSource(emb, index, top_k=2)
+                if matches:
+                    relevant_matches.extend(matches)
+            
+            # Sort and deduplicate
+            relevant_matches.sort(key=lambda x: x['score'], reverse=True)
+            seen_ids = set()
+            unique_matches = []
+            for match in relevant_matches:
+                if match['id'] not in seen_ids:
+                    seen_ids.add(match['id'])
+                    unique_matches.append(match)
+            
+            top_matches = unique_matches[:3]
+            medical_guide_content = "\n\n".join([match['text'] for match in top_matches])
+            
+            # Create examination prompt
+            previous_exams_text = "\n".join([f"- {exam}" for exam in previous_exams]) if previous_exams else "- No previous examinations"
+            symptoms_summary = ", ".join(symptoms[:3]) if symptoms else "No specific symptoms identified"
+            
+            prompt = f'''Patient information:
+Initial complaint: "{initial_complaint}"
+Key symptoms: {symptoms_summary}
+Patient age: {patient_info.get('age', 'Unknown')}
+Patient sex: {patient_info.get('sex', 'Unknown')}
+
+Previous examinations already performed (DO NOT REPEAT THESE):
+{previous_exams_text}
+
+THE FOLLOWING MEDICAL GUIDE INFORMATION IS YOUR ONLY SOURCE OF KNOWLEDGE:
+{medical_guide_content}
+
+IMPORTANT INSTRUCTIONS:
+1. ONLY use information contained in the medical guide above.
+2. You MUST select one of these three formats:
+
+FORMAT 1 - WHEN THE GUIDE PROVIDES AN EXAMINATION PROCEDURE:
+Examination: [Name]
+Procedure: [Steps from guide]
+#: [Finding 1]
+#: [Finding 2] 
+#: [Finding 3]
+#: [Finding 4]
+
+FORMAT 2 - WHEN NO EXAMINATION INFO:
+"The medical guide does not provide specific examination procedures for this condition."
+
+FORMAT 3 - WHEN PARTIAL INFO:
+"PARTIAL INFORMATION: [relevant guidance from guide]"
+
+3. Choose an examination DIFFERENT from previous ones.
+4. Use exact terminology from the medical guide.
+
+Based ONLY on the medical guide, what examination should be performed?'''
+
+            if not openai:
+                raise Exception("OpenAI not available")
+                
+            completion = openai.ChatCompletion.create(
+                model="gpt-4-0125-preview",
+                messages=[
+                    {"role": "system", "content": "You can ONLY use information from the medical guide."},
+                    {"role": "user", "content": prompt}
+                ],
+                max_tokens=400,
+                temperature=0.3
+            )
+            
+            examination_text = completion.choices[0].message.content.strip()
+            
+            # Check for no information case
+            if (examination_text == "The medical guide does not provide specific examination procedures for this condition." or
+                "does not provide" in examination_text.lower()):
+                
+                options = [
+                    {"id": 1, "text": "Proceed with general assessment and diagnosis"},
+                    {"id": 2, "text": "Refer to higher level facility"},
+                    {"id": 3, "text": "Other (please specify)"}
+                ]
+                
+                return {
+                    "status": "success",
+                    "output": f"The medical guide does not provide specific examination procedures for this condition.\n\nPlease select how to proceed:",
+                    "metadata": {
+                        "phase": "exam",
+                        "question_type": "EXAM",
+                        "options": options,
+                        "sources": top_matches,
+                        "type": "NO_INFO_EXAM"
+                    }
+                }
+            
+            # Parse examination with findings
+            try:
+                examination, option_texts = parse_examination_text(examination_text)
+                options = [{"id": i+1, "text": text} for i, text in enumerate(option_texts[:4])]
+                options.append({"id": 5, "text": "Other (please specify)"})
+                
+                # Format output
+                if any(phrase in examination.lower() for phrase in ["does not provide", "no information"]):
+                    output = f"Examination Information:\n{examination}\n\nRecommended Action:"
+                else:
+                    output = f"Recommended Examination:\n{examination}\n\nFindings:"
+                
+                return {
+                    "status": "success",
+                    "output": output,
+                    "metadata": {
+                        "phase": "exam",
+                        "question_type": "EXAM", 
+                        "options": options,
+                        "sources": top_matches,
+                        "examination_name": examination.split('\n')[0] if '\n' in examination else examination
+                    }
+                }
+                
+            except Exception as e:
+                print(f"Error parsing examination: {e}")
+                options = [
+                    {"id": 1, "text": "Proceed with general assessment"},
+                    {"id": 2, "text": "Refer to higher level facility"}
+                ]
+                
+                return {
+                    "status": "success",
+                    "output": "Unable to determine specific examination from medical guide.\n\nRecommended action:",
+                    "metadata": {
+                        "phase": "exam",
+                        "question_type": "EXAM",
+                        "options": options,
+                        "sources": [],
+                        "type": "NO_INFO_EXAM"
+                    }
+                }
+                
+        except Exception as e:
+            print(f"Error in standalone examination generation: {e}")
+            return {
+                "status": "error",
+                "message": str(e)
+            }
 
 def main():
     runner = SimplePatientRunner()
