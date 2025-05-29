@@ -112,7 +112,7 @@ An AI-powered health consultation application designed to support Community Heal
 
 ### Vector Database Implementation
 #### Pinecone Integration
-- Database name: "final-asha"
+- Database name: "who-guide-old"
 - Optimized for medical knowledge storage
 - High-performance similarity search
 - Scalable vector storage

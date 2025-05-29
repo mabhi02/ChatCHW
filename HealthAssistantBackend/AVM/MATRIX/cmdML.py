@@ -262,7 +262,7 @@ def get_followup_questions(initial_responses: List[Dict[str, Any]]) -> List[Dict
     
     print("\nBased on your responses, I'll ask some follow-up questions.")
     
-    index = pc.Index("final-asha")
+    index = pc.Index("who-guide-old")
     
     while True:
         try:
@@ -370,7 +370,7 @@ def get_followup_exams(initial_responses: List[Dict[str, Any]], followup_respons
     
     print("\nBased on your responses, I'll recommend some basic examinations.")
     
-    index = pc.Index("final-asha")
+    index = pc.Index("who-guide-old")
     
     while True:
         try:
@@ -538,7 +538,7 @@ def main():
         
         # Get relevant documents for diagnosis
         embedding = get_embedding(initial_complaint)
-        relevant_docs = vectorQuotes(embedding, pc.Index("final-asha"))
+        relevant_docs = vectorQuotes(embedding, pc.Index("who-guide-old"))
         context_chunks = " ".join([doc["text"] for doc in relevant_docs[:3]])
 
         # Create diagnosis prompt
@@ -580,7 +580,7 @@ Return ONLY the most likely diagnosis in a clear, concise manner. No explanation
 
         # Get relevant documents for treatment based on diagnosis
         diagnosis_embedding = get_embedding(diagnosis)
-        treatment_docs = vectorQuotes(diagnosis_embedding, pc.Index("final-asha"))
+        treatment_docs = vectorQuotes(diagnosis_embedding, pc.Index("who-guide-old"))
         treatment_chunks = " ".join([doc["text"] for doc in treatment_docs[:3]])
 
         # Create treatment prompt

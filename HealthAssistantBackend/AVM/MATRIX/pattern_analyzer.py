@@ -18,7 +18,7 @@ class PatternAnalyzer:
         self.embedding_dim = MATRIXConfig.EMBEDDING_DIM
         # Initialize Pinecone
         pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
-        self.index = pc.Index("final-asha")
+        self.index = pc.Index("who-guide-old")
         
         # Severity indicators with weights
         self.severity_indicators = {

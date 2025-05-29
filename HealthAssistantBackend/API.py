@@ -90,7 +90,7 @@ class HealthAssessmentAPI:
     def _initialize_pinecone(self):
         """Initialize Pinecone index with error handling"""
         # List of possible index names to try
-        possible_indexes = ["final-asha", "who-guide-old", "healthcareassistantchw"]
+        possible_indexes = ["who-guide-old", "who-guide-old", "healthcareassistantchw"]
         
         for index_name in possible_indexes:
             try:
