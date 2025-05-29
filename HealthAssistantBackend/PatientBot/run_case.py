@@ -35,6 +35,20 @@ from chad import (
     pc
 )
 
+# Import the EXACT examination generation functions from app.py
+sys.path.append('../HealthAssistantBackend')
+try:
+    from app import generate_examination
+    print("✅ Successfully imported generate_examination from app.py")
+except ImportError as e:
+    print(f"❌ Failed to import generate_examination from app.py: {e}")
+    # Create a minimal fallback version
+    def generate_examination(session_data):
+        return {
+            "status": "error",
+            "output": "Examination generation not available"
+        }
+
 class SimplePatientRunner:
     def __init__(self):
         self.patient_bot_url = "http://localhost:5003"
@@ -86,50 +100,80 @@ class SimplePatientRunner:
         except Exception as e:
             return "other: Information not known"
     
-    def match_response_to_option(self, response, options):
-        """Auto-match PatientBot response to multiple choice options"""
+    def match_response_to_option(self, response, options, patient_info=None):
+        """Auto-match PatientBot response to multiple choice options using improved AI"""
+        
+        # Handle "Information not known" - should always select option 5 (Other)
         if response == "other: Information not known":
-            # When PatientBot doesn't know, select a reasonable default
-            if len(options) >= 3:
-                for option in options:
-                    if any(word in option['text'].lower() for word in ['not sure', 'unknown', 'unsure']):
-                        return str(option['id'])
-                return "2"  # Default to "No"
-            return "1"  # Fallback to first option
-            
-        response_lower = response.lower()
-        best_match = None
-        best_score = 0
+            # Find option 5 or any "Other" option
+            for option in options:
+                if option['id'] == 5 or 'other' in option['text'].lower():
+                    return str(option['id']), "No information found"
+            # Fallback if no "Other" option exists
+            return str(len(options)), "No information found"
         
+        # Enhanced AI prompt with patient context
+        options_text = "\n".join([f"{opt['id']}: {opt['text']}" for opt in options])
+        
+        patient_context = ""
+        if patient_info:
+            patient_context = f"""
+Patient Case Context:
+- Age: {patient_info.get('age_years', 'Unknown')} years
+- Sex: {patient_info.get('sex', 'Unknown')}
+- Primary Complaint: {patient_info.get('primary_complaint', 'Unknown')}
+- Duration: {patient_info.get('duration', 'Unknown')}
+"""
+        
+        prompt = f"""Given this patient response: "{response}"
+{patient_context}
+Available options:
+{options_text}
+
+CRITICAL RULES:
+1. If patient says "Yes" and there are multiple Yes options (like options 1,2,3), pick the MOST SPECIFIC/APPROPRIATE one based on the patient's case
+2. If patient says a duration like "2 days", match it to the closest duration option, NOT option 5
+3. If patient says "Female/Male", pick the exact gender option, NOT option 5
+4. Only use option 5 (Other) if the response truly doesn't match ANY of the specific options 1-4
+5. Be SMART about medical context - use the patient's complaint/symptoms to pick the best match
+
+Examples:
+- Patient with "Cough" complaint + says "Yes" to breathing difficulty → pick the breathing-related yes option
+- Patient says "2 days" → pick closest duration match (e.g., "3 days" option)
+- Patient says "Female" → pick option 2 (Female), not option 5
+
+Return ONLY the option number (e.g., "2")."""
+
+        try:
+            ai_choice = get_openai_completion(
+                prompt=prompt,
+                max_tokens=10,
+                temperature=0.1
+            ).strip()
+            
+            # Extract just the number
+            import re
+            match = re.search(r'\d+', ai_choice)
+            if match:
+                choice_num = int(match.group())
+                if 1 <= choice_num <= len(options):
+                    # If option 5 selected, determine what specific answer to provide
+                    if choice_num == 5:
+                        if response == "other: Information not known":
+                            specific_answer = "No information found"
+                        else:
+                            specific_answer = response
+                    else:
+                        specific_answer = None
+                    return str(choice_num), specific_answer
+        except Exception as e:
+            print(f"AI matching error: {e}")
+        
+        # Fallback: return option 5 (Other) if available, otherwise first option
         for option in options:
-            if option['id'] == 5:  # Skip "Other" option
-                continue
-                
-            option_text = option['text'].lower()
-            
-            # Direct matches
-            if response_lower == option_text:
-                return str(option['id'])
-            
-            # Keyword matching
-            keywords = option_text.split()
-            matches = sum(1 for word in keywords if word in response_lower)
-            score = matches / len(keywords) if keywords else 0
-            
-            if score > best_score and score > 0.3:
-                best_score = score
-                best_match = str(option['id'])
-        
-        # If no good match found, select reasonable defaults
-        if not best_match:
-            if len(options) == 3:
-                return "2"  # Default to "No"
-            elif len(options) >= 3:
-                return "3"  # Default to third option
-            else:
-                return "1"  # Fallback to first option
-        
-        return best_match
+            if option['id'] == 5:
+                return "5", "No information found"
+        return "1", None
 
     def extract_number_from_response(self, response):
         """Extract number from PatientBot response"""
@@ -140,7 +184,7 @@ class SimplePatientRunner:
         numbers = re.findall(r'\d+', response)
         return int(numbers[0]) if numbers else 1
 
-    def run_chw_workflow(self):
+    def run_chw_workflow(self, patient_info=None):
         """Run the EXACT ChatCHW workflow - FULLY AUTOMATED"""
         
         # Initialize/clear the global arrays EXACTLY like chad.py
@@ -167,8 +211,12 @@ class SimplePatientRunner:
                 print(f"🤒 PatientBot: {patient_response}")
                 
                 # Auto-select - NO USER INPUT
-                answer = self.match_response_to_option(patient_response, question['options'])
-                print(f"🤖 Auto-selected: {answer}")
+                answer, specific_answer = self.match_response_to_option(patient_response, question['options'], patient_info)
+                print(f"📋 Option Selection: {answer}")
+                if specific_answer:
+                    print(f"✏️ Specific Answer: {specific_answer}")
+                else:
+                    print(f"✏️ Specific Answer: None")
                 
                 # Use EXACT validation logic from chad.py
                 if question['type'] == 'MCM':
@@ -191,7 +239,8 @@ class SimplePatientRunner:
                 else:
                     if validate_mc_input(answer, question['options']):
                         if answer == "5":
-                            custom_answer = "Not specified"
+                            # Use the specific answer for option 5
+                            custom_answer = specific_answer if specific_answer else "Not specified"
                             initial_responses.append({
                                 "question": question['question'],
                                 "answer": custom_answer,
@@ -211,7 +260,8 @@ class SimplePatientRunner:
                 
                 auto_answer = self.extract_number_from_response(patient_response)
                 answer = str(auto_answer)
-                print(f"🤖 Auto-extracted: {auto_answer}")
+                print(f"📋 Extracted Number: {auto_answer}")
+                print(f"✏️ Specific Answer: None")
                 
                 if validated_num := validate_num_input(answer, question['range']):
                     initial_responses.append({
@@ -227,16 +277,31 @@ class SimplePatientRunner:
                 if patient_response != "other: Information not known":
                     answer = patient_response
                 else:
-                    answer = "Not specified"
+                    # Generate intelligent answer from patient case data
+                    if patient_info and 'what brings you here today' in question['question'].lower():
+                        # Create complaint from patient case data
+                        complaint_parts = []
+                        if patient_info.get('primary_complaint'):
+                            complaint_parts.append(patient_info['primary_complaint'])
+                        if patient_info.get('duration'):
+                            complaint_parts.append(f"for {patient_info['duration']}")
+                        
+                        if complaint_parts:
+                            answer = " ".join(complaint_parts)
+                        else:
+                            answer = "Not specified"
+                    else:
+                        answer = "Not specified"
                 
-                print(f"🤖 Using: {answer}")
+                print(f"📋 Generated Response: {answer}")
+                print(f"✏️ Specific Answer: None")
                 initial_responses.append({
                     "question": question['question'],
                     "answer": answer,
                     "type": question['type']
                 })
 
-        print("\n📝 INITIAL ASSESSMENT COMPLETE")
+        print("\n🏥 INITIAL ASSESSMENT COMPLETE")
         for resp in initial_responses:
             print(f"Q: {resp['question']}")
             print(f"A: {resp['answer']}\n")
@@ -317,12 +382,17 @@ class SimplePatientRunner:
                 patient_response = self.ask_patient_bot(question)
                 print(f"🤒 PatientBot: {patient_response}")
                 
-                answer = self.match_response_to_option(patient_response, options)
-                print(f"🤖 Auto-selected: {answer}")
+                answer, specific_answer = self.match_response_to_option(patient_response, options, patient_info)
+                print(f"📋 Option Selection: {answer}")
+                if specific_answer:
+                    print(f"✏️ Specific Answer: {specific_answer}")
+                else:
+                    print(f"✏️ Specific Answer: None")
                 
                 if validate_mc_input(answer, options):
                     if answer == "5":
-                        answer_text = "Not specified"
+                        # Use the specific answer for option 5
+                        answer_text = specific_answer if specific_answer else "Not specified"
                     else:
                         answer_text = next(opt['text'] for opt in options if str(opt['id']) == answer)
                     
@@ -362,72 +432,113 @@ class SimplePatientRunner:
         
         while exam_count < max_exams:
             try:
-                context = f"Initial complaint: {initial_complaint}\n"
-                context += "Follow-up responses:\n"
-                for resp in followup_responses:
-                    context += f"Q: {resp['question']}\nA: {resp['answer']}\n"
+                # Create session data structure that generate_examination expects
+                session_data = {
+                    'session_id': f'run_case_{datetime.now().strftime("%Y%m%d_%H%M%S")}',
+                    'initial_responses': initial_responses,
+                    'followup_responses': followup_responses,
+                    'exam_responses': exam_responses,
+                    'phase': 'exam'
+                }
                 
-                if exam_responses:
-                    context += "Previous examinations:\n"
-                    for resp in exam_responses:
-                        context += f"Exam: {resp['examination']}\nResult: {resp['result']}\n"
+                # Use the EXACT same generate_examination function from app.py
+                examination_result = generate_examination(session_data)
                 
-                embedding = get_embedding_batch([context])[0]
-                relevant_docs = vectorQuotesWithSource(embedding, index)
-                
-                if not relevant_docs:
+                if examination_result.get('status') != 'success':
+                    print(f"❌ Examination generation failed: {examination_result.get('message', 'Unknown error')}")
                     break
                 
-                combined_context = " ".join([doc["text"] for doc in relevant_docs[:2]])
+                # Get the examination details
+                examination_output = examination_result['output']
+                examination_metadata = examination_result.get('metadata', {})
+                examination_options = examination_metadata.get('options', [])
                 
-                previous_exams = "\n".join([f"- {resp['examination']}" for resp in exam_responses])
-                prompt = f'''Based on the patient information and medical context, suggest ONE specific physical examination or test.
+                print(f"\n{examination_output}")
                 
-                Patient context:
-                {context}
+                # Handle different examination types
+                exam_type = examination_metadata.get('type', 'EXAM')
                 
-                Previous examinations:
-                {previous_exams if exam_responses else "No previous examinations"}
+                if exam_type == "NO_INFO_EXAM":
+                    # For cases where medical guide has no examination info
+                    print("📋 Please select an option:")
+                    for i, option in enumerate(examination_options, 1):
+                        print(f"  {i}: {option['text']}")
+                    
+                    # Auto-select option 1 (proceed with assessment)
+                    print(f"🤒 PatientBot: Proceed with assessment")
+                    print(f"📋 Option Selection: 1")
+                    print(f"✏️ Specific Answer: None")
+                    
+                    exam_responses.append({
+                        "examination": "No specific examination available in medical guide",
+                        "result": "Proceeded with general assessment",
+                        "type": "NO_INFO_EXAM"
+                    })
+                    
+                    # Move directly to diagnosis
+                    break
                 
-                Medical context:
-                {combined_context}
-                
-                Return only the examination name (e.g., "Check blood pressure", "Listen to lungs", "Examine throat").'''
-                
-                examination = get_openai_completion(
-                    prompt=prompt,
-                    max_tokens=100,
-                    temperature=0.3
-                )
-                
-                print(f"\n🔬 Examination: {examination}")
-                
-                patient_response = self.ask_patient_bot(f"What do you find when you {examination.lower()}?")
-                print(f"🤒 PatientBot: {patient_response}")
-                
-                if patient_response != "other: Information not known":
-                    result = patient_response
                 else:
-                    result = "Normal findings"
-                
-                print(f"🤖 Result: {result}")
-                
-                exam_responses.append({
-                    "examination": examination,
-                    "result": result,
-                    "citations": relevant_docs[-5:]
-                })
-                
-                store_examination(examination, 1)
+                    # Regular examination with findings options
+                    if examination_options:
+                        # Ask PatientBot about examination findings
+                        # Extract examination name from the output
+                        lines = examination_output.split('\n')
+                        examination_name = "Physical examination"
+                        for line in lines:
+                            if "Examination:" in line or "Recommended Examination:" in line:
+                                examination_name = line.split(':')[1].strip()
+                                break
+                        
+                        # Ask PatientBot for findings
+                        finding_question = f"During {examination_name.lower()}, what findings do you observe?"
+                        patient_response = self.ask_patient_bot(finding_question)
+                        print(f"🤒 PatientBot: {patient_response}")
+                        
+                        # Match the response to examination options
+                        answer, specific_answer = self.match_response_to_option(
+                            patient_response, examination_options, patient_info
+                        )
+                        
+                        print(f"📋 Option Selection: {answer}")
+                        if specific_answer:
+                            print(f"✏️ Specific Answer: {specific_answer}")
+                        else:
+                            print(f"✏️ Specific Answer: None")
+                        
+                        # Get the selected finding text
+                        if answer == "5" and specific_answer:
+                            result_text = specific_answer
+                        elif answer.isdigit() and int(answer) <= len(examination_options):
+                            selected_option = next(
+                                (opt for opt in examination_options if str(opt['id']) == answer), 
+                                examination_options[0]
+                            )
+                            result_text = selected_option['text']
+                        else:
+                            result_text = "Normal findings"
+                        
+                        # Store the examination result
+                        exam_responses.append({
+                            "examination": examination_name,
+                            "result": result_text,
+                            "citations": examination_metadata.get('sources', [])
+                        })
+                        
+                        # Store in global examination history
+                        store_examination(examination_name, int(answer) if answer.isdigit() else 1)
                 
                 exam_count += 1
                 
-                if judge_exam(exam_responses, examination):
+                # Use the EXACT same judge_exam logic from chad.py
+                if judge_exam(exam_responses, examination_name if 'examination_name' in locals() else "examination"):
                     print("\n✅ Sufficient examination data collected.")
                     break
                         
             except Exception as e:
                 print(f"Error in examination phase: {e}")
+                import traceback
+                traceback.print_exc()
                 break
 
         # EXACT Final Diagnosis from chad.py
@@ -502,7 +613,7 @@ def main():
     input("\nPress Enter to start CHW workflow...")
     
     # Run CHW workflow
-    runner.run_chw_workflow()
+    runner.run_chw_workflow(patient_info)
 
 if __name__ == "__main__":
     main() 
