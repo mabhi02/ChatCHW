@@ -1,0 +1,1001 @@
+Age,age (years),Sex,Complaint,Duration,CHW Questions,Exam Findings,Mapped_Rubric_Row
+Child,1,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 37.7°C,2
+Child,3,Male,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 61/min; Chest indrawing: Yes; Temperature: 39.2°C,1
+Elder,60,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.7°C,5
+Adult,11,Female,Diarrhea,2 days,Duration: 2 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.5°C,6
+Elder,61,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.9°C,2
+Elder,75,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 37.4°C,2
+Elder,70,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 36.9°C,2
+Elder,66,Female,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 40/min; Temperature: 38.6°C,1
+Child,5,Female,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 49/min; Temperature: 39.5°C,1
+Adult,7,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 36.8°C,2
+Child,3,Male,Diarrhea,2 days,Duration: 2 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.6°C,5
+Child,1,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 36.6°C,6
+Elder,65,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 37.6°C,2
+Child,3,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.2°C,2
+Adult,27,Male,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 40/min; Temperature: 38.7°C,1
+Adult,6,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 36.9°C,2
+Elder,63,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.8°C,2
+Child,5,Male,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; Lethargic/unconscious: Yes; Sunken eyes: Yes; Unable to drink: Yes,Skin pinch: very slow; Temperature: 39.1°C,9
+Elder,72,Female,Diarrhea,2 days,Duration: 2 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.4°C,6
+Adult,19,Female,Diarrhea,4 weeks,Duration: 4 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 38.0°C,8
+Adult,51,Male,Sore throat,2 days,Duration: 2 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.7°C,10
+Adult,55,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.4°C,2
+Elder,70,Female,Diarrhea,5 weeks,Duration: 5 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.6°C,8
+Adult,52,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.3°C,5
+Adult,42,Female,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.5°C,10
+Elder,61,Male,Diarrhea,2 days,Duration: 2 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.0°C,6
+Adult,18,Male,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 43/min; Temperature: 38.9°C,1
+Elder,74,Female,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.1°C,5
+Adult,23,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; Lethargic/unconscious: Yes; Sunken eyes: Yes; Unable to drink: Yes,Skin pinch: very slow; Temperature: 39.5°C,9
+Child,1,Male,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 55/min; Temperature: 38.6°C,1
+Child,5,Female,Diarrhea,2 days,Duration: 2 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 38.0°C,7
+Elder,70,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.4°C,2
+Adult,24,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.7°C,2
+Child,1,Female,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 40/min; Temperature: 39.4°C,1
+Adult,19,Male,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 38.4°C,6
+Elder,71,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 36.9°C,2
+Adult,21,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.0°C,2
+Adult,24,Female,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: Yes,Temperature: 39.1°C,10
+Adult,18,Female,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.4°C,5
+Adult,52,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.5°C,2
+Adult,15,Female,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.5°C,6
+Adult,36,Male,Cough,4 weeks,Duration: 4 weeks; Cough duration ≥ 3 weeks; No fever,Respiratory rate: 24/min; Temperature: 36.8°C,4
+Adult,47,Male,Diarrhea,4 weeks,Duration: 4 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.2°C,8
+Adult,26,Male,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 51/min; Temperature: 39.5°C,1
+Child,4,Male,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 57/min; Temperature: 39.1°C,1
+Adult,53,Male,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 42/min; Temperature: 38.9°C,1
+Adult,20,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.6°C,2
+Elder,72,Male,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; Lethargic/unconscious: Yes; Sunken eyes: Yes; Unable to drink: Yes,Skin pinch: very slow; Temperature: 38.4°C,9
+Adult,29,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.2°C,2
+Adult,55,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.8°C,2
+Elder,63,Female,Diarrhea,3 days,Duration: 3 days; Blood in stool: No; Lethargic/unconscious: Yes; Sunken eyes: Yes; Unable to drink: Yes,Skin pinch: very slow; Temperature: 37.8°C,6
+Adult,30,Female,Diarrhea,2 days,Duration: 2 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 36.7°C,6
+Elder,61,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.6°C,2
+Elder,60,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 37.9°C,2
+Child,3,Male,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 42/min; Temperature: 39.0°C,1
+Adult,20,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.6°C,2
+Elder,71,Male,Sore throat,2 days,Duration: 2 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.5°C,10
+Child,3,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 37.5°C,2
+Child,4,Male,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 55/min; Temperature: 39.4°C,1
+Elder,75,Female,Diarrhea,3 days,Duration: 3 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.6°C,5
+Adult,16,Male,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 56/min; Temperature: 39.0°C,1
+Adult,16,Female,Cough,4 weeks,Duration: 4 weeks; Cough duration ≥ 3 weeks; No fever,Respiratory rate: 26/min; Temperature: 36.5°C,4
+Child,2,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.6°C,2
+Adult,20,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.0°C,2
+Adult,14,Female,Sore throat,3 days,Duration: 3 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 38.0°C,10
+Adult,39,Female,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 38.3°C,6
+Child,4,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 38.0°C,2
+Elder,65,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.9°C,2
+Adult,10,Male,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 38.4°C,6
+Elder,69,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.3°C,2
+Child,5,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.1°C,2
+Child,5,Male,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 44/min; Temperature: 39.4°C,1
+Adult,29,Female,Sore throat,2 days,Duration: 2 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 36.6°C,10
+Child,3,Male,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 46/min; Temperature: 39.5°C,1
+Adult,12,Male,Diarrhea,4 days,Duration: 4 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 38.2°C,7
+Child,3,Male,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; Lethargic/unconscious: Yes; Sunken eyes: Yes; Unable to drink: Yes,Skin pinch: very slow; Temperature: 38.1°C,9
+Child,1,Male,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: Yes,Temperature: 39.0°C,10
+Child,4,Male,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 56/min; Chest indrawing: Yes; Temperature: 38.6°C,1
+Elder,71,Male,Cough,3 weeks,Duration: 3 weeks; Cough duration ≥ 3 weeks; No fever,Respiratory rate: 21/min; Temperature: 36.6°C,4
+Adult,32,Male,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 59/min; Temperature: 38.8°C,1
+Child,5,Male,Sore throat,2 days,Duration: 2 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.2°C,10
+Child,2,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.4°C,6
+Child,3,Female,Sore throat,2 days,Duration: 2 days; Very sore throat: Yes; White spots on tonsils: Yes,Temperature: 39.5°C,10
+Elder,72,Female,Cough,3 weeks,Duration: 3 weeks; Cough duration ≥ 3 weeks; No fever,Respiratory rate: 23/min; Temperature: 36.6°C,4
+Child,5,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.7°C,2
+Elder,69,Male,Sore throat,2 days,Duration: 2 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.0°C,10
+Adult,6,Male,Diarrhea,3 weeks,Duration: 3 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.4°C,5
+Elder,72,Male,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 47/min; Temperature: 38.5°C,1
+Elder,63,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.6°C,2
+Child,5,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.0°C,2
+Child,4,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.9°C,2
+Elder,64,Male,Diarrhea,4 weeks,Duration: 4 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.7°C,8
+Elder,69,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.4°C,2
+Child,2,Male,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 65/min; Chest indrawing: Yes; Temperature: 39.7°C,1
+Child,3,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 38.0°C,2
+Elder,67,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.6°C,5
+Child,3,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.8°C,2
+Adult,55,Male,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 60/min; Temperature: 39.5°C,1
+Adult,19,Male,Diarrhea,4 days,Duration: 4 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 38.5°C,7
+Elder,70,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.2°C,2
+Elder,73,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.3°C,2
+Child,1,Male,Diarrhea,3 days,Duration: 3 days; Blood in stool: No; Lethargic/unconscious: Yes; Sunken eyes: Yes; Unable to drink: Yes,Skin pinch: very slow; Temperature: 39.4°C,9
+Elder,60,Male,Diarrhea,7 days,Duration: 7 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 38.3°C,7
+Elder,71,Male,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 36.8°C,6
+Adult,44,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.1°C,2
+Adult,39,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 37.7°C,2
+Adult,47,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 37.6°C,2
+Adult,7,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.5°C,2
+Elder,68,Male,Sore throat,3 days,Duration: 3 days; Very sore throat: Yes; White spots on tonsils: Yes,Temperature: 39.5°C,10
+Adult,32,Male,Diarrhea,3 weeks,Duration: 3 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.0°C,5
+Adult,31,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.5°C,2
+Child,2,Male,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.3°C,10
+Child,5,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.8°C,2
+Elder,70,Female,Sore throat,2 days,Duration: 2 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.8°C,10
+Adult,40,Male,Diarrhea,2 days,Duration: 2 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.7°C,5
+Child,3,Male,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 38.0°C,6
+Elder,67,Male,Diarrhea,7 days,Duration: 7 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 39.0°C,7
+Adult,6,Male,Diarrhea,3 days,Duration: 3 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.7°C,5
+Adult,8,Female,Diarrhea,4 weeks,Duration: 4 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.6°C,5
+Child,2,Female,Sore throat,2 days,Duration: 2 days; Very sore throat: Yes; White spots on tonsils: Yes,Temperature: 39.4°C,10
+Elder,70,Female,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.9°C,6
+Elder,61,Female,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 36.6°C,6
+Adult,28,Male,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 51/min; Temperature: 39.5°C,1
+Elder,75,Female,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 48/min; Temperature: 39.4°C,1
+Elder,68,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.0°C,2
+Adult,11,Male,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 38.2°C,6
+Elder,71,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 38.0°C,2
+Elder,71,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.0°C,2
+Adult,16,Male,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; Lethargic/unconscious: Yes; Sunken eyes: Yes; Unable to drink: Yes,Skin pinch: very slow; Temperature: 37.6°C,9
+Child,3,Male,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 62/min; Chest indrawing: Yes; Temperature: 38.9°C,1
+Elder,69,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.8°C,2
+Elder,73,Male,Cough,3 weeks,Duration: 3 weeks; Cough duration ≥ 3 weeks; No fever,Respiratory rate: 28/min; Temperature: 37.0°C,4
+Child,4,Female,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 48/min; Temperature: 39.2°C,1
+Adult,14,Male,Cough,3 weeks,Duration: 3 weeks; Cough duration ≥ 3 weeks; No fever,Respiratory rate: 28/min; Temperature: 36.9°C,4
+Elder,61,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 37.6°C,2
+Elder,67,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 36.6°C,6
+Child,4,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.0°C,2
+Adult,38,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 36.8°C,2
+Child,5,Male,Sore throat,3 days,Duration: 3 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 36.7°C,10
+Elder,63,Male,Sore throat,3 days,Duration: 3 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 36.6°C,10
+Elder,60,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.0°C,2
+Child,2,Male,Sore throat,2 days,Duration: 2 days; Very sore throat: Yes; White spots on tonsils: Yes,Temperature: 39.7°C,10
+Child,5,Male,Diarrhea,2 days,Duration: 2 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.0°C,6
+Child,2,Male,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 50/min; Temperature: 38.6°C,1
+Adult,55,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.7°C,2
+Adult,36,Male,Diarrhea,2 days,Duration: 2 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.7°C,7
+Elder,67,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.5°C,2
+Adult,14,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.7°C,2
+Elder,70,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 36.9°C,2
+Adult,10,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.8°C,2
+Elder,72,Male,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.9°C,10
+Elder,73,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 36.8°C,6
+Elder,60,Female,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.2°C,6
+Child,4,Female,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 45/min; Temperature: 38.6°C,1
+Child,4,Female,Diarrhea,3 days,Duration: 3 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.8°C,6
+Child,5,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.3°C,2
+Adult,28,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 36.8°C,2
+Adult,30,Male,Diarrhea,2 days,Duration: 2 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.9°C,6
+Child,3,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.6°C,2
+Elder,64,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.3°C,2
+Adult,26,Male,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.5°C,5
+Child,2,Female,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 53/min; Temperature: 39.3°C,1
+Elder,60,Female,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.4°C,5
+Child,5,Female,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 57/min; Temperature: 38.7°C,1
+Elder,69,Male,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.1°C,10
+Child,4,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.5°C,2
+Adult,39,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 37.2°C,2
+Elder,68,Female,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.0°C,5
+Child,2,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 36.5°C,6
+Child,5,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.3°C,2
+Adult,30,Female,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.3°C,5
+Elder,60,Male,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.9°C,5
+Elder,69,Male,Diarrhea,3 days,Duration: 3 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 38.4°C,7
+Adult,9,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 37.5°C,2
+Elder,62,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.3°C,2
+Adult,14,Female,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 58/min; Temperature: 39.0°C,1
+Elder,63,Male,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: Yes,Temperature: 39.0°C,10
+Elder,75,Male,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.3°C,5
+Adult,49,Female,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 59/min; Temperature: 39.3°C,1
+Elder,66,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.9°C,2
+Elder,65,Male,Diarrhea,3 days,Duration: 3 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.6°C,5
+Child,3,Female,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.5°C,5
+Elder,63,Male,Sore throat,3 days,Duration: 3 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.8°C,10
+Elder,62,Female,Diarrhea,2 days,Duration: 2 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 38.1°C,6
+Child,4,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.1°C,2
+Child,3,Female,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 40/min; Temperature: 39.4°C,1
+Elder,72,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 36.9°C,2
+Child,5,Male,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 43/min; Temperature: 39.1°C,1
+Child,3,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.0°C,2
+Elder,60,Male,Diarrhea,3 days,Duration: 3 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.9°C,5
+Adult,18,Male,Diarrhea,3 days,Duration: 3 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.0°C,6
+Adult,32,Male,Sore throat,3 days,Duration: 3 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.7°C,10
+Elder,71,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 36.8°C,2
+Adult,8,Male,Diarrhea,7 days,Duration: 7 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 38.3°C,7
+Adult,11,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.1°C,2
+Adult,28,Female,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.2°C,5
+Child,4,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 36.9°C,2
+Child,1,Female,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.3°C,6
+Child,3,Female,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 56/min; Temperature: 38.5°C,1
+Elder,73,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 36.9°C,2
+Child,2,Male,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 57/min; Chest indrawing: Yes; Temperature: 39.9°C,1
+Elder,70,Female,Sore throat,2 days,Duration: 2 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 38.0°C,10
+Elder,69,Female,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.1°C,6
+Adult,36,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.9°C,2
+Adult,35,Female,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 60/min; Temperature: 38.9°C,1
+Child,1,Male,Sore throat,3 days,Duration: 3 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.3°C,10
+Adult,17,Male,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 44/min; Temperature: 39.1°C,1
+Adult,15,Male,Diarrhea,5 days,Duration: 5 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.0°C,7
+Adult,54,Male,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 36.7°C,6
+Elder,60,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.6°C,2
+Elder,65,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.1°C,2
+Adult,35,Female,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.7°C,5
+Elder,62,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.1°C,2
+Child,4,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.3°C,2
+Child,5,Female,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 58/min; Temperature: 38.6°C,1
+Child,2,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.9°C,2
+Child,4,Male,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.8°C,5
+Adult,38,Female,Diarrhea,3 days,Duration: 3 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.6°C,6
+Elder,73,Male,Diarrhea,5 weeks,Duration: 5 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.6°C,8
+Elder,71,Male,Diarrhea,3 days,Duration: 3 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.7°C,7
+Child,2,Female,Sore throat,2 days,Duration: 2 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.4°C,10
+Adult,15,Female,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.8°C,5
+Elder,66,Male,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 43/min; Temperature: 38.7°C,1
+Adult,27,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 38.4°C,6
+Elder,75,Male,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 60/min; Chest indrawing: Yes; Temperature: 38.9°C,1
+Elder,75,Male,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.3°C,6
+Adult,38,Male,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 55/min; Temperature: 39.1°C,1
+Adult,27,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.8°C,2
+Elder,65,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.8°C,2
+Elder,71,Female,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 57/min; Temperature: 39.3°C,1
+Elder,62,Female,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 47/min; Temperature: 38.9°C,1
+Child,3,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.9°C,2
+Adult,5,Female,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; Lethargic/unconscious: Yes; Sunken eyes: Yes; Unable to drink: Yes,Skin pinch: very slow; Temperature: 38.1°C,6
+Child,1,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.1°C,2
+Adult,39,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.2°C,5
+Child,1,Male,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 56/min; Temperature: 38.7°C,1
+Child,4,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 37.9°C,2
+Child,2,Female,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 68/min; Chest indrawing: Yes; Temperature: 39.2°C,1
+Adult,19,Male,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 42/min; Temperature: 38.6°C,1
+Elder,65,Female,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 36.6°C,6
+Child,3,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.2°C,2
+Child,1,Female,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.3°C,5
+Child,1,Female,Diarrhea,7 days,Duration: 7 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.8°C,7
+Child,4,Male,Diarrhea,3 days,Duration: 3 days; Blood in stool: No; Lethargic/unconscious: Yes; Sunken eyes: Yes; Unable to drink: Yes,Skin pinch: very slow; Temperature: 38.1°C,6
+Adult,39,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.2°C,2
+Elder,70,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.4°C,2
+Elder,61,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.2°C,2
+Adult,21,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.9°C,2
+Adult,39,Female,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 50/min; Temperature: 39.0°C,1
+Elder,60,Female,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 38.1°C,6
+Elder,74,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.4°C,2
+Child,3,Male,Diarrhea,4 days,Duration: 4 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.6°C,7
+Adult,26,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.4°C,2
+Adult,23,Male,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 53/min; Temperature: 39.2°C,1
+Adult,18,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.9°C,2
+Adult,46,Male,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.9°C,10
+Adult,52,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.9°C,2
+Child,4,Female,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 36.9°C,10
+Elder,71,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.2°C,2
+Adult,52,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.1°C,5
+Child,2,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 37.8°C,2
+Adult,22,Male,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.7°C,5
+Elder,62,Male,Sore throat,3 days,Duration: 3 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.9°C,10
+Adult,29,Male,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 58/min; Temperature: 38.9°C,1
+Child,4,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 38.0°C,2
+Elder,62,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.9°C,2
+Adult,25,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.2°C,2
+Adult,35,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 37.5°C,2
+Adult,5,Male,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.0°C,5
+Adult,40,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.3°C,6
+Elder,70,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.0°C,2
+Adult,26,Male,Cough,4 weeks,Duration: 4 weeks; Cough duration ≥ 3 weeks; No fever,Respiratory rate: 27/min; Temperature: 36.7°C,4
+Child,1,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.5°C,2
+Elder,70,Female,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 52/min; Temperature: 39.2°C,1
+Child,3,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 37.5°C,2
+Child,1,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.3°C,2
+Elder,71,Female,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 46/min; Temperature: 39.3°C,1
+Child,5,Male,Diarrhea,3 days,Duration: 3 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.2°C,5
+Adult,30,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.8°C,2
+Adult,49,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.4°C,2
+Child,1,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.6°C,2
+Child,1,Female,Sore throat,3 days,Duration: 3 days; Very sore throat: Yes; White spots on tonsils: Yes,Temperature: 38.6°C,10
+Child,4,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 37.2°C,2
+Elder,67,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.4°C,2
+Adult,16,Female,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 57/min; Chest indrawing: Yes; Temperature: 39.5°C,1
+Child,3,Male,Sore throat,2 days,Duration: 2 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.4°C,10
+Adult,27,Female,Diarrhea,2 days,Duration: 2 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 36.8°C,6
+Elder,63,Female,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 66/min; Chest indrawing: Yes; Temperature: 39.6°C,1
+Child,1,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.9°C,2
+Elder,62,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.5°C,2
+Elder,73,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.4°C,5
+Adult,5,Female,Diarrhea,3 days,Duration: 3 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.8°C,6
+Elder,66,Female,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: Yes,Temperature: 38.7°C,10
+Adult,37,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.8°C,2
+Child,2,Female,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 43/min; Temperature: 38.8°C,1
+Adult,9,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 38.4°C,7
+Adult,25,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 36.9°C,2
+Child,4,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.9°C,2
+Elder,60,Male,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.1°C,5
+Adult,27,Female,Diarrhea,3 weeks,Duration: 3 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.9°C,8
+Elder,71,Male,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.7°C,10
+Adult,54,Female,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 41/min; Temperature: 39.1°C,1
+Child,4,Male,Diarrhea,7 days,Duration: 7 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 38.5°C,7
+Elder,63,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.4°C,2
+Child,4,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.4°C,2
+Child,3,Female,Diarrhea,5 weeks,Duration: 5 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.3°C,5
+Child,3,Male,Diarrhea,3 days,Duration: 3 days; Blood in stool: No; Lethargic/unconscious: Yes; Sunken eyes: Yes; Unable to drink: Yes,Skin pinch: very slow; Temperature: 38.2°C,6
+Adult,35,Female,Sore throat,2 days,Duration: 2 days; Very sore throat: Yes; White spots on tonsils: Yes,Temperature: 39.2°C,10
+Child,3,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 36.9°C,2
+Adult,27,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 37.9°C,2
+Adult,22,Female,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.6°C,6
+Child,4,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.0°C,2
+Child,1,Male,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.3°C,10
+Elder,68,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.3°C,2
+Adult,20,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.2°C,2
+Elder,65,Female,Diarrhea,1 days,Duration: 1 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.0°C,7
+Elder,69,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.5°C,2
+Child,5,Male,Diarrhea,2 days,Duration: 2 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.3°C,6
+Elder,74,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.7°C,2
+Adult,55,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.5°C,2
+Elder,72,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 37.6°C,2
+Child,3,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 37.8°C,2
+Adult,22,Male,Cough,4 weeks,Duration: 4 weeks; Cough duration ≥ 3 weeks; No fever,Respiratory rate: 21/min; Temperature: 37.0°C,4
+Adult,55,Male,Diarrhea,2 days,Duration: 2 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.0°C,5
+Child,3,Female,Cough,4 weeks,Duration: 4 weeks; Cough duration ≥ 3 weeks; No fever,Respiratory rate: 20/min; Temperature: 36.7°C,4
+Child,2,Female,Diarrhea,2 days,Duration: 2 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.1°C,5
+Elder,73,Male,Diarrhea,7 days,Duration: 7 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 38.5°C,7
+Elder,64,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.4°C,6
+Child,5,Male,Cough,4 weeks,Duration: 4 weeks; Cough duration ≥ 3 weeks; No fever,Respiratory rate: 21/min; Temperature: 36.7°C,4
+Child,1,Female,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 36.9°C,6
+Child,3,Male,Sore throat,2 days,Duration: 2 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.7°C,10
+Child,1,Male,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 43/min; Temperature: 38.6°C,1
+Elder,75,Female,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 56/min; Temperature: 38.5°C,1
+Child,5,Female,Diarrhea,2 days,Duration: 2 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.6°C,5
+Adult,15,Male,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 46/min; Temperature: 38.5°C,1
+Elder,72,Female,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 51/min; Temperature: 39.0°C,1
+Elder,72,Female,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 60/min; Temperature: 38.7°C,1
+Elder,63,Male,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 46/min; Temperature: 39.2°C,1
+Child,4,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.5°C,2
+Adult,31,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.3°C,5
+Child,5,Female,Diarrhea,5 days,Duration: 5 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.2°C,7
+Child,2,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 37.8°C,2
+Child,1,Male,Diarrhea,3 days,Duration: 3 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.3°C,5
+Elder,66,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 37.6°C,2
+Child,3,Female,Cough,3 weeks,Duration: 3 weeks; Cough duration ≥ 3 weeks; No fever,Respiratory rate: 25/min; Temperature: 36.6°C,4
+Adult,51,Female,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 41/min; Temperature: 38.8°C,1
+Child,1,Female,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.8°C,5
+Elder,74,Female,Diarrhea,5 days,Duration: 5 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 38.6°C,7
+Child,2,Female,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 36.9°C,6
+Adult,11,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.5°C,2
+Child,5,Female,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 53/min; Temperature: 38.6°C,1
+Adult,30,Female,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 67/min; Chest indrawing: Yes; Temperature: 39.7°C,1
+Child,3,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.5°C,2
+Child,1,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 37.0°C,2
+Elder,72,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.1°C,2
+Adult,19,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.1°C,2
+Child,5,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.9°C,2
+Child,4,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.4°C,2
+Elder,68,Male,Diarrhea,3 days,Duration: 3 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.9°C,5
+Child,3,Female,Diarrhea,5 days,Duration: 5 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.6°C,7
+Adult,16,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 37.3°C,2
+Adult,18,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 37.4°C,2
+Elder,66,Female,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 55/min; Temperature: 39.1°C,1
+Elder,65,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.5°C,2
+Adult,8,Male,Diarrhea,2 days,Duration: 2 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 38.0°C,6
+Adult,32,Female,Diarrhea,3 days,Duration: 3 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.1°C,5
+Adult,14,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.3°C,2
+Adult,54,Female,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 59/min; Chest indrawing: Yes; Temperature: 39.4°C,1
+Elder,66,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 37.6°C,2
+Adult,25,Female,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 67/min; Chest indrawing: Yes; Temperature: 38.8°C,1
+Adult,17,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.8°C,2
+Child,3,Female,Diarrhea,7 days,Duration: 7 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 38.6°C,7
+Adult,5,Female,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 44/min; Temperature: 38.8°C,1
+Child,2,Female,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 46/min; Temperature: 38.8°C,1
+Child,3,Male,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.7°C,5
+Elder,75,Female,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 60/min; Temperature: 38.5°C,1
+Elder,70,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.7°C,2
+Child,3,Male,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: Yes,Temperature: 39.1°C,10
+Child,4,Female,Diarrhea,2 days,Duration: 2 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.9°C,6
+Elder,60,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 37.0°C,2
+Elder,63,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 37.6°C,2
+Adult,12,Male,Diarrhea,2 days,Duration: 2 days; Blood in stool: No; Lethargic/unconscious: Yes; Sunken eyes: Yes; Unable to drink: Yes,Skin pinch: very slow; Temperature: 39.1°C,9
+Adult,22,Female,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 55/min; Temperature: 38.6°C,1
+Child,1,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 36.8°C,2
+Adult,19,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.7°C,2
+Elder,66,Female,Diarrhea,2 days,Duration: 2 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.4°C,6
+Adult,31,Female,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 36.5°C,6
+Elder,70,Male,Sore throat,2 days,Duration: 2 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.9°C,10
+Child,1,Male,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; Lethargic/unconscious: Yes; Sunken eyes: Yes; Unable to drink: Yes,Skin pinch: very slow; Temperature: 39.5°C,9
+Elder,67,Male,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 46/min; Temperature: 39.4°C,1
+Child,1,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.2°C,2
+Child,5,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.6°C,2
+Child,2,Male,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 58/min; Temperature: 38.6°C,1
+Child,3,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.4°C,2
+Elder,75,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 37.4°C,2
+Elder,60,Male,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 66/min; Chest indrawing: Yes; Temperature: 39.0°C,1
+Adult,39,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 36.9°C,2
+Child,4,Female,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 52/min; Temperature: 39.2°C,1
+Elder,71,Female,Diarrhea,3 days,Duration: 3 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.6°C,5
+Elder,67,Female,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 66/min; Chest indrawing: Yes; Temperature: 38.9°C,1
+Elder,66,Female,Diarrhea,5 weeks,Duration: 5 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.0°C,8
+Adult,40,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.3°C,2
+Adult,39,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.9°C,2
+Adult,52,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.8°C,2
+Elder,72,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 37.1°C,2
+Adult,12,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 37.6°C,2
+Adult,7,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.6°C,2
+Child,1,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.4°C,5
+Elder,68,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 37.0°C,2
+Adult,6,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.0°C,2
+Adult,33,Male,Diarrhea,2 days,Duration: 2 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 36.7°C,6
+Child,2,Male,Diarrhea,3 days,Duration: 3 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.3°C,5
+Elder,63,Female,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.4°C,5
+Elder,75,Female,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 43/min; Temperature: 38.6°C,1
+Elder,68,Female,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.7°C,5
+Child,1,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.9°C,2
+Adult,30,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.2°C,2
+Child,4,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.5°C,2
+Elder,64,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.8°C,5
+Child,4,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.7°C,2
+Child,1,Male,Diarrhea,4 weeks,Duration: 4 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.8°C,5
+Child,1,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.4°C,2
+Child,2,Female,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 36.6°C,6
+Elder,70,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.9°C,2
+Child,1,Female,Diarrhea,1 days,Duration: 1 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 38.5°C,7
+Child,4,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.0°C,2
+Child,4,Male,Diarrhea,3 weeks,Duration: 3 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.8°C,5
+Child,4,Male,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.8°C,6
+Adult,11,Male,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 44/min; Temperature: 39.3°C,1
+Elder,62,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.3°C,2
+Elder,74,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.7°C,2
+Adult,8,Female,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 58/min; Temperature: 39.1°C,1
+Elder,64,Female,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.4°C,5
+Child,1,Male,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 70/min; Chest indrawing: Yes; Temperature: 39.6°C,1
+Child,5,Male,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 56/min; Temperature: 38.6°C,1
+Adult,27,Female,Diarrhea,5 days,Duration: 5 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.4°C,7
+Child,5,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 37.4°C,2
+Elder,67,Male,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; Lethargic/unconscious: Yes; Sunken eyes: Yes; Unable to drink: Yes,Skin pinch: very slow; Temperature: 39.3°C,9
+Elder,63,Male,Sore throat,3 days,Duration: 3 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.8°C,10
+Child,2,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.0°C,2
+Adult,41,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 37.2°C,2
+Child,3,Female,Diarrhea,4 weeks,Duration: 4 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.5°C,8
+Elder,72,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.3°C,2
+Child,3,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.3°C,2
+Elder,60,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.8°C,2
+Adult,25,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.3°C,2
+Adult,51,Female,Sore throat,2 days,Duration: 2 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 36.7°C,10
+Adult,52,Male,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 49/min; Temperature: 38.9°C,1
+Child,4,Female,Sore throat,2 days,Duration: 2 days; Very sore throat: Yes; White spots on tonsils: Yes,Temperature: 39.3°C,10
+Child,2,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.2°C,2
+Adult,14,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.7°C,2
+Elder,61,Male,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 59/min; Chest indrawing: Yes; Temperature: 39.9°C,1
+Adult,30,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 36.9°C,2
+Child,5,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.7°C,2
+Child,1,Male,Diarrhea,4 days,Duration: 4 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 38.0°C,7
+Adult,47,Male,Diarrhea,3 days,Duration: 3 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.8°C,5
+Child,3,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.7°C,2
+Child,5,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.4°C,2
+Child,4,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.5°C,2
+Elder,71,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 37.2°C,2
+Adult,41,Male,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.5°C,5
+Adult,20,Male,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 47/min; Temperature: 39.3°C,1
+Adult,47,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.0°C,2
+Adult,27,Female,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 53/min; Temperature: 39.4°C,1
+Adult,37,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 38.0°C,2
+Child,2,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 37.6°C,2
+Elder,62,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.2°C,2
+Adult,11,Female,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 46/min; Temperature: 38.9°C,1
+Elder,75,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.5°C,2
+Adult,47,Male,Sore throat,3 days,Duration: 3 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.8°C,10
+Elder,67,Male,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 60/min; Temperature: 39.0°C,1
+Child,2,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 37.1°C,2
+Elder,72,Female,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.2°C,5
+Adult,38,Female,Diarrhea,3 days,Duration: 3 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 38.4°C,6
+Child,5,Female,Sore throat,2 days,Duration: 2 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.4°C,10
+Child,2,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 37.5°C,2
+Adult,10,Female,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; Lethargic/unconscious: Yes; Sunken eyes: Yes; Unable to drink: Yes,Skin pinch: very slow; Temperature: 38.6°C,6
+Child,4,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.5°C,2
+Adult,5,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.7°C,2
+Child,3,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.2°C,2
+Elder,73,Female,Cough,3 weeks,Duration: 3 weeks; Cough duration ≥ 3 weeks; No fever,Respiratory rate: 22/min; Temperature: 36.8°C,4
+Elder,65,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 38.1°C,6
+Child,3,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.5°C,2
+Adult,6,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.0°C,2
+Child,2,Female,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 54/min; Temperature: 39.5°C,1
+Elder,61,Female,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.5°C,5
+Elder,65,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 37.5°C,2
+Elder,66,Male,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 49/min; Temperature: 39.4°C,1
+Child,2,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.0°C,2
+Elder,68,Male,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; Lethargic/unconscious: Yes; Sunken eyes: Yes; Unable to drink: Yes,Skin pinch: very slow; Temperature: 38.4°C,9
+Child,1,Male,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 42/min; Temperature: 38.8°C,1
+Child,3,Male,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 57/min; Chest indrawing: Yes; Temperature: 39.6°C,1
+Child,3,Female,Diarrhea,5 weeks,Duration: 5 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.7°C,5
+Child,4,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.6°C,2
+Elder,62,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 38.0°C,2
+Child,3,Male,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 62/min; Chest indrawing: Yes; Temperature: 38.6°C,1
+Elder,61,Male,Cough,3 weeks,Duration: 3 weeks; Cough duration ≥ 3 weeks; No fever,Respiratory rate: 25/min; Temperature: 36.8°C,4
+Adult,39,Male,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.6°C,10
+Adult,28,Male,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 40/min; Temperature: 38.9°C,1
+Child,4,Male,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 40/min; Temperature: 39.2°C,1
+Adult,23,Female,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.3°C,5
+Child,3,Female,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 36.7°C,6
+Adult,51,Male,Diarrhea,2 days,Duration: 2 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.6°C,6
+Elder,62,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.9°C,2
+Adult,39,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 36.8°C,2
+Child,1,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.9°C,2
+Adult,31,Male,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 56/min; Temperature: 39.4°C,1
+Child,3,Male,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.8°C,5
+Adult,14,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.5°C,2
+Child,4,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 37.1°C,2
+Child,3,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.3°C,2
+Child,2,Female,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 38.0°C,6
+Child,5,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.4°C,2
+Adult,22,Female,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 59/min; Chest indrawing: Yes; Temperature: 39.4°C,1
+Adult,23,Male,Diarrhea,3 days,Duration: 3 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 38.4°C,6
+Child,5,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.4°C,2
+Child,5,Female,Diarrhea,3 days,Duration: 3 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.1°C,6
+Elder,72,Male,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 36.8°C,12
+Adult,36,Male,Diarrhea,3 weeks,Duration: 3 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.8°C,8
+Elder,61,Female,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.8°C,5
+Adult,22,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.8°C,2
+Elder,60,Female,Sore throat,3 days,Duration: 3 days; Very sore throat: Yes; White spots on tonsils: Yes,Temperature: 40.0°C,10
+Child,5,Female,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; Lethargic/unconscious: Yes; Sunken eyes: Yes; Unable to drink: Yes,Skin pinch: very slow; Temperature: 37.8°C,9
+Child,4,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.0°C,2
+Adult,31,Female,Sore throat,2 days,Duration: 2 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.3°C,10
+Elder,62,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.2°C,2
+Elder,62,Male,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 42/min; Temperature: 39.3°C,1
+Elder,66,Female,Diarrhea,3 weeks,Duration: 3 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.4°C,8
+Child,5,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 37.9°C,2
+Child,1,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.6°C,2
+Child,5,Male,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 43/min; Temperature: 38.5°C,1
+Elder,70,Male,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 57/min; Temperature: 39.3°C,1
+Child,5,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.7°C,2
+Adult,5,Female,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 55/min; Temperature: 38.9°C,1
+Adult,20,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.0°C,2
+Elder,74,Female,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.1°C,6
+Adult,23,Female,Sore throat,2 days,Duration: 2 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 36.7°C,10
+Adult,24,Male,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 54/min; Temperature: 38.6°C,1
+Adult,42,Male,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.0°C,6
+Adult,20,Female,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.2°C,10
+Elder,66,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.6°C,2
+Elder,64,Male,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 40/min; Temperature: 39.0°C,1
+Elder,61,Male,Diarrhea,5 weeks,Duration: 5 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.9°C,8
+Adult,32,Male,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; Lethargic/unconscious: Yes; Sunken eyes: Yes; Unable to drink: Yes,Skin pinch: very slow; Temperature: 37.8°C,9
+Elder,70,Male,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.1°C,6
+Elder,67,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.8°C,2
+Child,3,Female,Diarrhea,4 weeks,Duration: 4 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.6°C,5
+Child,2,Male,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 67/min; Chest indrawing: Yes; Temperature: 39.7°C,1
+Child,4,Male,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 40/min; Temperature: 39.1°C,1
+Elder,70,Male,Diarrhea,2 days,Duration: 2 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 36.8°C,6
+Child,2,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.0°C,2
+Elder,64,Female,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 66/min; Chest indrawing: Yes; Temperature: 39.7°C,1
+Child,4,Female,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 36.8°C,6
+Elder,63,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.9°C,2
+Elder,61,Male,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.9°C,5
+Adult,15,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.3°C,2
+Child,4,Male,Diarrhea,3 days,Duration: 3 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.7°C,5
+Elder,61,Male,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 42/min; Temperature: 38.6°C,1
+Child,1,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.5°C,2
+Adult,10,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 38.0°C,2
+Elder,63,Male,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 49/min; Temperature: 39.2°C,1
+Elder,75,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 38.0°C,2
+Elder,60,Female,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 45/min; Temperature: 39.2°C,1
+Elder,73,Male,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 45/min; Temperature: 38.8°C,1
+Child,3,Male,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.7°C,6
+Elder,65,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 37.2°C,2
+Adult,29,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.2°C,2
+Child,1,Male,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.5°C,10
+Adult,14,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.6°C,2
+Adult,55,Male,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 58/min; Temperature: 39.0°C,1
+Elder,74,Female,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 36.5°C,6
+Child,2,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 37.9°C,2
+Child,3,Male,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 48/min; Temperature: 39.2°C,1
+Adult,29,Female,Sore throat,3 days,Duration: 3 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 36.8°C,10
+Elder,74,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.3°C,5
+Adult,28,Male,Diarrhea,2 days,Duration: 2 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 38.4°C,6
+Adult,13,Male,Sore throat,3 days,Duration: 3 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 36.9°C,10
+Elder,71,Female,Diarrhea,5 weeks,Duration: 5 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.2°C,8
+Adult,50,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.5°C,2
+Adult,29,Female,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.0°C,5
+Elder,72,Female,Diarrhea,3 days,Duration: 3 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.7°C,6
+Child,5,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.0°C,2
+Elder,62,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 37.4°C,2
+Child,4,Female,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.2°C,5
+Adult,27,Male,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 40/min; Temperature: 38.7°C,1
+Adult,40,Female,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 48/min; Temperature: 38.9°C,1
+Child,4,Female,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 51/min; Temperature: 38.8°C,1
+Elder,71,Female,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 69/min; Chest indrawing: Yes; Temperature: 39.6°C,1
+Child,4,Female,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 41/min; Temperature: 38.8°C,1
+Child,1,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.4°C,2
+Elder,68,Female,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 58/min; Chest indrawing: Yes; Temperature: 39.1°C,1
+Adult,39,Female,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.5°C,6
+Elder,73,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.4°C,2
+Adult,11,Female,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.3°C,5
+Elder,72,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.1°C,2
+Elder,70,Male,Sore throat,3 days,Duration: 3 days; Very sore throat: Yes; White spots on tonsils: Yes,Temperature: 39.5°C,10
+Adult,52,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.3°C,2
+Adult,9,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 37.8°C,2
+Child,5,Male,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 63/min; Chest indrawing: Yes; Temperature: 39.8°C,1
+Child,4,Male,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.6°C,6
+Child,1,Male,Sore throat,3 days,Duration: 3 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.6°C,10
+Child,1,Male,Cough,4 weeks,Duration: 4 weeks; Cough duration ≥ 3 weeks; No fever,Respiratory rate: 23/min; Temperature: 36.8°C,4
+Elder,66,Male,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 45/min; Temperature: 39.5°C,1
+Elder,65,Female,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.1°C,10
+Adult,48,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.2°C,2
+Child,3,Female,Sore throat,2 days,Duration: 2 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.0°C,10
+Child,3,Female,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.8°C,5
+Adult,42,Male,Cough,3 weeks,Duration: 3 weeks; Cough duration ≥ 3 weeks; No fever,Respiratory rate: 20/min; Temperature: 36.7°C,4
+Child,5,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.7°C,5
+Child,1,Male,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 56/min; Temperature: 39.2°C,1
+Adult,19,Female,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 68/min; Chest indrawing: Yes; Temperature: 39.8°C,1
+Adult,33,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.8°C,2
+Child,1,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.9°C,2
+Adult,21,Female,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 38.4°C,6
+Elder,74,Female,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 43/min; Temperature: 38.7°C,1
+Child,3,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.4°C,2
+Adult,40,Male,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 38.4°C,6
+Adult,15,Male,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 70/min; Chest indrawing: Yes; Temperature: 39.5°C,1
+Child,3,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 36.8°C,2
+Elder,61,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 37.2°C,2
+Adult,55,Male,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 68/min; Chest indrawing: Yes; Temperature: 39.6°C,1
+Child,4,Male,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 52/min; Temperature: 39.2°C,1
+Adult,46,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 37.5°C,2
+Child,5,Male,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 57/min; Temperature: 39.1°C,1
+Adult,53,Female,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.5°C,5
+Child,3,Male,Cough,3 weeks,Duration: 3 weeks; Cough duration ≥ 3 weeks; No fever,Respiratory rate: 24/min; Temperature: 36.8°C,4
+Child,3,Female,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.6°C,5
+Child,1,Male,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.1°C,6
+Child,3,Male,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 56/min; Temperature: 38.5°C,1
+Elder,71,Female,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; Lethargic/unconscious: Yes; Sunken eyes: Yes; Unable to drink: Yes,Skin pinch: very slow; Temperature: 39.3°C,9
+Child,1,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.1°C,2
+Child,4,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 36.9°C,2
+Adult,15,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.8°C,2
+Adult,7,Female,Sore throat,3 days,Duration: 3 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.9°C,10
+Elder,61,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 36.9°C,2
+Elder,65,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.3°C,2
+Adult,42,Male,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 45/min; Temperature: 39.0°C,1
+Child,5,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.0°C,2
+Elder,67,Female,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 64/min; Chest indrawing: Yes; Temperature: 39.4°C,1
+Child,3,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.5°C,2
+Elder,69,Male,Diarrhea,3 days,Duration: 3 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.1°C,5
+Child,3,Female,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 42/min; Temperature: 38.7°C,1
+Child,3,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; Lethargic/unconscious: Yes; Sunken eyes: Yes; Unable to drink: Yes,Skin pinch: very slow; Temperature: 37.8°C,6
+Child,3,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.5°C,2
+Elder,69,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.6°C,2
+Elder,67,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.1°C,2
+Child,2,Male,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 55/min; Temperature: 39.4°C,1
+Adult,31,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.1°C,2
+Adult,23,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.3°C,2
+Elder,69,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 38.3°C,7
+Child,5,Male,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 61/min; Chest indrawing: Yes; Temperature: 39.0°C,1
+Elder,70,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.8°C,2
+Child,1,Male,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 59/min; Temperature: 39.3°C,1
+Elder,63,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.5°C,2
+Adult,52,Male,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.2°C,5
+Child,3,Male,Sore throat,2 days,Duration: 2 days; Very sore throat: Yes; White spots on tonsils: Yes,Temperature: 38.5°C,10
+Elder,75,Male,Diarrhea,3 days,Duration: 3 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.8°C,6
+Child,2,Female,Diarrhea,2 days,Duration: 2 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.0°C,7
+Child,4,Male,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 57/min; Temperature: 39.2°C,1
+Child,4,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.0°C,2
+Child,5,Male,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 42/min; Temperature: 38.9°C,1
+Child,3,Female,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 63/min; Chest indrawing: Yes; Temperature: 39.2°C,1
+Elder,66,Female,Sore throat,2 days,Duration: 2 days; Very sore throat: Yes; White spots on tonsils: Yes,Temperature: 38.9°C,10
+Adult,51,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.9°C,2
+Child,3,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.6°C,2
+Adult,9,Male,Diarrhea,2 days,Duration: 2 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 36.9°C,6
+Elder,68,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.7°C,2
+Adult,14,Female,Diarrhea,5 weeks,Duration: 5 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.7°C,8
+Elder,75,Female,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.1°C,10
+Child,1,Female,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 51/min; Temperature: 38.6°C,1
+Adult,28,Female,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 67/min; Chest indrawing: Yes; Temperature: 39.3°C,1
+Elder,71,Female,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 50/min; Temperature: 38.8°C,1
+Adult,42,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 37.2°C,2
+Elder,65,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; Lethargic/unconscious: Yes; Sunken eyes: Yes; Unable to drink: Yes,Skin pinch: very slow; Temperature: 39.0°C,9
+Elder,65,Female,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 38.4°C,6
+Adult,12,Male,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; Lethargic/unconscious: Yes; Sunken eyes: Yes; Unable to drink: Yes,Skin pinch: very slow; Temperature: 39.3°C,9
+Child,5,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 37.8°C,2
+Adult,51,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.7°C,2
+Elder,74,Female,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.2°C,5
+Adult,12,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.7°C,2
+Child,2,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 36.9°C,2
+Adult,43,Female,Diarrhea,2 days,Duration: 2 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.6°C,5
+Child,5,Female,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: Yes,Temperature: 39.8°C,10
+Elder,63,Male,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.8°C,5
+Elder,75,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 36.9°C,2
+Adult,9,Female,Diarrhea,5 days,Duration: 5 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.5°C,7
+Adult,54,Female,Diarrhea,5 weeks,Duration: 5 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.0°C,8
+Elder,66,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.5°C,2
+Adult,46,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.0°C,2
+Elder,66,Female,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 68/min; Chest indrawing: Yes; Temperature: 39.3°C,1
+Elder,68,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 36.8°C,2
+Elder,64,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.6°C,2
+Adult,11,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.0°C,2
+Elder,72,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 39.0°C,7
+Elder,69,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.7°C,2
+Child,2,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.5°C,2
+Adult,55,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.1°C,2
+Elder,72,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.2°C,2
+Adult,18,Female,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.4°C,10
+Adult,37,Male,Diarrhea,3 days,Duration: 3 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 36.9°C,6
+Elder,64,Male,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; Lethargic/unconscious: Yes; Sunken eyes: Yes; Unable to drink: Yes,Skin pinch: very slow; Temperature: 38.4°C,9
+Child,4,Female,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 42/min; Temperature: 38.9°C,1
+Adult,23,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.0°C,2
+Elder,73,Male,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 41/min; Temperature: 39.3°C,1
+Elder,64,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.3°C,2
+Child,1,Female,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; Lethargic/unconscious: Yes; Sunken eyes: Yes; Unable to drink: Yes,Skin pinch: very slow; Temperature: 38.6°C,9
+Adult,9,Male,Diarrhea,4 days,Duration: 4 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.6°C,7
+Adult,38,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.7°C,5
+Child,5,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 36.8°C,2
+Child,3,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 37.4°C,2
+Elder,69,Female,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.7°C,5
+Elder,62,Male,Diarrhea,3 days,Duration: 3 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 36.7°C,6
+Child,1,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; Lethargic/unconscious: Yes; Sunken eyes: Yes; Unable to drink: Yes,Skin pinch: very slow; Temperature: 38.3°C,6
+Elder,67,Female,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 36.6°C,6
+Elder,67,Male,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: Yes,Temperature: 38.7°C,10
+Adult,50,Male,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.6°C,5
+Elder,64,Female,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 58/min; Temperature: 38.6°C,1
+Adult,30,Female,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 57/min; Temperature: 39.0°C,1
+Child,4,Female,Cough,4 weeks,Duration: 4 weeks; Cough duration ≥ 3 weeks; No fever,Respiratory rate: 27/min; Temperature: 36.9°C,4
+Adult,14,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.8°C,2
+Adult,30,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.5°C,2
+Child,3,Male,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 42/min; Temperature: 38.8°C,1
+Child,4,Female,Cough,4 weeks,Duration: 4 weeks; Cough duration ≥ 3 weeks; No fever,Respiratory rate: 26/min; Temperature: 36.6°C,4
+Adult,30,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 36.7°C,6
+Elder,61,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 38.0°C,2
+Elder,64,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.7°C,2
+Child,2,Female,Diarrhea,5 days,Duration: 5 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 38.6°C,7
+Adult,37,Female,Sore throat,2 days,Duration: 2 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 36.8°C,10
+Child,3,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.4°C,2
+Child,3,Male,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 44/min; Temperature: 38.8°C,1
+Child,3,Female,Diarrhea,2 days,Duration: 2 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.5°C,7
+Adult,26,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 38.4°C,7
+Child,1,Male,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.0°C,5
+Child,1,Male,Diarrhea,3 days,Duration: 3 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.8°C,7
+Elder,67,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.4°C,6
+Elder,74,Female,Sore throat,2 days,Duration: 2 days; Very sore throat: Yes; White spots on tonsils: Yes,Temperature: 40.0°C,10
+Elder,70,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.3°C,2
+Elder,74,Male,Diarrhea,5 weeks,Duration: 5 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.7°C,8
+Child,4,Female,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.9°C,5
+Child,4,Male,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 55/min; Temperature: 39.1°C,1
+Child,5,Female,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.8°C,10
+Elder,60,Female,Sore throat,2 days,Duration: 2 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.9°C,10
+Elder,73,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.3°C,2
+Elder,61,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.9°C,2
+Child,5,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.7°C,2
+Elder,68,Male,Diarrhea,3 weeks,Duration: 3 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.4°C,8
+Child,3,Female,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; Lethargic/unconscious: Yes; Sunken eyes: Yes; Unable to drink: Yes,Skin pinch: very slow; Temperature: 39.1°C,9
+Child,2,Male,Diarrhea,2 days,Duration: 2 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.8°C,5
+Adult,35,Male,Diarrhea,2 days,Duration: 2 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.7°C,5
+Elder,71,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 36.9°C,2
+Adult,23,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.7°C,2
+Elder,70,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.8°C,2
+Child,1,Male,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: Yes,Temperature: 39.3°C,10
+Child,2,Female,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 65/min; Chest indrawing: Yes; Temperature: 39.5°C,1
+Elder,66,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.8°C,2
+Adult,7,Male,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.7°C,5
+Elder,63,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.0°C,2
+Child,4,Female,Sore throat,3 days,Duration: 3 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 36.6°C,10
+Adult,7,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.1°C,2
+Child,2,Female,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 65/min; Chest indrawing: Yes; Temperature: 38.8°C,1
+Elder,65,Male,Diarrhea,3 weeks,Duration: 3 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.5°C,5
+Elder,64,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.1°C,2
+Adult,12,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.0°C,2
+Elder,65,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.1°C,2
+Adult,40,Female,Cough,4 weeks,Duration: 4 weeks; Cough duration ≥ 3 weeks; No fever,Respiratory rate: 21/min; Temperature: 36.9°C,4
+Adult,38,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.9°C,5
+Elder,68,Female,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 42/min; Temperature: 38.9°C,1
+Child,2,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.2°C,2
+Elder,63,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.2°C,2
+Child,1,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 36.8°C,2
+Adult,31,Female,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.3°C,6
+Adult,20,Female,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 53/min; Temperature: 39.3°C,1
+Adult,36,Female,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 51/min; Temperature: 39.1°C,1
+Child,4,Female,Diarrhea,3 days,Duration: 3 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.4°C,6
+Adult,30,Male,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 61/min; Chest indrawing: Yes; Temperature: 38.9°C,1
+Elder,73,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.1°C,2
+Elder,62,Male,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 48/min; Temperature: 39.1°C,1
+Elder,68,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.8°C,2
+Adult,46,Female,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 51/min; Temperature: 39.2°C,1
+Child,1,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.5°C,2
+Elder,68,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.4°C,2
+Elder,60,Female,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.2°C,6
+Adult,18,Female,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.3°C,10
+Elder,75,Male,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.5°C,5
+Elder,68,Female,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 55/min; Temperature: 38.7°C,1
+Elder,65,Male,Sore throat,3 days,Duration: 3 days; Very sore throat: Yes; White spots on tonsils: Yes,Temperature: 39.1°C,10
+Child,1,Male,Cough,3 weeks,Duration: 3 weeks; Cough duration ≥ 3 weeks; No fever,Respiratory rate: 25/min; Temperature: 36.9°C,4
+Adult,29,Male,Diarrhea,2 days,Duration: 2 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 38.2°C,6
+Elder,66,Female,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 47/min; Temperature: 39.1°C,1
+Elder,71,Male,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.8°C,5
+Adult,25,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.9°C,2
+Elder,68,Female,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.6°C,6
+Elder,60,Female,Diarrhea,3 weeks,Duration: 3 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.9°C,8
+Elder,61,Male,Sore throat,3 days,Duration: 3 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.9°C,10
+Adult,38,Male,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.2°C,6
+Adult,21,Male,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 47/min; Temperature: 39.0°C,1
+Child,3,Female,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 61/min; Chest indrawing: Yes; Temperature: 39.4°C,1
+Elder,65,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.0°C,5
+Adult,21,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.5°C,2
+Adult,53,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.1°C,2
+Adult,48,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.3°C,2
+Child,2,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.8°C,2
+Elder,68,Male,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 56/min; Temperature: 39.1°C,1
+Elder,68,Male,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.4°C,6
+Child,2,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.4°C,2
+Adult,31,Female,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 53/min; Temperature: 38.6°C,1
+Child,3,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.9°C,2
+Elder,72,Male,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 42/min; Temperature: 38.6°C,1
+Elder,71,Female,Diarrhea,3 days,Duration: 3 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.7°C,5
+Elder,69,Female,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.5°C,5
+Child,1,Male,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 57/min; Temperature: 38.7°C,1
+Adult,55,Female,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 41/min; Temperature: 38.8°C,1
+Elder,75,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.4°C,2
+Adult,31,Male,Diarrhea,2 days,Duration: 2 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.6°C,5
+Elder,60,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.2°C,2
+Adult,12,Female,Diarrhea,3 days,Duration: 3 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 38.1°C,7
+Adult,26,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 37.4°C,2
+Elder,70,Male,Cough,3 weeks,Duration: 3 weeks; Cough duration ≥ 3 weeks; No fever,Respiratory rate: 21/min; Temperature: 36.9°C,4
+Elder,66,Female,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 40/min; Temperature: 39.3°C,1
+Adult,35,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.6°C,2
+Elder,65,Male,Sore throat,2 days,Duration: 2 days; Very sore throat: Yes; White spots on tonsils: Yes,Temperature: 39.4°C,10
+Child,5,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 36.8°C,2
+Adult,34,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 36.9°C,2
+Child,4,Male,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 38.0°C,10
+Elder,63,Male,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.0°C,10
+Elder,68,Female,Sore throat,2 days,Duration: 2 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.5°C,10
+Elder,63,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.4°C,7
+Child,3,Female,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 52/min; Temperature: 39.4°C,1
+Adult,26,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 36.9°C,2
+Adult,44,Female,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: Yes,Temperature: 39.9°C,10
+Adult,43,Female,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 55/min; Chest indrawing: Yes; Temperature: 39.8°C,1
+Elder,63,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.4°C,2
+Elder,67,Male,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 40/min; Temperature: 39.3°C,1
+Adult,7,Female,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 66/min; Chest indrawing: Yes; Temperature: 38.6°C,1
+Adult,29,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.7°C,2
+Adult,7,Female,Sore throat,2 days,Duration: 2 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.3°C,10
+Elder,69,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.4°C,2
+Adult,12,Female,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.3°C,5
+Adult,25,Female,Cough,3 weeks,Duration: 3 weeks; Cough duration ≥ 3 weeks; No fever,Respiratory rate: 20/min; Temperature: 36.9°C,4
+Elder,61,Female,Cough,3 weeks,Duration: 3 weeks; Cough duration ≥ 3 weeks; No fever,Respiratory rate: 28/min; Temperature: 36.6°C,4
+Adult,5,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.8°C,2
+Elder,72,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.6°C,2
+Elder,71,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.6°C,2
+Elder,73,Male,Diarrhea,5 weeks,Duration: 5 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.2°C,8
+Elder,64,Male,Cough,4 weeks,Duration: 4 weeks; Cough duration ≥ 3 weeks; No fever,Respiratory rate: 27/min; Temperature: 36.8°C,4
+Child,1,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 37.4°C,2
+Child,1,Female,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 45/min; Temperature: 39.0°C,1
+Elder,64,Female,Sore throat,3 days,Duration: 3 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.7°C,10
+Child,4,Male,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.9°C,5
+Elder,66,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.1°C,2
+Elder,61,Female,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.4°C,6
+Elder,61,Male,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 57/min; Chest indrawing: Yes; Temperature: 39.2°C,1
+Adult,31,Female,Diarrhea,3 days,Duration: 3 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 38.9°C,7
+Child,1,Male,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 59/min; Temperature: 38.8°C,1
+Child,3,Male,Diarrhea,4 weeks,Duration: 4 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.6°C,5
+Elder,61,Male,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 40/min; Temperature: 39.3°C,1
+Elder,64,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.1°C,2
+Elder,62,Male,Diarrhea,4 weeks,Duration: 4 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.8°C,8
+Child,2,Male,Diarrhea,4 weeks,Duration: 4 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.9°C,5
+Elder,66,Male,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 36.8°C,10
+Elder,70,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.2°C,2
+Elder,63,Female,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.7°C,5
+Elder,65,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.6°C,5
+Adult,53,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.2°C,2
+Elder,71,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.4°C,2
+Elder,73,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 37.7°C,2
+Elder,69,Male,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: Yes,Temperature: 38.9°C,10
+Child,3,Male,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.0°C,6
+Adult,31,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.0°C,2
+Elder,60,Male,Sore throat,3 days,Duration: 3 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.6°C,10
+Elder,61,Female,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.0°C,6
+Adult,55,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 37.4°C,2
+Adult,43,Male,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 66/min; Chest indrawing: Yes; Temperature: 39.5°C,1
+Child,1,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.8°C,2
+Elder,64,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.2°C,2
+Elder,62,Female,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 49/min; Temperature: 38.6°C,1
+Adult,31,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 37.7°C,2
+Elder,62,Male,Cough,3 weeks,Duration: 3 weeks; Cough duration ≥ 3 weeks; No fever,Respiratory rate: 20/min; Temperature: 36.7°C,4
+Elder,69,Female,Sore throat,2 days,Duration: 2 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.2°C,10
+Child,4,Female,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: Yes,Temperature: 39.7°C,10
+Elder,69,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 36.9°C,2
+Child,5,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 25/min; Temperature: 37.8°C,2
+Adult,43,Female,Sore throat,2 days,Duration: 2 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 36.8°C,10
+Child,3,Female,Diarrhea,1 days,Duration: 1 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.2°C,7
+Adult,30,Female,Diarrhea,3 weeks,Duration: 3 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.4°C,8
+Adult,5,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.4°C,2
+Elder,63,Male,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.4°C,6
+Adult,16,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 21/min; Temperature: 37.7°C,2
+Child,3,Male,Diarrhea,7 days,Duration: 7 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 38.9°C,7
+Elder,64,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 36.8°C,2
+Adult,29,Female,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 64/min; Chest indrawing: Yes; Temperature: 40.0°C,1
+Child,5,Male,Sore throat,3 days,Duration: 3 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 36.6°C,10
+Adult,16,Male,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 51/min; Temperature: 39.4°C,1
+Child,1,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.3°C,2
+Elder,71,Male,Sore throat,3 days,Duration: 3 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.7°C,10
+Adult,40,Female,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 36.5°C,6
+Child,1,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.5°C,2
+Adult,7,Female,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 60/min; Chest indrawing: Yes; Temperature: 38.9°C,1
+Child,4,Male,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 70/min; Chest indrawing: Yes; Temperature: 38.7°C,1
+Child,2,Female,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 44/min; Temperature: 38.9°C,1
+Elder,70,Male,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 36.8°C,6
+Adult,9,Male,Sore throat,2 days,Duration: 2 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.7°C,10
+Adult,6,Male,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.3°C,5
+Adult,12,Female,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 70/min; Chest indrawing: Yes; Temperature: 39.6°C,1
+Adult,17,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 37.7°C,2
+Child,1,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.4°C,2
+Adult,54,Female,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 44/min; Temperature: 38.8°C,1
+Adult,45,Male,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.0°C,5
+Elder,64,Female,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.5°C,5
+Child,1,Female,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 57/min; Temperature: 38.6°C,1
+Adult,24,Male,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 38.5°C,6
+Adult,18,Female,Diarrhea,5 weeks,Duration: 5 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.9°C,8
+Child,1,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.8°C,2
+Child,5,Female,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 60/min; Chest indrawing: Yes; Temperature: 39.2°C,1
+Elder,66,Female,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 45/min; Temperature: 39.0°C,1
+Child,5,Male,Diarrhea,3 days,Duration: 3 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.2°C,6
+Elder,72,Male,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 44/min; Temperature: 39.2°C,1
+Elder,71,Female,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 56/min; Temperature: 39.0°C,1
+Child,4,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.5°C,2
+Elder,73,Male,Sore throat,3 days,Duration: 3 days; Very sore throat: Yes; White spots on tonsils: Yes,Temperature: 39.7°C,10
+Adult,44,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.4°C,6
+Child,3,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.1°C,2
+Elder,73,Female,Cough,3 weeks,Duration: 3 weeks; Cough duration ≥ 3 weeks; No fever,Respiratory rate: 21/min; Temperature: 36.5°C,4
+Adult,53,Male,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 57/min; Chest indrawing: Yes; Temperature: 39.9°C,1
+Child,2,Male,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; Lethargic/unconscious: Yes; Sunken eyes: Yes; Unable to drink: Yes,Skin pinch: very slow; Temperature: 37.7°C,9
+Child,5,Female,Sore throat,3 days,Duration: 3 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 37.5°C,10
+Adult,29,Female,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.3°C,5
+Child,2,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.6°C,2
+Elder,61,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.4°C,2
+Child,1,Male,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 36.5°C,10
+Child,4,Male,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.1°C,5
+Elder,63,Female,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 58/min; Chest indrawing: Yes; Temperature: 39.6°C,1
+Elder,66,Female,Diarrhea,5 weeks,Duration: 5 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.8°C,8
+Adult,11,Female,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 53/min; Temperature: 39.1°C,1
+Child,5,Male,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 43/min; Temperature: 39.0°C,1
+Elder,65,Female,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.5°C,5
+Adult,52,Male,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.5°C,5
+Child,4,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.2°C,2
+Adult,52,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 38.0°C,2
+Child,1,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.1°C,2
+Adult,42,Male,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 55/min; Temperature: 38.7°C,1
+Adult,35,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.7°C,2
+Elder,71,Male,Diarrhea,5 weeks,Duration: 5 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.1°C,8
+Child,5,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.6°C,2
+Child,2,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.8°C,2
+Adult,55,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.8°C,2
+Elder,65,Male,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 57/min; Chest indrawing: Yes; Temperature: 38.9°C,1
+Adult,53,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.5°C,2
+Adult,33,Female,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 45/min; Temperature: 38.7°C,1
+Adult,25,Male,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 44/min; Temperature: 39.2°C,1
+Child,1,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.3°C,2
+Adult,14,Female,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.9°C,5
+Adult,52,Female,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 36.7°C,6
+Adult,16,Female,Diarrhea,5 days,Duration: 5 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.6°C,5
+Child,1,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.4°C,2
+Child,5,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 18/min; Temperature: 37.4°C,2
+Adult,21,Female,Diarrhea,5 weeks,Duration: 5 weeks; Blood in stool: No; No blood in stool; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.2°C,8
+Elder,60,Female,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 38.2°C,6
+Elder,63,Male,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: Yes,Temperature: 39.2°C,10
+Adult,38,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.6°C,2
+Child,3,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.3°C,6
+Elder,62,Female,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 58/min; Temperature: 39.4°C,1
+Adult,24,Male,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 37.3°C,2
+Elder,67,Female,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 38.1°C,6
+Child,5,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 24/min; Temperature: 37.8°C,2
+Elder,65,Female,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 54/min; Temperature: 38.6°C,1
+Elder,69,Female,Diarrhea,4 days,Duration: 4 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 38.0°C,6
+Child,4,Female,Diarrhea,7 days,Duration: 7 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.8°C,5
+Child,2,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.0°C,2
+Child,2,Male,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.8°C,2
+Child,5,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 23/min; Temperature: 38.0°C,2
+Adult,31,Male,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 55/min; Temperature: 39.1°C,1
+Elder,70,Male,Sore throat,1 days,Duration: 1 days; Very sore throat: Yes; White spots on tonsils: No,Temperature: 36.9°C,10
+Adult,39,Male,Cough,3 days,Duration: 3 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 64/min; Chest indrawing: Yes; Temperature: 39.2°C,1
+Adult,38,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.4°C,2
+Elder,62,Male,Cough,3 weeks,Duration: 3 weeks; Cough duration ≥ 3 weeks; No fever,Respiratory rate: 25/min; Temperature: 36.6°C,4
+Child,4,Male,Diarrhea,2 days,Duration: 2 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 37.8°C,6
+Adult,17,Female,Diarrhea,3 days,Duration: 3 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 36.6°C,6
+Elder,61,Female,Cough,5 days,Duration: 5 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.3°C,2
+Elder,74,Female,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 63/min; Chest indrawing: Yes; Temperature: 39.7°C,1
+Adult,15,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 36.9°C,2
+Elder,75,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 36.9°C,5
+Child,5,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.9°C,2
+Adult,40,Female,Cough,2 days,Duration: 2 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 45/min; Temperature: 38.8°C,1
+Adult,50,Female,Diarrhea,7 days,Duration: 7 days; Blood in stool: Yes; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.7°C,7
+Adult,50,Female,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 59/min; Chest indrawing: Yes; Temperature: 39.5°C,1
+Adult,47,Male,Diarrhea,2 days,Duration: 2 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.2°C,5
+Adult,47,Female,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 47/min; Temperature: 39.4°C,1
+Adult,36,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.4°C,2
+Adult,18,Male,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.6°C,2
+Adult,26,Female,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 19/min; Temperature: 37.1°C,2
+Elder,66,Female,Diarrhea,2 days,Duration: 2 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.3°C,5
+Adult,12,Female,Cough,7 days,Duration: 7 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.1°C,2
+Elder,61,Male,Diarrhea,3 days,Duration: 3 days; Blood in stool: No; Restless/irritable: Yes; Sunken eyes: Yes; Drinks eagerly: Yes,Skin pinch: slow; Temperature: 36.7°C,6
+Child,5,Female,Cough,3 days,Duration: 3 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 20/min; Temperature: 37.1°C,2
+Adult,6,Male,Sore throat,3 days,Duration: 3 days; Very sore throat: Yes; White spots on tonsils: Yes,Temperature: 39.1°C,10
+Elder,73,Male,Diarrhea,1 days,Duration: 1 days; Blood in stool: No; General condition: Alert; Sunken eyes: No; Drinking normally,Skin pinch: normal; Temperature: 37.3°C,5
+Child,5,Female,Cough,7 days,Duration: 7 days; Cough: Yes; Difficulty breathing: Yes,Respiratory rate: 57/min; Temperature: 39.2°C,1
+Elder,62,Female,Cough,5 days,Duration: 5 days; Cough: Yes; Difficulty breathing: Yes; Lethargic: Yes,Respiratory rate: 62/min; Chest indrawing: Yes; Temperature: 38.6°C,1
+Elder,63,Male,Cough,2 days,Duration: 2 days; Runny nose: Yes; Sneezing: Yes; Cough: Mild,Respiratory rate: 22/min; Temperature: 37.5°C,2
