@@ -10,7 +10,9 @@ import json
 from datetime import datetime
 from tqdm import tqdm
 import openai
+import uuid
 from avm import SimplePatientRunner
+from chad import pc
 
 # Ensure OpenAI API key is set
 if not os.getenv("OPENAI_API_KEY"):
@@ -102,8 +104,15 @@ def main():
     num_cases = get_num_cases()
     print(f"[DEBUG] Will process {num_cases} cases")
     
-    # Initialize results dictionary
-    all_results = {}
+    # Initialize results dictionary with metadata
+    all_results = {
+        "metadata": {
+            "datetime": datetime.now().isoformat(),
+            "serializer": str(uuid.uuid4()),
+            "pinecone_index": pc.list_indexes()[0].name if pc.list_indexes() else None
+        },
+        "cases": {}
+    }
     
     # Initialize runner
     print("[DEBUG] Initializing SimplePatientRunner...")
@@ -144,7 +153,7 @@ def main():
             case_results.update(grades)
             
             # Store in all_results
-            all_results[f"Case_{case_id}"] = case_results
+            all_results["cases"][f"Case_{case_id}"] = case_results
             print(f"[DEBUG] Stored results for case {case_id}")
     
     # Save all results

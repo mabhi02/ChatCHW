@@ -1,0 +1,15 @@
+Section,ChatCHW asks,Reply,GraderBot rubric,Similarity
+New patient,,73902 <<Patient ID>>,NA,—
+Question,[What brings you here today?],Diarrhea,NA,[100%]
+Question,[Age],5 years,Age,[100%]
+Question,[Sex],Female,sex,[100%]
+Questions,Is there blood in stools?,No,Is there any blood in the stool?,99%
+Question,Does the child have lower energy than usual?,No,Is the child lethargic?,95%
+Question,Does the child have a cough?,No,—,0 (only ChatCHW)
+Exams,,,,
+Exam,,,Test dehydration with a pinch test,0 (only rubric)
+Exam,Take temperature,38.1,Measure any fever using a thermometer,95%
+Diagnosis,Diarrhea with a fever,[Told patient?] Yes,Diarrhea with complications: Fever,95%
+Treatment,ORS,"[Given?] Not given, stockout",ORS,100%
+Treatment,zinc,[Given?] Yes,zinc,100%
+Treatment,Please visit to clinic,[recommended to patient?] Yes,Go to the clinic,99%
