@@ -14,7 +14,6 @@ from AVM.MATRIX.attention_viz import AttentionVisualizer
 from AVM.MATRIX.state_encoder import StateSpaceEncoder
 from AVM.MATRIX.pattern_analyzer import PatternAnalyzer
 from AVM.MATRIX.config import MATRIXConfig
-from prompts import MedicalPrompts
 
 
 examination_history = []
@@ -157,57 +156,125 @@ def validate_mc_input(value: str, options: List[Dict[str, Any]]) -> Optional[str
 def generate_question_with_options(input_data: List[Dict[str, Any]]) -> Dict[str, Any]:
     """
     Generate a follow-up question with options based on patient input.
+    Uses predefined templates to avoid API rate limits.
     """
     try:
         # Get initial complaint
         initial_complaint = next((resp['answer'] for resp in input_data 
-                            if resp['question'] == "Please describe what brings you here today"), "")
+                            if resp['question'] == "Please describe what brings you here today"), "").lower()
+
+        # Common question patterns based on symptoms
+        pain_questions = [
+            {
+                "question": "How long have you been experiencing this pain?",
+                "options": [
+                    {"id": 1, "text": "Less than 24 hours"},
+                    {"id": 2, "text": "1-7 days"},
+                    {"id": 3, "text": "1-4 weeks"},
+                    {"id": 4, "text": "More than a month"},
+                    {"id": 5, "text": "Other (please specify)"}
+                ]
+            },
+            {
+                "question": "How would you describe the severity of the pain?",
+                "options": [
+                    {"id": 1, "text": "Mild - noticeable but not interfering with activities"},
+                    {"id": 2, "text": "Moderate - somewhat interfering with activities"},
+                    {"id": 3, "text": "Severe - significantly interfering with activities"},
+                    {"id": 4, "text": "Very severe - unable to perform activities"},
+                    {"id": 5, "text": "Other (please specify)"}
+                ]
+            },
+            {
+                "question": "What makes the pain worse?",
+                "options": [
+                    {"id": 1, "text": "Movement or physical activity"},
+                    {"id": 2, "text": "Pressure or touch"},
+                    {"id": 3, "text": "Specific positions"},
+                    {"id": 4, "text": "Nothing specific"},
+                    {"id": 5, "text": "Other (please specify)"}
+                ]
+            }
+        ]
+
+        general_questions = [
+            {
+                "question": "When did your symptoms first begin?",
+                "options": [
+                    {"id": 1, "text": "Within the last 24 hours"},
+                    {"id": 2, "text": "In the past week"},
+                    {"id": 3, "text": "Several weeks ago"},
+                    {"id": 4, "text": "More than a month ago"},
+                    {"id": 5, "text": "Other (please specify)"}
+                ]
+            },
+            {
+                "question": "How often do you experience these symptoms?",
+                "options": [
+                    {"id": 1, "text": "Constantly"},
+                    {"id": 2, "text": "Several times a day"},
+                    {"id": 3, "text": "A few times a week"},
+                    {"id": 4, "text": "Occasionally"},
+                    {"id": 5, "text": "Other (please specify)"}
+                ]
+            },
+            {
+                "question": "How does this affect your daily activities?",
+                "options": [
+                    {"id": 1, "text": "Not at all"},
+                    {"id": 2, "text": "Slightly limiting"},
+                    {"id": 3, "text": "Moderately limiting"},
+                    {"id": 4, "text": "Severely limiting"},
+                    {"id": 5, "text": "Other (please specify)"}
+                ]
+            }
+        ]
+
+        # Determine which question set to use
+        if "pain" in initial_complaint:
+            questions = pain_questions
+        else:
+            questions = general_questions
 
         # Get previous questions
-        previous_questions = [resp['question'] for resp in input_data 
-                            if resp['question'] != "Please describe what brings you here today"]
-        previous_questions_str = "\n".join(previous_questions)
+        asked_questions = set(resp.get('question', '') for resp in input_data if resp.get('question'))
 
-        # Get relevant medical context
-        context_embedding = get_embedding_batch([initial_complaint])[0]
-        context_docs = vectorQuotesWithSource(context_embedding, pc.Index("who-guide-old"))
-        combined_context = "\n".join([doc["text"] for doc in context_docs[:2]])
+        # Find first unused question
+        for question_data in questions:
+            if question_data['question'] not in asked_questions:
+                return {
+                    "question": question_data['question'],
+                    "options": question_data['options'],
+                    "type": "MC"
+                }
 
-        # Generate follow-up question using MedicalPrompts
-        question_prompt = MedicalPrompts.get_followup_question_prompt(
-            initial_complaint=initial_complaint,
-            previous_questions=previous_questions_str,
-            combined_context=combined_context
-        )
-        
-        question = get_openai_completion(question_prompt)
-        
-        # Generate options for the question
-        options_prompt = MedicalPrompts.get_question_options_prompt(question)
-        options_text = get_openai_completion(options_prompt)
-        
-        # Parse options into structured format
-        options = []
-        for i, line in enumerate(options_text.strip().split('\n'), 1):
-            if line.strip():
-                # Remove any numbering from the line
-                text = line.strip()
-                if text[0].isdigit() and text[1] in ['.','-',')']:
-                    text = text[2:].strip()
-                options.append({"id": i, "text": text})
-        
-        # Add "Other" option
-        options.append({"id": len(options) + 1, "text": "Other (please specify)"})
-        
+        # If all questions used, return a general follow-up
         return {
-            "question": question,
-            "type": "MC",
-            "options": options
+            "question": "Are you experiencing any other symptoms?",
+            "options": [
+                {"id": 1, "text": "No other symptoms"},
+                {"id": 2, "text": "Yes, mild additional symptoms"},
+                {"id": 3, "text": "Yes, moderate additional symptoms"},
+                {"id": 4, "text": "Yes, severe additional symptoms"},
+                {"id": 5, "text": "Other (please specify)"}
+            ],
+            "type": "MC"
         }
 
     except Exception as e:
         print(f"Error generating question: {e}")
-        return None
+        # Return a fallback question if there's an error
+        return {
+            "question": "How long have you been experiencing these symptoms?",
+            "options": [
+                {"id": 1, "text": "Less than 24 hours"},
+                {"id": 2, "text": "1-7 days"},
+                {"id": 3, "text": "1-4 weeks"},
+                {"id": 4, "text": "More than a month"},
+                {"id": 5, "text": "Other (please specify)"}
+            ],
+            "type": "MC"
+        }
 
 def process_with_matrix(current_text: str, previous_responses: List[Dict], 
                        context_text: str = "") -> Dict[str, Any]:
@@ -303,30 +370,34 @@ def store_examination(examination_text: str, selected_option: int):
 
 # Modified judge function to handle sessions
 def judge(followup_responses: List[Dict[str, Any]], current_question: str) -> bool:
-    """Determine if enough information has been gathered."""
+    """Judge if the current question is too similar using MATRIX."""
+    if len(followup_responses) >= MATRIXConfig.MAX_QUESTIONS:
+        print("\nReached maximum number of questions.")
+        return True
+        
+    if not followup_responses:
+        return False
+        
     try:
-        # Format previous responses
-        previous_responses = "\n".join([
-            f"Q: {resp['question']} A: {resp['answer']}"
-            for resp in followup_responses
-        ])
+        matrix_output = process_with_matrix(
+            current_question, 
+            followup_responses
+        )
         
-        # Use minimal diagnosis prompt to check if we have enough information
-        minimal_prompt = MedicalPrompts.get_minimal_diagnosis_prompt(current_question)
+        should_stop = (
+            matrix_output["confidence"] > MATRIXConfig.SIMILARITY_THRESHOLD or
+            len(followup_responses) >= MATRIXConfig.MAX_FOLLOWUPS or
+            matrix_output["weights"]["optimist"] > 0.7
+        )
         
-        response = get_openai_completion(minimal_prompt)
-        
-        # If response indicates we need more information, continue asking questions
-        return not any(phrase in response.lower() for phrase in [
-            "need more information",
-            "insufficient information",
-            "additional information needed",
-            "more details required"
-        ])
+        if should_stop:
+            print("\nMATRIX suggests sufficient information gathered.")
+            
+        return should_stop
         
     except Exception as e:
-        print(f"Error in judge function: {e}")
-        return True  # Default to stopping questions if there's an error
+        print(f"Warning: Similarity check falling back to basic method: {e}")
+        return len(followup_responses) >= 5
 
 # Add this to the end of your chad.py file
 __all__ = [
@@ -348,30 +419,68 @@ __all__ = [
 ]
 
 def judge_exam(previous_exams: List[Dict[str, Any]], current_exam: str) -> bool:
-    """Determine if enough examinations have been performed."""
+    """Judge examination similarity with improved duplicate detection."""
+    if not previous_exams:
+        return False
+        
     try:
-        # Format previous examinations
-        previous_exam_str = "\n".join([
-            f"Exam: {exam['examination']} Result: {exam['result']}"
-            for exam in previous_exams
-        ])
+        if len(previous_exams) >= MATRIXConfig.MAX_EXAMS:
+            print("\nReached maximum number of examinations.")
+            return True
+            
+        exam_lines = current_exam.split('\n')
+        current_exam_name = ""
+        current_procedure = ""
         
-        # Use minimal diagnosis prompt to check if we have enough information
-        minimal_prompt = MedicalPrompts.get_minimal_diagnosis_prompt(current_exam)
+        for line in exam_lines:
+            if line.startswith("Examination:"):
+                current_exam_name = line.split('Examination:')[1].strip().lower()
+            elif line.startswith("Procedure:"):
+                current_procedure = line.split('Procedure:')[1].strip().lower()
         
-        response = get_openai_completion(minimal_prompt)
+        for exam in previous_exams:
+            prev_exam_lines = exam['examination'].split('\n')
+            prev_name = ""
+            prev_procedure = ""
+            
+            for line in prev_exam_lines:
+                if line.startswith("Examination:"):
+                    prev_name = line.split('Examination:')[1].strip().lower()
+                elif line.startswith("Procedure:"):
+                    prev_procedure = line.split('Procedure:')[1].strip().lower()
+            
+            if (prev_name in current_exam_name or current_exam_name in prev_name):
+                print(f"\nSimilar examination '{current_exam_name}' has already been performed.")
+                return True
+                
+            if len(prev_procedure) > 0 and len(current_procedure) > 0:
+                words1 = set(prev_procedure.split())
+                words2 = set(current_procedure.split())
+                similarity = len(words1.intersection(words2)) / len(words1.union(words2))
+                
+                if similarity > 0.7:
+                    print(f"\nVery similar procedure has already been performed.")
+                    return True
         
-        # If response indicates we need more examinations, continue
-        return not any(phrase in response.lower() for phrase in [
-            "need more examination",
-            "additional tests required",
-            "further examination needed",
-            "more assessment needed"
-        ])
+        matrix_output = process_with_matrix(
+            current_exam, 
+            previous_exams
+        )
         
+        should_end = (
+            matrix_output["confidence"] > MATRIXConfig.EXAM_SIMILARITY_THRESHOLD or
+            len(previous_exams) >= MATRIXConfig.MAX_EXAMS or
+            matrix_output["weights"]["optimist"] > 0.8
+        )
+        
+        if should_end:
+            print("\nSufficient examinations completed based on comprehensive analysis.")
+            
+        return should_end
+                
     except Exception as e:
-        print(f"Error in judge_exam function: {e}")
-        return True  # Default to stopping examinations if there's an error
+        print(f"Warning: Exam similarity check falling back to basic method: {e}")
+        return len(previous_exams) >= MATRIXConfig.MAX_EXAMS
 
 structured_questions_array = []
 
@@ -527,80 +636,202 @@ def parse_examination_text(text):
 def get_diagnosis_and_treatment(initial_responses: List[Dict[str, Any]], 
                               followup_responses: List[Dict[str, Any]], 
                               exam_responses: List[Dict[str, Any]]) -> Dict[str, Any]:
-    """Get diagnosis and treatment recommendations based on patient responses."""
     try:
-        # Extract initial complaint
         initial_complaint = next((resp['answer'] for resp in initial_responses 
                             if resp['question'] == "Please describe what brings you here today"), "")
         
-        # Format key findings
+        # Get only the most relevant findings for context
         key_findings = []
-        for resp in followup_responses:
-            key_findings.append(f"Q: {resp['question']} A: {resp['answer']}")
-        for resp in exam_responses:
-            key_findings.append(f"Exam: {resp['examination']} Finding: {resp['result']}")
-        key_findings_str = "\n".join(key_findings)
+        for resp in followup_responses + exam_responses:
+            if isinstance(resp.get('answer'), str):
+                key_findings.append(f"{resp['answer']}")
+        key_findings = key_findings[-3:]  # Only keep last 3 findings
         
-        # Get relevant documents for diagnosis
-        diagnosis_query = MedicalPrompts.get_embedding_query('diagnosis', initial_complaint)
-        diagnosis_embedding = get_embedding_batch([diagnosis_query])[0]
-        diagnosis_docs = vectorQuotesWithSource(diagnosis_embedding, pc.Index("who-guide-old"))
+        # First, get diagnosis using minimal context
+        index = pc.Index("who-guide-old")
+        diagnosis_embedding = get_embedding_batch([initial_complaint + " diagnosis"])[0]
+        diagnosis_docs = vectorQuotesWithSource(diagnosis_embedding, index, top_k=3)  # Increased to get more context
         
         if not diagnosis_docs:
-            return {"error": MedicalPrompts.ERROR_MESSAGES['no_diagnosis_docs']}
+            return {
+                "diagnosis": "Unable to provide diagnosis. No relevant information found in the medical guide. Please refer the patient to the nearest health facility.",
+                "treatment": "Unable to provide treatment recommendations. No relevant information found in the medical guide. Please refer the patient to the nearest health facility.",
+                "citations": [],
+                "chunks_used": []
+            }
         
-        # Get diagnosis using medical guide information
-        diagnosis_content = "\n".join([doc["text"] for doc in diagnosis_docs[:3]])
-        diagnosis_prompt = MedicalPrompts.get_diagnosis_prompt(initial_complaint, key_findings_str, diagnosis_content)
+        # Save all chunks to return them
+        all_chunks_used = []
+        all_chunks_used.extend(diagnosis_docs)
         
-        diagnosis = get_openai_completion(diagnosis_prompt)
+        # Format medical guide information without exposing sources
+        diagnosis_content = "\n\n".join([doc['text'] for doc in diagnosis_docs])
         
-        # Get relevant documents for immediate care
-        immediate_query = MedicalPrompts.get_embedding_query('immediate_care', initial_complaint)
-        immediate_embedding = get_embedding_batch([immediate_query])[0]
-        immediate_docs = vectorQuotesWithSource(immediate_embedding, pc.Index("who-guide-old"))
+        short_diagnosis_prompt = f'''Patient information:
+Initial complaint: {initial_complaint}
+Key findings: {"; ".join(key_findings)}
+
+THE FOLLOWING MEDICAL GUIDE INFORMATION IS YOUR ONLY SOURCE OF KNOWLEDGE:
+{diagnosis_content}
+
+IMPORTANT INSTRUCTIONS:
+1. ONLY use information contained in the medical guide above to formulate your response.
+2. Do NOT add any medical knowledge from your pretraining.
+3. If the medical guide doesn't contain sufficient information for a specific aspect, simply say the guide doesn't provide that information.
+4. Format your response to be helpful to a community health worker exactly as shown in the medical guide.
+5. Use the same terminology and recommendations as presented in the medical guide.
+6. Do not alter or simplify the medical guidance provided in the guide - present it as written.
+
+What likely conditions might explain the patient's symptoms, based ONLY on the medical guide information?
+'''
+
+        diagnosis = get_openai_completion(
+            prompt=short_diagnosis_prompt,
+            max_tokens=300,
+            temperature=0.2
+        )
         
-        # Get immediate care recommendations
-        immediate_content = "\n".join([doc["text"] for doc in immediate_docs[:3]])
-        immediate_prompt = MedicalPrompts.get_immediate_care_prompt(immediate_content, initial_complaint)
+        # Get treatment recommendations in separate calls
+        treatment_parts = []
+        treatment_docs = []
         
-        immediate_care = get_openai_completion(immediate_prompt)
+        # 1. Immediate Care
+        immediate_embedding = get_embedding_batch([initial_complaint + " immediate care steps"])[0]
+        immediate_docs = vectorQuotesWithSource(immediate_embedding, index, top_k=2)
+        treatment_docs.extend(immediate_docs)
+        all_chunks_used.extend(immediate_docs)
         
-        # Get relevant documents for home care
-        home_query = MedicalPrompts.get_embedding_query('home_care', initial_complaint)
-        home_embedding = get_embedding_batch([home_query])[0]
-        home_docs = vectorQuotesWithSource(home_embedding, pc.Index("who-guide-old"))
+        if immediate_docs:
+            immediate_content = "\n\n".join([doc['text'] for doc in immediate_docs])
+            immediate_prompt = f'''THE FOLLOWING MEDICAL GUIDE INFORMATION IS YOUR ONLY SOURCE OF KNOWLEDGE:
+{immediate_content}
+
+IMPORTANT INSTRUCTIONS:
+1. ONLY use information contained in the medical guide above to formulate your response.
+2. Do NOT add any medical knowledge from your pretraining.
+3. If the medical guide doesn't contain sufficient information for immediate care, simply say the guide doesn't provide that information.
+4. Present the immediate care steps exactly as described in the medical guide for a patient with: {initial_complaint}
+5. Use the same terminology and recommendations as presented in the medical guide.
+6. Do not alter or simplify the medical guidance provided in the guide - present it as written.
+
+Based ONLY on the medical guide information, what immediate care steps should be taken?
+'''
+            
+            immediate_care = get_openai_completion(
+                prompt=immediate_prompt,
+                max_tokens=200,
+                temperature=0.2
+            )
+            treatment_parts.append("Immediate Care Steps:\n" + immediate_care)
         
-        # Get home care recommendations
-        home_content = "\n".join([doc["text"] for doc in home_docs[:3]])
-        home_prompt = MedicalPrompts.get_home_care_prompt(home_content, initial_complaint)
+        # 2. Home Care
+        home_embedding = get_embedding_batch([initial_complaint + " home care advice"])[0]
+        home_docs = vectorQuotesWithSource(home_embedding, index, top_k=2)
+        treatment_docs.extend(home_docs)
+        all_chunks_used.extend(home_docs)
         
-        home_care = get_openai_completion(home_prompt)
+        if home_docs:
+            home_content = "\n\n".join([doc['text'] for doc in home_docs])
+            home_prompt = f'''THE FOLLOWING MEDICAL GUIDE INFORMATION IS YOUR ONLY SOURCE OF KNOWLEDGE:
+{home_content}
+
+IMPORTANT INSTRUCTIONS:
+1. ONLY use information contained in the medical guide above to formulate your response.
+2. Do NOT add any medical knowledge from your pretraining.
+3. If the medical guide doesn't contain specific home care information, simply say the guide doesn't provide that information.
+4. Present the home care instructions exactly as described in the medical guide for a patient with: {initial_complaint}
+5. Use the same terminology and recommendations as presented in the medical guide.
+6. Do not alter or simplify the medical guidance provided in the guide - present it as written.
+
+Based ONLY on the medical guide information, what home care instructions should be provided?
+'''
+            
+            home_care = get_openai_completion(
+                prompt=home_prompt,
+                max_tokens=200,
+                temperature=0.2
+            )
+            treatment_parts.append("\nHome Care:\n" + home_care)
         
-        # Get relevant documents for referral guidance
-        referral_query = MedicalPrompts.get_embedding_query('referral', initial_complaint)
-        referral_embedding = get_embedding_batch([referral_query])[0]
-        referral_docs = vectorQuotesWithSource(referral_embedding, pc.Index("who-guide-old"))
+        # 3. When to Refer 
+        referral_embedding = get_embedding_batch([initial_complaint + " when to refer"])[0]
+        referral_docs = vectorQuotesWithSource(referral_embedding, index, top_k=2)
+        treatment_docs.extend(referral_docs)
+        all_chunks_used.extend(referral_docs)
         
-        # Get referral guidance
-        referral_content = "\n".join([doc["text"] for doc in referral_docs[:3]])
-        referral_prompt = MedicalPrompts.get_referral_guidance_prompt(referral_content, initial_complaint)
+        referral_content = "\n\n".join([doc['text'] for doc in (referral_docs if referral_docs else diagnosis_docs)])
+        referral_prompt = f'''THE FOLLOWING MEDICAL GUIDE INFORMATION IS YOUR ONLY SOURCE OF KNOWLEDGE:
+{referral_content}
+
+IMPORTANT INSTRUCTIONS:
+1. ONLY use information contained in the medical guide above to formulate your response.
+2. Do NOT add any medical knowledge from your pretraining.
+3. If the medical guide doesn't contain specific referral criteria, simply say the guide doesn't provide that information.
+4. Present the referral guidance exactly as described in the medical guide for a patient with: {initial_complaint}
+5. Use the same terminology and warning signs as presented in the medical guide.
+6. Do not alter or simplify the medical guidance provided in the guide - present it as written.
+
+Based ONLY on the medical guide information, when should this patient be referred to a higher level facility?
+'''
         
-        referral = get_openai_completion(referral_prompt)
+        referral_guidance = get_openai_completion(
+            prompt=referral_prompt,
+            max_tokens=200,
+            temperature=0.2
+        )
+        treatment_parts.append("\nReferral Guidance:\n" + referral_guidance)
         
-        # Combine all recommendations
-        treatment = {
+        # Combine all parts
+        treatment = "\n".join(treatment_parts)
+        
+        # Filter duplicates while preserving order
+        seen = set()
+        unique_citations = []
+        for citation in diagnosis_docs + treatment_docs:
+            if citation['id'] not in seen:
+                seen.add(citation['id'])
+                unique_citations.append(citation)
+        
+        return {
             "diagnosis": diagnosis,
-            "immediate_care": immediate_care,
-            "home_care": home_care,
-            "referral": referral
+            "treatment": treatment,
+            "citations": unique_citations,
+            "chunks_used": all_chunks_used  # Include all chunks for reference
         }
-        
-        return treatment
-        
+            
     except Exception as e:
-        print(f"Error in diagnosis and treatment: {e}")
-        return {"error": str(e)}
+        print(f"Error in diagnosis/treatment: {e}")
+        try:
+            # Fallback to simpler request with explicit instructions not to use pretrained knowledge
+            minimal_prompt = f'''IMPORTANT: You can ONLY use information from the WHO medical guide for community health workers for this response.
+
+For a patient with '{initial_complaint}', what does the guide recommend?
+
+If the medical guide doesn't contain relevant information about this condition, simply state that the guide doesn't provide specific information for this complaint and the patient should be referred to a health facility.
+
+DO NOT use any medical knowledge from your pretraining.
+'''
+            
+            fallback_diagnosis = get_openai_completion(
+                prompt=minimal_prompt,
+                max_tokens=150,
+                temperature=0.2
+            )
+            
+            return {
+                "diagnosis": fallback_diagnosis,
+                "treatment": "The medical guide doesn't provide specific treatment information for this condition. Please refer the patient to a health facility for proper evaluation and treatment.",
+                "citations": [],
+                "chunks_used": []
+            }
+        except Exception as e2:
+            print(f"Fallback also failed: {e2}")
+            return {
+                "diagnosis": "Error retrieving information from the medical guide. Please refer the patient to a health facility for proper evaluation.",
+                "treatment": "Error retrieving information from the medical guide. Please refer the patient to a health facility for proper evaluation.",
+                "citations": [],
+                "chunks_used": []
+            }
 
 def print_global_arrays():
     """Print both global arrays with proper formatting."""
@@ -694,205 +925,380 @@ def extract_examination_and_options(examinations: List[Dict[str, Any]], exam_num
 
     return examVals
 
-def generate_examination(initial_responses: List[Dict[str, Any]], 
-                       followup_responses: List[Dict[str, Any]]) -> Dict[str, Any]:
-    """Generate examination recommendation based on patient responses."""
+""""""
+
+
+
+
+
+
+def main():
     try:
-        # Get initial complaint
+        # Initialize/clear the global arrays
+        global structured_questions_array, examination_history
+        structured_questions_array = []
+        examination_history = []
+        
+        initial_responses = []
+        followup_responses = []
+        exam_responses = []
+        
+        print("\nMedical Assessment Initial Questions")
+        print("===================================")
+        
+        # Initial Questions Loop
+        for question in questions_init:
+            while True:
+                print(f"\n{question['question']}")
+                
+                if question['type'] in ['MC', 'YN', 'MCM']:
+                    print_options(question['options'])
+                    answer = input("Enter your choice (enter the number or id): ").strip()
+                    
+                    if question['type'] == 'MCM':
+                        print("For multiple selections, separate with commas (e.g., 1,2,3)")
+                        if ',' in answer:
+                            answers = answer.split(',')
+                            valid = all(validate_mc_input(a.strip(), question['options']) for a in answers)
+                            if valid:
+                                initial_responses.append({
+                                    "question": question['question'],
+                                    "answer": [a.strip() for a in answers],
+                                    "type": question['type']
+                                })
+                                break
+                        else:
+                            if validate_mc_input(answer, question['options']):
+                                initial_responses.append({
+                                    "question": question['question'],
+                                    "answer": [answer],
+                                    "type": question['type']
+                                })
+                                break
+                    else:
+                        if validate_mc_input(answer, question['options']):
+                            if answer == "5":
+                                custom_answer = input("Please specify: ").strip()
+                                initial_responses.append({
+                                    "question": question['question'],
+                                    "answer": custom_answer,
+                                    "type": question['type']
+                                })
+                            else:
+                                selected_text = next(opt['text'] for opt in question['options'] if str(opt['id']) == answer)
+                                initial_responses.append({
+                                    "question": question['question'],
+                                    "answer": selected_text,
+                                    "type": question['type']
+                                })
+                            break
+                
+                elif question['type'] == 'NUM':
+                    answer = input(f"Enter a number between {question['range']['min']} and {question['range']['max']}: ")
+                    if validated_num := validate_num_input(answer, question['range']):
+                        initial_responses.append({
+                            "question": question['question'],
+                            "answer": validated_num,
+                            "type": question['type']
+                        })
+                        break
+                        
+                elif question['type'] == 'FREE':
+                    answer = input("Enter your response (type your answer and press Enter): ").strip()
+                    if answer:
+                        initial_responses.append({
+                            "question": question['question'],
+                            "answer": answer,
+                            "type": question['type']
+                        })
+                        break
+                
+                print("Invalid input, please try again.")
+
+        print("\nThank you for providing your information. Here's what we recorded:\n")
+        for resp in initial_responses:
+            print(f"Q: {resp['question']}")
+            print(f"A: {resp['answer']}\n")
+
+        # Follow-up Questions Loop
         initial_complaint = next((resp['answer'] for resp in initial_responses 
                             if resp['question'] == "Please describe what brings you here today"), "")
         
-        # Format key symptoms
-        key_symptoms = []
+        print("\nBased on your responses, I'll ask some follow-up questions.")
+        index = pc.Index("who-guide-old")
+        
+        while True:
+            try:
+                context = f"Initial complaint: {initial_complaint}\n"
+                if followup_responses:
+                    context += "Previous responses:\n"
+                    for resp in followup_responses:
+                        context += f"Q: {resp['question']}\nA: {resp['answer']}\n"
+                
+                embedding = get_embedding_batch([context])[0]
+                relevant_docs = vectorQuotesWithSource(embedding, index)
+                
+                if not relevant_docs:
+                    print("Error: Could not generate relevant question.")
+                    continue
+                
+                combined_context = " ".join([doc["text"] for doc in relevant_docs[:2]])
+                
+                previous_questions = "\n".join([f"- {resp['question']}" for resp in followup_responses])
+                prompt = f'''Based on the patient's initial complaint: "{initial_complaint}"
+                
+                Previous questions asked:
+                {previous_questions if followup_responses else "No previous questions yet"}
+                
+                Relevant medical context:
+                {combined_context}
+                
+                Generate ONE focused, relevant follow-up question that is different from the previous questions.
+                Like do not ask both "How long have you had the pain?" and "How severe is the pain?", as they are too similar. It should only be like one or the other
+                Do not as about compound questions like "Do you have fever and cough?" or "Do you have pain in your chest or abdomen?". It should be one or the other like "Do you have fever" or "Do you have pain in your chest?".
+                There should be no "or" or "and" in the question as ask about one specific metric not compounded one.
+                
+                Return only the question text.'''
+                
+                question = get_openai_completion(
+                    prompt=prompt,
+                    max_tokens=150,
+                    temperature=0.3
+                )
+                
+                # Generate options
+                options_prompt = f'''Generate 4 concise answers for: "{question}"
+                Clear, mutually exclusive options.
+                Return each option on a new line (1-4).'''
+                
+                options_text = get_openai_completion(
+                    prompt=options_prompt,
+                    max_tokens=100,
+                    temperature=0.2
+                )
+                
+                options = []
+                for i, opt in enumerate(options_text.strip().split('\n')):
+                    if opt.strip():
+                        text = opt.strip()
+                        if text[0].isdigit() and text[1] in ['.','-',')']:
+                            text = text[2:].strip()
+                        options.append({"id": i+1, "text": text})
+                
+                options.append({"id": 5, "text": "Other (please specify)"})
+                
+                # Use MATRIX to judge similarity and get pattern analysis
+                matrix_output = process_with_matrix(question, followup_responses)
+                
+                # Print question and get answer
+                print(f"\n{question}")
+                print_options(options)
+                
+                while True:
+                    answer = input("Enter your choice (enter the number): ").strip()
+                    
+                    if validate_mc_input(answer, options):
+                        if answer == "5":
+                            custom_answer = input("Please specify your answer: ").strip()
+                            answer_text = custom_answer
+                        else:
+                            answer_text = next(opt['text'] for opt in options if str(opt['id']) == answer)
+                        
+                        # Store response
+                        followup_responses.append({
+                            "question": question,
+                            "answer": answer_text,
+                            "type": "MC",
+                            "citations": relevant_docs[-5:]
+                        })
+                        
+                        # Parse and store question data
+                        parse_question_data(
+                            question, 
+                            options, 
+                            answer_text, 
+                            matrix_output, 
+                            relevant_docs[-5:]
+                        )
+                        
+                        # Print global arrays after each answer
+                        print("\nCurrent Structured Questions Array:")
+                        print("================================")
+                        print(json.dumps(structured_questions_array, indent=2))
+                        
+                        print("\nCurrent Examination History:")
+                        print("=========================")
+                        print(json.dumps(examination_history, indent=2))
+                        break
+                        
+                    print("Invalid input, please try again.")
+                
+                # Check if we should stop asking questions
+                if judge(followup_responses, question):
+                    print("\nSufficient information gathered. Moving to next phase...")
+                    break
+                    
+            except Exception as e:
+                print(f"Error generating follow-up question: {e}")
+                continue
+
+        # Examinations Loop
+        print("\nBased on your responses, I'll recommend appropriate examinations.")
+        exam_citations = []
+        
+        # Track symptoms
+        symptoms = set()
         for resp in followup_responses:
-            key_symptoms.append(f"{resp['question']}: {resp['answer']}")
-        key_symptoms_str = "\n".join(key_symptoms)
+            answer = resp['answer'].lower()
+            for symptom in ['pain', 'fever', 'cough', 'fatigue', 'weakness', 'swelling', 
+                           'headache', 'nausea', 'dizziness', 'rash']:
+                if symptom in answer:
+                    symptoms.add(symptom)
         
-        # Get previous examinations
-        previous_exams = [exam['examination'] for exam in examination_history]
-        previous_exams_str = "\n".join(previous_exams) if previous_exams else "No previous examinations"
-        
-        # Generate examination recommendation
-        exam_prompt = MedicalPrompts.get_examination_recommendation_prompt(
-            initial_complaint=initial_complaint,
-            key_symptoms=key_symptoms_str,
-            previous_exams=previous_exams_str
+        while True:
+            try:
+                # Compress context for examination recommendations
+                context = f"""Initial complaint: {initial_complaint}
+Key symptoms: {', '.join(symptoms)}
+Previous findings: {str([exam['examination'] for exam in exam_responses]) if exam_responses else "None"}"""
+
+                embedding = get_embedding_batch([context])[0]
+                relevant_docs = vectorQuotesWithSource(embedding, index)
+                
+                if not relevant_docs:
+                    print("Error: Could not generate relevant examination.")
+                    continue
+                
+                exam_citations.extend(relevant_docs)
+                combined_context = " ".join([doc["text"] for doc in relevant_docs[:2]])
+                
+                # Modified prompt to use #: format
+                prompt = f'''Based on:
+Initial complaint: "{initial_complaint}"
+Key symptoms: {', '.join(symptoms)}
+
+Previous exams: {str([exam['examination'] for exam in exam_responses]) if exam_responses else "None"}
+
+Recommend ONE essential examination in this format (should not be first world exams like MRI, CT, Colonoscopy, etc.):
+[Examination name]
+[Procedure to perform the examination. Make sure this is detialed enough for a medical professional to understand and conduct]
+#:[First possible finding]
+#:[Second possible finding]
+#:[Third possible finding]
+#:[Fourth possible finding]'''
+
+                examination_text = get_openai_completion(
+                    prompt=prompt,
+                    max_tokens=200,
+                    temperature=0.3
+                )
+                
+                if judge_exam(exam_responses, examination_text):
+                    break
+                    
+                try:
+                    # Parse the examination text
+                    examination, option_texts = parse_examination_text(examination_text)
+                    
+                    # Create options list
+                    options = [{"id": i+1, "text": text} for i, text in enumerate(option_texts)]
+                    options.append({"id": 5, "text": "Other (please specify)"})
+                    
+                    print(f"\nRecommended Examination:")
+                    print(examination)
+                    print("\nSelect the finding:")
+                    print_options(options)
+                    
+                    while True:
+                        answer = input("Enter the finding (enter the number): ").strip()
+                        
+                        if validate_mc_input(answer, options):
+                            # Store the examination data
+                            store_examination(examination_text, int(answer))
+                            
+                            if answer == "5":
+                                custom_result = input("Please specify the finding: ").strip()
+                                exam_responses.append({
+                                    "examination": examination,
+                                    "result": custom_result,
+                                    "type": "EXAM",
+                                    "citations": exam_citations[-5:]
+                                })
+                            else:
+                                selected_text = next(opt['text'] for opt in options if str(opt['id']) == answer)
+                                exam_responses.append({
+                                    "examination": examination,
+                                    "result": selected_text,
+                                    "type": "EXAM",
+                                    "citations": exam_citations[-5:]
+                                })
+                            
+                            # Print global arrays after each answer
+                            print("\nCurrent Structured Questions Array:")
+                            print("================================")
+                            print(json.dumps(structured_questions_array, indent=2))
+                            
+                            print("\nCurrent Examination History:")
+                            print("=========================")
+                            print(json.dumps(examination_history, indent=2))
+                            break
+                            
+                        print("Invalid input, please try again.")
+                        
+                except ValueError as e:
+                    print(f"Error parsing examination: {e}")
+                    continue
+                    
+            except Exception as e:
+                print(f"Error generating examination: {e}")
+                continue
+
+        # Get and print diagnosis and treatment
+        results = get_diagnosis_and_treatment(
+            initial_responses,
+            followup_responses,
+            exam_responses
         )
         
-        exam_text = get_openai_completion(exam_prompt)
-        
-        # Parse examination text into structured format
-        exam_data = parse_examination_text(exam_text)
-        
-        # If parsing fails, use default findings
-        if not exam_data or 'options' not in exam_data:
-            exam_data = {
-                'examination': exam_text.split('\n')[0] if exam_text else 'General examination',
-                'procedure': 'Follow standard examination protocol',
-                'options': MedicalPrompts.DEFAULT_EXAMINATION_FINDINGS
-            }
-        
-        return {
-            'examination': exam_data['examination'],
-            'procedure': exam_data.get('procedure', ''),
-            'type': 'MC',
-            'options': [{'id': i+1, 'text': opt} for i, opt in enumerate(exam_data['options'])]
-        }
-        
-    except Exception as e:
-        print(f"Error generating examination: {e}")
-        return None
-
-def main():
-    """Main function for running the medical assessment system."""
-    try:
-        # Initialize session
-        session_data = initialize_session()
-        
-        # Get initial responses
-        initial_responses = []
-        for question in questions_init:
-            print(f"\n{question['question']}")
-            
-            if question.get('options'):
-                print_options(question['options'])
-            
-            while True:
-                if question['type'] == 'NUM':
-                    value = input("\nEnter a number: ")
-                    validated = validate_num_input(value, question['range'])
-                    if validated is not None:
-                        initial_responses.append({
-                            'question': question['question'],
-                            'answer': validated,
-                            'type': question['type']
-                        })
-                        break
-                elif question['type'] in ['MC', 'MCM']:
-                    value = input("\nSelect an option (or multiple for MCM, comma-separated): ")
-                    if question['type'] == 'MCM':
-                        values = [v.strip() for v in value.split(',')]
-                        if all(validate_mc_input(v, question['options']) for v in values):
-                            initial_responses.append({
-                                'question': question['question'],
-                                'answer': values,
-                                'type': question['type']
-                            })
-                            break
-                    else:
-                        validated = validate_mc_input(value, question['options'])
-                        if validated is not None:
-                            initial_responses.append({
-                                'question': question['question'],
-                                'answer': validated,
-                                'type': question['type']
-                            })
-                            break
-                else:  # FREE text
-                    value = input("\nEnter your response: ")
-                    if value.strip():
-                        initial_responses.append({
-                            'question': question['question'],
-                            'answer': value,
-                            'type': question['type']
-                        })
-                        break
-                print("\nInvalid input. Please try again.")
-        
-        # Follow-up questions phase
-        followup_responses = []
-        while True:
-            question_data = generate_question_with_options(initial_responses + followup_responses)
-            if not question_data:
-                break
-                
-            print(f"\n{question_data['question']}")
-            print_options(question_data['options'])
-            
-            while True:
-                value = input("\nSelect an option: ")
-                validated = validate_mc_input(value, question_data['options'])
-                if validated is not None:
-                    matrix_output = process_with_matrix(
-                        question_data['question'],
-                        followup_responses
-                    )
-                    
-                    followup_responses.append(
-                        parse_question_data(
-                            question_data['question'],
-                            question_data['options'],
-                            validated,
-                            matrix_output,
-                            []  # Citations not used in this context
-                        )
-                    )
-                    break
-                print("\nInvalid input. Please try again.")
-            
-            if judge(followup_responses, question_data['question']):
-                break
-        
-        # Examination phase
-        exam_responses = []
-        while True:
-            exam_data = generate_examination(initial_responses, followup_responses)
-            if not exam_data:
-                break
-                
-            print(f"\nRecommended Examination: {exam_data['examination']}")
-            if exam_data['procedure']:
-                print(f"Procedure: {exam_data['procedure']}")
-            print("\nPossible findings:")
-            print_options(exam_data['options'])
-            
-            while True:
-                value = input("\nSelect finding: ")
-                validated = validate_mc_input(value, exam_data['options'])
-                if validated is not None:
-                    exam_responses.append({
-                        'examination': exam_data['examination'],
-                        'procedure': exam_data['procedure'],
-                        'result': exam_data['options'][int(validated)-1]['text']
-                    })
-                    store_examination(exam_data['examination'], int(validated))
-                    break
-                print("\nInvalid input. Please try again.")
-            
-            if judge_exam(exam_responses, exam_data['examination']):
-                break
-        
-        # Get diagnosis and treatment
-        results = get_diagnosis_and_treatment(initial_responses, followup_responses, exam_responses)
-        
-        if 'error' in results:
-            print(f"\n❌ Error: {results['error']}")
-            return None
-            
-        print("\n📋 Assessment Results:")
-        print("===================")
+        # Print diagnosis
         print("\nDiagnosis:")
-        print(results['diagnosis'])
-        print("\nImmediate Care:")
-        print(results['immediate_care'])
-        print("\nHome Care:")
-        print(results['home_care'])
-        print("\nReferral Guidance:")
-        print(results['referral'])
+        print("==========")
+        print(results["diagnosis"])
         
-        return {
-            'initial_responses': initial_responses,
-            'followup_responses': followup_responses,
-            'exam_responses': exam_responses,
-            'diagnosis': results
-        }
+        # Print treatment plan
+        print("\nRecommended Treatment Plan:")
+        print("=========================")
+        print(results["treatment"])
+        
+        # Print references
+        print("\nKey References:")
+        print("==============")
+        seen_sources = set()
+        for citation in results["citations"]:
+            if citation['source'] not in seen_sources:
+                print(f"- {citation['source']} (relevance: {citation['score']:.2f})")
+                seen_sources.add(citation['source'])
+        
+        # Print final global arrays
+        print("\nFinal Structured Questions Array:")
+        print("==============================")
+        print(json.dumps(structured_questions_array, indent=2))
+        
+        extract_question_and_options(structured_questions_array, 1)
+        
+        print("\nFinal Examination History:")
+        print("========================")
+        print(json.dumps(examination_history, indent=2))
+
+        extract_examination_and_options(examination_history, 1)
         
     except KeyboardInterrupt:
         print("\nAssessment cancelled by user.")
-        return None
+        sys.exit(0)
     except Exception as e:
         print(f"\nAn error occurred: {str(e)}")
-        return None
-
+        sys.exit(1)
+        
+        
 if __name__ == "__main__":
     main()
