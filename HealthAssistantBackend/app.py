@@ -22,6 +22,13 @@ from chad import (
     initialize_session,
     get_session_data,
 )
+from prompts_infer import (
+    get_followup_question_prompt,
+    get_followup_options_prompt,
+    get_examination_prompt,
+    get_diagnosis_prompt,
+    get_treatment_prompt
+)
 
 # Import properly for NeonDB - use psycopg2 for native connection
 try:
@@ -678,30 +685,12 @@ def generate_followup_question(session_data):
             known_info.append(f"- Patient age: {patient_info['age']}")
         known_info_text = "\n".join(known_info) if known_info else "- No additional information"
         
-        prompt = f'''Patient information:
-Initial complaint: "{initial_complaint}"
-
-Information we already know (DO NOT ASK ABOUT THESE AGAIN):
-{known_info_text}
-
-Previous questions already asked (DO NOT REPEAT THESE):
-{previous_questions_text if previous_questions else "- No previous follow-up questions"}
-
-THE FOLLOWING MEDICAL GUIDE INFORMATION IS YOUR ONLY SOURCE OF KNOWLEDGE:
-{medical_guide_content}
-
-IMPORTANT INSTRUCTIONS:
-1. ONLY use information contained in the medical guide above to formulate your response.
-2. Do NOT add any medical knowledge from your pretraining.
-3. The question must be based directly on assessment questions mentioned in the medical guide.
-4. If the medical guide mentions specific questions to ask for this condition, use those exact questions.
-5. DO NOT ask about information we already know (like age or sex).
-6. DO NOT repeat any previous questions that have already been asked.
-7. Focus on gathering NEW information that is not already known.
-8. Return only the question text without any explanation.
-
-Based ONLY on the medical guide information, what follow-up question should be asked to assess this patient?
-'''
+        prompt = get_followup_question_prompt(
+            initial_complaint=initial_complaint,
+            known_info_text=known_info_text,
+            previous_questions_text=previous_questions_text,
+            medical_guide_content=medical_guide_content
+        )
         
         print("Sending prompt to OpenAI")  # Debug print
 
@@ -754,20 +743,10 @@ Based ONLY on the medical guide information, what follow-up question should be a
             }
         
         # Generate options
-        options_prompt = f'''QUESTION: "{question}"
-
-THE FOLLOWING MEDICAL GUIDE INFORMATION IS YOUR ONLY SOURCE OF KNOWLEDGE:
-{medical_guide_content}
-
-IMPORTANT INSTRUCTIONS:
-1. ONLY use information contained in the medical guide above to formulate your response.
-2. Do NOT add any medical knowledge from your pretraining.
-3. Generate 4 answer options for the above question.
-4. If the medical guide mentions specific answer options, use those exactly.
-5. If not, create relevant options based only on the medical guide content.
-6. Format as a numbered list (1-4).
-7. Do not include explanations, only the options themselves.
-'''
+        options_prompt = get_followup_options_prompt(
+            question=question,
+            medical_guide_content=medical_guide_content
+        )
         
         options_completion = openai.ChatCompletion.create(
             model="gpt-4-0125-preview",
@@ -942,45 +921,13 @@ def generate_examination(session_data):
         # Build a prompt focused only on the medical guide content
         symptoms_summary = ", ".join(symptoms[:3]) if symptoms else "No specific symptoms identified"
         
-        prompt = f'''Patient information:
-Initial complaint: "{initial_complaint}"
-Key symptoms: {symptoms_summary}
-
-Information we already know:
-{known_info_text}
-
-Previous examinations already performed (DO NOT REPEAT THESE):
-{previous_exams_text}
-
-THE FOLLOWING MEDICAL GUIDE INFORMATION IS YOUR ONLY SOURCE OF KNOWLEDGE:
-{medical_guide_content}
-
-IMPORTANT INSTRUCTIONS:
-1. ONLY use information contained in the medical guide above to formulate your response.
-2. Do NOT add any medical knowledge from your pretraining.
-3. You MUST select one of these three formats for your response:
-
-FORMAT 1 - WHEN THE GUIDE CLEARLY PROVIDES AN EXAMINATION PROCEDURE:
-[Examination name]
-[Detailed procedure steps as described in the guide]
-#: [Finding 1]
-#: [Finding 2]
-#: [Finding 3]
-#: [Finding 4]
-
-FORMAT 2 - WHEN THE GUIDE PROVIDES NO INFORMATION ABOUT EXAMINATIONS:
-"The medical guide does not provide specific examination procedures for this condition."
-
-FORMAT 3 - WHEN THE GUIDE PROVIDES PARTIAL/INFORMAL INFORMATION BUT NO CLEAR PROCEDURE:
-"While the medical guide does not provide a formal examination procedure, here is some relevant information that may be helpful:"
-[Include any relevant assessment guidance from the guide]
-
-4. Use the same terminology and procedures as presented in the medical guide.
-5. DO NOT repeat any examinations that have already been performed.
-6. Choose an examination that is DIFFERENT from previous ones and appropriate for the patient's symptoms.
-
-Based ONLY on the medical guide information, what NEW examination should be performed?
-'''
+        prompt = get_examination_prompt(
+            initial_complaint=initial_complaint,
+            symptoms_summary=symptoms_summary,
+            known_info_text=known_info_text,
+            previous_exams_text=previous_exams_text,
+            medical_guide_content=medical_guide_content
+        )
 
         completion = openai.ChatCompletion.create(
             model="gpt-4-0125-preview",

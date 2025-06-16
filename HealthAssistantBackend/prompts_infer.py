@@ -16,53 +16,109 @@ THE FOLLOWING MEDICAL GUIDE INFORMATION IS YOUR ONLY SOURCE OF KNOWLEDGE:
 {diagnosis_content}
 
 IMPORTANT INSTRUCTIONS:
-1. ONLY use information contained in the medical guide above to formulate your response.
-2. Do NOT add any medical knowledge from your pretraining.
-3. If the medical guide doesn't contain sufficient information for a specific aspect, simply say the guide doesn't provide that information.
-4. Format your response to be helpful to a community health worker exactly as shown in the medical guide.
-5. Use the same terminology and recommendations as presented in the medical guide.
-6. Do not alter or simplify the medical guidance provided in the guide - present it as written.
+1. The medical guide is ALWAYS correct and should be your primary source of information. Always directly reference and draw from the guide's content as your main justification.
+2. Base your response primarily on the medical guide information above, but you may make reasonable inferences based on:
+   - EXTREMELY limited resources available in third-world settings (e.g., no advanced imaging, limited medications, basic equipment only)
+   - Common medical practices in resource-constrained environments where access to healthcare is limited
+   - Basic medical principles that would be known to community health workers in rural/remote areas
+3. Clearly distinguish between:
+   - Direct recommendations from the medical guide (these take precedence)
+   - Inferences you are making based on the guide and context
+   - Adaptations necessary for third-world resource constraints
+4. If the medical guide doesn't contain sufficient information for a specific aspect, state this clearly.
+5. Format your response to be helpful to a community health worker in a third-world setting, considering severe resource limitations.
+6. Use terminology appropriate for community health workers in low-resource, third-world settings.
+7. If you cannot make a confident recommendation with the given information, state this clearly and recommend referral to the nearest available facility.
+8. Do not use any patient names or identifiers in your response.
+9. Always consider:
+   - Limited access to transportation for referrals
+   - Limited availability of medications and supplies
+   - Basic equipment and facilities only
+   - Cultural and language barriers
+   - Limited access to follow-up care
 
-What likely conditions might explain the patient's symptoms, based ONLY on the medical guide information?"""
+What likely conditions might explain the patient's symptoms, based on the medical guide information and reasonable inferences for a third-world setting?"""
 
     IMMEDIATE_CARE_PROMPT = """THE FOLLOWING MEDICAL GUIDE INFORMATION IS YOUR ONLY SOURCE OF KNOWLEDGE:
 {immediate_content}
 
 IMPORTANT INSTRUCTIONS:
-1. ONLY use information contained in the medical guide above to formulate your response.
-2. Do NOT add any medical knowledge from your pretraining.
-3. If the medical guide doesn't contain sufficient information for immediate care, simply say the guide doesn't provide that information.
-4. Present the immediate care steps exactly as described in the medical guide for a patient with: {initial_complaint}
-5. Use the same terminology and recommendations as presented in the medical guide.
-6. Do not alter or simplify the medical guidance provided in the guide - present it as written.
+1. The medical guide is ALWAYS correct and should be your primary source of information. Always directly reference and draw from the guide's content as your main justification.
+2. Base your response primarily on the medical guide information above, but you may make reasonable inferences based on:
+   - EXTREMELY limited resources available in third-world settings (e.g., no advanced equipment, limited medications, basic supplies only)
+   - Common medical practices in resource-constrained environments where access to healthcare is limited
+   - Basic medical principles that would be known to community health workers in rural/remote areas
+3. Clearly distinguish between:
+   - Direct recommendations from the medical guide (these take precedence)
+   - Inferences you are making based on the guide and context
+   - Adaptations necessary for third-world resource constraints
+4. If the medical guide doesn't contain sufficient information for immediate care, state this clearly.
+5. Present immediate care steps considering severe resource limitations in third-world settings.
+6. Use terminology appropriate for community health workers in low-resource settings.
+7. If you cannot make a confident recommendation with the given information, state this clearly and recommend immediate referral to the nearest available facility.
+8. Do not use any patient names or identifiers in your response.
+9. Always consider:
+   - Limited access to transportation for emergencies
+   - Limited availability of medications and supplies
+   - Basic equipment and facilities only
+   - Cultural and language barriers
+   - Limited access to follow-up care
 
-Based ONLY on the medical guide information, what immediate care steps should be taken?"""
+Based on the medical guide information and reasonable inferences for a third-world setting, what immediate care steps should be taken?"""
 
     HOME_CARE_PROMPT = """THE FOLLOWING MEDICAL GUIDE INFORMATION IS YOUR ONLY SOURCE OF KNOWLEDGE:
 {home_content}
 
 IMPORTANT INSTRUCTIONS:
-1. ONLY use information contained in the medical guide above to formulate your response.
-2. Do NOT add any medical knowledge from your pretraining.
-3. If the medical guide doesn't contain specific home care information, simply say the guide doesn't provide that information.
-4. Present the home care instructions exactly as described in the medical guide for a patient with: {initial_complaint}
-5. Use the same terminology and recommendations as presented in the medical guide.
-6. Do not alter or simplify the medical guidance provided in the guide - present it as written.
+1. The medical guide is ALWAYS correct and should be your primary source of information. Always directly reference and draw from the guide's content as your main justification.
+2. Base your response primarily on the medical guide information above, but you may make reasonable inferences based on:
+   - EXTREMELY limited resources available in third-world settings (e.g., limited access to clean water, basic hygiene supplies, traditional remedies)
+   - Common home care practices in resource-constrained environments where access to healthcare is limited
+   - Basic medical principles that would be known to community health workers in rural/remote areas
+3. Clearly distinguish between:
+   - Direct recommendations from the medical guide (these take precedence)
+   - Inferences you are making based on the guide and context
+   - Adaptations necessary for third-world resource constraints
+4. If the medical guide doesn't contain specific home care information, state this clearly.
+5. Present home care instructions considering severe resource limitations in third-world settings.
+6. Use terminology appropriate for community health workers in low-resource settings.
+7. If you cannot make a confident recommendation with the given information, state this clearly and recommend referral to the nearest available facility.
+8. Do not use any patient names or identifiers in your response.
+9. Always consider:
+   - Limited access to clean water and sanitation
+   - Limited availability of medications and supplies
+   - Cultural practices and traditional remedies
+   - Language and literacy barriers
+   - Limited access to follow-up care
 
-Based ONLY on the medical guide information, what home care instructions should be provided?"""
+Based on the medical guide information and reasonable inferences for a third-world setting, what home care instructions should be provided?"""
 
     REFERRAL_GUIDANCE_PROMPT = """THE FOLLOWING MEDICAL GUIDE INFORMATION IS YOUR ONLY SOURCE OF KNOWLEDGE:
 {referral_content}
 
 IMPORTANT INSTRUCTIONS:
-1. ONLY use information contained in the medical guide above to formulate your response.
-2. Do NOT add any medical knowledge from your pretraining.
-3. If the medical guide doesn't contain specific referral criteria, simply say the guide doesn't provide that information.
-4. Present the referral guidance exactly as described in the medical guide for a patient with: {initial_complaint}
-5. Use the same terminology and warning signs as presented in the medical guide.
-6. Do not alter or simplify the medical guidance provided in the guide - present it as written.
+1. The medical guide is ALWAYS correct and should be your primary source of information. Always directly reference and draw from the guide's content as your main justification.
+2. Base your response primarily on the medical guide information above, but you may make reasonable inferences based on:
+   - EXTREMELY limited resources available in third-world settings (e.g., limited transportation, distant facilities, basic care only)
+   - Common referral practices in resource-constrained environments where access to healthcare is limited
+   - Basic medical principles that would be known to community health workers in rural/remote areas
+3. Clearly distinguish between:
+   - Direct recommendations from the medical guide (these take precedence)
+   - Inferences you are making based on the guide and context
+   - Adaptations necessary for third-world resource constraints
+4. If the medical guide doesn't contain specific referral criteria, state this clearly.
+5. Present referral guidance considering severe resource limitations in third-world settings.
+6. Use terminology appropriate for community health workers in low-resource settings.
+7. If you cannot make a confident recommendation with the given information, state this clearly and recommend conservative referral to the nearest available facility.
+8. Do not use any patient names or identifiers in your response.
+9. Always consider:
+   - Limited access to transportation
+   - Distance to nearest facilities
+   - Limited availability of specialized care
+   - Cultural and language barriers
+   - Cost implications for the patient
 
-Based ONLY on the medical guide information, when should this patient be referred to a higher level facility?"""
+Based on the medical guide information and reasonable inferences for a third-world setting, when should this patient be referred to a higher level facility?"""
 
     # Follow-up Question Generation Prompts
     FOLLOWUP_QUESTION_PROMPT = """Based on the patient's initial complaint: "{initial_complaint}"
@@ -73,10 +129,22 @@ Previous questions asked:
 Relevant medical context:
 {combined_context}
 
-Generate ONE focused, relevant follow-up question that is different from the previous questions.
-Like do not ask both "How long have you had the pain?" and "How severe is the pain?", as they are too similar. It should only be like one or the other
-Do not as about compound questions like "Do you have fever and cough?" or "Do you have pain in your chest or abdomen?". It should be one or the other like "Do you have fever" or "Do you have pain in your chest?".
-There should be no "or" or "and" in the question as ask about one specific metric not compounded one.
+IMPORTANT INSTRUCTIONS:
+1. The medical guide is ALWAYS correct and should be your primary source of information. Always directly reference and draw from the guide's content as your main justification.
+2. Base your question on the medical guide information above, but you may make reasonable inferences based on:
+   - EXTREMELY limited resources available in third-world settings
+   - Common assessment practices in resource-constrained environments
+   - Basic medical principles that would be known to community health workers in rural/remote areas
+3. Generate ONE focused, relevant follow-up question that is different from the previous questions.
+4. Do not ask compound questions (e.g., "Do you have fever and cough?").
+5. Focus on one specific metric or symptom at a time.
+6. Consider severe resource limitations in third-world settings when formulating questions.
+7. Do not use any patient names or identifiers in your question.
+8. Always consider:
+   - Limited access to healthcare
+   - Cultural and language barriers
+   - Basic understanding of medical concepts
+   - Available resources for treatment
 
 Return only the question text."""
 
@@ -216,7 +284,7 @@ DO NOT use any medical knowledge from your pretraining."""
         template = cls.EMBEDDING_QUERIES.get(query_type, "{complaint}")
         return template.format(complaint=complaint)
 
-    # Advanced Follow-up Question Prompts (from Flask API)
+    # Advanced Follow-up Question Prompts
     ADVANCED_FOLLOWUP_PROMPT = """Patient information:
 Initial complaint: "{initial_complaint}"
 
@@ -230,16 +298,26 @@ THE FOLLOWING MEDICAL GUIDE INFORMATION IS YOUR ONLY SOURCE OF KNOWLEDGE:
 {medical_guide_content}
 
 IMPORTANT INSTRUCTIONS:
-1. ONLY use information contained in the medical guide above to formulate your response.
-2. Do NOT add any medical knowledge from your pretraining.
-3. The question must be based directly on assessment questions mentioned in the medical guide.
-4. If the medical guide mentions specific questions to ask for this condition, use those exact questions.
-5. DO NOT ask about information we already know (like age or sex).
-6. DO NOT repeat any previous questions that have already been asked.
+1. The medical guide is ALWAYS correct and should be your primary source of information. Always directly reference and draw from the guide's content as your main justification.
+2. Base your question on the medical guide information above, but you may make reasonable inferences based on:
+   - EXTREMELY limited resources available in third-world settings
+   - Common assessment practices in resource-constrained environments
+   - Basic medical principles that would be known to community health workers in rural/remote areas
+3. The question must be based on assessment questions mentioned in the medical guide or reasonable inferences.
+4. If the medical guide mentions specific questions, use those exact questions.
+5. DO NOT ask about information we already know.
+6. DO NOT repeat any previous questions.
 7. Focus on gathering NEW information that is not already known.
-8. Return only the question text without any explanation.
+8. Consider severe resource limitations in third-world settings when formulating questions.
+9. Do not use any patient names or identifiers in your question.
+10. Always consider:
+    - Limited access to healthcare
+    - Cultural and language barriers
+    - Basic understanding of medical concepts
+    - Available resources for treatment
+11. Return only the question text without any explanation.
 
-Based ONLY on the medical guide information, what follow-up question should be asked to assess this patient?"""
+Based on the medical guide information and reasonable inferences for a third-world setting, what follow-up question should be asked to assess this patient?"""
 
     ADVANCED_OPTIONS_PROMPT = """QUESTION: "{question}"
 
@@ -255,7 +333,7 @@ IMPORTANT INSTRUCTIONS:
 6. Format as a numbered list (1-4).
 7. Do not include explanations, only the options themselves."""
 
-    # Advanced Examination Prompts (from Flask API)
+    # Advanced Examination Prompts
     ADVANCED_EXAMINATION_PROMPT = """Patient information:
 Initial complaint: "{initial_complaint}"
 Key symptoms: {symptoms_summary}
@@ -270,9 +348,16 @@ THE FOLLOWING MEDICAL GUIDE INFORMATION IS YOUR ONLY SOURCE OF KNOWLEDGE:
 {medical_guide_content}
 
 IMPORTANT INSTRUCTIONS:
-1. ONLY use information contained in the medical guide above to formulate your response.
-2. Do NOT add any medical knowledge from your pretraining.
-3. You MUST select one of these three formats for your response:
+1. The medical guide is ALWAYS correct and should be your primary source of information. Always directly reference and draw from the guide's content as your main justification.
+2. Base your response primarily on the medical guide information above, but you may make reasonable inferences based on:
+   - EXTREMELY limited resources available in third-world settings (e.g., no advanced equipment, basic supplies only)
+   - Common examination practices in resource-constrained environments
+   - Basic medical principles that would be known to community health workers in rural/remote areas
+3. Clearly distinguish between:
+   - Direct recommendations from the medical guide (these take precedence)
+   - Inferences you are making based on the guide and context
+   - Adaptations necessary for third-world resource constraints
+4. You MUST select one of these three formats for your response:
 
 FORMAT 1 - WHEN THE GUIDE CLEARLY PROVIDES AN EXAMINATION PROCEDURE:
 [Examination name]
@@ -289,11 +374,19 @@ FORMAT 3 - WHEN THE GUIDE PROVIDES PARTIAL/INFORMAL INFORMATION BUT NO CLEAR PRO
 "While the medical guide does not provide a formal examination procedure, here is some relevant information that may be helpful:"
 [Include any relevant assessment guidance from the guide]
 
-4. Use the same terminology and procedures as presented in the medical guide.
-5. DO NOT repeat any examinations that have already been performed.
-6. Choose an examination that is DIFFERENT from previous ones and appropriate for the patient's symptoms.
+5. Use terminology appropriate for community health workers in low-resource, third-world settings.
+6. DO NOT repeat any examinations that have already been performed.
+7. Choose an examination that is DIFFERENT from previous ones and appropriate for the patient's symptoms.
+8. Consider severe resource limitations in third-world settings when recommending examinations.
+9. Do not use any patient names or identifiers in your response.
+10. Always consider:
+    - Limited access to equipment and supplies
+    - Basic facilities only
+    - Cultural and language barriers
+    - Limited training opportunities
+    - Available resources for treatment
 
-Based ONLY on the medical guide information, what NEW examination should be performed?"""
+Based on the medical guide information and reasonable inferences for a third-world setting, what NEW examination should be performed?"""
 
     # System Messages
     SYSTEM_MESSAGES = {
@@ -661,4 +754,4 @@ Recommend ONE essential examination in this format (should not be first world ex
 #:[First possible finding]
 #:[Second possible finding]
 #:[Third possible finding]
-#:[Fourth possible finding]'''
+#:[Fourth possible finding]''' 
