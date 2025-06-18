@@ -25,43 +25,6 @@ from chad import (
 )
 from prompts import MedicalPrompts
 
-# MongoDB setup
-mongodb_url = os.environ.get('MONGODB_URL', 'mongodb://localhost:27017/')
-mongodb_client = MongoClient(mongodb_url)
-db = mongodb_client.medical_assessment
-sessions_collection = db.sessions
-
-def create_or_get_session(chat_name: str) -> Dict[str, Any]:
-    """Create a new session or get existing session from MongoDB."""
-    session = sessions_collection.find_one({"chat_name": chat_name})
-    if not session:
-        # Initialize new session
-        session = {
-            "chat_name": chat_name,
-            "initial_responses": [],
-            "followup_responses": [],
-            "exam_responses": [],
-            "current_question_index": 0,
-            "phase": "initial",
-            "created_at": datetime.datetime.now().isoformat()
-        }
-        sessions_collection.insert_one(session)
-    return session
-
-def update_session_responses(chat_name: str, response_type: str, response_data: Dict[str, Any]):
-    """Update session responses in MongoDB."""
-    sessions_collection.update_one(
-        {"chat_name": chat_name},
-        {"$push": {response_type: response_data}}
-    )
-
-def update_session_phase(chat_name: str, new_phase: str):
-    """Update session phase in MongoDB."""
-    sessions_collection.update_one(
-        {"chat_name": chat_name},
-        {"$set": {"phase": new_phase}}
-    )
-
 # Import MATRIXConfig for configuration constants
 from AVM.MATRIX.config import MATRIXConfig
 
@@ -483,7 +446,7 @@ def process_input():
                 # Generate next followup question or move to exam phase
                 if judge(session_data['followup_responses'], session_data['current_followup_question']['question']):
                     session_data['phase'] = "exam"
-                    response = generate_examination(session_data['session_id'])
+                    response = generate_examination(session_data)
                     
                     # Save assistant message to conversation history for phase change
                     save_conversation_message(
@@ -542,13 +505,15 @@ def process_input():
                             response = generate_final_results(session_data)
                             
                             # Save assistant message for diagnosis
-                            save_conversation_message(
-                                session_id=session_id,
-                                message_type='assistant',
-                                phase='complete',
-                                content=response.json['output'],
-                                metadata=response.json['metadata']
-                            )
+                            if response.status_code == 200:
+                                response_data = response.get_json()
+                                save_conversation_message(
+                                    session_id=session_id,
+                                    message_type='assistant',
+                                    phase='complete',
+                                    content=response_data['output'],
+                                    metadata=response_data['metadata']
+                                )
                             
                             return response
                         elif selected_option == 2 or "refer to higher" in user_input.lower():
@@ -631,17 +596,19 @@ def process_input():
                     response = generate_final_results(session_data)
                     
                     # Save assistant message for diagnosis
-                    save_conversation_message(
-                        session_id=session_id,
-                        message_type='assistant',
-                        phase='complete',
-                        content=response.json['output'],
-                        metadata=response.json['metadata']
-                    )
+                    if response.status_code == 200:
+                        response_data = response.get_json()
+                        save_conversation_message(
+                            session_id=session_id,
+                            message_type='assistant',
+                            phase='complete',
+                            content=response_data['output'],
+                            metadata=response_data['metadata']
+                        )
                     
                     return response
                 else:
-                    response = generate_examination(session_data['session_id'])
+                    response = generate_examination(session_data)
                     
                     # Save assistant message for next examination
                     save_conversation_message(
@@ -666,113 +633,87 @@ def process_input():
         })
 
 def generate_followup_question(session_data):
-    """Generate and format followup question using MongoDB session"""
+    """Generate and format followup question for chat interface"""
     try:
-        # Get session data
-        session = create_or_get_session(session_data['session_id'])
-        initial_responses = session.get('initial_responses', [])
-        followup_responses = session.get('followup_responses', [])
+        initial_responses = session_data.get('initial_responses', [])
+        followup_responses = session_data.get('followup_responses', [])
         
         # Get initial complaint
         initial_complaint = next((resp['answer'] for resp in initial_responses 
                             if resp['question'] == "Please describe what brings you here today"), "")
         
-        # Get patient info for context
-        patient_info = {
-            'age': next((resp['answer'] for resp in initial_responses 
-                        if resp['question'] == "What is the patient's age?"), None),
-            'sex': next((resp['answer'] for resp in initial_responses 
-                        if resp['question'] == "What is the patient's sex?"), None)
-        }
-        
-        # Format known information
-        known_info = []
-        if patient_info['sex']:
-            known_info.append(f"- Patient sex: {patient_info['sex']}")
-        if patient_info['age']:
-            known_info.append(f"- Patient age: {patient_info['age']}")
-        known_info_text = "\n".join(known_info) if known_info else "- No additional information"
-        
-        # Format previous questions
-        previous_questions = [resp['question'] for resp in followup_responses]
-        previous_questions_text = "\n".join([f"- {q}" for q in previous_questions]) if previous_questions else ""
-        
-        # Get relevant medical guide content
-        embedding = get_embedding_batch([initial_complaint])[0]
-        relevant_docs = vectorQuotesWithSource(embedding, pc.Index("who-guide-old"))
-        
-        if not relevant_docs:
-            print("No relevant medical guide content found")
+        if not initial_complaint:
             return jsonify({
                 "status": "error",
-                "message": "Could not find relevant medical information"
+                "message": "No initial complaint found"
             })
+        
+        # Get relevant medical guide content
+        try:
+            embedding = get_embedding_batch([initial_complaint])[0]
+            relevant_docs = vectorQuotesWithSource(embedding, pc.Index("who-guide-old"))
+        except Exception as e:
+            print(f"Error getting embeddings: {e}")
+            relevant_docs = []
+        
+        if not relevant_docs:
+            # Fallback question if no relevant docs
+            question = "Can you describe any additional symptoms you are experiencing?"
+            options = [
+                {"id": 1, "text": "Pain or discomfort"},
+                {"id": 2, "text": "Fever or chills"},
+                {"id": 3, "text": "Difficulty breathing"},
+                {"id": 4, "text": "Nausea or vomiting"},
+                {"id": 5, "text": "Other (please specify)"}
+            ]
+        else:
+            # Generate question based on medical guide content
+            medical_content = "\n".join([doc["text"] for doc in relevant_docs[:2]])
             
-        medical_guide_content = "\n\n".join([doc["text"] for doc in relevant_docs[:3]])
-        
-        # Generate question using advanced prompt
-        prompt = MedicalPrompts.get_advanced_followup_prompt(
-            initial_complaint=initial_complaint,
-            known_info_text=known_info_text,
-            previous_questions_text=previous_questions_text,
-            medical_guide_content=medical_guide_content
-        )
-        
-        print("Sending prompt to OpenAI")
-        
-        response = openai.ChatCompletion.create(
-            model="gpt-4-0125-preview",
-            messages=[
-                {"role": "system", "content": MedicalPrompts.SYSTEM_MESSAGES['followup_question']},
-                {"role": "user", "content": prompt}
-            ],
-            max_tokens=150,
-            temperature=0.3
-        )
-        question = response.choices[0].message.content.strip()
-        
-        print(f"Got question: {question}")
-        
-        # Generate options using advanced prompt
-        options_prompt = MedicalPrompts.get_advanced_options_prompt(
-            question=question,
-            medical_guide_content=medical_guide_content
-        )
-        
-        options_completion = openai.ChatCompletion.create(
-            model="gpt-4-0125-preview",
-            messages=[
-                {"role": "system", "content": MedicalPrompts.SYSTEM_MESSAGES['options']},
-                {"role": "user", "content": options_prompt}
-            ],
-            max_tokens=150,
-            temperature=0.3
-        )
-        
-        options = []
-        for i, opt in enumerate(options_completion.choices[0].message.content.strip().split('\n')):
-            if opt.strip():
-                text = opt.strip()
-                if text[0].isdigit() and text[1] in ['.','-',')']:
-                    text = text[2:].strip()
-                options.append({"id": i+1, "text": text})
-        
-        # Add "Other" option
-        options.append({"id": len(options) + 1, "text": "Other (please specify)"})
+            try:
+                prompt = f"""Based on the medical guide content and the patient's complaint of "{initial_complaint}", what is the most important follow-up question to ask?
+
+Medical guide content:
+{medical_content}
+
+Generate a single, specific follow-up question that would help determine the appropriate care."""
+
+                response = openai.ChatCompletion.create(
+                    model="gpt-4-0125-preview",
+                    messages=[
+                        {"role": "system", "content": "You are a medical assistant helping with patient assessment. Generate clear, specific follow-up questions."},
+                        {"role": "user", "content": prompt}
+                    ],
+                    max_tokens=100,
+                    temperature=0.3
+                )
+                question = response.choices[0].message.content.strip()
+                
+                # Generate simple options
+                options = [
+                    {"id": 1, "text": "Yes"},
+                    {"id": 2, "text": "No"},
+                    {"id": 3, "text": "Sometimes"},
+                    {"id": 4, "text": "Not sure"},
+                    {"id": 5, "text": "Other (please specify)"}
+                ]
+            except Exception as e:
+                print(f"Error generating question with OpenAI: {e}")
+                question = "Can you describe any additional symptoms you are experiencing?"
+                options = [
+                    {"id": 1, "text": "Pain or discomfort"},
+                    {"id": 2, "text": "Fever or chills"},
+                    {"id": 3, "text": "Difficulty breathing"},
+                    {"id": 4, "text": "Nausea or vomiting"},
+                    {"id": 5, "text": "Other (please specify)"}
+                ]
         
         # Store current question in session
-        current_followup = {
+        session_data['current_followup_question'] = {
             "question": question,
             "options": options,
             "type": "MC"
         }
-        sessions_collection.update_one(
-            {"chat_name": session_data['session_id']},
-            {"$set": {"current_followup_question": current_followup}}
-        )
-        
-        # Save relevant chunks to NeonDB
-        save_session_chunks_to_neondb(session_data['session_id'], "followup", relevant_docs)
         
         return jsonify({
             "status": "success",
@@ -780,8 +721,7 @@ def generate_followup_question(session_data):
             "metadata": {
                 "phase": "followup",
                 "question_type": "MC",
-                "options": options,
-                "citations": relevant_docs[-5:]
+                "options": options
             }
         })
         
@@ -792,218 +732,181 @@ def generate_followup_question(session_data):
             "message": str(e)
         })
      
-def generate_examination(chat_name):
-    """Generate examination recommendation using MongoDB session"""
+def generate_examination(session_data):
+    """Generate examination recommendation using session data"""
     try:
-        # Get session data
-        session = create_or_get_session(chat_name)
-        initial_responses = session.get('initial_responses', [])
-        followup_responses = session.get('followup_responses', [])
-        exam_responses = session.get('exam_responses', [])
+        initial_responses = session_data.get('initial_responses', [])
+        followup_responses = session_data.get('followup_responses', [])
+        exam_responses = session_data.get('exam_responses', [])
         
         # Get initial complaint
         initial_complaint = next((resp['answer'] for resp in initial_responses 
                             if resp['question'] == "Please describe what brings you here today"), "")
         
-        # Format symptoms summary
-        symptoms = []
-        for resp in followup_responses:
-            symptoms.append(f"- {resp['question']}: {resp['answer']}")
-        symptoms_summary = "\n".join(symptoms) if symptoms else "No additional symptoms reported"
-        
-        # Format known information
-        known_info = []
-        for resp in initial_responses:
-            if resp['question'] != "Please describe what brings you here today":
-                known_info.append(f"- {resp['question']}: {resp['answer']}")
-        for resp in followup_responses:
-            known_info.append(f"- {resp['question']}: {resp['answer']}")
-        known_info_text = "\n".join(known_info) if known_info else "No additional information"
-        
-        # Format previous examinations
-        previous_exams = []
-        for exam in exam_responses:
-            previous_exams.append(f"- {exam['examination']}: {exam['result']}")
-        previous_exams_text = "\n".join(previous_exams) if previous_exams else ""
-        
-        # Get relevant medical guide content
-        embedding = get_embedding_batch([initial_complaint])[0]
-        relevant_docs = vectorQuotesWithSource(embedding, pc.Index("who-guide-old"))
-        
-        if not relevant_docs:
-            print("No relevant medical guide content found")
+        if not initial_complaint:
             return jsonify({
                 "status": "error",
-                "message": "Could not find relevant medical information"
+                "message": "No initial complaint found"
             })
+        
+        # Get relevant medical guide content
+        try:
+            embedding = get_embedding_batch([initial_complaint])[0]
+            relevant_docs = vectorQuotesWithSource(embedding, pc.Index("who-guide-old"))
+        except Exception as e:
+            print(f"Error getting embeddings: {e}")
+            relevant_docs = []
+        
+        if not relevant_docs:
+            return jsonify({
+                "status": "success",
+                "output": "Based on the symptoms described, the medical guide does not provide specific examination procedures for this condition. Please proceed with general assessment and refer to a health facility if needed.",
+                "metadata": {
+                    "phase": "exam",
+                    "question_type": "NO_INFO_EXAM",
+                    "type": "NO_INFO_EXAM",
+                    "options": [
+                        {"id": 1, "text": "Proceed with general assessment and diagnosis"},
+                        {"id": 2, "text": "Refer to health facility"}
+                    ]
+                }
+            })
+        
+        # Generate examination using medical guide content
+        medical_content = "\n".join([doc["text"] for doc in relevant_docs[:2]])
+        
+        try:
+            prompt = f"""Based on the medical guide content and patient complaint "{initial_complaint}", what examination should be performed?
+
+Medical guide content:
+{medical_content}
+
+Provide a specific examination recommendation with clear steps."""
+
+            response = openai.ChatCompletion.create(
+                model="gpt-4-0125-preview",
+                messages=[
+                    {"role": "system", "content": "You are a medical assistant providing examination guidance based on WHO medical guidelines."},
+                    {"role": "user", "content": prompt}
+                ],
+                max_tokens=200,
+                temperature=0.3
+            )
             
-        medical_guide_content = "\n\n".join([doc["text"] for doc in relevant_docs[:3]])
-        
-        # Generate examination using advanced prompt
-        prompt = MedicalPrompts.get_advanced_examination_prompt(
-            initial_complaint=initial_complaint,
-            symptoms_summary=symptoms_summary,
-            known_info_text=known_info_text,
-            previous_exams_text=previous_exams_text,
-            medical_guide_content=medical_guide_content
-        )
-        
-        print("Sending prompt to OpenAI")
-        
-        response = openai.ChatCompletion.create(
-            model="gpt-4-0125-preview",
-            messages=[
-                {"role": "system", "content": MedicalPrompts.SYSTEM_MESSAGES['examination']},
-                {"role": "user", "content": prompt}
-            ],
-            max_tokens=300,
-            temperature=0.3
-        )
-        
-        examination_text = response.choices[0].message.content.strip()
-        print(f"Got examination: {examination_text}")
-        
-        # Check if no examination information is available
-        if "does not provide" in examination_text.lower():
+            examination_text = response.choices[0].message.content.strip()
+            
+            # Store current examination in session
+            session_data['current_examination'] = {
+                "text": examination_text,
+                "type": "FORMAL_EXAM",
+                "options": [
+                    {"id": 1, "text": "Normal findings"},
+                    {"id": 2, "text": "Abnormal findings detected"},
+                    {"id": 3, "text": "Unable to perform examination"},
+                    {"id": 4, "text": "Other findings"}
+                ]
+            }
+            
             return jsonify({
                 "status": "success",
                 "output": examination_text,
                 "metadata": {
                     "phase": "exam",
                     "question_type": "MC",
-                    "options": MedicalPrompts.NO_INFO_RESPONSES['proceed_options'],
-                    "citations": relevant_docs[-5:]
+                    "options": session_data['current_examination']['options']
                 }
             })
             
-        # Parse examination text into structured format
-        examination, findings = parse_examination_text(examination_text)
-        
-        # Create options from findings
-        options = [{"id": i+1, "text": finding} for i, finding in enumerate(findings)]
-        
-        # Store current examination in session
-        current_exam = {
-            "examination": examination,
-            "options": options,
-            "type": "MC"
-        }
-        sessions_collection.update_one(
-            {"chat_name": chat_name},
-            {"$set": {"current_examination": current_exam}}
-        )
-        
-        # Save relevant chunks to NeonDB
-        save_session_chunks_to_neondb(chat_name, "examination", relevant_docs)
-        
-        return jsonify({
-            "status": "success",
-            "output": examination,
-            "metadata": {
-                "phase": "exam",
-                "question_type": "MC",
-                "options": options,
-                "citations": relevant_docs[-5:]
-            }
-        })
+        except Exception as e:
+            print(f"Error generating examination: {e}")
+            return jsonify({
+                "status": "success",
+                "output": "Please perform a general physical examination based on the patient's symptoms and refer to a health facility if needed.",
+                "metadata": {
+                    "phase": "exam",
+                    "question_type": "MC",
+                    "options": [
+                        {"id": 1, "text": "Normal findings"},
+                        {"id": 2, "text": "Abnormal findings detected"},
+                        {"id": 3, "text": "Unable to perform examination"},
+                        {"id": 4, "text": "Other findings"}
+                    ]
+                }
+            })
         
     except Exception as e:
-        print(f"Error generating examination: {str(e)}")
+        print(f"Error in generate_examination: {str(e)}")
         return jsonify({
             "status": "error",
             "message": str(e)
         })
 
-def generate_final_results(chat_name):
-    """Generate final diagnosis and treatment recommendations using MongoDB session"""
+def generate_final_results(session_data):
+    """Generate and format final results using session data"""
     try:
-        # Get session data
-        session = create_or_get_session(chat_name)
-        initial_responses = session.get('initial_responses', [])
-        followup_responses = session.get('followup_responses', [])
-        exam_responses = session.get('exam_responses', [])
+        initial_responses = session_data.get('initial_responses', [])
+        followup_responses = session_data.get('followup_responses', [])
+        exam_responses = session_data.get('exam_responses', [])
         
         # Get initial complaint
         initial_complaint = next((resp['answer'] for resp in initial_responses 
                             if resp['question'] == "Please describe what brings you here today"), "")
         
-        # Get diagnosis and treatment recommendations
-        results = get_diagnosis_and_treatment(initial_responses, followup_responses, exam_responses)
-        
-        if 'error' in results:
+        if not initial_complaint:
             return jsonify({
                 "status": "error",
-                "message": results['error']
+                "message": "No initial complaint found for diagnosis"
+            })
+        
+        # Use the existing diagnosis function from chad.py
+        try:
+            results = get_diagnosis_and_treatment(
+                initial_responses,
+                followup_responses,
+                exam_responses
+            )
+            
+            diagnosis_text = results.get("diagnosis", "Unable to determine diagnosis from available information")
+            treatment_text = results.get("treatment", "General care recommended - refer to health facility")
+            
+            output = f"""Assessment Complete
+
+Diagnosis:
+{diagnosis_text}
+
+Treatment Plan:
+{treatment_text}
+
+Note: This assessment is based on the WHO medical guide for community health workers. For complex cases or if symptoms persist, refer to a health facility.
+"""
+            
+            return jsonify({
+                "status": "success",
+                "output": output,
+                "metadata": {
+                    "phase": "complete"
+                }
             })
             
-        # Format the assessment summary
-        if not exam_responses:
-            # If no examinations were performed, use referral summary template
-            summary = MedicalPrompts.REFERRAL_SUMMARY_TEMPLATE.format(
-                initial_complaint=initial_complaint,
-                key_findings="\n".join([f"- {resp['question']}: {resp['answer']}" 
-                                      for resp in followup_responses])
-            )
-        else:
-            # Format complete assessment with all findings
-            diagnosis_text = results['diagnosis']
-            treatment_text = "\n".join([
-                f"Immediate Care:\n{results['immediate_care']}",
-                f"\nHome Care:\n{results['home_care']}",
-                f"\nReferral Guidance:\n{results['referral']}"
-            ])
-            
-            # Add limitation note if no formal examinations were described
-            limitation_note = ""
-            if any("does not provide" in exam['examination'].lower() for exam in exam_responses):
-                limitation_note = MedicalPrompts.LIMITATION_NOTES['no_formal_exam']
-            
-            # Format citations from chunks used
-            citations = []
-            if 'retrieved_chunks' in session:
-                citations = [f"- {chunk['source']}" for chunk in session['retrieved_chunks'][-5:]]
-            citations_text = "\n".join(citations) if citations else "No specific citations available"
-            
-            summary = MedicalPrompts.COMPLETE_ASSESSMENT_TEMPLATE.format(
-                diagnosis_text=diagnosis_text,
-                treatment_text=treatment_text,
-                limitation_note=limitation_note,
-                citations_text=citations_text
-            )
-        
-        # Save summary to NeonDB
-        try:
-            with db_conn.cursor() as cursor:
-                cursor.execute("""
-                    INSERT INTO session_summaries (
-                        session_id, timestamp, initial_complaint, 
-                        diagnosis, treatment, chunks_used
-                    ) VALUES (%s, %s, %s, %s, %s, %s)
-                """, (
-                    chat_name,
-                    datetime.datetime.now().isoformat(),
-                    initial_complaint,
-                    results.get('diagnosis', ''),
-                    treatment_text if 'treatment_text' in locals() else '',
-                    len(session.get('retrieved_chunks', []))
-                ))
         except Exception as e:
-            print(f"Error saving summary to NeonDB: {e}")
-        
-        return jsonify({
-            "status": "success",
-            "output": summary,
-            "metadata": {
-                "phase": "complete",
-                "diagnosis": results.get('diagnosis', ''),
-                "immediate_care": results.get('immediate_care', ''),
-                "home_care": results.get('home_care', ''),
-                "referral": results.get('referral', '')
-            }
-        })
+            print(f"Error getting diagnosis: {e}")
+            return jsonify({
+                "status": "success",
+                "output": f"""Assessment Complete
+
+Based on the complaint: {initial_complaint}
+
+Recommendation: Please refer the patient to a health facility for proper evaluation and treatment as the specific condition requires professional medical assessment.
+
+Note: This assessment is based on available information. Professional medical evaluation is recommended.
+""",
+                "metadata": {
+                    "phase": "complete"
+                }
+            })
         
     except Exception as e:
-        print(f"Error generating final results: {str(e)}")
+        print(f"Error in generate_final_results: {str(e)}")
         return jsonify({
             "status": "error",
             "message": str(e)
