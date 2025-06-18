@@ -334,7 +334,7 @@ def start_assessment():
             }), 400
 
         # Initialize session
-        session_data = initialize_session(session_id)
+        session_data = get_session_data(session_id, sessions)
         
         # Save user message for session start
         save_conversation_message(
