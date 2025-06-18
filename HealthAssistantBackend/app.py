@@ -336,6 +336,9 @@ def start_assessment():
         # Initialize session
         session_data = get_session_data(session_id, sessions)
         
+        # Store session_id in the session data
+        session_data['session_id'] = session_id
+        
         # Save user message for session start
         save_conversation_message(
             session_id=session_id,
@@ -344,19 +347,37 @@ def start_assessment():
             content='Assessment session started'
         )
         
-        # Get first question
-        response = generate_followup_question(session_data)
+        # Get first question from the initial questions array
+        first_question = questions_init[0]
+        question_text = first_question['question']
+        
+        if first_question['type'] in ['MC', 'MCM']:
+            options_text = "\n".join([f"{opt['id']}. {opt['text']}" for opt in first_question['options']])
+            output = f"{question_text}\n\n{options_text}"
+        else:
+            output = question_text
         
         # Save assistant message for first question
         save_conversation_message(
             session_id=session_id,
             message_type='assistant',
             phase='initial',
-            content=response.json['output'],
-            metadata=response.json['metadata']
+            content=output,
+            metadata={
+                'question_type': first_question['type'],
+                'options': first_question.get('options', [])
+            }
         )
         
-        return response
+        return jsonify({
+            "status": "success",
+            "output": output,
+            "metadata": {
+                "phase": "initial",
+                "question_type": first_question['type'],
+                "options": first_question.get('options', [])
+            }
+        })
         
     except Exception as e:
         print(f"Error in start_assessment: {str(e)}")
