@@ -23,6 +23,9 @@ from chad import (
     get_session_data,
 )
 
+# Import MATRIXConfig for configuration constants
+from AVM.MATRIX.config import MATRIXConfig
+
 # Import properly for NeonDB - use psycopg2 for native connection
 try:
     import psycopg2
@@ -42,7 +45,10 @@ app = Flask(__name__)
 # Set frontend URL with fallback to your deployed frontend
 frontend_url = os.environ.get('FRONTEND_URL', 'https://chw-demo.onrender.com')
 # Configure CORS to allow requests from both localhost and your deployed frontend
-CORS(app, origins=["http://localhost:3000", frontend_url], supports_credentials=True)
+CORS(app, origins=["http://localhost:3000", "https://localhost:3000", frontend_url], 
+     supports_credentials=True, 
+     allow_headers=["Content-Type", "Authorization"],
+     methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"])
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
@@ -263,54 +269,63 @@ def save_conversation_message(session_id, message_type, phase, content, metadata
     except Exception as e:
         print(f"Error saving conversation message to NeonDB: {e}")
 
+@app.route('/api/health', methods=['GET'])
+def health_check():
+    """Health check endpoint"""
+    return jsonify({
+        "status": "healthy",
+        "service": "ChatCHW Medical Assessment API",
+        "version": "1.0.0",
+        "timestamp": datetime.datetime.now().isoformat()
+    })
+
 @app.route('/api/start-assessment', methods=['POST'])
 def start_assessment():
-    """Initialize a new session and return first question"""
+    """Initialize a new assessment session"""
     try:
-        session_id = request.json.get('session_id', 'default')
-        session_data = get_session_data(session_id, sessions)
+        data = request.get_json()
+        if not data:
+            data = {}
         
-        # Store session_id in the session data
-        session_data['session_id'] = session_id
+        session_id = data.get('session_id')
+        if not session_id:
+            return jsonify({
+                "status": "error",
+                "message": "session_id is required"
+            }), 400
+
+        # Initialize session
+        session_data = initialize_session(session_id)
         
-        # Format first question for chat interface
-        first_question = questions_init[0]
-        question_text = first_question['question']
+        # Save user message for session start
+        save_conversation_message(
+            session_id=session_id,
+            message_type='system',
+            phase='initial',
+            content='Assessment session started'
+        )
         
-        if first_question['type'] in ['MC', 'MCM']:
-            options_text = "\n".join([f"{opt['id']}. {opt['text']}" for opt in first_question['options']])
-            output = f"{question_text}\n\n{options_text}"
-        else:
-            output = question_text
-            
-        # Save assistant message to conversation history
+        # Get first question
+        response = generate_followup_question(session_data)
+        
+        # Save assistant message for first question
         save_conversation_message(
             session_id=session_id,
             message_type='assistant',
             phase='initial',
-            content=output,
-            metadata={
-                'question_type': first_question['type'],
-                'options': first_question.get('options', [])
-            }
+            content=response.json['output'],
+            metadata=response.json['metadata']
         )
-            
-        return jsonify({
-            "status": "success",
-            "output": output,
-            "metadata": {
-                "phase": "initial",
-                "question_type": first_question['type'],
-                "options": first_question.get('options', [])
-            }
-        })
+        
+        return response
         
     except Exception as e:
+        print(f"Error in start_assessment: {str(e)}")
         return jsonify({
             "status": "error",
-            "message": str(e)
-        })
-        
+            "message": f"Failed to start assessment: {str(e)}"
+        }), 500
+
 @app.route('/api/input', methods=['POST'])
 def process_input():
     """Process user input and return next question/response"""
