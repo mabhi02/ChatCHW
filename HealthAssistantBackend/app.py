@@ -21,6 +21,7 @@ from chad import (
     store_examination,
     initialize_session,
     get_session_data,
+    MATRIXConfig
 )
 from prompts_infer import (
     get_followup_question_prompt,
