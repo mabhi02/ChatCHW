@@ -159,13 +159,28 @@ Key symptoms: {key_symptoms}
 
 Previous exams: {previous_exams}
 
-Recommend ONE essential examination in this format (should not be first world exams like MRI, CT, Colonoscopy, etc.):
+IMPORTANT INSTRUCTIONS:
+1. ONLY recommend examinations that are explicitly mentioned in the medical guide.
+2. If the guide mentions a specific examination (like RDT, blood pressure check, etc.), you MUST provide the exact procedure steps as described in the guide.
+3. The possible findings must be specific and directly contribute to the diagnosis.
+4. Do not include any first-world exams (like MRI, CT, Colonoscopy, etc.).
+5. If the guide mentions a test or examination but doesn't provide steps, you MUST search through the guide content to find the procedure steps.
+6. NEVER default to generic responses like "refer to higher facility" if the guide actually provides examination steps.
+
+Recommend ONE essential examination in this format:
 [Examination name]
-[Procedure to perform the examination. Make sure this is detailed enough for a medical professional to understand and conduct]
-#:[First possible finding]
-#:[Second possible finding]
-#:[Third possible finding]
-#:[Fourth possible finding]"""
+[Detailed step-by-step procedure to perform the examination. Each step should be numbered and clear enough for a medical professional to follow exactly. If the guide provides specific steps, use those exact steps.]
+#:[First possible finding - must be specific and directly related to diagnosis]
+#:[Second possible finding - must be specific and directly related to diagnosis]
+#:[Third possible finding - must be specific and directly related to diagnosis]
+#:[Fourth possible finding - must be specific and directly related to diagnosis]
+
+If the medical guide does not provide a specific examination procedure, respond with:
+"The medical guide does not provide specific examination procedures for this condition."
+
+If the medical guide provides partial information but no clear procedure, respond with:
+"While the medical guide does not provide a formal examination procedure, here is some relevant information that may be helpful:"
+[Include any relevant assessment guidance from the guide]"""
 
     # Fallback Prompts
     MINIMAL_DIAGNOSIS_PROMPT = """IMPORTANT: You can ONLY use information from the WHO medical guide for community health workers for this response.
@@ -348,24 +363,17 @@ THE FOLLOWING MEDICAL GUIDE INFORMATION IS YOUR ONLY SOURCE OF KNOWLEDGE:
 {medical_guide_content}
 
 IMPORTANT INSTRUCTIONS:
-1. The medical guide is ALWAYS correct and should be your primary source of information. Always directly reference and draw from the guide's content as your main justification.
-2. Base your response primarily on the medical guide information above, but you may make reasonable inferences based on:
-   - EXTREMELY limited resources available in third-world settings (e.g., no advanced equipment, basic supplies only)
-   - Common examination practices in resource-constrained environments
-   - Basic medical principles that would be known to community health workers in rural/remote areas
-3. Clearly distinguish between:
-   - Direct recommendations from the medical guide (these take precedence)
-   - Inferences you are making based on the guide and context
-   - Adaptations necessary for third-world resource constraints
-4. You MUST select one of these three formats for your response:
+1. ONLY use information contained in the medical guide above to formulate your response.
+2. Do NOT add any medical knowledge from your pretraining.
+3. You MUST select one of these three formats for your response:
 
 FORMAT 1 - WHEN THE GUIDE CLEARLY PROVIDES AN EXAMINATION PROCEDURE:
 [Examination name]
-[Detailed procedure steps as described in the guide]
-#: [Finding 1]
-#: [Finding 2]
-#: [Finding 3]
-#: [Finding 4]
+[Detailed step-by-step procedure to perform the examination. Each step should be numbered and clear enough for a medical professional to follow exactly. If the guide provides specific steps, use those exact steps.]
+#: [Finding 1 - must be specific and directly related to diagnosis]
+#: [Finding 2 - must be specific and directly related to diagnosis]
+#: [Finding 3 - must be specific and directly related to diagnosis]
+#: [Finding 4 - must be specific and directly related to diagnosis]
 
 FORMAT 2 - WHEN THE GUIDE PROVIDES NO INFORMATION ABOUT EXAMINATIONS:
 "The medical guide does not provide specific examination procedures for this condition."
@@ -374,19 +382,15 @@ FORMAT 3 - WHEN THE GUIDE PROVIDES PARTIAL/INFORMAL INFORMATION BUT NO CLEAR PRO
 "While the medical guide does not provide a formal examination procedure, here is some relevant information that may be helpful:"
 [Include any relevant assessment guidance from the guide]
 
-5. Use terminology appropriate for community health workers in low-resource, third-world settings.
-6. DO NOT repeat any examinations that have already been performed.
-7. Choose an examination that is DIFFERENT from previous ones and appropriate for the patient's symptoms.
-8. Consider severe resource limitations in third-world settings when recommending examinations.
-9. Do not use any patient names or identifiers in your response.
-10. Always consider:
-    - Limited access to equipment and supplies
-    - Basic facilities only
-    - Cultural and language barriers
-    - Limited training opportunities
-    - Available resources for treatment
+4. Use the same terminology and procedures as presented in the medical guide.
+5. DO NOT repeat any examinations that have already been performed.
+6. Choose an examination that is DIFFERENT from previous ones and appropriate for the patient's symptoms.
+7. Each finding must be specific and directly contribute to the diagnosis.
+8. The procedure must be detailed enough for a medical professional to follow exactly.
+9. If the guide mentions a test or examination but doesn't provide steps, you MUST search through the guide content to find the procedure steps.
+10. NEVER default to generic responses like "refer to higher facility" if the guide actually provides examination steps.
 
-Based on the medical guide information and reasonable inferences for a third-world setting, what NEW examination should be performed?"""
+Based ONLY on the medical guide information, what NEW examination should be performed?"""
 
     # System Messages
     SYSTEM_MESSAGES = {
@@ -648,11 +652,11 @@ IMPORTANT INSTRUCTIONS:
 
 FORMAT 1 - WHEN THE GUIDE CLEARLY PROVIDES AN EXAMINATION PROCEDURE:
 [Examination name]
-[Detailed procedure steps as described in the guide]
-#: [Finding 1]
-#: [Finding 2]
-#: [Finding 3]
-#: [Finding 4]
+[Detailed step-by-step procedure to perform the examination. Each step should be numbered and clear enough for a medical professional to follow exactly]
+#: [Finding 1 - must be specific and directly related to diagnosis]
+#: [Finding 2 - must be specific and directly related to diagnosis]
+#: [Finding 3 - must be specific and directly related to diagnosis]
+#: [Finding 4 - must be specific and directly related to diagnosis]
 
 FORMAT 2 - WHEN THE GUIDE PROVIDES NO INFORMATION ABOUT EXAMINATIONS:
 "The medical guide does not provide specific examination procedures for this condition."
@@ -689,7 +693,6 @@ IMPORTANT INSTRUCTIONS:
 5. Format your response as:
    - Primary diagnosis (if clear from guide)
    - Differential diagnoses (if mentioned in guide)
-   - Confidence level (high/medium/low)
    - Reasoning based on guide content
 
 Based ONLY on the medical guide information, what is the diagnosis?
@@ -754,10 +757,25 @@ Key symptoms: {symptoms}
 
 Previous exams: {previous_exams}
 
-Recommend ONE essential examination in this format (should not be first world exams like MRI, CT, Colonoscopy, etc.):
+IMPORTANT INSTRUCTIONS:
+1. ONLY recommend examinations that are explicitly mentioned in the medical guide.
+2. If the guide mentions a specific examination (like RDT, blood pressure check, etc.), you MUST provide the exact procedure steps as described in the guide.
+3. The possible findings must be specific and directly contribute to the diagnosis.
+4. Do not include any first-world exams (like MRI, CT, Colonoscopy, etc.).
+5. If the guide mentions a test or examination but doesn't provide steps, you MUST search through the guide content to find the procedure steps.
+6. NEVER default to generic responses like "refer to higher facility" if the guide actually provides examination steps.
+
+Recommend ONE essential examination in this format:
 [Examination name]
-[Procedure to perform the examination. Make sure this is detialed enough for a medical professional to understand and conduct]
-#:[First possible finding]
-#:[Second possible finding]
-#:[Third possible finding]
-#:[Fourth possible finding]''' 
+[Detailed step-by-step procedure to perform the examination. Each step should be numbered and clear enough for a medical professional to follow exactly. If the guide provides specific steps, use those exact steps.]
+#:[First possible finding - must be specific and directly related to diagnosis]
+#:[Second possible finding - must be specific and directly related to diagnosis]
+#:[Third possible finding - must be specific and directly related to diagnosis]
+#:[Fourth possible finding - must be specific and directly related to diagnosis]
+
+If the medical guide does not provide a specific examination procedure, respond with:
+"The medical guide does not provide specific examination procedures for this condition."
+
+If the medical guide provides partial information but no clear procedure, respond with:
+"While the medical guide does not provide a formal examination procedure, here is some relevant information that may be helpful:"
+[Include any relevant assessment guidance from the guide]''' 
