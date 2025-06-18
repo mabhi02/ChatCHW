@@ -7,6 +7,7 @@ import sys
 import os
 import openai
 import datetime
+from pymongo import MongoClient
 from chad import (
     questions_init,
     structured_questions_array,
@@ -22,6 +23,44 @@ from chad import (
     initialize_session,
     get_session_data,
 )
+from prompts import MedicalPrompts
+
+# MongoDB setup
+mongodb_url = os.environ.get('MONGODB_URL', 'mongodb://localhost:27017/')
+mongodb_client = MongoClient(mongodb_url)
+db = mongodb_client.medical_assessment
+sessions_collection = db.sessions
+
+def create_or_get_session(chat_name: str) -> Dict[str, Any]:
+    """Create a new session or get existing session from MongoDB."""
+    session = sessions_collection.find_one({"chat_name": chat_name})
+    if not session:
+        # Initialize new session
+        session = {
+            "chat_name": chat_name,
+            "initial_responses": [],
+            "followup_responses": [],
+            "exam_responses": [],
+            "current_question_index": 0,
+            "phase": "initial",
+            "created_at": datetime.datetime.now().isoformat()
+        }
+        sessions_collection.insert_one(session)
+    return session
+
+def update_session_responses(chat_name: str, response_type: str, response_data: Dict[str, Any]):
+    """Update session responses in MongoDB."""
+    sessions_collection.update_one(
+        {"chat_name": chat_name},
+        {"$push": {response_type: response_data}}
+    )
+
+def update_session_phase(chat_name: str, new_phase: str):
+    """Update session phase in MongoDB."""
+    sessions_collection.update_one(
+        {"chat_name": chat_name},
+        {"$set": {"phase": new_phase}}
+    )
 
 # Import MATRIXConfig for configuration constants
 from AVM.MATRIX.config import MATRIXConfig
@@ -423,7 +462,7 @@ def process_input():
                 # Generate next followup question or move to exam phase
                 if judge(session_data['followup_responses'], session_data['current_followup_question']['question']):
                     session_data['phase'] = "exam"
-                    response = generate_examination(session_data)
+                    response = generate_examination(session_data['session_id'])
                     
                     # Save assistant message to conversation history for phase change
                     save_conversation_message(
@@ -581,7 +620,7 @@ def process_input():
                     
                     return response
                 else:
-                    response = generate_examination(session_data)
+                    response = generate_examination(session_data['session_id'])
                     
                     # Save assistant message for next examination
                     save_conversation_message(
@@ -606,188 +645,83 @@ def process_input():
         })
 
 def generate_followup_question(session_data):
-    """Generate and format followup question"""
+    """Generate and format followup question using MongoDB session"""
     try:
-        print("Starting generate_followup_question")  # Debug print
-        initial_complaint = next((resp['answer'] for resp in session_data['initial_responses'] 
+        # Get session data
+        session = create_or_get_session(session_data['session_id'])
+        initial_responses = session.get('initial_responses', [])
+        followup_responses = session.get('followup_responses', [])
+        
+        # Get initial complaint
+        initial_complaint = next((resp['answer'] for resp in initial_responses 
                             if resp['question'] == "Please describe what brings you here today"), "")
         
-        session_id = session_data.get('session_id', 'default')
-        print(f"Initial complaint: {initial_complaint}")  # Debug print
+        # Get patient info for context
+        patient_info = {
+            'age': next((resp['answer'] for resp in initial_responses 
+                        if resp['question'] == "What is the patient's age?"), None),
+            'sex': next((resp['answer'] for resp in initial_responses 
+                        if resp['question'] == "What is the patient's sex?"), None)
+        }
         
-        # Extract previously gathered information to avoid repeating questions
-        patient_info = {}
-        
-        # Get patient sex
-        sex_response = next((resp for resp in session_data['initial_responses'] 
-                        if "sex" in resp['question'].lower()), None)
-        if sex_response:
-            patient_info['sex'] = sex_response['answer']
-            
-        # Get patient age
-        age_response = next((resp for resp in session_data['initial_responses'] 
-                        if "age" in resp['question'].lower()), None)
-        if age_response:
-            patient_info['age'] = age_response['answer']
-            
-        # Get patient symptoms from initial complaint and followup responses
-        patient_info['symptoms'] = [initial_complaint]
-        for resp in session_data['followup_responses']:
-            patient_info['symptoms'].append(f"Q: {resp['question']} - A: {resp['answer']}")
-        
-        # Build context including the patient information we've already collected
-        context = f"Initial complaint: {initial_complaint}\n"
-        context += f"Patient profile: {patient_info}\n"
-        if session_data['followup_responses']:
-            context += "Previous responses:\n"
-            for resp in session_data['followup_responses']:
-                context += f"Q: {resp['question']}\nA: {resp['answer']}\n"
-        
-        # Get embeddings and relevant documents
-        index = pc.Index("who-guide-old")
-        embedding = get_embedding_batch([context])[0]
-        
-        print("Got embedding")  # Debug print
-        
-        relevant_docs = vectorQuotesWithSource(embedding, index, top_k=3)  # Increased to get more context
-        
-        print(f"Got {len(relevant_docs)} relevant docs")  # Debug print
-        print("Relevant docs:")  # Debug print
-        print("" + "-"*50)  # Debug print
-        for doc in relevant_docs:   
-            print(f"Doc: {doc['text']} (score: {doc['score']})")    # Debug print 
-            print("" + "+"*50)  # Debug print
-        print("-"*50)  # Debug print
-        
-        if not relevant_docs:
-            raise Exception("Could not generate relevant question")
-        
-        # Store chunks for reference
-        if 'retrieved_chunks' not in session_data:
-            session_data['retrieved_chunks'] = []
-        session_data['retrieved_chunks'].extend(relevant_docs)
-        
-        # Save chunks to NeonDB for persistence
-        try:
-            save_session_chunks_to_neondb(
-                session_id=session_id,
-                phase="followup_question",
-                chunks=relevant_docs,
-                chunk_type="retrieved"
-            )
-        except Exception as e:
-            print(f"Error saving followup chunks to NeonDB: {e}")
-        
-        # Format medical guide information
-        medical_guide_content = "\n\n".join([doc['text'] for doc in relevant_docs[:3]])
-        
-        # Create list of previous questions to avoid repetition
-        previous_questions = [resp['question'] for resp in session_data['followup_responses']]
-        previous_questions_text = "\n".join([f"- {q}" for q in previous_questions])
-        
-        # Create list of information we already know to avoid asking about it again
+        # Format known information
         known_info = []
-        if 'sex' in patient_info:
+        if patient_info['sex']:
             known_info.append(f"- Patient sex: {patient_info['sex']}")
-        if 'age' in patient_info:
+        if patient_info['age']:
             known_info.append(f"- Patient age: {patient_info['age']}")
         known_info_text = "\n".join(known_info) if known_info else "- No additional information"
         
-        prompt = f'''Patient information:
-Initial complaint: "{initial_complaint}"
-
-Information we already know (DO NOT ASK ABOUT THESE AGAIN):
-{known_info_text}
-
-Previous questions already asked (DO NOT REPEAT THESE):
-{previous_questions_text if previous_questions else "- No previous follow-up questions"}
-
-THE FOLLOWING MEDICAL GUIDE INFORMATION IS YOUR ONLY SOURCE OF KNOWLEDGE:
-{medical_guide_content}
-
-IMPORTANT INSTRUCTIONS:
-1. ONLY use information contained in the medical guide above to formulate your response.
-2. Do NOT add any medical knowledge from your pretraining.
-3. The question must be based directly on assessment questions mentioned in the medical guide.
-4. If the medical guide mentions specific questions to ask for this condition, use those exact questions.
-5. DO NOT ask about information we already know (like age or sex).
-6. DO NOT repeat any previous questions that have already been asked.
-7. Focus on gathering NEW information that is not already known.
-8. Return only the question text without any explanation.
-
-Based ONLY on the medical guide information, what follow-up question should be asked to assess this patient?
-'''
+        # Format previous questions
+        previous_questions = [resp['question'] for resp in followup_responses]
+        previous_questions_text = "\n".join([f"- {q}" for q in previous_questions]) if previous_questions else ""
         
-        print("Sending prompt to OpenAI")  # Debug print
-
+        # Get relevant medical guide content
+        embedding = get_embedding_batch([initial_complaint])[0]
+        relevant_docs = vectorQuotesWithSource(embedding, pc.Index("who-guide-old"))
+        
+        if not relevant_docs:
+            print("No relevant medical guide content found")
+            return jsonify({
+                "status": "error",
+                "message": "Could not find relevant medical information"
+            })
+            
+        medical_guide_content = "\n\n".join([doc["text"] for doc in relevant_docs[:3]])
+        
+        # Generate question using advanced prompt
+        prompt = MedicalPrompts.get_advanced_followup_prompt(
+            initial_complaint=initial_complaint,
+            known_info_text=known_info_text,
+            previous_questions_text=previous_questions_text,
+            medical_guide_content=medical_guide_content
+        )
+        
+        print("Sending prompt to OpenAI")
+        
         response = openai.ChatCompletion.create(
             model="gpt-4-0125-preview",
             messages=[
-                {"role": "system", "content": "You can ONLY use information from the medical guide. Do not add any medical knowledge from your training."},
+                {"role": "system", "content": MedicalPrompts.SYSTEM_MESSAGES['followup_question']},
                 {"role": "user", "content": prompt}
             ],
             max_tokens=150,
             temperature=0.3
         )
         question = response.choices[0].message.content.strip()
-
-        print(f"Got question: {question}")  # Debug print
         
-        # MATRIX evaluation - analyze the question's relevance given previous questions
-        if previous_questions:
-            # Process the question through MATRIX system for pattern recognition
-            matrix_output = process_with_matrix(question, session_data['followup_responses'], context)
-            print(f"MATRIX evaluation - confidence: {matrix_output.get('confidence', 0)}, selected agent: {matrix_output.get('selected_agent', 'unknown')}")
-            
-            # Save MATRIX evaluation to database
-            try:
-                save_matrix_evaluation(
-                    session_id=session_id,
-                    phase="followup_question",
-                    question=question,
-                    matrix_output=matrix_output
-                )
-            except Exception as e:
-                print(f"Error saving MATRIX evaluation: {e}")
-            
-            # Check if the question is too similar to previous ones
-            similarity_threshold = 0.7  # Configurable threshold
-            if matrix_output.get('confidence', 0) > similarity_threshold:
-                print(f"Question '{question}' is too similar to previous questions (confidence: {matrix_output.get('confidence', 0)})")
-                
-                # Check if we have enough information to proceed to examination phase
-                if len(session_data['followup_responses']) >= 3:
-                    print("Sufficient information gathered. Moving to examination phase.")
-                    session_data['phase'] = "exam"
-                    return generate_examination(session_data)
-        else:
-            # For the first question, create a default matrix output
-            matrix_output = {
-                "confidence": 0.1,
-                "selected_agent": "optimist",
-                "weights": {"optimist": 0.9, "pessimist": 0.1}
-            }
+        print(f"Got question: {question}")
         
-        # Generate options
-        options_prompt = f'''QUESTION: "{question}"
-
-THE FOLLOWING MEDICAL GUIDE INFORMATION IS YOUR ONLY SOURCE OF KNOWLEDGE:
-{medical_guide_content}
-
-IMPORTANT INSTRUCTIONS:
-1. ONLY use information contained in the medical guide above to formulate your response.
-2. Do NOT add any medical knowledge from your pretraining.
-3. Generate 4 answer options for the above question.
-4. If the medical guide mentions specific answer options, use those exactly.
-5. If not, create relevant options based only on the medical guide content.
-6. Format as a numbered list (1-4).
-7. Do not include explanations, only the options themselves.
-'''
+        # Generate options using advanced prompt
+        options_prompt = MedicalPrompts.get_advanced_options_prompt(
+            question=question,
+            medical_guide_content=medical_guide_content
+        )
         
         options_completion = openai.ChatCompletion.create(
             model="gpt-4-0125-preview",
             messages=[
-                {"role": "system", "content": "You can ONLY use information from the medical guide. Do not add any medical knowledge from your training."},
+                {"role": "system", "content": MedicalPrompts.SYSTEM_MESSAGES['options']},
                 {"role": "user", "content": options_prompt}
             ],
             max_tokens=150,
@@ -802,593 +736,253 @@ IMPORTANT INSTRUCTIONS:
                     text = text[2:].strip()
                 options.append({"id": i+1, "text": text})
         
-        options.append({"id": 5, "text": "Other (please specify)"})
+        # Add "Other" option
+        options.append({"id": len(options) + 1, "text": "Other (please specify)"})
         
-        print(f"Generated {len(options)} options")  # Debug print
-        
-        # Store the generated question in session
-        session_data['current_followup_question'] = {
+        # Store current question in session
+        current_followup = {
             "question": question,
             "options": options,
-            "sources": relevant_docs[:3],  # Store sources used for this question
-            "matrix_output": matrix_output  # Store MATRIX evaluation output
+            "type": "MC"
         }
+        sessions_collection.update_one(
+            {"chat_name": session_data['session_id']},
+            {"$set": {"current_followup_question": current_followup}}
+        )
         
-        # Format output for chat interface
-        options_text = "\n".join([f"{opt['id']}. {opt['text']}" for opt in options])
-        output = f"{question}\n\n{options_text}"
+        # Save relevant chunks to NeonDB
+        save_session_chunks_to_neondb(session_data['session_id'], "followup", relevant_docs)
         
         return jsonify({
             "status": "success",
-            "output": output,
+            "output": question,
             "metadata": {
                 "phase": "followup",
                 "question_type": "MC",
                 "options": options,
-                "sources": [{"source": doc["source"], "score": doc["score"]} for doc in relevant_docs[:3]],
-                "matrix_evaluation": {
-                    "confidence": matrix_output.get('confidence', 0),
-                    "selected_agent": matrix_output.get('selected_agent', 'unknown'),
-                    "optimist_weight": matrix_output.get('weights', {}).get('optimist', 0.5),
-                    "pessimist_weight": matrix_output.get('weights', {}).get('pessimist', 0.5)
-                }
+                "citations": relevant_docs[-5:]
             }
         })
         
     except Exception as e:
-        print(f"Error in generate_followup_question: {str(e)}")  # Debug print
-        import traceback
-        traceback.print_exc()  # This will print the full stack trace
+        print(f"Error generating followup question: {str(e)}")
         return jsonify({
             "status": "error",
             "message": str(e)
         })
      
-def generate_examination(session_data):
-    """Generate examination using embeddings for context matching"""
+def generate_examination(chat_name):
+    """Generate examination recommendation using MongoDB session"""
     try:
-        initial_complaint = next((resp['answer'] for resp in session_data['initial_responses'] 
+        # Get session data
+        session = create_or_get_session(chat_name)
+        initial_responses = session.get('initial_responses', [])
+        followup_responses = session.get('followup_responses', [])
+        exam_responses = session.get('exam_responses', [])
+        
+        # Get initial complaint
+        initial_complaint = next((resp['answer'] for resp in initial_responses 
                             if resp['question'] == "Please describe what brings you here today"), "")
         
-        session_id = session_data.get('session_id', 'default')
-        
-        # Extract previously gathered information to avoid redundant examinations
-        patient_info = {}
-        
-        # Get patient sex
-        sex_response = next((resp for resp in session_data['initial_responses'] 
-                        if "sex" in resp['question'].lower()), None)
-        if sex_response:
-            patient_info['sex'] = sex_response['answer']
-            
-        # Get patient age
-        age_response = next((resp for resp in session_data['initial_responses'] 
-                        if "age" in resp['question'].lower()), None)
-        if age_response:
-            patient_info['age'] = age_response['answer']
-        
-        # Get previous examination information
-        previous_exams = []
-        if 'exam_responses' in session_data and session_data['exam_responses']:
-            for exam in session_data['exam_responses']:
-                if 'examination' in exam:
-                    previous_exams.append(exam['examination'])
-        
-        # Get patient symptoms
+        # Format symptoms summary
         symptoms = []
-        symptoms.append(initial_complaint)
-        for resp in session_data['followup_responses']:
-            answer = resp['answer'].lower()
-            if any(symptom in answer for symptom in 
-                  ['pain', 'fever', 'cough', 'fatigue', 'weakness', 'swelling', 
-                   'headache', 'nausea', 'dizziness', 'rash']):
-                symptoms.append(answer)
+        for resp in followup_responses:
+            symptoms.append(f"- {resp['question']}: {resp['answer']}")
+        symptoms_summary = "\n".join(symptoms) if symptoms else "No additional symptoms reported"
         
-        # Build comprehensive context with all patient info
-        context_items = [initial_complaint]
-        context_items.append(f"Patient: {patient_info}")
-        context_items.extend(symptoms)
-        
-        # Build a complete context string for MATRIX evaluation
-        context_text = f"Initial complaint: {initial_complaint}\n" + \
-                       f"Patient info: {patient_info}\n" + \
-                       f"Symptoms: {', '.join(symptoms)}\n" + \
-                       f"Previous exams: {', '.join(previous_exams)}"
-        
-        # Get embeddings for all context items
-        embeddings = get_embedding_batch(context_items)
-        
-        # Get relevant documents using embeddings
-        index = pc.Index("who-guide-old")
-        relevant_matches = []
-        for emb in embeddings:
-            matches = vectorQuotesWithSource(emb, index, top_k=2)
-            if matches:
-                relevant_matches.extend(matches)
-        print("Here are the chunks that got matched")
-        print(relevant_matches)  # Debug print
-        
-        # Store chunks for reference
-        if 'examination_chunks' not in session_data:
-            session_data['examination_chunks'] = []
-        session_data['examination_chunks'].extend(relevant_matches)
-        
-        # Save chunks to NeonDB for persistence
-        try:
-            save_session_chunks_to_neondb(
-                session_id=session_id,
-                phase="examination",
-                chunks=relevant_matches,
-                chunk_type="retrieved"
-            )
-        except Exception as e:
-            print(f"Error saving examination chunks to NeonDB: {e}")
-        
-        # Sort matches by relevance score
-        relevant_matches.sort(key=lambda x: x['score'], reverse=True)
-        
-        # Get top matches, ensure we don't have duplicates
-        seen_ids = set()
-        unique_matches = []
-        for match in relevant_matches:
-            if match['id'] not in seen_ids:
-                seen_ids.add(match['id'])
-                unique_matches.append(match)
-        
-        top_matches = unique_matches[:3]  # Take up to 3 unique matches
-        
-        # Format context with just the text content
-        medical_guide_content = "\n\n".join([match['text'] for match in top_matches])
-        
-        # Format information on previous exams to avoid repeating them
-        previous_exams_text = "\n".join([f"- {exam}" for exam in previous_exams]) if previous_exams else "- No previous examinations"
-        
-        # Create list of information we already know to inform examination choice
+        # Format known information
         known_info = []
-        if 'sex' in patient_info:
-            known_info.append(f"- Patient sex: {patient_info['sex']}")
-        if 'age' in patient_info:
-            known_info.append(f"- Patient age: {patient_info['age']}")
-        # Add symptom information
-        for i, symptom in enumerate(symptoms[:5]):  # Limit to 5 key symptoms
-            known_info.append(f"- Symptom {i+1}: {symptom}")
-        known_info_text = "\n".join(known_info) if known_info else "- No additional information"
+        for resp in initial_responses:
+            if resp['question'] != "Please describe what brings you here today":
+                known_info.append(f"- {resp['question']}: {resp['answer']}")
+        for resp in followup_responses:
+            known_info.append(f"- {resp['question']}: {resp['answer']}")
+        known_info_text = "\n".join(known_info) if known_info else "No additional information"
         
-        # Build a prompt focused only on the medical guide content
-        symptoms_summary = ", ".join(symptoms[:3]) if symptoms else "No specific symptoms identified"
+        # Format previous examinations
+        previous_exams = []
+        for exam in exam_responses:
+            previous_exams.append(f"- {exam['examination']}: {exam['result']}")
+        previous_exams_text = "\n".join(previous_exams) if previous_exams else ""
         
-        prompt = f'''Patient information:
-Initial complaint: "{initial_complaint}"
-Key symptoms: {symptoms_summary}
-
-Information we already know:
-{known_info_text}
-
-Previous examinations already performed (DO NOT REPEAT THESE):
-{previous_exams_text}
-
-THE FOLLOWING MEDICAL GUIDE INFORMATION IS YOUR ONLY SOURCE OF KNOWLEDGE:
-{medical_guide_content}
-
-IMPORTANT INSTRUCTIONS:
-1. ONLY use information contained in the medical guide above to formulate your response.
-2. Do NOT add any medical knowledge from your pretraining.
-3. You MUST select one of these three formats for your response:
-
-FORMAT 1 - WHEN THE GUIDE CLEARLY PROVIDES AN EXAMINATION PROCEDURE:
-[Examination name]
-[Detailed procedure steps as described in the guide]
-#: [Finding 1]
-#: [Finding 2]
-#: [Finding 3]
-#: [Finding 4]
-
-FORMAT 2 - WHEN THE GUIDE PROVIDES NO INFORMATION ABOUT EXAMINATIONS:
-"The medical guide does not provide specific examination procedures for this condition."
-
-FORMAT 3 - WHEN THE GUIDE PROVIDES PARTIAL/INFORMAL INFORMATION BUT NO CLEAR PROCEDURE:
-"While the medical guide does not provide a formal examination procedure, here is some relevant information that may be helpful:"
-[Include any relevant assessment guidance from the guide]
-
-4. Use the same terminology and procedures as presented in the medical guide.
-5. DO NOT repeat any examinations that have already been performed.
-6. Choose an examination that is DIFFERENT from previous ones and appropriate for the patient's symptoms.
-
-Based ONLY on the medical guide information, what NEW examination should be performed?
-'''
-
-        completion = openai.ChatCompletion.create(
+        # Get relevant medical guide content
+        embedding = get_embedding_batch([initial_complaint])[0]
+        relevant_docs = vectorQuotesWithSource(embedding, pc.Index("who-guide-old"))
+        
+        if not relevant_docs:
+            print("No relevant medical guide content found")
+            return jsonify({
+                "status": "error",
+                "message": "Could not find relevant medical information"
+            })
+            
+        medical_guide_content = "\n\n".join([doc["text"] for doc in relevant_docs[:3]])
+        
+        # Generate examination using advanced prompt
+        prompt = MedicalPrompts.get_advanced_examination_prompt(
+            initial_complaint=initial_complaint,
+            symptoms_summary=symptoms_summary,
+            known_info_text=known_info_text,
+            previous_exams_text=previous_exams_text,
+            medical_guide_content=medical_guide_content
+        )
+        
+        print("Sending prompt to OpenAI")
+        
+        response = openai.ChatCompletion.create(
             model="gpt-4-0125-preview",
             messages=[
-                {"role": "system", "content": "You can ONLY use information from the medical guide. Do not add any medical knowledge from your training."},
+                {"role": "system", "content": MedicalPrompts.SYSTEM_MESSAGES['examination']},
                 {"role": "user", "content": prompt}
             ],
-            max_tokens=400,
+            max_tokens=300,
             temperature=0.3
         )
         
-        examination_text = completion.choices[0].message.content.strip()
-        print(f"Generated examination text: {examination_text}")  # Debug print
+        examination_text = response.choices[0].message.content.strip()
+        print(f"Got examination: {examination_text}")
         
-        # Check for simple "no information" responses directly
-        if examination_text == "The guide doesn't provide that information." or examination_text == "The medical guide does not provide specific examination procedures for this condition.":
-            # Generate simplified options for no examination info
-            options = [
-                {"id": 1, "text": "Proceed with general assessment and diagnosis"},
-                {"id": 2, "text": "Refer to higher level facility"},
-                {"id": 3, "text": "Other (please specify)"}
-            ]
-            
-            # Save this as a special type of "NO_INFO" examination
-            session_data['current_examination'] = {
-                "text": examination_text,
-                "options": options,
-                "sources": top_matches,
-                "matrix_output": {
-                    "confidence": 0.1,
-                    "selected_agent": "optimist",
-                    "weights": {"optimist": 0.9, "pessimist": 0.1}
-                },
-                "type": "NO_INFO_EXAM"
-            }
-            
+        # Check if no examination information is available
+        if "does not provide" in examination_text.lower():
             return jsonify({
                 "status": "success",
-                "output": f"The medical guide does not provide specific examination procedures for this condition.\n\nPlease select how you would like to proceed:",
+                "output": examination_text,
                 "metadata": {
                     "phase": "exam",
-                    "question_type": "EXAM",
-                    "options": options,
-                    "sources": [{"source": doc["source"], "score": doc["score"]} for doc in top_matches],
-                    "matrix_evaluation": {
-                        "confidence": 0.1,
-                        "selected_agent": "optimist",
-                        "optimist_weight": 0.9,
-                        "pessimist_weight": 0.1
-                    }
-                }
-            })
-        
-        # Use MATRIX to evaluate examination relevance and similarity
-        if session_data['exam_responses']:
-            try:
-                matrix_output = process_with_matrix(examination_text, session_data['exam_responses'], context_text)
-                print(f"MATRIX evaluation - confidence: {matrix_output.get('confidence', 0)}, selected agent: {matrix_output.get('selected_agent', 'unknown')}")
-                
-                # Save MATRIX evaluation to database
-                try:
-                    save_matrix_evaluation(
-                        session_id=session_id,
-                        phase="examination",
-                        question=examination_text.split('\n')[0][:50],  # Use first line (exam name) as identifier
-                        matrix_output=matrix_output
-                    )
-                except Exception as e:
-                    print(f"Error saving MATRIX evaluation: {e}")
-                    
-                # If we've reached the confidence threshold for similarity, we might need to generate more diverse examinations
-                similarity_threshold = 0.7
-                if matrix_output.get('confidence', 0) > similarity_threshold:
-                    print(f"Warning: Generated examination is too similar to previous ones (confidence: {matrix_output.get('confidence', 0)})")
-                    
-                    # If this is consistent across multiple attempts, we might want to change approach
-                    if len(session_data['exam_responses']) >= 3 and matrix_output.get('weights', {}).get('optimist', 0) > 0.7:
-                        print("MATRIX suggests moving to diagnosis phase")
-                        session_data['phase'] = "complete"
-                        return generate_final_results(session_data)
-            except Exception as e:
-                print(f"Error in MATRIX evaluation: {e}")
-                matrix_output = {
-                    "confidence": 0.1,
-                    "selected_agent": "optimist",
-                    "weights": {"optimist": 0.9, "pessimist": 0.1}
-                }
-        else:
-            # For the first examination, create a default matrix output
-            matrix_output = {
-                "confidence": 0.1,
-                "selected_agent": "optimist",
-                "weights": {"optimist": 0.9, "pessimist": 0.1}
-            }
-        
-        # Parse the examination text - this will now handle cases where the guide doesn't provide examination info
-        try:
-            examination, option_texts = parse_examination_text(examination_text)
-            
-            options = [{"id": i+1, "text": text} for i, text in enumerate(option_texts[:4])]
-            options.append({"id": 5, "text": "Other (please specify)"})
-            
-            session_data['current_examination'] = {
-                "text": examination_text,
-                "options": options,
-                "sources": top_matches,  # Store sources used for this examination
-                "matrix_output": matrix_output  # Store MATRIX evaluation
-            }
-            
-            options_text = "\n".join([f"{opt['id']}. {opt['text']}" for opt in options])
-            
-            # Determine which scenario we're in based on the examination text
-            if any(phrase in examination.lower() for phrase in ["does not provide", "no information", "no examination", 
-                                                            "no specific examination", "doesn't provide"]):
-                # SCENARIO 1: No examination information available
-                output = f"Examination Information:\n{examination}\n\nRecommended Action:\n{options_text}"
-                
-                # Add a note about source material
-                if top_matches:
-                    source_info = "\n\nNote: This recommendation is based on the WHO medical guide which does not provide specific examination procedures for this condition."
-                    output += source_info
-                    
-            elif examination.startswith("PARTIAL INFORMATION"):
-                # SCENARIO 2: Partial/informal examination information
-                # Extract the partial information without the prefix
-                partial_info = examination.replace("PARTIAL INFORMATION (Not a formal examination procedure):\n", "")
-                
-                output = f"Note: The medical guide does not provide a formal examination procedure for this condition.\n\n"
-                output += f"Relevant Information:\n{partial_info}\n\n"
-                output += f"Recommended Action:\n{options_text}"
-                
-                # Add citation to show where information came from
-                if top_matches:
-                    source_names = ", ".join([match.get('source', 'Medical guide').split('/')[-1] for match in top_matches[:2]])
-                    output += f"\n\nSource: {source_names}"
-            else:
-                # SCENARIO 3: Clear examination with findings
-                output = f"Recommended Examination:\n{examination}\n\nFindings:\n{options_text}"
-            
-            return jsonify({
-                "status": "success",
-                "output": output,
-                "metadata": {
-                    "phase": "exam",
-                    "question_type": "EXAM",
-                    "options": options,
-                    "sources": [{"source": doc["source"], "score": doc["score"]} for doc in top_matches],
-                    "matrix_evaluation": {
-                        "confidence": matrix_output.get('confidence', 0),
-                        "selected_agent": matrix_output.get('selected_agent', 'unknown'),
-                        "optimist_weight": matrix_output.get('weights', {}).get('optimist', 0.5),
-                        "pessimist_weight": matrix_output.get('weights', {}).get('pessimist', 0.5)
-                    }
+                    "question_type": "MC",
+                    "options": MedicalPrompts.NO_INFO_RESPONSES['proceed_options'],
+                    "citations": relevant_docs[-5:]
                 }
             })
             
-        except Exception as e:
-            print(f"Error parsing examination text: {e}")
-            # Fallback options if parsing fails
-            options = [
-                {"id": 1, "text": "Proceed with general assessment and diagnosis"},
-                {"id": 2, "text": "Refer to higher level facility"},
-                {"id": 3, "text": "Other (please specify)"}
-            ]
-            
-            # Save this as a special type of "NO_INFO" examination
-            session_data['current_examination'] = {
-                "text": "The system encountered an issue while determining an appropriate examination based on the medical guide.",
-                "options": options,
-                "sources": [],
-                "matrix_output": {
-                    "confidence": 0.1,
-                    "selected_agent": "optimist",
-                    "weights": {"optimist": 0.9, "pessimist": 0.1}
-                },
-                "type": "NO_INFO_EXAM"
-            }
-            
-            return jsonify({
-                "status": "success",
-                "output": "The system encountered an issue while determining an appropriate examination based on the medical guide.\n\nPlease select how you would like to proceed:",
-                "metadata": {
-                    "phase": "exam",
-                    "question_type": "EXAM",
-                    "options": options,
-                    "sources": [],
-                    "matrix_evaluation": {
-                        "confidence": 0.1,
-                        "selected_agent": "unknown",
-                        "optimist_weight": 0.5,
-                        "pessimist_weight": 0.5
-                    }
-                }
-            })
-    except Exception as e:
-        print(f"Error in generate_examination: {str(e)}")
-        import traceback
-        traceback.print_exc()
+        # Parse examination text into structured format
+        examination, findings = parse_examination_text(examination_text)
         
-        # Fallback response if an error occurs
-        options = [
-            {"id": 1, "text": "Proceed with general assessment and diagnosis"},
-            {"id": 2, "text": "Refer to higher level facility"},
-            {"id": 3, "text": "Other (please specify)"}
-        ]
+        # Create options from findings
+        options = [{"id": i+1, "text": finding} for i, finding in enumerate(findings)]
         
-        # Save this as a special type of "NO_INFO" examination
-        session_data['current_examination'] = {
-            "text": "The system encountered an issue while determining an appropriate examination based on the medical guide.",
+        # Store current examination in session
+        current_exam = {
+            "examination": examination,
             "options": options,
-            "sources": [],
-            "matrix_output": {
-                "confidence": 0.1,
-                "selected_agent": "optimist",
-                "weights": {"optimist": 0.9, "pessimist": 0.1}
-            },
-            "type": "NO_INFO_EXAM"
+            "type": "MC"
         }
-        
-        return jsonify({
-            "status": "success",
-            "output": "The system encountered an issue while determining an appropriate examination based on the medical guide.\n\nPlease select how you would like to proceed:",
-            "metadata": {
-                "phase": "exam",
-                "question_type": "EXAM",
-                "options": options,
-                "sources": [],
-                "matrix_evaluation": {
-                    "confidence": 0.1,
-                    "selected_agent": "unknown",
-                    "optimist_weight": 0.5,
-                    "pessimist_weight": 0.5
-                }
-            }
-        })
-
-def generate_final_results(session_data):
-    """Generate and format final results"""
-    try:
-        session_id = session_data.get('session_id', 'default')
-        
-        # Check if we proceeded without proper examination
-        has_no_formal_exam = all(resp.get('type') != 'FORMAL_EXAM' for resp in session_data['exam_responses'])
-        was_referred = any(resp.get('type') == 'REFERRAL' for resp in session_data['exam_responses'])
-        
-        # Add special context for diagnosis when no formal examination was done
-        if has_no_formal_exam:
-            initial_complaint = next((resp['answer'] for resp in session_data['initial_responses'] 
-                                if resp['question'] == "Please describe what brings you here today"), "")
-            
-            # Extract symptoms from followup responses
-            symptoms = []
-            for resp in session_data['followup_responses']:
-                if isinstance(resp.get('answer'), str) and not resp.get('answer').startswith("No "):
-                    symptoms.append(resp.get('answer'))
-            
-            # If patient was referred, create a referral summary
-            if was_referred:
-                # Create a simple referral summary
-                return jsonify({
-                    "status": "success",
-                    "output": f"""Assessment Summary
-                    
-Initial complaint: {initial_complaint}
-
-Key findings:
-{chr(10).join([f"- {symptom}" for symptom in symptoms[:5]])}
-
-Diagnosis:
-The medical guide does not provide specific examination procedures for this condition. 
-A full diagnosis requires proper medical examination.
-
-Recommendation:
-Patient has been referred to a higher level facility for proper examination and diagnosis.
-
-Note: This summary is based on limited information and should not be considered a complete medical assessment.
-""",
-                    "metadata": {
-                        "phase": "complete",
-                        "referral": True,
-                        "formal_examination": False,
-                        "citations": []
-                    }
-                })
-        
-        # Get diagnosis and treatment based on responses
-        results = get_diagnosis_and_treatment(
-            session_data['initial_responses'],
-            session_data['followup_responses'],
-            session_data['exam_responses']
+        sessions_collection.update_one(
+            {"chat_name": chat_name},
+            {"$set": {"current_examination": current_exam}}
         )
         
-        # Store chunks used for reference if available
-        if 'chunks_used' in results:
-            session_data['chunks_used'] = results['chunks_used']
-            
-            # Save chunks to NeonDB for persistence
-            try:
-                save_session_chunks_to_neondb(
-                    session_id=session_id,
-                    phase="diagnosis_treatment",
-                    chunks=results['chunks_used'],
-                    chunk_type="used_for_generation"
-                )
-            except Exception as e:
-                print(f"Error saving diagnosis chunks to NeonDB: {e}")
-        
-        # Format results for chat interface, preserving formatting
-        diagnosis_text = results['diagnosis']
-        treatment_text = results['treatment']
-        
-        # Format citations
-        citations_text = ""
-        if results['citations']:
-            citations = []
-            for cite in results['citations']:
-                citations.append(f"- {cite['source']} (relevance: {cite['score']:.2f})")
-            citations_text = "\n".join(citations)
-        else:
-            citations_text = "No specific medical guide citations available."
-        
-        # Add a note about limitations of assessment if no formal examination was done
-        note = ""
-        if has_no_formal_exam:
-            note = "\nNote: This assessment is based on limited information without formal examination procedures described in the medical guide. Consider referring for a complete medical evaluation if symptoms persist or worsen."
-        
-        output = f"""Assessment Complete
-
-Diagnosis:
-{diagnosis_text}
-
-Treatment Plan:
-{treatment_text}
-{note}
-
-Key References:
-{citations_text}
-"""
-        
-        # Also save a summary record of the entire session
-        try:
-            if db_conn:
-                # Create session_summaries table if it doesn't exist
-                create_table_query = """
-                CREATE TABLE IF NOT EXISTS session_summaries (
-                    id SERIAL PRIMARY KEY,
-                    session_id TEXT NOT NULL,
-                    timestamp TIMESTAMP WITH TIME ZONE,
-                    initial_complaint TEXT,
-                    diagnosis TEXT,
-                    treatment TEXT,
-                    chunks_used INTEGER
-                )
-                """
-                with db_conn.cursor() as cursor:
-                    cursor.execute(create_table_query)
-                    
-                    # Insert summary record
-                    initial_complaint = next((resp['answer'] for resp in session_data['initial_responses'] 
-                                    if resp['question'] == "Please describe what brings you here today"), "")
-                    
-                    chunks_count = len(results.get('chunks_used', []))
-                    
-                    insert_query = """
-                    INSERT INTO session_summaries (
-                        session_id, timestamp, initial_complaint, diagnosis, treatment, chunks_used
-                    ) VALUES (%s, %s, %s, %s, %s, %s)
-                    """
-                    cursor.execute(insert_query, (
-                        session_id,
-                        datetime.datetime.now().isoformat(),
-                        initial_complaint,
-                        diagnosis_text,
-                        treatment_text,
-                        chunks_count
-                    ))
-                db_conn.commit()
-                print(f"Saved session summary to NeonDB for session {session_id}")
-        except Exception as e:
-            print(f"Error saving session summary to NeonDB: {e}")
+        # Save relevant chunks to NeonDB
+        save_session_chunks_to_neondb(chat_name, "examination", relevant_docs)
         
         return jsonify({
             "status": "success",
-            "output": output,
+            "output": examination,
             "metadata": {
-                "phase": "complete",
-                "citations": results['citations'],
-                "chunks_used": results.get('chunks_used', []),
-                "formal_examination": not has_no_formal_exam
+                "phase": "exam",
+                "question_type": "MC",
+                "options": options,
+                "citations": relevant_docs[-5:]
             }
         })
         
     except Exception as e:
+        print(f"Error generating examination: {str(e)}")
+        return jsonify({
+            "status": "error",
+            "message": str(e)
+        })
+
+def generate_final_results(chat_name):
+    """Generate final diagnosis and treatment recommendations using MongoDB session"""
+    try:
+        # Get session data
+        session = create_or_get_session(chat_name)
+        initial_responses = session.get('initial_responses', [])
+        followup_responses = session.get('followup_responses', [])
+        exam_responses = session.get('exam_responses', [])
+        
+        # Get initial complaint
+        initial_complaint = next((resp['answer'] for resp in initial_responses 
+                            if resp['question'] == "Please describe what brings you here today"), "")
+        
+        # Get diagnosis and treatment recommendations
+        results = get_diagnosis_and_treatment(initial_responses, followup_responses, exam_responses)
+        
+        if 'error' in results:
+            return jsonify({
+                "status": "error",
+                "message": results['error']
+            })
+            
+        # Format the assessment summary
+        if not exam_responses:
+            # If no examinations were performed, use referral summary template
+            summary = MedicalPrompts.REFERRAL_SUMMARY_TEMPLATE.format(
+                initial_complaint=initial_complaint,
+                key_findings="\n".join([f"- {resp['question']}: {resp['answer']}" 
+                                      for resp in followup_responses])
+            )
+        else:
+            # Format complete assessment with all findings
+            diagnosis_text = results['diagnosis']
+            treatment_text = "\n".join([
+                f"Immediate Care:\n{results['immediate_care']}",
+                f"\nHome Care:\n{results['home_care']}",
+                f"\nReferral Guidance:\n{results['referral']}"
+            ])
+            
+            # Add limitation note if no formal examinations were described
+            limitation_note = ""
+            if any("does not provide" in exam['examination'].lower() for exam in exam_responses):
+                limitation_note = MedicalPrompts.LIMITATION_NOTES['no_formal_exam']
+            
+            # Format citations from chunks used
+            citations = []
+            if 'retrieved_chunks' in session:
+                citations = [f"- {chunk['source']}" for chunk in session['retrieved_chunks'][-5:]]
+            citations_text = "\n".join(citations) if citations else "No specific citations available"
+            
+            summary = MedicalPrompts.COMPLETE_ASSESSMENT_TEMPLATE.format(
+                diagnosis_text=diagnosis_text,
+                treatment_text=treatment_text,
+                limitation_note=limitation_note,
+                citations_text=citations_text
+            )
+        
+        # Save summary to NeonDB
+        try:
+            with db_conn.cursor() as cursor:
+                cursor.execute("""
+                    INSERT INTO session_summaries (
+                        session_id, timestamp, initial_complaint, 
+                        diagnosis, treatment, chunks_used
+                    ) VALUES (%s, %s, %s, %s, %s, %s)
+                """, (
+                    chat_name,
+                    datetime.datetime.now().isoformat(),
+                    initial_complaint,
+                    results.get('diagnosis', ''),
+                    treatment_text if 'treatment_text' in locals() else '',
+                    len(session.get('retrieved_chunks', []))
+                ))
+        except Exception as e:
+            print(f"Error saving summary to NeonDB: {e}")
+        
+        return jsonify({
+            "status": "success",
+            "output": summary,
+            "metadata": {
+                "phase": "complete",
+                "diagnosis": results.get('diagnosis', ''),
+                "immediate_care": results.get('immediate_care', ''),
+                "home_care": results.get('home_care', ''),
+                "referral": results.get('referral', '')
+            }
+        })
+        
+    except Exception as e:
+        print(f"Error generating final results: {str(e)}")
         return jsonify({
             "status": "error",
             "message": str(e)

@@ -1,0 +1,341 @@
+{
+  "metadata": {
+    "datetime": "2025-06-06T23:54:30.741841",
+    "serializer": "cb995455-8e27-4095-9e69-cbd19e4a37f4",
+    "pinecone_index": "new-medical-chw-guides"
+  },
+  "case_data": {
+    "timestamp": "20250606_235811",
+    "initial_responses": [
+      {
+        "question": "What is the patient's sex?",
+        "answer": "Male",
+        "type": "MC"
+      },
+      {
+        "question": "What is the patient's age?",
+        "answer": 60,
+        "type": "NUM"
+      },
+      {
+        "question": "Does the patient have a caregiver?",
+        "answer": "No information found",
+        "type": "MC"
+      },
+      {
+        "question": "Who is accompanying the patient?",
+        "answer": [
+          "5"
+        ],
+        "type": "MCM"
+      },
+      {
+        "question": "Please describe what brings you here today",
+        "answer": "Diarrhea for 1 days",
+        "type": "FREE"
+      }
+    ],
+    "followup_responses": [
+      {
+        "question": "Has Juanita had any recent changes in her diet or been exposed to any new environments that could explain the onset of her symptoms?",
+        "answer": "No information found",
+        "type": "MC",
+        "citations": [
+          {
+            "text": "S, for how long?       days  \n\uf06f \uf06e  Diarrhoea (loose stools)        days.  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \n\uf06f \uf06e Convulsions?  \uf06f \uf06e  Fever (reported or now) Since    2   days ago.  \n\uf06f \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf06f not able to drink or feed anything?   \n\uf06f \uf06e  Vomiting? IF YES, \uf06f vomits everything?   \n\uf06f \uf06e Chest indrawing? (FOR ALL CHILDREN)  \nIF COUGH, count breaths in 1 minute:  \n      breaths per minute (bpm).  \n \n\uf06f \uf06e Fast breathing:  \n Age 2 months up to 12 months: 50bpm or more  \n Age 12 months up to 5 years: 40bpm or more  \n\uf06f \uf06e Unusually sleepy or unconscious?  \nFor child 6 months up to 5 years, MUAC strap colour:  \nRed     Yellow     Green          \n\uf06f \uf06e  Swelling of both feet?   \nAny OTHER PROBLEM or reason referred:              \nReferred to (name of health facility):              \nReferred by (name of CHW):         Date:    Time:      \uf06f  Cough for 14 days or more  \n\uf06f  Diarrhoea for 14 days or more  \uf06f  ORS solution for diarrhoea  \n\uf06f  Blood in stool  \n\uf06f  Convulsions  \uf06f  Fever for last 7 days or more  \n\uf06f  Not able to drink or  \n feed anything  \n\uf06f  Vomits everything  \n\uf06f  Chest indrawing  \n \n\uf06f  Unusually sleepy or unconscious  \n\uf06f  Red on MUAC strap  \n\uf06f",
+            "id": "chunk-201",
+            "source": "Unknown",
+            "score": 0.512708187
+          },
+          {
+            "text": "roblems?  \nIf not reported, then ask to be sure  \nYES,  sign present   \uf0e0 Tick \uf0fe No sign  \uf0e0 Circle  \uf06e \n\uf0fe \uf06e Cough? If YES, for how long?    2  days  \n\uf06f \uf06e  Diarrhoea (3 or more loose stools in 24 hours)?  \n            IF YES, for how long?         days.  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \n\uf06f \uf06e Convulsions?  \uf0fe \uf06e  Fever (reported or now)  \n            IF YES, started    4    days ago.  \n\uf0fe \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf0fe not able to drink or feed anything?   \n\uf0fe \uf06e  Vomiting? IF YES, \uf0fe vomits everything?   \n \nParticipant Manual: Caring for the sick child in the community  18 \n \nExercise: Use the recording form to \nidentify proble ms (2)  \nComplete the recording form below for Juanita.  \n \n \nChild: Juanita Vald\u00e9z  \nJuanita Vald\u00e9z is 3 and a half years old. She lives with her aunt Maria Lomos. They are your \nneighbours in the village of Agua Fria.  \nJuanita has been coughing. You ask her aunt, \u201cFor how long?\u201d She says, \u201cFor 5 days.\u201d \nJuanita now seems to be breathing with greater difficulty than usual.  \nMiss Lomos says that Juanita does not have any other problems. However, when you ask \nabout diarrhoea , you learn that Juanita has had diarrhoea for 3 days. You a",
+            "id": "chunk-38",
+            "source": "Unknown",
+            "score": 0.508235872
+          },
+          {
+            "text": ":  \n\uf06f If  Diarrhoea  \n (less than  \n 14 days \n AND no \n blood in \n stool)  \uf06f Give ORS.  Help caregiver give child ORS  solution \n in front of you until child is no longer thirsty.  \n\uf06f Give caregiver 2 ORS packets to take home. \n Advise to give as much as child wants, but at least  \n \u00bd cup ORS solution after each loose stool  \n\uf06f Give zinc supplement. Give 1 dose daily for 10 days:  \n \uf06f Age 2 months up to 6 months  - \u00bd tablet (total 5 tablets)  \n \uf06f Age 6 months up to 5 y ears - 1 tablet (total 10 tablets)  \n Help caregiver to give first  dose now.   If any danger sign, REFER URGENTLY to health facility:  \nASSIST REFERRAL to health facility:   \n\uf06f Explain w hy child needs to go to health facility.  \n GIVE FIRST DOSE OF TREATMENT : \n\uf06f If  Diarrhoea  \uf06f If  child can drink, begin giving ORS \n solution right away, as much as the \n child can take until departure. Give \n caregiver extra ORS solution to \n continue giving on the way.  \n\uf06f If  Fever AND  \n \uf06f Convulsions or  \n \uf06f Unusually sleepy    \n  or unconscious or \n \uf06f Not able to drink  \n  or feed anything or  \n \uf06f Vomits everything   \n \n\uf06f If Fever AND danger \n sign other than the 4 \n above  \uf06f Give rectal artesunate suppository \n (100 mg)  \n ",
+            "id": "chunk-207",
+            "source": "Unknown",
+            "score": 0.492826134
+          },
+          {
+            "text": "\nCough for 14 days  \nFever for 3 days  \uf06f Begin giving ORS solution  \n\uf06f Give first dose of oral antibiotic  \n\uf06f Give first dose of oral antimalarial  \n\uf06f Give dose of rectal artesunate suppository  \n\uf06f No pre -referral treatment   \nAnita (2 -year-old girl)   \nCough for 14 da ys \nDiarrhoea for 3 days  \nNo blood in stool  \uf06f Begin giving ORS solution  \n\uf06f Give first dose of oral antibiotic  \n\uf06f Give first dose of oral antimalarial  \n\uf06f Give dose of rectal artesunate suppository  \n\uf06f No pre -referral treatment   \nSam (2 -month -old boy)  \nDiarrhoea for 3 weeks  \nNo blood in stool  \nFever for last 3 days  \uf06f Begin giving ORS solution  \n\uf06f Give first dose of oral antibiotic  \n\uf06f Give first dose of oral antimalarial  \n\uf06f Give dose of rectal artesunate suppository  \n\uf06f No pre -referral treatment   \nKofi (3 -year-old boy)   \nCough for 3 days  \nChest indrawing  \nUnusually sleepy or \nunconscious  \uf06f Begin giving ORS solution  \n\uf06f Give first dose of oral antibiotic  \n\uf06f Give first dose of oral antimalarial  \n\uf06f Give dose of rectal artesunate suppository  \n\uf06f No pre -referral treatment   \nSara (3 -year-old girl)   \nDiarrhoea for 4 days  \nBlood in stool  \uf06f Begin giving ORS solution  \n\uf06f Give first dose of oral ant",
+            "id": "chunk-182",
+            "source": "Unknown",
+            "score": 0.483787507
+          },
+          {
+            "text": "k child in the community  39 \n \uf06f Diarrhoea for 14 days or more  \nDiarrhoea often stops on its own in 3 or 4 days. Diarrhoea for 14 days or more, however, is a \ndanger sign. It may be a sign of a severe disease. The diarrhoea will contribute to malnutrition. \nDiarrhoea also can cause dehydration, when the body loses more f luids than are being \nreplaced. If not treated, dehydration results in death. Refer a child with diarrhoea for 14 \ndays or more.  \n \n\uf06f Blood in stool  \nDiarrhoea with blood in the stool, with or without mucus, is dysentery. If there is blood in the \nstool, the child needs medicine that you do not have in the medicine kit. Refer a child with \nblood in the stool.  \n\uf06f Fever for last 7 days or more  \nMost fevers go away within a few days. Fever that has lasted for 7 days or more can me an \nthat the child has a severe disease. The fever does not have to occur every day, all the time. \nRefer a child who has had fever for the last 7 days or more .  \n\uf06f Convulsions  \nA convulsion during the child\u2019s current illness is a danger sign. A serious infect ion or a high \nfever may be the cause of the convulsion. The health facility can provide the appropriate \nmedicine and identif",
+            "id": "chunk-64",
+            "source": "Unknown",
+            "score": 0.48138082
+          }
+        ]
+      },
+      {
+        "question": "Has Juanita been in contact with anyone who is sick or showing similar symptoms?",
+        "answer": "No information found",
+        "type": "MC",
+        "citations": [
+          {
+            "text": "roblems?  \nIf not reported, then ask to be sure  \nYES,  sign present   \uf0e0 Tick \uf0fe No sign  \uf0e0 Circle  \uf06e \n\uf0fe \uf06e Cough? If YES, for how long?    2  days  \n\uf06f \uf06e  Diarrhoea (3 or more loose stools in 24 hours)?  \n            IF YES, for how long?         days.  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \n\uf06f \uf06e Convulsions?  \uf0fe \uf06e  Fever (reported or now)  \n            IF YES, started    4    days ago.  \n\uf0fe \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf0fe not able to drink or feed anything?   \n\uf0fe \uf06e  Vomiting? IF YES, \uf0fe vomits everything?   \n \nParticipant Manual: Caring for the sick child in the community  18 \n \nExercise: Use the recording form to \nidentify proble ms (2)  \nComplete the recording form below for Juanita.  \n \n \nChild: Juanita Vald\u00e9z  \nJuanita Vald\u00e9z is 3 and a half years old. She lives with her aunt Maria Lomos. They are your \nneighbours in the village of Agua Fria.  \nJuanita has been coughing. You ask her aunt, \u201cFor how long?\u201d She says, \u201cFor 5 days.\u201d \nJuanita now seems to be breathing with greater difficulty than usual.  \nMiss Lomos says that Juanita does not have any other problems. However, when you ask \nabout diarrhoea , you learn that Juanita has had diarrhoea for 3 days. You a",
+            "id": "chunk-38",
+            "source": "Unknown",
+            "score": 0.61082375
+          },
+          {
+            "text": " any other problems. However, when you ask \nabout diarrhoea , you learn that Juanita has had diarrhoea for 3 days. You also ask about \nblood in stool, fever, convulsions, difficult drinking or feeding, vomiting, and any other problem. \nTo each, Miss Lomos says, \u201cNo.\u201d Juanita does not have any of these problems.  \n \n \n  \nSICK CHILD RECORDING FORM  \n(for community -based treatment of child age 2 months up to 5 years)  \nDate:          /           / 20    \n(Day / Month / Year)  CHW:      \nChild\u2019s name:  First:     Family: :    Age:    Years         Months  Boy / Girl  \nCaregiver\u2019s name:        Relationship:  Mother / Father / Other      \nAddress, Community:   \n1. Identify Problems  \nASK and LOOK  \nASK: What are the child\u2019s problems?  \nIf not reported, then ask to be sure  \nYES,  sign present   \uf0e0 Tick \uf0fe No sign  \uf0e0 Circle  \uf06e \n\uf06f \uf06e Cough? If YES, for how long?      days  \n\uf06f \uf06e  Diarrhoea (3 or more loose stools in 24 hours)?  \n            IF YES, for how long?         days.  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \n\uf06f \uf06e Convulsions?  \uf06f \uf06e  Fever (reported or now)  \n            IF YES, started        days ago.  \n\uf06f \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf06f not able to drink or feed",
+            "id": "chunk-39",
+            "source": "Unknown",
+            "score": 0.557706058
+          },
+          {
+            "text": "S, for how long?       days  \n\uf06f \uf06e  Diarrhoea (loose stools)        days.  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \n\uf06f \uf06e Convulsions?  \uf06f \uf06e  Fever (reported or now) Since    2   days ago.  \n\uf06f \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf06f not able to drink or feed anything?   \n\uf06f \uf06e  Vomiting? IF YES, \uf06f vomits everything?   \n\uf06f \uf06e Chest indrawing? (FOR ALL CHILDREN)  \nIF COUGH, count breaths in 1 minute:  \n      breaths per minute (bpm).  \n \n\uf06f \uf06e Fast breathing:  \n Age 2 months up to 12 months: 50bpm or more  \n Age 12 months up to 5 years: 40bpm or more  \n\uf06f \uf06e Unusually sleepy or unconscious?  \nFor child 6 months up to 5 years, MUAC strap colour:  \nRed     Yellow     Green          \n\uf06f \uf06e  Swelling of both feet?   \nAny OTHER PROBLEM or reason referred:              \nReferred to (name of health facility):              \nReferred by (name of CHW):         Date:    Time:      \uf06f  Cough for 14 days or more  \n\uf06f  Diarrhoea for 14 days or more  \uf06f  ORS solution for diarrhoea  \n\uf06f  Blood in stool  \n\uf06f  Convulsions  \uf06f  Fever for last 7 days or more  \n\uf06f  Not able to drink or  \n feed anything  \n\uf06f  Vomits everything  \n\uf06f  Chest indrawing  \n \n\uf06f  Unusually sleepy or unconscious  \n\uf06f  Red on MUAC strap  \n\uf06f",
+            "id": "chunk-201",
+            "source": "Unknown",
+            "score": 0.491098344
+          },
+          {
+            "text": "r for 2 or 3 \nminutes at a time  Yes No  \n9. Child age 4 years has swelling of both feet  Yes No  \n10. Child age 6 months has chest indrawing  Yes No  \n11. Child age 2 years has a YELLOW reading on the MUAC strap  Yes No  \n12. Child age 10 months has had diarrhoea with 4 loose stools since \nyesterday morning  Yes No  \n13. Child age 8 months has a RED reading on the MUAC strap  Yes No  \n14. Child age 36 months has had a very hot body since last night in a \nmalaria area  Yes No  \n15. Child age 4 years has had loose and smelly stools with white mucus for \nthree days  Yes No  \n16. Child age 4 months has chest indrawing while breastfeeding  Yes No  \n17. Child age 4 and a half years has been coughing for 2 months  Yes No  \n18. Child age 2 years has diarrhoea with blood in her stools  Yes No  \n19. Child age 2 years has had diarrhoea for one week with no blood in her \nstools  Yes No  \n20. Child age 18 months has had a low fever (not very hot) for 2 weeks  Yes No  \n21. Child in a malaria area has had fever and vomiting (not everything) for 3 \ndays  Yes No  \n \nParticipant Manual: Caring for the sick child in the community  43 \n SICK but NO DANGER SIGN: Treat the child  \nLook at the far right",
+            "id": "chunk-70",
+            "source": "Unknown",
+            "score": 0.473076195
+          },
+          {
+            "text": "\nCough for 14 days  \nFever for 3 days  \uf06f Begin giving ORS solution  \n\uf06f Give first dose of oral antibiotic  \n\uf06f Give first dose of oral antimalarial  \n\uf06f Give dose of rectal artesunate suppository  \n\uf06f No pre -referral treatment   \nAnita (2 -year-old girl)   \nCough for 14 da ys \nDiarrhoea for 3 days  \nNo blood in stool  \uf06f Begin giving ORS solution  \n\uf06f Give first dose of oral antibiotic  \n\uf06f Give first dose of oral antimalarial  \n\uf06f Give dose of rectal artesunate suppository  \n\uf06f No pre -referral treatment   \nSam (2 -month -old boy)  \nDiarrhoea for 3 weeks  \nNo blood in stool  \nFever for last 3 days  \uf06f Begin giving ORS solution  \n\uf06f Give first dose of oral antibiotic  \n\uf06f Give first dose of oral antimalarial  \n\uf06f Give dose of rectal artesunate suppository  \n\uf06f No pre -referral treatment   \nKofi (3 -year-old boy)   \nCough for 3 days  \nChest indrawing  \nUnusually sleepy or \nunconscious  \uf06f Begin giving ORS solution  \n\uf06f Give first dose of oral antibiotic  \n\uf06f Give first dose of oral antimalarial  \n\uf06f Give dose of rectal artesunate suppository  \n\uf06f No pre -referral treatment   \nSara (3 -year-old girl)   \nDiarrhoea for 4 days  \nBlood in stool  \uf06f Begin giving ORS solution  \n\uf06f Give first dose of oral ant",
+            "id": "chunk-182",
+            "source": "Unknown",
+            "score": 0.466087222
+          }
+        ]
+      },
+      {
+        "question": "Has Juanita experienced any weight loss or decreased appetite since the onset of her symptoms?",
+        "answer": "No information found",
+        "type": "MC",
+        "citations": [
+          {
+            "text": "roblems?  \nIf not reported, then ask to be sure  \nYES,  sign present   \uf0e0 Tick \uf0fe No sign  \uf0e0 Circle  \uf06e \n\uf0fe \uf06e Cough? If YES, for how long?    2  days  \n\uf06f \uf06e  Diarrhoea (3 or more loose stools in 24 hours)?  \n            IF YES, for how long?         days.  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \n\uf06f \uf06e Convulsions?  \uf0fe \uf06e  Fever (reported or now)  \n            IF YES, started    4    days ago.  \n\uf0fe \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf0fe not able to drink or feed anything?   \n\uf0fe \uf06e  Vomiting? IF YES, \uf0fe vomits everything?   \n \nParticipant Manual: Caring for the sick child in the community  18 \n \nExercise: Use the recording form to \nidentify proble ms (2)  \nComplete the recording form below for Juanita.  \n \n \nChild: Juanita Vald\u00e9z  \nJuanita Vald\u00e9z is 3 and a half years old. She lives with her aunt Maria Lomos. They are your \nneighbours in the village of Agua Fria.  \nJuanita has been coughing. You ask her aunt, \u201cFor how long?\u201d She says, \u201cFor 5 days.\u201d \nJuanita now seems to be breathing with greater difficulty than usual.  \nMiss Lomos says that Juanita does not have any other problems. However, when you ask \nabout diarrhoea , you learn that Juanita has had diarrhoea for 3 days. You a",
+            "id": "chunk-38",
+            "source": "Unknown",
+            "score": 0.625780344
+          },
+          {
+            "text": " any other problems. However, when you ask \nabout diarrhoea , you learn that Juanita has had diarrhoea for 3 days. You also ask about \nblood in stool, fever, convulsions, difficult drinking or feeding, vomiting, and any other problem. \nTo each, Miss Lomos says, \u201cNo.\u201d Juanita does not have any of these problems.  \n \n \n  \nSICK CHILD RECORDING FORM  \n(for community -based treatment of child age 2 months up to 5 years)  \nDate:          /           / 20    \n(Day / Month / Year)  CHW:      \nChild\u2019s name:  First:     Family: :    Age:    Years         Months  Boy / Girl  \nCaregiver\u2019s name:        Relationship:  Mother / Father / Other      \nAddress, Community:   \n1. Identify Problems  \nASK and LOOK  \nASK: What are the child\u2019s problems?  \nIf not reported, then ask to be sure  \nYES,  sign present   \uf0e0 Tick \uf0fe No sign  \uf0e0 Circle  \uf06e \n\uf06f \uf06e Cough? If YES, for how long?      days  \n\uf06f \uf06e  Diarrhoea (3 or more loose stools in 24 hours)?  \n            IF YES, for how long?         days.  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \n\uf06f \uf06e Convulsions?  \uf06f \uf06e  Fever (reported or now)  \n            IF YES, started        days ago.  \n\uf06f \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf06f not able to drink or feed",
+            "id": "chunk-39",
+            "source": "Unknown",
+            "score": 0.573637903
+          },
+          {
+            "text": "S, for how long?       days  \n\uf06f \uf06e  Diarrhoea (loose stools)        days.  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \n\uf06f \uf06e Convulsions?  \uf06f \uf06e  Fever (reported or now) Since    2   days ago.  \n\uf06f \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf06f not able to drink or feed anything?   \n\uf06f \uf06e  Vomiting? IF YES, \uf06f vomits everything?   \n\uf06f \uf06e Chest indrawing? (FOR ALL CHILDREN)  \nIF COUGH, count breaths in 1 minute:  \n      breaths per minute (bpm).  \n \n\uf06f \uf06e Fast breathing:  \n Age 2 months up to 12 months: 50bpm or more  \n Age 12 months up to 5 years: 40bpm or more  \n\uf06f \uf06e Unusually sleepy or unconscious?  \nFor child 6 months up to 5 years, MUAC strap colour:  \nRed     Yellow     Green          \n\uf06f \uf06e  Swelling of both feet?   \nAny OTHER PROBLEM or reason referred:              \nReferred to (name of health facility):              \nReferred by (name of CHW):         Date:    Time:      \uf06f  Cough for 14 days or more  \n\uf06f  Diarrhoea for 14 days or more  \uf06f  ORS solution for diarrhoea  \n\uf06f  Blood in stool  \n\uf06f  Convulsions  \uf06f  Fever for last 7 days or more  \n\uf06f  Not able to drink or  \n feed anything  \n\uf06f  Vomits everything  \n\uf06f  Chest indrawing  \n \n\uf06f  Unusually sleepy or unconscious  \n\uf06f  Red on MUAC strap  \n\uf06f",
+            "id": "chunk-201",
+            "source": "Unknown",
+            "score": 0.492233157
+          },
+          {
+            "text": "r for 2 or 3 \nminutes at a time  Yes No  \n9. Child age 4 years has swelling of both feet  Yes No  \n10. Child age 6 months has chest indrawing  Yes No  \n11. Child age 2 years has a YELLOW reading on the MUAC strap  Yes No  \n12. Child age 10 months has had diarrhoea with 4 loose stools since \nyesterday morning  Yes No  \n13. Child age 8 months has a RED reading on the MUAC strap  Yes No  \n14. Child age 36 months has had a very hot body since last night in a \nmalaria area  Yes No  \n15. Child age 4 years has had loose and smelly stools with white mucus for \nthree days  Yes No  \n16. Child age 4 months has chest indrawing while breastfeeding  Yes No  \n17. Child age 4 and a half years has been coughing for 2 months  Yes No  \n18. Child age 2 years has diarrhoea with blood in her stools  Yes No  \n19. Child age 2 years has had diarrhoea for one week with no blood in her \nstools  Yes No  \n20. Child age 18 months has had a low fever (not very hot) for 2 weeks  Yes No  \n21. Child in a malaria area has had fever and vomiting (not everything) for 3 \ndays  Yes No  \n \nParticipant Manual: Caring for the sick child in the community  43 \n SICK but NO DANGER SIGN: Treat the child  \nLook at the far right",
+            "id": "chunk-70",
+            "source": "Unknown",
+            "score": 0.490017503
+          },
+          {
+            "text": "\nCough for 14 days  \nFever for 3 days  \uf06f Begin giving ORS solution  \n\uf06f Give first dose of oral antibiotic  \n\uf06f Give first dose of oral antimalarial  \n\uf06f Give dose of rectal artesunate suppository  \n\uf06f No pre -referral treatment   \nAnita (2 -year-old girl)   \nCough for 14 da ys \nDiarrhoea for 3 days  \nNo blood in stool  \uf06f Begin giving ORS solution  \n\uf06f Give first dose of oral antibiotic  \n\uf06f Give first dose of oral antimalarial  \n\uf06f Give dose of rectal artesunate suppository  \n\uf06f No pre -referral treatment   \nSam (2 -month -old boy)  \nDiarrhoea for 3 weeks  \nNo blood in stool  \nFever for last 3 days  \uf06f Begin giving ORS solution  \n\uf06f Give first dose of oral antibiotic  \n\uf06f Give first dose of oral antimalarial  \n\uf06f Give dose of rectal artesunate suppository  \n\uf06f No pre -referral treatment   \nKofi (3 -year-old boy)   \nCough for 3 days  \nChest indrawing  \nUnusually sleepy or \nunconscious  \uf06f Begin giving ORS solution  \n\uf06f Give first dose of oral antibiotic  \n\uf06f Give first dose of oral antimalarial  \n\uf06f Give dose of rectal artesunate suppository  \n\uf06f No pre -referral treatment   \nSara (3 -year-old girl)   \nDiarrhoea for 4 days  \nBlood in stool  \uf06f Begin giving ORS solution  \n\uf06f Give first dose of oral ant",
+            "id": "chunk-182",
+            "source": "Unknown",
+            "score": 0.477643788
+          }
+        ]
+      },
+      {
+        "question": "Has Juanita experienced any recent travel that could have exposed her to different food or water sources?",
+        "answer": "No information found",
+        "type": "MC",
+        "citations": [
+          {
+            "text": "roblems?  \nIf not reported, then ask to be sure  \nYES,  sign present   \uf0e0 Tick \uf0fe No sign  \uf0e0 Circle  \uf06e \n\uf0fe \uf06e Cough? If YES, for how long?    2  days  \n\uf06f \uf06e  Diarrhoea (3 or more loose stools in 24 hours)?  \n            IF YES, for how long?         days.  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \n\uf06f \uf06e Convulsions?  \uf0fe \uf06e  Fever (reported or now)  \n            IF YES, started    4    days ago.  \n\uf0fe \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf0fe not able to drink or feed anything?   \n\uf0fe \uf06e  Vomiting? IF YES, \uf0fe vomits everything?   \n \nParticipant Manual: Caring for the sick child in the community  18 \n \nExercise: Use the recording form to \nidentify proble ms (2)  \nComplete the recording form below for Juanita.  \n \n \nChild: Juanita Vald\u00e9z  \nJuanita Vald\u00e9z is 3 and a half years old. She lives with her aunt Maria Lomos. They are your \nneighbours in the village of Agua Fria.  \nJuanita has been coughing. You ask her aunt, \u201cFor how long?\u201d She says, \u201cFor 5 days.\u201d \nJuanita now seems to be breathing with greater difficulty than usual.  \nMiss Lomos says that Juanita does not have any other problems. However, when you ask \nabout diarrhoea , you learn that Juanita has had diarrhoea for 3 days. You a",
+            "id": "chunk-38",
+            "source": "Unknown",
+            "score": 0.623136699
+          },
+          {
+            "text": " any other problems. However, when you ask \nabout diarrhoea , you learn that Juanita has had diarrhoea for 3 days. You also ask about \nblood in stool, fever, convulsions, difficult drinking or feeding, vomiting, and any other problem. \nTo each, Miss Lomos says, \u201cNo.\u201d Juanita does not have any of these problems.  \n \n \n  \nSICK CHILD RECORDING FORM  \n(for community -based treatment of child age 2 months up to 5 years)  \nDate:          /           / 20    \n(Day / Month / Year)  CHW:      \nChild\u2019s name:  First:     Family: :    Age:    Years         Months  Boy / Girl  \nCaregiver\u2019s name:        Relationship:  Mother / Father / Other      \nAddress, Community:   \n1. Identify Problems  \nASK and LOOK  \nASK: What are the child\u2019s problems?  \nIf not reported, then ask to be sure  \nYES,  sign present   \uf0e0 Tick \uf0fe No sign  \uf0e0 Circle  \uf06e \n\uf06f \uf06e Cough? If YES, for how long?      days  \n\uf06f \uf06e  Diarrhoea (3 or more loose stools in 24 hours)?  \n            IF YES, for how long?         days.  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \n\uf06f \uf06e Convulsions?  \uf06f \uf06e  Fever (reported or now)  \n            IF YES, started        days ago.  \n\uf06f \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf06f not able to drink or feed",
+            "id": "chunk-39",
+            "source": "Unknown",
+            "score": 0.574665427
+          },
+          {
+            "text": "S, for how long?       days  \n\uf06f \uf06e  Diarrhoea (loose stools)        days.  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \n\uf06f \uf06e Convulsions?  \uf06f \uf06e  Fever (reported or now) Since    2   days ago.  \n\uf06f \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf06f not able to drink or feed anything?   \n\uf06f \uf06e  Vomiting? IF YES, \uf06f vomits everything?   \n\uf06f \uf06e Chest indrawing? (FOR ALL CHILDREN)  \nIF COUGH, count breaths in 1 minute:  \n      breaths per minute (bpm).  \n \n\uf06f \uf06e Fast breathing:  \n Age 2 months up to 12 months: 50bpm or more  \n Age 12 months up to 5 years: 40bpm or more  \n\uf06f \uf06e Unusually sleepy or unconscious?  \nFor child 6 months up to 5 years, MUAC strap colour:  \nRed     Yellow     Green          \n\uf06f \uf06e  Swelling of both feet?   \nAny OTHER PROBLEM or reason referred:              \nReferred to (name of health facility):              \nReferred by (name of CHW):         Date:    Time:      \uf06f  Cough for 14 days or more  \n\uf06f  Diarrhoea for 14 days or more  \uf06f  ORS solution for diarrhoea  \n\uf06f  Blood in stool  \n\uf06f  Convulsions  \uf06f  Fever for last 7 days or more  \n\uf06f  Not able to drink or  \n feed anything  \n\uf06f  Vomits everything  \n\uf06f  Chest indrawing  \n \n\uf06f  Unusually sleepy or unconscious  \n\uf06f  Red on MUAC strap  \n\uf06f",
+            "id": "chunk-201",
+            "source": "Unknown",
+            "score": 0.499795318
+          },
+          {
+            "text": "r for 2 or 3 \nminutes at a time  Yes No  \n9. Child age 4 years has swelling of both feet  Yes No  \n10. Child age 6 months has chest indrawing  Yes No  \n11. Child age 2 years has a YELLOW reading on the MUAC strap  Yes No  \n12. Child age 10 months has had diarrhoea with 4 loose stools since \nyesterday morning  Yes No  \n13. Child age 8 months has a RED reading on the MUAC strap  Yes No  \n14. Child age 36 months has had a very hot body since last night in a \nmalaria area  Yes No  \n15. Child age 4 years has had loose and smelly stools with white mucus for \nthree days  Yes No  \n16. Child age 4 months has chest indrawing while breastfeeding  Yes No  \n17. Child age 4 and a half years has been coughing for 2 months  Yes No  \n18. Child age 2 years has diarrhoea with blood in her stools  Yes No  \n19. Child age 2 years has had diarrhoea for one week with no blood in her \nstools  Yes No  \n20. Child age 18 months has had a low fever (not very hot) for 2 weeks  Yes No  \n21. Child in a malaria area has had fever and vomiting (not everything) for 3 \ndays  Yes No  \n \nParticipant Manual: Caring for the sick child in the community  43 \n SICK but NO DANGER SIGN: Treat the child  \nLook at the far right",
+            "id": "chunk-70",
+            "source": "Unknown",
+            "score": 0.491065204
+          },
+          {
+            "text": " NO Danger Sign, treat \n at  home and advise \n caregiver  \nGO TO PAGE 2  \uf06f  Vomits everything  \n \nParticipant Manual: Caring for the sick child in the community  49 \n Child 3: Karen Shah  \n \nSICK CHILD RECORDING FORM  \n(for community -based treatment of child age 2 months up to 5 years)  \nDate:   16   /     5    / 2014  \n(Day / Month / Year)  CHW :    LC  \nChild\u2019s name:  First: Karen  Family: :  Shah   Age:  3     Years   3      Months  Boy / Girl  \nCaregiver\u2019s name:  Mona Shah    Relationship:  Mother / Father / Other  Aunt     \nAddress, Community:  Four Corners                                                                                           \n1. Identify Problems  \nASK and LOOK  \nASK: What are the child\u2019s problems?  \nIf not reported, then ask to be sure  \nYES,  sign present   \uf0e0 Tick \uf0fe No sign  \uf0e0 Circle  \uf06e \n\uf0fe \uf06e Cough? If YES, for how long?    3  days  \n\uf06f \uf06e  Diarrhoea (3 or more loose stools in 24 hours)?  \n            IF YES, for how long?         days.  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \n\uf06f \uf06e Convulsions?  \uf06f \uf06e  Fever (reported or now)  \n            IF YES, started        days ago.  \n\uf06f \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf06f not able to drink or feed an",
+            "id": "chunk-82",
+            "source": "Unknown",
+            "score": 0.478087306
+          }
+        ]
+      },
+      {
+        "question": "Has Juanita been experiencing any abdominal pain or discomfort along with her diarrhea?",
+        "answer": "1 days",
+        "type": "MC",
+        "citations": [
+          {
+            "text": "roblems?  \nIf not reported, then ask to be sure  \nYES,  sign present   \uf0e0 Tick \uf0fe No sign  \uf0e0 Circle  \uf06e \n\uf0fe \uf06e Cough? If YES, for how long?    2  days  \n\uf06f \uf06e  Diarrhoea (3 or more loose stools in 24 hours)?  \n            IF YES, for how long?         days.  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \n\uf06f \uf06e Convulsions?  \uf0fe \uf06e  Fever (reported or now)  \n            IF YES, started    4    days ago.  \n\uf0fe \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf0fe not able to drink or feed anything?   \n\uf0fe \uf06e  Vomiting? IF YES, \uf0fe vomits everything?   \n \nParticipant Manual: Caring for the sick child in the community  18 \n \nExercise: Use the recording form to \nidentify proble ms (2)  \nComplete the recording form below for Juanita.  \n \n \nChild: Juanita Vald\u00e9z  \nJuanita Vald\u00e9z is 3 and a half years old. She lives with her aunt Maria Lomos. They are your \nneighbours in the village of Agua Fria.  \nJuanita has been coughing. You ask her aunt, \u201cFor how long?\u201d She says, \u201cFor 5 days.\u201d \nJuanita now seems to be breathing with greater difficulty than usual.  \nMiss Lomos says that Juanita does not have any other problems. However, when you ask \nabout diarrhoea , you learn that Juanita has had diarrhoea for 3 days. You a",
+            "id": "chunk-38",
+            "source": "Unknown",
+            "score": 0.621514618
+          },
+          {
+            "text": " any other problems. However, when you ask \nabout diarrhoea , you learn that Juanita has had diarrhoea for 3 days. You also ask about \nblood in stool, fever, convulsions, difficult drinking or feeding, vomiting, and any other problem. \nTo each, Miss Lomos says, \u201cNo.\u201d Juanita does not have any of these problems.  \n \n \n  \nSICK CHILD RECORDING FORM  \n(for community -based treatment of child age 2 months up to 5 years)  \nDate:          /           / 20    \n(Day / Month / Year)  CHW:      \nChild\u2019s name:  First:     Family: :    Age:    Years         Months  Boy / Girl  \nCaregiver\u2019s name:        Relationship:  Mother / Father / Other      \nAddress, Community:   \n1. Identify Problems  \nASK and LOOK  \nASK: What are the child\u2019s problems?  \nIf not reported, then ask to be sure  \nYES,  sign present   \uf0e0 Tick \uf0fe No sign  \uf0e0 Circle  \uf06e \n\uf06f \uf06e Cough? If YES, for how long?      days  \n\uf06f \uf06e  Diarrhoea (3 or more loose stools in 24 hours)?  \n            IF YES, for how long?         days.  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \n\uf06f \uf06e Convulsions?  \uf06f \uf06e  Fever (reported or now)  \n            IF YES, started        days ago.  \n\uf06f \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf06f not able to drink or feed",
+            "id": "chunk-39",
+            "source": "Unknown",
+            "score": 0.583572865
+          },
+          {
+            "text": "S, for how long?       days  \n\uf06f \uf06e  Diarrhoea (loose stools)        days.  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \n\uf06f \uf06e Convulsions?  \uf06f \uf06e  Fever (reported or now) Since    2   days ago.  \n\uf06f \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf06f not able to drink or feed anything?   \n\uf06f \uf06e  Vomiting? IF YES, \uf06f vomits everything?   \n\uf06f \uf06e Chest indrawing? (FOR ALL CHILDREN)  \nIF COUGH, count breaths in 1 minute:  \n      breaths per minute (bpm).  \n \n\uf06f \uf06e Fast breathing:  \n Age 2 months up to 12 months: 50bpm or more  \n Age 12 months up to 5 years: 40bpm or more  \n\uf06f \uf06e Unusually sleepy or unconscious?  \nFor child 6 months up to 5 years, MUAC strap colour:  \nRed     Yellow     Green          \n\uf06f \uf06e  Swelling of both feet?   \nAny OTHER PROBLEM or reason referred:              \nReferred to (name of health facility):              \nReferred by (name of CHW):         Date:    Time:      \uf06f  Cough for 14 days or more  \n\uf06f  Diarrhoea for 14 days or more  \uf06f  ORS solution for diarrhoea  \n\uf06f  Blood in stool  \n\uf06f  Convulsions  \uf06f  Fever for last 7 days or more  \n\uf06f  Not able to drink or  \n feed anything  \n\uf06f  Vomits everything  \n\uf06f  Chest indrawing  \n \n\uf06f  Unusually sleepy or unconscious  \n\uf06f  Red on MUAC strap  \n\uf06f",
+            "id": "chunk-201",
+            "source": "Unknown",
+            "score": 0.509608865
+          },
+          {
+            "text": "r for 2 or 3 \nminutes at a time  Yes No  \n9. Child age 4 years has swelling of both feet  Yes No  \n10. Child age 6 months has chest indrawing  Yes No  \n11. Child age 2 years has a YELLOW reading on the MUAC strap  Yes No  \n12. Child age 10 months has had diarrhoea with 4 loose stools since \nyesterday morning  Yes No  \n13. Child age 8 months has a RED reading on the MUAC strap  Yes No  \n14. Child age 36 months has had a very hot body since last night in a \nmalaria area  Yes No  \n15. Child age 4 years has had loose and smelly stools with white mucus for \nthree days  Yes No  \n16. Child age 4 months has chest indrawing while breastfeeding  Yes No  \n17. Child age 4 and a half years has been coughing for 2 months  Yes No  \n18. Child age 2 years has diarrhoea with blood in her stools  Yes No  \n19. Child age 2 years has had diarrhoea for one week with no blood in her \nstools  Yes No  \n20. Child age 18 months has had a low fever (not very hot) for 2 weeks  Yes No  \n21. Child in a malaria area has had fever and vomiting (not everything) for 3 \ndays  Yes No  \n \nParticipant Manual: Caring for the sick child in the community  43 \n SICK but NO DANGER SIGN: Treat the child  \nLook at the far right",
+            "id": "chunk-70",
+            "source": "Unknown",
+            "score": 0.500650644
+          },
+          {
+            "text": " NO Danger Sign, treat \n at  home and advise \n caregiver  \nGO TO PAGE 2  \uf06f  Vomits everything  \n \nParticipant Manual: Caring for the sick child in the community  49 \n Child 3: Karen Shah  \n \nSICK CHILD RECORDING FORM  \n(for community -based treatment of child age 2 months up to 5 years)  \nDate:   16   /     5    / 2014  \n(Day / Month / Year)  CHW :    LC  \nChild\u2019s name:  First: Karen  Family: :  Shah   Age:  3     Years   3      Months  Boy / Girl  \nCaregiver\u2019s name:  Mona Shah    Relationship:  Mother / Father / Other  Aunt     \nAddress, Community:  Four Corners                                                                                           \n1. Identify Problems  \nASK and LOOK  \nASK: What are the child\u2019s problems?  \nIf not reported, then ask to be sure  \nYES,  sign present   \uf0e0 Tick \uf0fe No sign  \uf0e0 Circle  \uf06e \n\uf0fe \uf06e Cough? If YES, for how long?    3  days  \n\uf06f \uf06e  Diarrhoea (3 or more loose stools in 24 hours)?  \n            IF YES, for how long?         days.  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \n\uf06f \uf06e Convulsions?  \uf06f \uf06e  Fever (reported or now)  \n            IF YES, started        days ago.  \n\uf06f \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf06f not able to drink or feed an",
+            "id": "chunk-82",
+            "source": "Unknown",
+            "score": 0.486470312
+          }
+        ]
+      }
+    ],
+    "exam_responses": [
+      {
+        "examination": "No specific examination available in medical guide",
+        "result": "Proceeded with general assessment",
+        "type": "NO_INFO_EXAM"
+      }
+    ],
+    "diagnosis": {
+      "diagnosis": "Based on the medical guide information provided, the patient's symptoms of diarrhea for 1 day without any mention of blood in the stool could be a case of acute diarrhea. The guide does not provide specific conditions that explain the symptoms beyond the general categorization of diarrhea without blood in the stool as a condition that can often stop on its own in 3 or 4 days. It does not specify causes or likely conditions beyond this description.",
+      "treatment": "Immediate Care Steps:\nFor a patient with Diarrhea for 1 day, the immediate care steps according to the medical guide are as follows:\n\n1. Give ORS (Oral Rehydration Salts) solution. Help the caregiver give the child ORS solution in front of you until the child is no longer thirsty.\n2. Give the caregiver 2 ORS packets to take home. Advise the caregiver to give as much as the child wants, but at least \u00bd cup ORS solution after each loose stool.\n3. Give a zinc supplement. The dosage depends on the age of the child:\n   - If the child is aged 2 months up to 6 months, give \u00bd tablet daily for 10 days (total 5 tablets).\n   - If the child is aged 6 months up to 5 years, give 1 tablet daily for 10 days (total 10 tablets).\n4. Help the caregiver to give the first dose of zinc supplement now.\n\nIf the child presents\n\nHome Care:\nFor a patient with diarrhea for 1 day, the following home care instructions should be provided:\n\n1. Give ORS (Oral Rehydration Solution) to the child. Help the caregiver give the child ORS solution in front of you until the child is no longer thirsty.\n\n2. Give the caregiver 2 ORS packets to take home. Advise the caregiver to give as much ORS solution as the child wants, but at least \u00bd cup ORS solution after each loose stool.\n\n3. Give zinc supplement. The dosage depends on the age of the child:\n   - If the child is aged 2 months up to 6 months, give \u00bd tablet daily for 10 days (total 5 tablets).\n   - If the child is aged 6 months up to 5 years, give 1 tablet daily for 10 days (total 10 tablets).\n   Help the caregiver to give the first dose now.\n\n4. Check the caregiver\u2019s understanding by observing that she\n\nReferral Guidance:\nThe medical guide does not provide specific referral criteria for a patient with diarrhea for 1 day.",
+      "citations": [
+        {
+          "text": ":  \n\uf06f If  Diarrhoea  \n (less than  \n 14 days \n AND no \n blood in \n stool)  \uf06f Give ORS.  Help caregiver give child ORS  solution \n in front of you until child is no longer thirsty.  \n\uf06f Give caregiver 2 ORS packets to take home. \n Advise to give as much as child wants, but at least  \n \u00bd cup ORS solution after each loose stool  \n\uf06f Give zinc supplement. Give 1 dose daily for 10 days:  \n \uf06f Age 2 months up to 6 months  - \u00bd tablet (total 5 tablets)  \n \uf06f Age 6 months up to 5 y ears - 1 tablet (total 10 tablets)  \n Help caregiver to give first  dose now.   If any danger sign, REFER URGENTLY to health facility:  \nASSIST REFERRAL to health facility:   \n\uf06f Explain w hy child needs to go to health facility.  \n GIVE FIRST DOSE OF TREATMENT : \n\uf06f If  Diarrhoea  \uf06f If  child can drink, begin giving ORS \n solution right away, as much as the \n child can take until departure. Give \n caregiver extra ORS solution to \n continue giving on the way.  \n\uf06f If  Fever AND  \n \uf06f Convulsions or  \n \uf06f Unusually sleepy    \n  or unconscious or \n \uf06f Not able to drink  \n  or feed anything or  \n \uf06f Vomits everything   \n \n\uf06f If Fever AND danger \n sign other than the 4 \n above  \uf06f Give rectal artesunate suppository \n (100 mg)  \n ",
+          "id": "chunk-207",
+          "source": "Unknown",
+          "score": 0.490171134
+        },
+        {
+          "text": "k child in the community  39 \n \uf06f Diarrhoea for 14 days or more  \nDiarrhoea often stops on its own in 3 or 4 days. Diarrhoea for 14 days or more, however, is a \ndanger sign. It may be a sign of a severe disease. The diarrhoea will contribute to malnutrition. \nDiarrhoea also can cause dehydration, when the body loses more f luids than are being \nreplaced. If not treated, dehydration results in death. Refer a child with diarrhoea for 14 \ndays or more.  \n \n\uf06f Blood in stool  \nDiarrhoea with blood in the stool, with or without mucus, is dysentery. If there is blood in the \nstool, the child needs medicine that you do not have in the medicine kit. Refer a child with \nblood in the stool.  \n\uf06f Fever for last 7 days or more  \nMost fevers go away within a few days. Fever that has lasted for 7 days or more can me an \nthat the child has a severe disease. The fever does not have to occur every day, all the time. \nRefer a child who has had fever for the last 7 days or more .  \n\uf06f Convulsions  \nA convulsion during the child\u2019s current illness is a danger sign. A serious infect ion or a high \nfever may be the cause of the convulsion. The health facility can provide the appropriate \nmedicine and identif",
+          "id": "chunk-64",
+          "source": "Unknown",
+          "score": 0.477053732
+        },
+        {
+          "text": "S, for how long?       days  \n\uf06f \uf06e  Diarrhoea (loose stools)        days.  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \n\uf06f \uf06e Convulsions?  \uf06f \uf06e  Fever (reported or now) Since    2   days ago.  \n\uf06f \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf06f not able to drink or feed anything?   \n\uf06f \uf06e  Vomiting? IF YES, \uf06f vomits everything?   \n\uf06f \uf06e Chest indrawing? (FOR ALL CHILDREN)  \nIF COUGH, count breaths in 1 minute:  \n      breaths per minute (bpm).  \n \n\uf06f \uf06e Fast breathing:  \n Age 2 months up to 12 months: 50bpm or more  \n Age 12 months up to 5 years: 40bpm or more  \n\uf06f \uf06e Unusually sleepy or unconscious?  \nFor child 6 months up to 5 years, MUAC strap colour:  \nRed     Yellow     Green          \n\uf06f \uf06e  Swelling of both feet?   \nAny OTHER PROBLEM or reason referred:              \nReferred to (name of health facility):              \nReferred by (name of CHW):         Date:    Time:      \uf06f  Cough for 14 days or more  \n\uf06f  Diarrhoea for 14 days or more  \uf06f  ORS solution for diarrhoea  \n\uf06f  Blood in stool  \n\uf06f  Convulsions  \uf06f  Fever for last 7 days or more  \n\uf06f  Not able to drink or  \n feed anything  \n\uf06f  Vomits everything  \n\uf06f  Chest indrawing  \n \n\uf06f  Unusually sleepy or unconscious  \n\uf06f  Red on MUAC strap  \n\uf06f",
+          "id": "chunk-201",
+          "source": "Unknown",
+          "score": 0.468274146
+        },
+        {
+          "text": "ss, Community:                     \n \n \nChild\u2019s name:  Age \n3. Refer or treat child  \n(Tick treatments given and  other actions)  \uf06f If any danger sign, \nREFER URGENTLY  \n to health facility  \uf06f If NO danger sign, \ntreat at home and \nadvise caregiver  \nIf no danger sign, TREAT at home and ADVISE on home care:  \n\uf06f If  Diarrhoea  \n (less than  \n 14 days \n AND no \n blood in \n stool)  \uf06f Give ORS.  Help caregiver give child ORS  solution \n in front of you until child is no longer thirsty.  \n\uf06f Give caregiver 2 ORS packets to take home. \n Advise to give as much as child wants, but at least  \n \u00bd cup ORS solution after each loose stool  \n\uf06f Give zinc supplement. Give 1 dose daily for 10 days:  \n \uf06f Age 2 months up to 6 months  - \u00bd tablet (total 5 tablets)  \n \uf06f Age 6 months up to 5 y ears - 1 tablet (total 10 tablets)  \n Help caregiver to give first  dose now.   If any danger sign, REFER URGENTLY to health facility:  \nASSIST REFERRAL to health facility:   \n\uf06f Explain w hy child needs to go to health facility.  \n GIVE FIRST DOSE OF TREATMENT : \n\uf06f If  Diarrhoea  \uf06f If  child can drink, begin giving ORS \n solution right away, as much as the \n child can take until departure. Give \n caregiver extra ORS",
+          "id": "chunk-218",
+          "source": "Unknown",
+          "score": 0.561824739
+        },
+        {
+          "text": "solution after each loose stool.  \n4. Check the caregiver\u2019s understanding. For example:  \n\uf0b7 Observe to see that she is giving small sips of the ORS \nsolution. The child should not choke.  \n\uf0b7 Ask her: How often will you give the ORS solution  at home ? \nHow much will you give?  \n \n5. The child should also  drink the usual fluids that the child drinks, such as breast milk .  \nIf the child is not exclusively breastfed, the caregiver should offer the child clean water. \nAdvise the caregiver not to give very sweet drinks  and juices  to the child with diarrhoea  \nwho is taking ORS . \n6. How do you know when the child can go home?  \nA dehydrated child, who has enough strength to drink, drinks eagerly. If the child \ncontinues to want to drink the ORS solution, have the mother continue to give the ORS \nsolution in front of you . \nIf the child becomes more alert and begins to refuse to  drink the ORS, it is likely that the \nchild is not dehydrated. If you see that the child is no longer thirsty, then the child is ready \nto go home.  \n \n7. Put the extra ORS solution in a container and give it to the caregiver for the trip home (or \nto the health facility, if the child needs to be referred). ",
+          "id": "chunk-113",
+          "source": "Unknown",
+          "score": 0.566544712
+        },
+        {
+          "text": "(3 -year-old girl)   \nDiarrhoea for 4 days  \nBlood in stool  \uf06f Begin giving ORS solution  \n\uf06f Give first dose of oral antibiotic  \n\uf06f Give first dose of oral antimalarial  \n\uf06f Give dose of rectal artesunate suppository  \n\uf06f No pre -referral treatment   \n \nParticipant Manual: Caring for the sick child in the community  112 \n Circle the signs to refer \nthe child  Tick [\uf0fc] pre -referral treatment  Write the dose for \neach pre -referral \ntreatment  \nThomas (3-year-old \nboy)   \nDiarrhoea for 8 days  \nFever for last 8 days  \nVomits everything  \nRed on MUAC strap  \uf06f Begin giving ORS solution  \n\uf06f Give first dose of oral antibiotic  \n\uf06f Give first dose of oral antimalarial  \n\uf06f Give dose of rectal artesunate suppository  \n\uf06f No pre -referral treatment   \nMaggie (5 -month -old \ngirl)   \nFever for last 7 days  \nDiarrhoea less than 14 \ndays  \nSwelling of both feet  \uf06f Begin giving ORS solution  \n\uf06f Give first dose of oral antibiotic  \n\uf06f Give first dose of oral antimalarial  \n\uf06f Give dose of rectal artesunate suppository  \n\uf06f No pre -referral treatment   \n \nAssist referral  \nA pre -referral treatment for fever, fast breathing or chest indrawing is only the first dose. This \nis not enough to treat the chil",
+          "id": "chunk-183",
+          "source": "Unknown",
+          "score": 0.627134144
+        }
+      ],
+      "chunks_used": [
+        {
+          "text": ":  \n\uf06f If  Diarrhoea  \n (less than  \n 14 days \n AND no \n blood in \n stool)  \uf06f Give ORS.  Help caregiver give child ORS  solution \n in front of you until child is no longer thirsty.  \n\uf06f Give caregiver 2 ORS packets to take home. \n Advise to give as much as child wants, but at least  \n \u00bd cup ORS solution after each loose stool  \n\uf06f Give zinc supplement. Give 1 dose daily for 10 days:  \n \uf06f Age 2 months up to 6 months  - \u00bd tablet (total 5 tablets)  \n \uf06f Age 6 months up to 5 y ears - 1 tablet (total 10 tablets)  \n Help caregiver to give first  dose now.   If any danger sign, REFER URGENTLY to health facility:  \nASSIST REFERRAL to health facility:   \n\uf06f Explain w hy child needs to go to health facility.  \n GIVE FIRST DOSE OF TREATMENT : \n\uf06f If  Diarrhoea  \uf06f If  child can drink, begin giving ORS \n solution right away, as much as the \n child can take until departure. Give \n caregiver extra ORS solution to \n continue giving on the way.  \n\uf06f If  Fever AND  \n \uf06f Convulsions or  \n \uf06f Unusually sleepy    \n  or unconscious or \n \uf06f Not able to drink  \n  or feed anything or  \n \uf06f Vomits everything   \n \n\uf06f If Fever AND danger \n sign other than the 4 \n above  \uf06f Give rectal artesunate suppository \n (100 mg)  \n ",
+          "id": "chunk-207",
+          "source": "Unknown",
+          "score": 0.490171134
+        },
+        {
+          "text": "k child in the community  39 \n \uf06f Diarrhoea for 14 days or more  \nDiarrhoea often stops on its own in 3 or 4 days. Diarrhoea for 14 days or more, however, is a \ndanger sign. It may be a sign of a severe disease. The diarrhoea will contribute to malnutrition. \nDiarrhoea also can cause dehydration, when the body loses more f luids than are being \nreplaced. If not treated, dehydration results in death. Refer a child with diarrhoea for 14 \ndays or more.  \n \n\uf06f Blood in stool  \nDiarrhoea with blood in the stool, with or without mucus, is dysentery. If there is blood in the \nstool, the child needs medicine that you do not have in the medicine kit. Refer a child with \nblood in the stool.  \n\uf06f Fever for last 7 days or more  \nMost fevers go away within a few days. Fever that has lasted for 7 days or more can me an \nthat the child has a severe disease. The fever does not have to occur every day, all the time. \nRefer a child who has had fever for the last 7 days or more .  \n\uf06f Convulsions  \nA convulsion during the child\u2019s current illness is a danger sign. A serious infect ion or a high \nfever may be the cause of the convulsion. The health facility can provide the appropriate \nmedicine and identif",
+          "id": "chunk-64",
+          "source": "Unknown",
+          "score": 0.477053732
+        },
+        {
+          "text": "S, for how long?       days  \n\uf06f \uf06e  Diarrhoea (loose stools)        days.  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \n\uf06f \uf06e Convulsions?  \uf06f \uf06e  Fever (reported or now) Since    2   days ago.  \n\uf06f \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf06f not able to drink or feed anything?   \n\uf06f \uf06e  Vomiting? IF YES, \uf06f vomits everything?   \n\uf06f \uf06e Chest indrawing? (FOR ALL CHILDREN)  \nIF COUGH, count breaths in 1 minute:  \n      breaths per minute (bpm).  \n \n\uf06f \uf06e Fast breathing:  \n Age 2 months up to 12 months: 50bpm or more  \n Age 12 months up to 5 years: 40bpm or more  \n\uf06f \uf06e Unusually sleepy or unconscious?  \nFor child 6 months up to 5 years, MUAC strap colour:  \nRed     Yellow     Green          \n\uf06f \uf06e  Swelling of both feet?   \nAny OTHER PROBLEM or reason referred:              \nReferred to (name of health facility):              \nReferred by (name of CHW):         Date:    Time:      \uf06f  Cough for 14 days or more  \n\uf06f  Diarrhoea for 14 days or more  \uf06f  ORS solution for diarrhoea  \n\uf06f  Blood in stool  \n\uf06f  Convulsions  \uf06f  Fever for last 7 days or more  \n\uf06f  Not able to drink or  \n feed anything  \n\uf06f  Vomits everything  \n\uf06f  Chest indrawing  \n \n\uf06f  Unusually sleepy or unconscious  \n\uf06f  Red on MUAC strap  \n\uf06f",
+          "id": "chunk-201",
+          "source": "Unknown",
+          "score": 0.468274146
+        },
+        {
+          "text": ":  \n\uf06f If  Diarrhoea  \n (less than  \n 14 days \n AND no \n blood in \n stool)  \uf06f Give ORS.  Help caregiver give child ORS  solution \n in front of you until child is no longer thirsty.  \n\uf06f Give caregiver 2 ORS packets to take home. \n Advise to give as much as child wants, but at least  \n \u00bd cup ORS solution after each loose stool  \n\uf06f Give zinc supplement. Give 1 dose daily for 10 days:  \n \uf06f Age 2 months up to 6 months  - \u00bd tablet (total 5 tablets)  \n \uf06f Age 6 months up to 5 y ears - 1 tablet (total 10 tablets)  \n Help caregiver to give first  dose now.   If any danger sign, REFER URGENTLY to health facility:  \nASSIST REFERRAL to health facility:   \n\uf06f Explain w hy child needs to go to health facility.  \n GIVE FIRST DOSE OF TREATMENT : \n\uf06f If  Diarrhoea  \uf06f If  child can drink, begin giving ORS \n solution right away, as much as the \n child can take until departure. Give \n caregiver extra ORS solution to \n continue giving on the way.  \n\uf06f If  Fever AND  \n \uf06f Convulsions or  \n \uf06f Unusually sleepy    \n  or unconscious or \n \uf06f Not able to drink  \n  or feed anything or  \n \uf06f Vomits everything   \n \n\uf06f If Fever AND danger \n sign other than the 4 \n above  \uf06f Give rectal artesunate suppository \n (100 mg)  \n ",
+          "id": "chunk-207",
+          "source": "Unknown",
+          "score": 0.602542937
+        },
+        {
+          "text": "ss, Community:                     \n \n \nChild\u2019s name:  Age \n3. Refer or treat child  \n(Tick treatments given and  other actions)  \uf06f If any danger sign, \nREFER URGENTLY  \n to health facility  \uf06f If NO danger sign, \ntreat at home and \nadvise caregiver  \nIf no danger sign, TREAT at home and ADVISE on home care:  \n\uf06f If  Diarrhoea  \n (less than  \n 14 days \n AND no \n blood in \n stool)  \uf06f Give ORS.  Help caregiver give child ORS  solution \n in front of you until child is no longer thirsty.  \n\uf06f Give caregiver 2 ORS packets to take home. \n Advise to give as much as child wants, but at least  \n \u00bd cup ORS solution after each loose stool  \n\uf06f Give zinc supplement. Give 1 dose daily for 10 days:  \n \uf06f Age 2 months up to 6 months  - \u00bd tablet (total 5 tablets)  \n \uf06f Age 6 months up to 5 y ears - 1 tablet (total 10 tablets)  \n Help caregiver to give first  dose now.   If any danger sign, REFER URGENTLY to health facility:  \nASSIST REFERRAL to health facility:   \n\uf06f Explain w hy child needs to go to health facility.  \n GIVE FIRST DOSE OF TREATMENT : \n\uf06f If  Diarrhoea  \uf06f If  child can drink, begin giving ORS \n solution right away, as much as the \n child can take until departure. Give \n caregiver extra ORS",
+          "id": "chunk-218",
+          "source": "Unknown",
+          "score": 0.561824739
+        },
+        {
+          "text": ":  \n\uf06f If  Diarrhoea  \n (less than  \n 14 days \n AND no \n blood in \n stool)  \uf06f Give ORS.  Help caregiver give child ORS  solution \n in front of you until child is no longer thirsty.  \n\uf06f Give caregiver 2 ORS packets to take home. \n Advise to give as much as child wants, but at least  \n \u00bd cup ORS solution after each loose stool  \n\uf06f Give zinc supplement. Give 1 dose daily for 10 days:  \n \uf06f Age 2 months up to 6 months  - \u00bd tablet (total 5 tablets)  \n \uf06f Age 6 months up to 5 y ears - 1 tablet (total 10 tablets)  \n Help caregiver to give first  dose now.   If any danger sign, REFER URGENTLY to health facility:  \nASSIST REFERRAL to health facility:   \n\uf06f Explain w hy child needs to go to health facility.  \n GIVE FIRST DOSE OF TREATMENT : \n\uf06f If  Diarrhoea  \uf06f If  child can drink, begin giving ORS \n solution right away, as much as the \n child can take until departure. Give \n caregiver extra ORS solution to \n continue giving on the way.  \n\uf06f If  Fever AND  \n \uf06f Convulsions or  \n \uf06f Unusually sleepy    \n  or unconscious or \n \uf06f Not able to drink  \n  or feed anything or  \n \uf06f Vomits everything   \n \n\uf06f If Fever AND danger \n sign other than the 4 \n above  \uf06f Give rectal artesunate suppository \n (100 mg)  \n ",
+          "id": "chunk-207",
+          "source": "Unknown",
+          "score": 0.580772638
+        },
+        {
+          "text": "solution after each loose stool.  \n4. Check the caregiver\u2019s understanding. For example:  \n\uf0b7 Observe to see that she is giving small sips of the ORS \nsolution. The child should not choke.  \n\uf0b7 Ask her: How often will you give the ORS solution  at home ? \nHow much will you give?  \n \n5. The child should also  drink the usual fluids that the child drinks, such as breast milk .  \nIf the child is not exclusively breastfed, the caregiver should offer the child clean water. \nAdvise the caregiver not to give very sweet drinks  and juices  to the child with diarrhoea  \nwho is taking ORS . \n6. How do you know when the child can go home?  \nA dehydrated child, who has enough strength to drink, drinks eagerly. If the child \ncontinues to want to drink the ORS solution, have the mother continue to give the ORS \nsolution in front of you . \nIf the child becomes more alert and begins to refuse to  drink the ORS, it is likely that the \nchild is not dehydrated. If you see that the child is no longer thirsty, then the child is ready \nto go home.  \n \n7. Put the extra ORS solution in a container and give it to the caregiver for the trip home (or \nto the health facility, if the child needs to be referred). ",
+          "id": "chunk-113",
+          "source": "Unknown",
+          "score": 0.566544712
+        },
+        {
+          "text": "(3 -year-old girl)   \nDiarrhoea for 4 days  \nBlood in stool  \uf06f Begin giving ORS solution  \n\uf06f Give first dose of oral antibiotic  \n\uf06f Give first dose of oral antimalarial  \n\uf06f Give dose of rectal artesunate suppository  \n\uf06f No pre -referral treatment   \n \nParticipant Manual: Caring for the sick child in the community  112 \n Circle the signs to refer \nthe child  Tick [\uf0fc] pre -referral treatment  Write the dose for \neach pre -referral \ntreatment  \nThomas (3-year-old \nboy)   \nDiarrhoea for 8 days  \nFever for last 8 days  \nVomits everything  \nRed on MUAC strap  \uf06f Begin giving ORS solution  \n\uf06f Give first dose of oral antibiotic  \n\uf06f Give first dose of oral antimalarial  \n\uf06f Give dose of rectal artesunate suppository  \n\uf06f No pre -referral treatment   \nMaggie (5 -month -old \ngirl)   \nFever for last 7 days  \nDiarrhoea less than 14 \ndays  \nSwelling of both feet  \uf06f Begin giving ORS solution  \n\uf06f Give first dose of oral antibiotic  \n\uf06f Give first dose of oral antimalarial  \n\uf06f Give dose of rectal artesunate suppository  \n\uf06f No pre -referral treatment   \n \nAssist referral  \nA pre -referral treatment for fever, fast breathing or chest indrawing is only the first dose. This \nis not enough to treat the chil",
+          "id": "chunk-183",
+          "source": "Unknown",
+          "score": 0.627134144
+        },
+        {
+          "text": "S, for how long?       days  \n\uf06f \uf06e  Diarrhoea (loose stools)        days.  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \n\uf06f \uf06e Convulsions?  \uf06f \uf06e  Fever (reported or now) Since    2   days ago.  \n\uf06f \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf06f not able to drink or feed anything?   \n\uf06f \uf06e  Vomiting? IF YES, \uf06f vomits everything?   \n\uf06f \uf06e Chest indrawing? (FOR ALL CHILDREN)  \nIF COUGH, count breaths in 1 minute:  \n      breaths per minute (bpm).  \n \n\uf06f \uf06e Fast breathing:  \n Age 2 months up to 12 months: 50bpm or more  \n Age 12 months up to 5 years: 40bpm or more  \n\uf06f \uf06e Unusually sleepy or unconscious?  \nFor child 6 months up to 5 years, MUAC strap colour:  \nRed     Yellow     Green          \n\uf06f \uf06e  Swelling of both feet?   \nAny OTHER PROBLEM or reason referred:              \nReferred to (name of health facility):              \nReferred by (name of CHW):         Date:    Time:      \uf06f  Cough for 14 days or more  \n\uf06f  Diarrhoea for 14 days or more  \uf06f  ORS solution for diarrhoea  \n\uf06f  Blood in stool  \n\uf06f  Convulsions  \uf06f  Fever for last 7 days or more  \n\uf06f  Not able to drink or  \n feed anything  \n\uf06f  Vomits everything  \n\uf06f  Chest indrawing  \n \n\uf06f  Unusually sleepy or unconscious  \n\uf06f  Red on MUAC strap  \n\uf06f",
+          "id": "chunk-201",
+          "source": "Unknown",
+          "score": 0.613126755
+        }
+      ]
+    },
+    "structured_questions": [],
+    "examination_history": [],
+    "grading_True diagnosis ": 0.0,
+    "grading_Presents with": 0.0,
+    "grading_Required questions": 0.0,
+    "grading_Optional questions": 0.0,
+    "grading_Required exams <<May need to have \"right\" answer for this row>>": 0.0,
+    "grading_Final diagnosis": 0.0,
+    "grading_Treatment plan": 0.0,
+    "grading_Follow-up instructions": 1.0
+  }
+}

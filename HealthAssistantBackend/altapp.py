@@ -247,7 +247,7 @@ def generate_followup_question(chat_name):
                 context += f"Q: {resp['question']}\nA: {resp['answer']}\n"
         
         # Get embeddings and relevant documents
-        index = pc.Index("final-asha")
+        index = pc.Index("who-guide-old")
         embedding = get_embedding_batch([context])[0]
         
         print("Got embedding")
@@ -379,7 +379,7 @@ def generate_examination(chat_name):
         embeddings = get_embedding_batch(context_items)
         
         # Get relevant documents using embeddings
-        index = pc.Index("final-asha")
+        index = pc.Index("who-guide-old")
         relevant_matches = []
         for emb in embeddings:
             matches = vectorQuotesWithSource(emb, index, top_k=1)
