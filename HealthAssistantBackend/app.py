@@ -1190,22 +1190,7 @@ def generate_final_results(session_data):
                 # Create a simple referral summary
                 return jsonify({
                     "status": "success",
-                    "output": f"""Assessment Summary
-                    
-Initial complaint: {initial_complaint}
-
-Key findings:
-{chr(10).join([f"- {symptom}" for symptom in symptoms[:5]])}
-
-Diagnosis:
-The medical guide does not provide specific examination procedures for this condition. 
-A full diagnosis requires proper medical examination.
-
-Recommendation:
-Patient has been referred to a higher level facility for proper examination and diagnosis.
-
-Note: This summary is based on limited information and should not be considered a complete medical assessment.
-""",
+                    "output": f"""- Primary Diagnosis: Not available due to lack of formal examination.\n- Differential Diagnoses: Not available due to lack of formal examination.\n- Treatment Plan: Patient has been referred to a higher level facility for proper examination and diagnosis.\n\nKey References:\nNo specific medical guide citations available.""",
                     "metadata": {
                         "phase": "complete",
                         "referral": True,
@@ -1224,8 +1209,6 @@ Note: This summary is based on limited information and should not be considered 
         # Store chunks used for reference if available
         if 'chunks_used' in results:
             session_data['chunks_used'] = results['chunks_used']
-            
-            # Save chunks to NeonDB for persistence
             try:
                 save_session_chunks_to_neondb(
                     session_id=session_id,
@@ -1238,7 +1221,7 @@ Note: This summary is based on limited information and should not be considered 
         
         # Format results for chat interface, preserving formatting
         diagnosis_text = results['diagnosis']
-        treatment_text = results['treatment']
+        # treatment_text = results['treatment']  # No longer used in output
         
         # Format citations
         citations_text = ""
@@ -1250,28 +1233,12 @@ Note: This summary is based on limited information and should not be considered 
         else:
             citations_text = "No specific medical guide citations available."
         
-        # Add a note about limitations of assessment if no formal examination was done
-        note = ""
-        if has_no_formal_exam:
-            note = "\nNote: This assessment is based on limited information without formal examination procedures described in the medical guide. Consider referring for a complete medical evaluation if symptoms persist or worsen."
-        
-        output = f"""Assessment Complete
-
-Diagnosis:
-{diagnosis_text}
-
-Treatment Plan:
-{treatment_text}
-{note}
-
-Key References:
-{citations_text}
-"""
+        # Only output the three bullet points and Key References
+        output = f"""{diagnosis_text}\n\nKey References:\n{citations_text}"""
         
         # Also save a summary record of the entire session
         try:
             if db_conn:
-                # Create session_summaries table if it doesn't exist
                 create_table_query = """
                 CREATE TABLE IF NOT EXISTS session_summaries (
                     id SERIAL PRIMARY KEY,
@@ -1285,13 +1252,9 @@ Key References:
                 """
                 with db_conn.cursor() as cursor:
                     cursor.execute(create_table_query)
-                    
-                    # Insert summary record
                     initial_complaint = next((resp['answer'] for resp in session_data['initial_responses'] 
                                     if resp['question'] == "Please describe what brings you here today"), "")
-                    
                     chunks_count = len(results.get('chunks_used', []))
-                    
                     insert_query = """
                     INSERT INTO session_summaries (
                         session_id, timestamp, initial_complaint, diagnosis, treatment, chunks_used
@@ -1302,7 +1265,7 @@ Key References:
                         datetime.datetime.now().isoformat(),
                         initial_complaint,
                         diagnosis_text,
-                        treatment_text,
+                        results.get('treatment', ''),
                         chunks_count
                     ))
                 db_conn.commit()

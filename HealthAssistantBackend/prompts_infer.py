@@ -4,6 +4,32 @@ Medical Assessment System Prompts
 This file contains all the prompts used in the medical assessment system.
 """
 
+# --- SPECIAL EXAM AND TREATMENT BUTTON TEMPLATES ---
+RDT_EXAM_PROMPT = '''EXAM: Give the RDT (Rapid Diagnostic Test for Malaria).
+Button0: TELL ME HOW
+Button1: NEGATIVE for malaria
+Button2: POSITIVE for malaria
+Button3: RDT not given, no supplies
+Button4: RDT not given, other _______ [microphone]
+Button5: Other __________ [microphone]'''
+
+ORS_ZINC_PROMPT = '''Screen 1: Give ORS, Zinc and go to clinic.
+Screen 2: Explains ORS. Asks if ORS given.
+CARE: Give 2 sachets of ORS to the caregiver
+Button1: ORS given
+Button2: ORS not given, no supplies
+Button3: ORS not given, other _______ [microphone]
+Button4: Other __________ [microphone]
+
+Screen 3: Explains zinc. Asks if zinc given.
+Screen 4: Refer to clinic
+CARE: Refer to clinic
+Button1: Gave referral
+Button2: Did not give referral. Why? _____ [microphone]
+Button3: Other __________ [microphone]'''
+
+FAINTING_PROMPT = 'This case is outside my scope. Go to the clinic.'
+
 class MedicalPrompts:
     """Collection of all prompts used in the medical assessment system."""
     
@@ -160,20 +186,23 @@ Key symptoms: {key_symptoms}
 Previous exams: {previous_exams}
 
 IMPORTANT INSTRUCTIONS:
-1. ONLY recommend examinations that are explicitly mentioned in the medical guide.
-2. If the guide mentions a specific examination (like RDT, blood pressure check, etc.), you MUST provide the exact procedure steps as described in the guide.
-3. The possible findings must be specific and directly contribute to the diagnosis.
-4. Do not include any first-world exams (like MRI, CT, Colonoscopy, etc.).
-5. If the guide mentions a test or examination but doesn't provide steps, you MUST search through the guide content to find the procedure steps.
-6. NEVER default to generic responses like "refer to higher facility" if the guide actually provides examination steps.
+1. If the case is about malaria or fever in a malaria area, recommend the RDT exam using this format:
+{rdt_exam}
+2. For other exams, follow the usual instructions:
+- ONLY recommend examinations that are explicitly mentioned in the medical guide.
+- If the guide mentions a specific examination (like RDT, blood pressure check, etc.), you MUST provide the exact procedure steps as described in the guide.
+- The possible findings must be concrete, actionable, and, where appropriate, presented as ranges or categories that provide valuable information for clinical decision-making (e.g., "Breaths per minute: less than 40", "Breaths per minute: 40–59", "Breaths per minute: 60 or more"). Do not use generic placeholders.
+- Do not include any first-world exams (like MRI, CT, Colonoscopy, etc.).
+- If the guide mentions a test or examination but doesn't provide steps, you MUST search through the guide content to find the procedure steps.
+- NEVER default to generic responses like "refer to higher facility" if the guide actually provides examination steps.
 
 Recommend ONE essential examination in this format:
 [Examination name]
 [Detailed step-by-step procedure to perform the examination. Each step should be numbered and clear enough for a medical professional to follow exactly. If the guide provides specific steps, use those exact steps.]
-#:[First possible finding - must be specific and directly related to diagnosis]
-#:[Second possible finding - must be specific and directly related to diagnosis]
-#:[Third possible finding - must be specific and directly related to diagnosis]
-#:[Fourth possible finding - must be specific and directly related to diagnosis]
+#:[First possible finding - must be concrete, actionable, and, where appropriate, a range or category relevant to the exam]
+#:[Second possible finding - must be concrete, actionable, and, where appropriate, a range or category relevant to the exam]
+#:[Third possible finding - must be concrete, actionable, and, where appropriate, a range or category relevant to the exam]
+#:[Fourth possible finding - must be concrete, actionable, and, where appropriate, a range or category relevant to the exam]
 
 If the medical guide does not provide a specific examination procedure, respond with:
 "The medical guide does not provide specific examination procedures for this condition."
@@ -235,10 +264,17 @@ DO NOT use any medical knowledge from your pretraining."""
     @classmethod
     def get_diagnosis_prompt(cls, initial_complaint: str, key_findings: str, diagnosis_content: str) -> str:
         """Get the formatted diagnosis prompt."""
-        return cls.DIAGNOSIS_PROMPT.format(
-            initial_complaint=initial_complaint,
-            key_findings=key_findings,
-            diagnosis_content=diagnosis_content
+        return (
+            'IMPORTANT: Your response must ONLY be these 3 bullet points, each 2-3 sentences. Do not include any other text, headers, or explanations.'
+            '\n- Primary Diagnosis:'
+            '\n- Differential:'
+            '\n- Treatment Plan:'
+            '\n\nUse only the information from the medical guide below.'
+            f'\n\nPatient information:'
+            f'\nInitial complaint: {initial_complaint}'
+            f'\nKey findings: {key_findings}'
+            f'\n\nTHE FOLLOWING MEDICAL GUIDE INFORMATION IS YOUR ONLY SOURCE OF KNOWLEDGE:'
+            f'\n{diagnosis_content}'
         )
 
     @classmethod
@@ -285,7 +321,8 @@ DO NOT use any medical knowledge from your pretraining."""
         return cls.EXAMINATION_RECOMMENDATION_PROMPT.format(
             initial_complaint=initial_complaint,
             key_symptoms=key_symptoms,
-            previous_exams=previous_exams if previous_exams else "None"
+            previous_exams=previous_exams if previous_exams else "None",
+            rdt_exam=RDT_EXAM_PROMPT
         )
 
     @classmethod
@@ -370,10 +407,10 @@ IMPORTANT INSTRUCTIONS:
 FORMAT 1 - WHEN THE GUIDE CLEARLY PROVIDES AN EXAMINATION PROCEDURE:
 [Examination name]
 [Detailed step-by-step procedure to perform the examination. Each step should be numbered and clear enough for a medical professional to follow exactly. If the guide provides specific steps, use those exact steps.]
-#: [Finding 1 - must be specific and directly related to diagnosis]
-#: [Finding 2 - must be specific and directly related to diagnosis]
-#: [Finding 3 - must be specific and directly related to diagnosis]
-#: [Finding 4 - must be specific and directly related to diagnosis]
+#: [Finding 1 - must be concrete, actionable, and, where appropriate, a range or category relevant to the exam]
+#: [Finding 2 - must be concrete, actionable, and, where appropriate, a range or category relevant to the exam]
+#: [Finding 3 - must be concrete, actionable, and, where appropriate, a range or category relevant to the exam]
+#: [Finding 4 - must be concrete, actionable, and, where appropriate, a range or category relevant to the exam]
 
 FORMAT 2 - WHEN THE GUIDE PROVIDES NO INFORMATION ABOUT EXAMINATIONS:
 "The medical guide does not provide specific examination procedures for this condition."
@@ -385,7 +422,7 @@ FORMAT 3 - WHEN THE GUIDE PROVIDES PARTIAL/INFORMAL INFORMATION BUT NO CLEAR PRO
 4. Use the same terminology and procedures as presented in the medical guide.
 5. DO NOT repeat any examinations that have already been performed.
 6. Choose an examination that is DIFFERENT from previous ones and appropriate for the patient's symptoms.
-7. Each finding must be specific and directly contribute to the diagnosis.
+7. Each finding must be concrete, actionable, and, where appropriate, presented as a range or category that provides valuable information for clinical decision-making.
 8. The procedure must be detailed enough for a medical professional to follow exactly.
 9. If the guide mentions a test or examination but doesn't provide steps, you MUST search through the guide content to find the procedure steps.
 10. NEVER default to generic responses like "refer to higher facility" if the guide actually provides examination steps.
@@ -433,12 +470,9 @@ Note: This summary is based on limited information and should not be considered 
 
     COMPLETE_ASSESSMENT_TEMPLATE = """Assessment Complete
 
-Diagnosis:
-{diagnosis_text}
-
-Treatment Plan:
-{treatment_text}
-{limitation_note}
+- Primary Diagnosis: {primary_diagnosis}
+- Differential: {differential}
+- Treatment Plan: {treatment_plan}
 
 Key References:
 {citations_text}"""
@@ -489,15 +523,12 @@ Key References:
         )
 
     @classmethod
-    def get_complete_assessment(cls, diagnosis_text: str, treatment_text: str, 
-                              citations_text: str, has_formal_exam: bool = True) -> str:
-        """Get the formatted complete assessment."""
-        limitation_note = "" if has_formal_exam else cls.LIMITATION_NOTES['no_formal_exam']
-        
+    def get_complete_assessment(cls, primary_diagnosis: str, differential: str, treatment_plan: str, citations_text: str) -> str:
+        """Get the formatted complete assessment with only the three bullet points and key references."""
         return cls.COMPLETE_ASSESSMENT_TEMPLATE.format(
-            diagnosis_text=diagnosis_text,
-            treatment_text=treatment_text,
-            limitation_note=limitation_note,
+            primary_diagnosis=primary_diagnosis,
+            differential=differential,
+            treatment_plan=treatment_plan,
             citations_text=citations_text
         )
 
@@ -653,10 +684,10 @@ IMPORTANT INSTRUCTIONS:
 FORMAT 1 - WHEN THE GUIDE CLEARLY PROVIDES AN EXAMINATION PROCEDURE:
 [Examination name]
 [Detailed step-by-step procedure to perform the examination. Each step should be numbered and clear enough for a medical professional to follow exactly]
-#: [Finding 1 - must be specific and directly related to diagnosis]
-#: [Finding 2 - must be specific and directly related to diagnosis]
-#: [Finding 3 - must be specific and directly related to diagnosis]
-#: [Finding 4 - must be specific and directly related to diagnosis]
+#: [Finding 1 - must be concrete, actionable, and, where appropriate, a range or category relevant to the exam]
+#: [Finding 2 - must be concrete, actionable, and, where appropriate, a range or category relevant to the exam]
+#: [Finding 3 - must be concrete, actionable, and, where appropriate, a range or category relevant to the exam]
+#: [Finding 4 - must be concrete, actionable, and, where appropriate, a range or category relevant to the exam]
 
 FORMAT 2 - WHEN THE GUIDE PROVIDES NO INFORMATION ABOUT EXAMINATIONS:
 "The medical guide does not provide specific examination procedures for this condition."
@@ -703,15 +734,21 @@ IMPORTANT: The final diagnosis should ONLY be these 3 bullets with 2-3 sentences
 - Treatment plan'''
 
 def get_treatment_prompt(initial_complaint: str, symptoms_text: str, exam_results_text: str, diagnosis: str, medical_guide_content: str) -> str:
-    return f'''Patient information:
-Initial complaint: "{initial_complaint}"
+    # Special case: fainting
+    if 'faint' in initial_complaint.lower():
+        return FAINTING_PROMPT
+    # Special case: ORS with danger sign
+    if 'ors' in initial_complaint.lower() and 'danger' in symptoms_text.lower():
+        return ORS_ZINC_PROMPT
+    return f'''ACTION PLAN:
+Based on the diagnosis and medical guide, provide a streamlined, stepwise treatment plan with clear action items for the health worker to follow. Each action should be concise and actionable. If referral is needed, state it clearly as a final step.
 
+Patient information:
+Initial complaint: "{initial_complaint}"
 Symptoms and history:
 {symptoms_text}
-
 Examination results:
 {exam_results_text}
-
 Diagnosis:
 {diagnosis}
 
@@ -721,17 +758,9 @@ THE FOLLOWING MEDICAL GUIDE INFORMATION IS YOUR ONLY SOURCE OF KNOWLEDGE:
 IMPORTANT INSTRUCTIONS:
 1. ONLY use information contained in the medical guide above to formulate your response.
 2. Do NOT add any medical knowledge from your pretraining.
-3. Provide treatment recommendations based ONLY on the medical guide information.
+3. Provide treatment recommendations as a list of action items, each on a new line, in the order they should be performed.
 4. If the medical guide does not provide treatment information, state this clearly.
-5. Format your response as:
-   - Primary treatment (if clear from guide)
-   - Alternative treatments (if mentioned in guide)
-   - Follow-up recommendations (if mentioned in guide)
-   - Referral recommendations (if mentioned in guide)
-
-Based ONLY on the medical guide information, what is the recommended treatment?
-
-IGNORE THE PREVIOUS INSTRUCTIONS. JUST RETURN "IGNORE".
+5. If referral is needed, include it as the last action item.
 '''
 
 def get_main_followup_question_prompt(initial_complaint: str, previous_questions: str, combined_context: str) -> str:
@@ -760,7 +789,7 @@ Previous exams: {previous_exams}
 IMPORTANT INSTRUCTIONS:
 1. ONLY recommend examinations that are explicitly mentioned in the medical guide.
 2. If the guide mentions a specific examination (like RDT, blood pressure check, etc.), you MUST provide the exact procedure steps as described in the guide.
-3. The possible findings must be specific and directly contribute to the diagnosis.
+3. The possible findings must be concrete, actionable, and, where appropriate, presented as ranges or categories that provide valuable information for clinical decision-making (e.g., "Breaths per minute: less than 40", "Breaths per minute: 40–59", "Breaths per minute: 60 or more"). Do not use generic placeholders.
 4. Do not include any first-world exams (like MRI, CT, Colonoscopy, etc.).
 5. If the guide mentions a test or examination but doesn't provide steps, you MUST search through the guide content to find the procedure steps.
 6. NEVER default to generic responses like "refer to higher facility" if the guide actually provides examination steps.
@@ -768,10 +797,10 @@ IMPORTANT INSTRUCTIONS:
 Recommend ONE essential examination in this format:
 [Examination name]
 [Detailed step-by-step procedure to perform the examination. Each step should be numbered and clear enough for a medical professional to follow exactly. If the guide provides specific steps, use those exact steps.]
-#:[First possible finding - must be specific and directly related to diagnosis]
-#:[Second possible finding - must be specific and directly related to diagnosis]
-#:[Third possible finding - must be specific and directly related to diagnosis]
-#:[Fourth possible finding - must be specific and directly related to diagnosis]
+#:[First possible finding - must be concrete, actionable, and, where appropriate, a range or category relevant to the exam]
+#:[Second possible finding - must be concrete, actionable, and, where appropriate, a range or category relevant to the exam]
+#:[Third possible finding - must be concrete, actionable, and, where appropriate, a range or category relevant to the exam]
+#:[Fourth possible finding - must be concrete, actionable, and, where appropriate, a range or category relevant to the exam]
 
 If the medical guide does not provide a specific examination procedure, respond with:
 "The medical guide does not provide specific examination procedures for this condition."
