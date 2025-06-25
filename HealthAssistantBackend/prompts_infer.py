@@ -1,3 +1,31 @@
+from dotenv import load_dotenv
+import openai
+import os
+
+load_dotenv()
+openai.api_key = os.getenv("OPENAI_API_KEY")
+
+def get_openai_completion(prompt: str, max_tokens: int = 150, temperature: float = 0.3) -> str:
+    """
+    Get completion from OpenAI's GPT-4 API.
+    """
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-4-0125-preview",  # Using GPT-4-mini
+            messages=[
+                {"role": "system", "content": prompt}
+            ],
+            max_tokens=max_tokens,
+            temperature=temperature
+        )
+        return response.choices[0].message.content.strip()
+    except Exception as e:
+        print(f"Error in OpenAI API call: {e}")
+        return ""
+
+
+
+
 """
 Medical Assessment System Prompts
 =================================
@@ -186,26 +214,23 @@ Key symptoms: {key_symptoms}
 Previous exams: {previous_exams}
 
 IMPORTANT INSTRUCTIONS:
-1. If the case is about malaria or fever in a malaria area, recommend the RDT exam using this format:
-{rdt_exam}
-2. For other exams, follow the usual instructions:
-- ONLY recommend examinations that are explicitly mentioned in the medical guide.
-- If the guide mentions a specific examination (like RDT, blood pressure check, etc.), you MUST provide the exact procedure steps as described in the guide.
-- The possible findings must be concrete, actionable, and, where appropriate, presented as ranges or categories that provide valuable information for clinical decision-making (e.g., "Breaths per minute: less than 40", "Breaths per minute: 40–59", "Breaths per minute: 60 or more"). Do not use generic placeholders.
-- Do not include any first-world exams (like MRI, CT, Colonoscopy, etc.).
-- If the guide mentions a test or examination but doesn't provide steps, you MUST search through the guide content to find the procedure steps.
-- NEVER default to generic responses like "refer to higher facility" if the guide actually provides examination steps.
+1. If the case is about malaria or fever in a malaria area, you MUST provide the actual step-by-step procedure for performing a rapid diagnostic test (RDT) for malaria. Use all available information from the guide. If the guide does not provide explicit steps, synthesize them using safe, practical steps that could be performed in a third-world/low-resource setting (you may use your pretrained knowledge ONLY for the procedure, not for diagnosis or treatment). Do NOT default to generic findings or referral if a real test is present and can be described.
+2. For all other cases, you MUST synthesize and conduct a concrete, step-by-step examination using all relevant information from the medical guide, even if the guide does not present it as a formal procedure. If the guide provides the necessary context (such as how to count breaths, what constitutes fast breathing, or what danger signs to look for), you must construct the examination and findings based on that information.
+3. The possible findings must be actionable, clinically relevant, and, where appropriate, presented as ranges or categories that provide valuable information for decision-making (e.g., "RDT positive for malaria", "RDT negative for malaria", "RDT not performed: no supplies", "Other: specify").
+4. NEVER default to generic findings or referral if a reasonable, context-based exam can be constructed from the guide or synthesized from safe, practical steps.
+5. Do not include any first-world exams (like MRI, CT, Colonoscopy, etc.).
+6. If the guide mentions a test or examination but doesn't provide steps, you MUST synthesize the steps from the context and related sections in the guide, or use safe, practical steps from your pretrained knowledge for the procedure only.
 
 Recommend ONE essential examination in this format:
 [Examination name]
-[Detailed step-by-step procedure to perform the examination. Each step should be numbered and clear enough for a medical professional to follow exactly. If the guide provides specific steps, use those exact steps.]
-#:[First possible finding - must be concrete, actionable, and, where appropriate, a range or category relevant to the exam]
-#:[Second possible finding - must be concrete, actionable, and, where appropriate, a range or category relevant to the exam]
-#:[Third possible finding - must be concrete, actionable, and, where appropriate, a range or category relevant to the exam]
-#:[Fourth possible finding - must be concrete, actionable, and, where appropriate, a range or category relevant to the exam]
+[Detailed step-by-step procedure to perform the examination. Each step should be numbered and clear enough for a medical professional to follow exactly. If the guide provides specific steps, use those exact steps. If not, synthesize them from the context or use safe, practical steps from your pretrained knowledge for the procedure only.]
+#:[First possible finding - must be actionable, context-appropriate, and relevant to the exam]
+#:[Second possible finding - must be actionable, context-appropriate, and relevant to the exam]
+#:[Third possible finding - must be actionable, context-appropriate, and relevant to the exam]
+#:[Fourth possible finding - must be actionable, context-appropriate, and relevant to the exam]
 
-If the medical guide does not provide a specific examination procedure, respond with:
-"The medical guide does not provide specific examination procedures for this condition."
+If the medical guide truly does not provide enough information to construct any examination, respond with:
+"The medical guide does not provide specific examination procedures or enough information to construct an examination for this condition."
 
 If the medical guide provides partial information but no clear procedure, respond with:
 "While the medical guide does not provide a formal examination procedure, here is some relevant information that may be helpful:"
@@ -336,99 +361,6 @@ DO NOT use any medical knowledge from your pretraining."""
         template = cls.EMBEDDING_QUERIES.get(query_type, "{complaint}")
         return template.format(complaint=complaint)
 
-    # Advanced Follow-up Question Prompts
-    ADVANCED_FOLLOWUP_PROMPT = """Patient information:
-Initial complaint: "{initial_complaint}"
-
-Information we already know (DO NOT ASK ABOUT THESE AGAIN):
-{known_info_text}
-
-Previous questions already asked (DO NOT REPEAT THESE):
-{previous_questions_text}
-
-THE FOLLOWING MEDICAL GUIDE INFORMATION IS YOUR ONLY SOURCE OF KNOWLEDGE:
-{medical_guide_content}
-
-IMPORTANT INSTRUCTIONS:
-1. The medical guide is ALWAYS correct and should be your primary source of information. Always directly reference and draw from the guide's content as your main justification.
-2. Base your question on the medical guide information above, but you may make reasonable inferences based on:
-   - EXTREMELY limited resources available in third-world settings
-   - Common assessment practices in resource-constrained environments
-   - Basic medical principles that would be known to community health workers in rural/remote areas
-3. The question must be based on assessment questions mentioned in the medical guide or reasonable inferences.
-4. If the medical guide mentions specific questions, use those exact questions.
-5. DO NOT ask about information we already know.
-6. DO NOT repeat any previous questions.
-7. Focus on gathering NEW information that is not already known.
-8. Consider severe resource limitations in third-world settings when formulating questions.
-9. Do not use any patient names or identifiers in your question.
-10. Always consider:
-    - Limited access to healthcare
-    - Cultural and language barriers
-    - Basic understanding of medical concepts
-    - Available resources for treatment
-11. Return only the question text without any explanation.
-
-Based on the medical guide information and reasonable inferences for a third-world setting, what follow-up question should be asked to assess this patient?"""
-
-    ADVANCED_OPTIONS_PROMPT = """QUESTION: "{question}"
-
-THE FOLLOWING MEDICAL GUIDE INFORMATION IS YOUR ONLY SOURCE OF KNOWLEDGE:
-{medical_guide_content}
-
-IMPORTANT INSTRUCTIONS:
-1. ONLY use information contained in the medical guide above to formulate your response.
-2. Do NOT add any medical knowledge from your pretraining.
-3. Generate 4 answer options for the above question.
-4. If the medical guide mentions specific answer options, use those exactly.
-5. If not, create relevant options based only on the medical guide content.
-6. Format as a numbered list (1-4).
-7. Do not include explanations, only the options themselves."""
-
-    # Advanced Examination Prompts
-    ADVANCED_EXAMINATION_PROMPT = """Patient information:
-Initial complaint: "{initial_complaint}"
-Key symptoms: {symptoms_summary}
-
-Information we already know:
-{known_info_text}
-
-Previous examinations already performed (DO NOT REPEAT THESE):
-{previous_exams_text}
-
-THE FOLLOWING MEDICAL GUIDE INFORMATION IS YOUR ONLY SOURCE OF KNOWLEDGE:
-{medical_guide_content}
-
-IMPORTANT INSTRUCTIONS:
-1. ONLY use information contained in the medical guide above to formulate your response.
-2. Do NOT add any medical knowledge from your pretraining.
-3. You MUST select one of these three formats for your response:
-
-FORMAT 1 - WHEN THE GUIDE CLEARLY PROVIDES AN EXAMINATION PROCEDURE:
-[Examination name]
-[Detailed step-by-step procedure to perform the examination. Each step should be numbered and clear enough for a medical professional to follow exactly. If the guide provides specific steps, use those exact steps.]
-#: [Finding 1 - must be concrete, actionable, and, where appropriate, a range or category relevant to the exam]
-#: [Finding 2 - must be concrete, actionable, and, where appropriate, a range or category relevant to the exam]
-#: [Finding 3 - must be concrete, actionable, and, where appropriate, a range or category relevant to the exam]
-#: [Finding 4 - must be concrete, actionable, and, where appropriate, a range or category relevant to the exam]
-
-FORMAT 2 - WHEN THE GUIDE PROVIDES NO INFORMATION ABOUT EXAMINATIONS:
-"The medical guide does not provide specific examination procedures for this condition."
-
-FORMAT 3 - WHEN THE GUIDE PROVIDES PARTIAL/INFORMAL INFORMATION BUT NO CLEAR PROCEDURE:
-"While the medical guide does not provide a formal examination procedure, here is some relevant information that may be helpful:"
-[Include any relevant assessment guidance from the guide]
-
-4. Use the same terminology and procedures as presented in the medical guide.
-5. DO NOT repeat any examinations that have already been performed.
-6. Choose an examination that is DIFFERENT from previous ones and appropriate for the patient's symptoms.
-7. Each finding must be concrete, actionable, and, where appropriate, presented as a range or category that provides valuable information for clinical decision-making.
-8. The procedure must be detailed enough for a medical professional to follow exactly.
-9. If the guide mentions a test or examination but doesn't provide steps, you MUST search through the guide content to find the procedure steps.
-10. NEVER default to generic responses like "refer to higher facility" if the guide actually provides examination steps.
-
-Based ONLY on the medical guide information, what NEW examination should be performed?"""
-
     # System Messages
     SYSTEM_MESSAGES = {
         'followup_question': "You can ONLY use information from the medical guide. Do not add any medical knowledge from your training.",
@@ -481,56 +413,6 @@ Key References:
     LIMITATION_NOTES = {
         'no_formal_exam': "\nNote: This assessment is based on limited information without formal examination procedures described in the medical guide. Consider referring for a complete medical evaluation if symptoms persist or worsen."
     }
-
-    @classmethod
-    def get_advanced_followup_prompt(cls, initial_complaint: str, known_info_text: str, 
-                                   previous_questions_text: str, medical_guide_content: str) -> str:
-        """Get the formatted advanced follow-up question prompt."""
-        return cls.ADVANCED_FOLLOWUP_PROMPT.format(
-            initial_complaint=initial_complaint,
-            known_info_text=known_info_text,
-            previous_questions_text=previous_questions_text if previous_questions_text else "- No previous follow-up questions",
-            medical_guide_content=medical_guide_content
-        )
-
-    @classmethod
-    def get_advanced_options_prompt(cls, question: str, medical_guide_content: str) -> str:
-        """Get the formatted advanced options prompt."""
-        return cls.ADVANCED_OPTIONS_PROMPT.format(
-            question=question,
-            medical_guide_content=medical_guide_content
-        )
-
-    @classmethod
-    def get_advanced_examination_prompt(cls, initial_complaint: str, symptoms_summary: str, 
-                                      known_info_text: str, previous_exams_text: str, 
-                                      medical_guide_content: str) -> str:
-        """Get the formatted advanced examination prompt."""
-        return cls.ADVANCED_EXAMINATION_PROMPT.format(
-            initial_complaint=initial_complaint,
-            symptoms_summary=symptoms_summary,
-            known_info_text=known_info_text,
-            previous_exams_text=previous_exams_text if previous_exams_text else "- No previous examinations",
-            medical_guide_content=medical_guide_content
-        )
-
-    @classmethod
-    def get_referral_summary(cls, initial_complaint: str, key_findings: str) -> str:
-        """Get the formatted referral summary."""
-        return cls.REFERRAL_SUMMARY_TEMPLATE.format(
-            initial_complaint=initial_complaint,
-            key_findings=key_findings
-        )
-
-    @classmethod
-    def get_complete_assessment(cls, primary_diagnosis: str, differential: str, treatment_plan: str, citations_text: str) -> str:
-        """Get the formatted complete assessment with only the three bullet points and key references."""
-        return cls.COMPLETE_ASSESSMENT_TEMPLATE.format(
-            primary_diagnosis=primary_diagnosis,
-            differential=differential,
-            treatment_plan=treatment_plan,
-            citations_text=citations_text
-        )
 
     @classmethod
     def get_system_message(cls, message_type: str) -> str:
@@ -676,32 +558,38 @@ Previous examinations already performed (DO NOT REPEAT THESE):
 THE FOLLOWING MEDICAL GUIDE INFORMATION IS YOUR ONLY SOURCE OF KNOWLEDGE:
 {medical_guide_content}
 
-IMPORTANT INSTRUCTIONS:
-1. ONLY use information contained in the medical guide above to formulate your response.
-2. Do NOT add any medical knowledge from your pretraining.
-3. You MUST select one of these three formats for your response:
+CRITICAL INSTRUCTIONS:
+1. You MUST provide a concrete examination procedure with detailed steps.
+2. If the patient has fever, malaria symptoms, or is in a malaria area, you MUST provide the RDT (Rapid Diagnostic Test) procedure for malaria.
+3. If the guide mentions ANY test, examination, or assessment procedure, you MUST provide it with detailed steps.
+4. You may use your pretrained knowledge ONLY for synthesizing safe, practical examination steps if the guide provides context but not explicit steps.
+5. NEVER say "the guide doesn't provide examination procedures" unless you have thoroughly searched the provided content and found absolutely nothing relevant.
 
-FORMAT 1 - WHEN THE GUIDE CLEARLY PROVIDES AN EXAMINATION PROCEDURE:
-[Examination name]
-[Detailed step-by-step procedure to perform the examination. Each step should be numbered and clear enough for a medical professional to follow exactly]
-#: [Finding 1 - must be concrete, actionable, and, where appropriate, a range or category relevant to the exam]
-#: [Finding 2 - must be concrete, actionable, and, where appropriate, a range or category relevant to the exam]
-#: [Finding 3 - must be concrete, actionable, and, where appropriate, a range or category relevant to the exam]
-#: [Finding 4 - must be concrete, actionable, and, where appropriate, a range or category relevant to the exam]
+REQUIRED FORMAT - FOLLOW EXACTLY:
+[Examination name - be specific and clear]
 
-FORMAT 2 - WHEN THE GUIDE PROVIDES NO INFORMATION ABOUT EXAMINATIONS:
-"The medical guide does not provide specific examination procedures for this condition."
+[Why this examination should be conducted - explain what the guide says about this condition and why this specific exam is needed. Reference specific information from the guide.]
 
-FORMAT 3 - WHEN THE GUIDE PROVIDES PARTIAL/INFORMAL INFORMATION BUT NO CLEAR PROCEDURE:
-"While the medical guide does not provide a formal examination procedure, here is some relevant information that may be helpful:"
-[Include any relevant assessment guidance from the guide]
+[Step-by-step procedure to conduct the examination:
+1. [First step - be specific and actionable]
+2. [Second step - be specific and actionable]
+3. [Third step - be specific and actionable]
+... continue with numbered steps as needed]
 
-4. Use the same terminology and procedures as presented in the medical guide.
-5. DO NOT repeat any examinations that have already been performed.
-6. Choose an examination that is DIFFERENT from previous ones and appropriate for the patient's symptoms.
+#:[Finding A - must be concrete and actionable]
+#:[Finding B - must be concrete and actionable] 
+#:[Finding C - must be concrete and actionable]
+#:[Finding D - must be concrete and actionable]
 
-Based ONLY on the medical guide information, what NEW examination should be performed?
-'''
+SPECIAL RULES:
+- For malaria/fever cases: ALWAYS provide RDT procedure with steps
+- For breathing problems: ALWAYS provide respiratory rate counting procedure
+- Use terminology from the guide when possible
+- Make findings specific and actionable (e.g., "RDT positive", "RDT negative", "RDT not available")
+- Include the reasoning from the guide about why this examination is needed
+- Number each step clearly (1, 2, 3, etc.)
+
+Based on the medical guide information above, what examination should be performed? Provide the complete procedure with findings.'''
 
 def get_diagnosis_prompt(initial_complaint: str, symptoms_text: str, exam_results_text: str, medical_guide_content: str) -> str:
     return f'''Patient information:

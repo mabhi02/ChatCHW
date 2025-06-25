@@ -450,11 +450,14 @@ def process_input():
             try:
                 # Store examination response
                 if 'current_examination' in session_data:
-                    # Fix: Match the text to the option ID
-                    selected_option = 1  # Default to first option
+                    # Try to find which option was selected
+                    selected_option = "A"  # Default to first option
                     
-                    # Try to find which option was selected by matching the text
-                    if 'options' in session_data['current_examination']:
+                    # First try to match by letter (A, B, C, D, E)
+                    if user_input.upper() in ['A', 'B', 'C', 'D', 'E']:
+                        selected_option = user_input.upper()
+                    # Then try to match by text
+                    elif 'options' in session_data['current_examination']:
                         for option in session_data['current_examination']['options']:
                             if option['text'] == user_input:
                                 selected_option = option['id']
@@ -463,7 +466,7 @@ def process_input():
                     # Check if this is a NO_INFO_EXAM type (no examination available)
                     if session_data['current_examination'].get('type') == "NO_INFO_EXAM":
                         # If user selected "Proceed with general assessment and diagnosis"
-                        if selected_option == 1 or "proceed with general assessment" in user_input.lower():
+                        if selected_option == "A" or "proceed with general assessment" in user_input.lower():
                             # Add a generic response to exam_responses so we can proceed
                             session_data['exam_responses'].append({
                                 "examination": "No specific examination was available in the medical guide.",
@@ -484,7 +487,7 @@ def process_input():
                             )
                             
                             return response
-                        elif selected_option == 2 or "refer to higher" in user_input.lower():
+                        elif selected_option == "B" or "refer to higher" in user_input.lower():
                             # Add a referral response
                             session_data['exam_responses'].append({
                                 "examination": "No specific examination was available in the medical guide.",
@@ -933,7 +936,7 @@ def generate_examination(session_data):
         completion = openai.ChatCompletion.create(
             model="gpt-4-0125-preview",
             messages=[
-                {"role": "system", "content": "You can ONLY use information from the medical guide. Do not add any medical knowledge from your training."},
+                {"role": "system", "content": "You are a medical assistant helping community health workers. Use information from the medical guide as your primary source. You may synthesize safe, practical examination steps when the guide provides context but not explicit procedures. Always provide concrete, actionable examinations when possible."},
                 {"role": "user", "content": prompt}
             ],
             max_tokens=400,
@@ -942,45 +945,6 @@ def generate_examination(session_data):
         
         examination_text = completion.choices[0].message.content.strip()
         print(f"Generated examination text: {examination_text}")  # Debug print
-        
-        # Check for simple "no information" responses directly
-        if examination_text == "The guide doesn't provide that information." or examination_text == "The medical guide does not provide specific examination procedures for this condition.":
-            # Generate simplified options for no examination info
-            options = [
-                {"id": 1, "text": "Proceed with general assessment and diagnosis"},
-                {"id": 2, "text": "Refer to higher level facility"},
-                {"id": 3, "text": "Other (please specify)"}
-            ]
-            
-            # Save this as a special type of "NO_INFO" examination
-            session_data['current_examination'] = {
-                "text": examination_text,
-                "options": options,
-                "sources": top_matches,
-                "matrix_output": {
-                    "confidence": 0.1,
-                    "selected_agent": "optimist",
-                    "weights": {"optimist": 0.9, "pessimist": 0.1}
-                },
-                "type": "NO_INFO_EXAM"
-            }
-            
-            return jsonify({
-                "status": "success",
-                "output": f"The medical guide does not provide specific examination procedures for this condition.\n\nPlease select how you would like to proceed:",
-                "metadata": {
-                    "phase": "exam",
-                    "question_type": "EXAM",
-                    "options": options,
-                    "sources": [{"source": doc["source"], "score": doc["score"]} for doc in top_matches],
-                    "matrix_evaluation": {
-                        "confidence": 0.1,
-                        "selected_agent": "optimist",
-                        "optimist_weight": 0.9,
-                        "pessimist_weight": 0.1
-                    }
-                }
-            })
         
         # Use MATRIX to evaluate examination relevance and similarity
         if session_data['exam_responses']:
@@ -1028,8 +992,12 @@ def generate_examination(session_data):
         try:
             examination, option_texts = parse_examination_text(examination_text)
             
-            options = [{"id": i+1, "text": text} for i, text in enumerate(option_texts[:4])]
-            options.append({"id": 5, "text": "Other (please specify)"})
+            # Create options with A, B, C, D, E format
+            options = []
+            labels = ['A', 'B', 'C', 'D', 'E']
+            for i, text in enumerate(option_texts[:4]):
+                options.append({"id": labels[i], "text": text})
+            options.append({"id": "E", "text": "Other (please specify)"})
             
             session_data['current_examination'] = {
                 "text": examination_text,
@@ -1041,8 +1009,13 @@ def generate_examination(session_data):
             options_text = "\n".join([f"{opt['id']}. {opt['text']}" for opt in options])
             
             # Determine which scenario we're in based on the examination text
-            if any(phrase in examination.lower() for phrase in ["does not provide", "no information", "no examination", 
-                                                            "no specific examination", "doesn't provide"]):
+            # Only treat as "no information" if it's explicitly stated and very short
+            if (len(examination.strip()) < 100 and 
+                any(phrase in examination.lower() for phrase in [
+                    "the medical guide does not provide specific examination procedures for this condition",
+                    "no examination procedures are provided",
+                    "no specific examination procedures for this condition"
+                ])):
                 # SCENARIO 1: No examination information available
                 output = f"Examination Information:\n{examination}\n\nRecommended Action:\n{options_text}"
                 

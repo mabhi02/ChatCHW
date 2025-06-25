@@ -534,10 +534,7 @@ def parse_question_data(question: str, options: list, answer: str, matrix_output
 def parse_examination_text(text):
     """
     Parse examination text to extract the examination description and findings.
-    Handles three scenarios:
-    1. Clear examination procedure with findings
-    2. No examination information available
-    3. Partial/informal examination information
+    Handles the new format with reasoning section and A, B, C, D findings.
     
     Args:
         text (str): The examination text to parse
@@ -556,18 +553,20 @@ def parse_examination_text(text):
         ]
         return examination, findings
     
-    # Common phrases indicating no information is available
-    no_info_phrases = [
-        "does not provide", "no information", "no examination", 
-        "no specific examination", "doesn't provide", "isn't provided",
-        "the guide doesn't provide", "not available in the guide",
-        "not included in the guide", "not mentioned in the guide",
-        "doesn't contain", "does not mention"
+    # Only detect "no information" if the text explicitly states it AND contains no useful content
+    explicit_no_info_phrases = [
+        "the medical guide does not provide specific examination procedures for this condition",
+        "the guide does not provide specific examination procedures",
+        "no examination procedures are provided",
+        "no specific examination procedures for this condition"
     ]
     
-    # SCENARIO 1: Check if the response indicates no examination information is available
-    if any(phrase in text.lower() for phrase in no_info_phrases):
-        # Return a standardized "No examination" response with default findings
+    # Check if the text is explicitly saying no examination is available
+    text_lower = text.lower()
+    is_explicit_no_info = any(phrase in text_lower for phrase in explicit_no_info_phrases)
+    
+    # If it's explicitly saying no info AND the text is short/contains no useful content
+    if is_explicit_no_info and len(text.strip()) < 100:
         examination = text.strip()
         findings = [
             "No specific finding available - refer to higher facility",
@@ -577,64 +576,95 @@ def parse_examination_text(text):
         ]
         return examination, findings
     
-    # SCENARIO 2: Check if there's some useful information but not a formal procedure
-    if ("relevant information" in text.lower() or "some information" in text.lower() or 
-        "general guidance" in text.lower() or "may be helpful" in text.lower() or
-        not any(line.startswith('#') or line.startswith('#:') for line in text.strip().split('\n'))):
-        
-        # Extract the useful information
-        examination = "PARTIAL INFORMATION (Not a formal examination procedure):\n" + text.strip()
-        findings = [
-            "Consider referring to medical professional for proper examination",
-            "Use this information as supplementary guidance only",
-            "Document observations based on general assessment",
-            "Consult with supervisor about next steps"
-        ]
-        return examination, findings
-    
-    # SCENARIO 3: Regular parsing for normal examination text with findings
     # Split the text by lines
     lines = text.strip().split('\n')
     
-    # Extract examination description (everything before the first finding)
-    examination_lines = []
-    findings = []
-    
-    in_examination = True
-    
-    for line in lines:
-        line = line.strip()
-        # Check for both '#:' and '#' formats
+    # Look for findings markers (#: or #)
+    findings_markers = []
+    for i, line in enumerate(lines):
         if line.startswith('#:') or (line.startswith('#') and not line.startswith('#:')):
-            in_examination = False
-            # Extract the finding text by removing the delimiter
+            findings_markers.append(i)
+    
+    # If we have findings markers, parse normally
+    if findings_markers:
+        # Everything before the first finding marker is the examination
+        examination_lines = lines[:findings_markers[0]]
+        findings = []
+        
+        # Extract findings and label them as A, B, C, D
+        labels = ['A', 'B', 'C', 'D']
+        for i, marker_idx in enumerate(findings_markers):
+            line = lines[marker_idx].strip()
             if line.startswith('#:'):
                 finding = line[2:].strip()
             else:
                 finding = line[1:].strip()
+            
+            # Add label if we have one available
+            if i < len(labels):
+                finding = f"{labels[i]}. {finding}"
+            else:
+                finding = f"{i+1}. {finding}"
+            
             findings.append(finding)
-        elif in_examination and line:
-            examination_lines.append(line)
+        
+        # Join the examination lines
+        examination = '\n'.join(examination_lines)
+        
+        # If we didn't find any findings but have examination text, create default findings
+        if not findings and examination:
+            # For malaria/fever cases, provide RDT-specific findings
+            if any(word in examination.lower() for word in ['malaria', 'rdt', 'rapid diagnostic']):
+                findings = [
+                    "A. RDT positive for malaria",
+                    "B. RDT negative for malaria", 
+                    "C. RDT not performed: no supplies",
+                    "D. RDT not performed: other reason"
+                ]
+            else:
+                findings = [
+                    "A. Normal finding",
+                    "B. Abnormal finding requiring further assessment",
+                    "C. Inconclusive finding - may need additional tests",
+                    "D. Unable to determine based on current examination"
+                ]
+    else:
+        # No findings markers found - check if this is very short (partial info)
+        if len(lines) < 3:
+            examination = "PARTIAL INFORMATION (Not a formal examination procedure):\n" + text.strip()
+            findings = [
+                "A. Consider referring to medical professional for proper examination",
+                "B. Use this information as supplementary guidance only",
+                "C. Document observations based on general assessment",
+                "D. Consult with supervisor about next steps"
+            ]
+        else:
+            # Assume the whole text is examination and create default findings
+            examination = text.strip()
+            # For malaria/fever cases, provide RDT-specific findings
+            if any(word in examination.lower() for word in ['malaria', 'rdt', 'rapid diagnostic']):
+                findings = [
+                    "A. RDT positive for malaria",
+                    "B. RDT negative for malaria", 
+                    "C. RDT not performed: no supplies",
+                    "D. RDT not performed: other reason"
+                ]
+            else:
+                findings = [
+                    "A. Normal finding",
+                    "B. Abnormal finding requiring further assessment",
+                    "C. Inconclusive finding - may need additional tests",
+                    "D. Unable to determine based on current examination"
+                ]
     
-    # Join the examination lines
-    examination = '\n'.join(examination_lines)
-    
-    # If we didn't find any findings but have examination text, create default findings
-    if not findings and examination:
-        findings = [
-            "Normal finding",
-            "Abnormal finding requiring further assessment",
-            "Inconclusive finding - may need additional tests",
-            "Unable to determine based on current examination"
-        ]
     # If we don't have examination text or findings, provide a fallback response
-    elif not findings and not examination:
+    if not findings and not examination:
         examination = "The response from the medical guide was incomplete or invalid."
         findings = [
-            "No specific finding available - refer to higher facility",
-            "Unable to perform examination based on medical guide",
-            "Need additional clinical assessment",
-            "Consider general observation only"
+            "A. No specific finding available - refer to higher facility",
+            "B. Unable to perform examination based on medical guide",
+            "C. Need additional clinical assessment",
+            "D. Consider general observation only"
         ]
     
     return examination, findings
