@@ -939,7 +939,7 @@ def generate_examination(session_data):
                 {"role": "system", "content": "You are a medical assistant helping community health workers. Use information from the medical guide as your primary source. You may synthesize safe, practical examination steps when the guide provides context but not explicit procedures. Always provide concrete, actionable examinations when possible."},
                 {"role": "user", "content": prompt}
             ],
-            max_tokens=400,
+            max_tokens=800,
             temperature=0.3
         )
         
