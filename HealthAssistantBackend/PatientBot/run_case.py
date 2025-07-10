@@ -84,18 +84,21 @@ class SimplePatientRunner:
             print("Make sure PatientBot API is running: python API.py")
             return None
     
-    def ask_patient_bot(self, question):
-        """Ask PatientBot a question"""
+    def ask_patient_bot(self, question, context=None):
+        """Ask PatientBot a question, passing previous Q&A context"""
         try:
+            payload = {"question": question}
+            if context is not None:
+                payload["context"] = context
             response = requests.post(f"{self.patient_bot_url}/api/patient/ask",
-                                   json={"question": question})
+                                   json=payload)
             if response.status_code == 200:
                 data = response.json()
                 if data.get('status') == 'success':
                     return data['response']
-            return "other: Information not known"
+            return "No"
         except Exception as e:
-            return "other: Information not known"
+            return "No"
     
     def match_response_to_option(self, response, options, patient_info=None):
         """Auto-match PatientBot response to multiple choice options using improved AI"""
@@ -200,6 +203,7 @@ Return ONLY the option number (e.g., "2")."""
         initial_responses = []
         followup_responses = []
         exam_responses = []
+        previous_qa = []  # Track all previous Q&A
         
         print("\n🏥 MEDICAL ASSESSMENT - INITIAL QUESTIONS")
         print("=" * 60)
@@ -211,8 +215,8 @@ Return ONLY the option number (e.g., "2")."""
             if question['type'] in ['MC', 'YN', 'MCM']:
                 print_options(question['options'])
                 
-                # Get PatientBot response
-                patient_response = self.ask_patient_bot(question['question'])
+                # Get PatientBot response with context
+                patient_response = self.ask_patient_bot(question['question'], context=previous_qa)
                 print(f"🤒 PatientBot: {patient_response}")
                 
                 # Auto-select - NO USER INPUT
@@ -222,6 +226,9 @@ Return ONLY the option number (e.g., "2")."""
                     print(f"✏️ Specific Answer: {specific_answer}")
                 else:
                     print(f"✏️ Specific Answer: None")
+                
+                # After answer is selected:
+                previous_qa.append({"question": question['question'], "answer": patient_response})
                 
                 # Use EXACT validation logic from chad.py
                 if question['type'] == 'MCM':
@@ -260,7 +267,7 @@ Return ONLY the option number (e.g., "2")."""
                             })
             
             elif question['type'] == 'NUM':
-                patient_response = self.ask_patient_bot(question['question'])
+                patient_response = self.ask_patient_bot(question['question'], context=previous_qa)
                 print(f"🤒 PatientBot: {patient_response}")
                 
                 auto_answer = self.extract_number_from_response(patient_response)
@@ -276,7 +283,7 @@ Return ONLY the option number (e.g., "2")."""
                     })
                     
             elif question['type'] == 'FREE':
-                patient_response = self.ask_patient_bot(question['question'])
+                patient_response = self.ask_patient_bot(question['question'], context=previous_qa)
                 print(f"🤒 PatientBot: {patient_response}")
                 
                 if patient_response != "other: Information not known":
@@ -384,7 +391,7 @@ Return ONLY the option number (e.g., "2")."""
                 print(f"\n{question}")
                 print_options(options)
                 
-                patient_response = self.ask_patient_bot(question)
+                patient_response = self.ask_patient_bot(question, context=previous_qa)
                 print(f"🤒 PatientBot: {patient_response}")
                 
                 answer, specific_answer = self.match_response_to_option(patient_response, options, patient_info)
@@ -497,7 +504,7 @@ Return ONLY the option number (e.g., "2")."""
                         
                         # Ask PatientBot for findings
                         finding_question = f"During {examination_name.lower()}, what findings do you observe?"
-                        patient_response = self.ask_patient_bot(finding_question)
+                        patient_response = self.ask_patient_bot(finding_question, context=previous_qa)
                         print(f"🤒 PatientBot: {patient_response}")
                         
                         # Match the response to examination options

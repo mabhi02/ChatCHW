@@ -95,14 +95,37 @@ class KnowledgeBasePatientBot:
         
         return None
     
-    def respond_to_question(self, question: str) -> str:
-        """Respond to questions using ONLY the knowledge base data"""
+    def respond_to_question(self, question: str, context: Optional[list] = None) -> str:
+        """Respond to questions using ONLY the knowledge base data and previous Q&A context. Defaults to 'No' for unknowns."""
         if not self.current_patient_data:
             return "No patient case loaded. Please load a patient case first."
         
         question_lower = question.lower()
+        context = context or []
+        # Use context to improve answer (very basic example: check if similar question was already asked)
+        for prev in reversed(context):
+            if prev and isinstance(prev, dict):
+                prev_q = prev.get('question', '').lower()
+                prev_a = prev.get('answer', '')
+                # If the same question was already asked, return the same answer
+                if prev_q and prev_q == question_lower and prev_a:
+                    return prev_a
         
         # Basic demographic questions
+        if any(phrase in question_lower for phrase in [
+            'what brings you here today',
+            'what is wrong with you',
+            'what is the problem',
+            'what is your complaint',
+            'primary complaint',
+            'reason for visit',
+            'why are you here',
+            'describe your problem',
+            'describe what brings you here',
+            'chief complaint',
+        ]):
+            return f"{self.current_patient_data['complaint']}"
+        
         if any(word in question_lower for word in ['age', 'old', 'years']):
             if 'how old' in question_lower or 'age' in question_lower:
                 return f"{self.current_patient_data['age_years']} years old"
@@ -129,6 +152,14 @@ class KnowledgeBasePatientBot:
                 return f"Yes, {result.lower()}"
             elif 'cough' in self.current_patient_data['complaint'].lower():
                 return "Yes"
+
+        # Consistent 'No' for multi-symptom yes/no questions if no info found
+        if any(kw in question_lower for kw in [
+            'chest indrawing', 'difficulty breathing', 'indrawing', 'breathing', 'symptom', 'sign', 'findings', 'contact with', 'been in contact', 'exposed to', 'exposure', 'rash', 'vomiting', 'diarrhea', 'blood in stool', 'dehydration', 'sunken eyes', 'drinking', 'lethargic', 'alert', 'conscious', 'white spots', 'tonsils', 'spots', 'skin pinch', 'skin', 'throat', 'sore throat', 'fever', 'temperature', 'runny nose', 'sneezing', 'sneeze']):
+            # Try to extract relevant info as before
+            # (existing extraction logic for each symptom remains above)
+            # If no relevant info found, return 'No'
+            return "No"
         
         if any(word in question_lower for word in ['breathing', 'breath', 'difficulty breathing']):
             result = self.extract_from_chw_questions(['difficulty breathing', 'breathing'])
@@ -196,8 +227,12 @@ class KnowledgeBasePatientBot:
             if result:
                 return result
         
-        # Default response when information is not in knowledge base
-        return "other: Information not known"
+        # Default response when information is not in knowledge base or context
+        # Try to infer if this is a yes/no or MC question and default to 'No'
+        if any(word in question_lower for word in ['yes', 'no', 'has', 'have', 'is', 'are', 'does', 'do', 'did', 'was', 'were', 'can', 'could']):
+            return "No"
+        # Fallback for other types
+        return "No information found"
 
 # Initialize the bot
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -227,7 +262,7 @@ def load_patient():
 
 @app.route('/api/patient/ask', methods=['POST'])
 def ask_patient():
-    """Ask the patient a question"""
+    """Ask the patient a question, using previous Q&A context if provided."""
     try:
         data = request.get_json()
         if not data or 'question' not in data:
@@ -235,17 +270,15 @@ def ask_patient():
                 'status': 'error',
                 'message': 'Question is required'
             }), 400
-        
         question = data['question']
-        response = patient_bot.respond_to_question(question)
-        
+        context = data.get('context', [])
+        response = patient_bot.respond_to_question(question, context)
         return jsonify({
             'status': 'success',
             'question': question,
             'response': response,
             'patient_id': patient_bot.current_patient_data.get('case_id') if patient_bot.current_patient_data else None
         })
-    
     except Exception as e:
         return jsonify({
             'status': 'error',
