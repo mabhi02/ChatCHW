@@ -1,0 +1,272 @@
+{
+  "case_id": 0,
+  "case_results": {
+    "initial_responses": [
+      {
+        "question": "What is the patient's sex?",
+        "answer": "Male",
+        "type": "MC"
+      },
+      {
+        "question": "What is the patient's age?",
+        "answer": 1,
+        "type": "NUM"
+      },
+      {
+        "question": "Does the patient have a caregiver?",
+        "answer": "No",
+        "type": "MC"
+      },
+      {
+        "question": "Who is accompanying the patient?",
+        "answer": [
+          "1"
+        ],
+        "type": "MCM"
+      },
+      {
+        "question": "Please describe what brings you here today",
+        "answer": "Cough",
+        "type": "FREE"
+      }
+    ],
+    "followup_responses": [
+      {
+        "question": "Has the child shown any signs of chest indrawing or difficulty breathing along with the cough?",
+        "answer": "5 days",
+        "type": "MC",
+        "citations": [
+          {
+            "text": "aria area), and cough with \nfast breathing.  \nIn this secti on, you will learn to:  \n\uf0b7 Identify danger signs.  \n\uf0b7 Identify signs of illness (that are not danger signs).  \n\uf0b7 Decide if the child must be referred to the health facility or whether you can treat the \nchild in the community.  \nAny DANGER SIGN: Refer the child  \nOn the r ecording form, the middle column \u2014Any DANGER SIGN? \u2014lists the danger signs. \n[Find the column that lists the danger signs.]  \nAny one of these signs is a reason to refer the child URGENTLY to the health facility. Using \nthe information you have about the child,  tick [\uf0fc] any danger sign or signs you find.  \nThe first seven danger signs are found by asking the caregiver about the child\u2019s problems.  \n\uf06f Cough for 14  days or more  \nA child who has had cough for 14 days or more has a danger sign. The child may have \ntubercu losis (TB), asthma, whooping cough, or another problem. The child needs more \nassessment and treatment at the health facility. Refer a child with cough for 14 days or \nmore.  \n \n  \n \nParticipant Manual: Caring for the sick child in the community  39 \n \uf06f Diarrhoea for 14 days or more  \nDiarrhoea often stops on its own in 3 or 4 days. Diarrh",
+            "id": "chunk-63",
+            "source": "Unknown",
+            "score": 0.464302093
+          },
+          {
+            "text": "\nCough for 14 days  \nFever for 3 days  \uf06f Begin giving ORS solution  \n\uf06f Give first dose of oral antibiotic  \n\uf06f Give first dose of oral antimalarial  \n\uf06f Give dose of rectal artesunate suppository  \n\uf06f No pre -referral treatment   \nAnita (2 -year-old girl)   \nCough for 14 da ys \nDiarrhoea for 3 days  \nNo blood in stool  \uf06f Begin giving ORS solution  \n\uf06f Give first dose of oral antibiotic  \n\uf06f Give first dose of oral antimalarial  \n\uf06f Give dose of rectal artesunate suppository  \n\uf06f No pre -referral treatment   \nSam (2 -month -old boy)  \nDiarrhoea for 3 weeks  \nNo blood in stool  \nFever for last 3 days  \uf06f Begin giving ORS solution  \n\uf06f Give first dose of oral antibiotic  \n\uf06f Give first dose of oral antimalarial  \n\uf06f Give dose of rectal artesunate suppository  \n\uf06f No pre -referral treatment   \nKofi (3 -year-old boy)   \nCough for 3 days  \nChest indrawing  \nUnusually sleepy or \nunconscious  \uf06f Begin giving ORS solution  \n\uf06f Give first dose of oral antibiotic  \n\uf06f Give first dose of oral antimalarial  \n\uf06f Give dose of rectal artesunate suppository  \n\uf06f No pre -referral treatment   \nSara (3 -year-old girl)   \nDiarrhoea for 4 days  \nBlood in stool  \uf06f Begin giving ORS solution  \n\uf06f Give first dose of oral ant",
+            "id": "chunk-182",
+            "source": "Unknown",
+            "score": 0.455278903
+          },
+          {
+            "text": "S, for how long?       days  \n\uf06f \uf06e  Diarrhoea (loose stools)        days.  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \n\uf06f \uf06e Convulsions?  \uf06f \uf06e  Fever (reported or now) Since    2   days ago.  \n\uf06f \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf06f not able to drink or feed anything?   \n\uf06f \uf06e  Vomiting? IF YES, \uf06f vomits everything?   \n\uf06f \uf06e Chest indrawing? (FOR ALL CHILDREN)  \nIF COUGH, count breaths in 1 minute:  \n      breaths per minute (bpm).  \n \n\uf06f \uf06e Fast breathing:  \n Age 2 months up to 12 months: 50bpm or more  \n Age 12 months up to 5 years: 40bpm or more  \n\uf06f \uf06e Unusually sleepy or unconscious?  \nFor child 6 months up to 5 years, MUAC strap colour:  \nRed     Yellow     Green          \n\uf06f \uf06e  Swelling of both feet?   \nAny OTHER PROBLEM or reason referred:              \nReferred to (name of health facility):              \nReferred by (name of CHW):         Date:    Time:      \uf06f  Cough for 14 days or more  \n\uf06f  Diarrhoea for 14 days or more  \uf06f  ORS solution for diarrhoea  \n\uf06f  Blood in stool  \n\uf06f  Convulsions  \uf06f  Fever for last 7 days or more  \n\uf06f  Not able to drink or  \n feed anything  \n\uf06f  Vomits everything  \n\uf06f  Chest indrawing  \n \n\uf06f  Unusually sleepy or unconscious  \n\uf06f  Red on MUAC strap  \n\uf06f",
+            "id": "chunk-201",
+            "source": "Unknown",
+            "score": 0.45005843
+          },
+          {
+            "text": "m drinking and eating well.  \nFor a child who is not exclusively breastfed, sipping a safe, soothing remedy \u2014like honey in \nwarm (not hot) water \u2014can help relieve a cough and soothe the throat. There is no need for \nother medicine. Tell the caregiver that cough medicines may contain harmful ingredients, and \nthey are expensive.  \n  \n \nParticipant Manual: Caring for the sick child in the community  44 \n Discuss: What is a safe, soothing remedy for a sore throat, which is used in your \ncommunity?  \nAdvise the caregiver to bring the child right away if the child cannot drink or eat or is getting \nsicker. Especially watch for any difficult breathing. If the child becomes sicker, ask the \ncaregiver to bring the child back right away. Even if the child improves, ask to see the child \nwith cough again in 3 days for a follow -up visit.  \n\uf06f Yellow on MUAC strap  \nCounsel caregiver on feeding or, if ther e is a community -based feeding programme, refer the \nchild with yellow on the strap for supplemental feeding.  \nThere will be more information later on how to treat children with diarrhoea, malaria, or cough \nwith fast breathing. You will also need to follow up these children. You will make",
+            "id": "chunk-73",
+            "source": "Unknown",
+            "score": 0.440491766
+          },
+          {
+            "text": "  \uf06e   \n\uf0fe \uf06e Cough? If YES, for how long?    3  days  \uf06f  Cough for 14 days or more  \n\uf06f \uf06e  Diarrhoea (3 or more loose stools in 24 hours)?  \n            IF YES, for how long?       days.  \uf06f  Diarrhoea for 14 days  \n or more  \uf06f  Diarrhoea  (less than 14 \n days AND no blood in \n stool)  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \uf06f  Blood in stool  \n\uf06f \uf06e Convulsions?  \uf06f  Convulsions   \uf0fe \uf06e  Fever (reported or now)  \n            IF YES, started    2   days ago.  \uf06f  Fever for last 7 days  \n or more  \uf06f  Fever (less than 7 days)  \n in a malaria area  \n\uf06f \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf06f not able to drink or feed anything?   \uf06f  Not able to drink or  \n feed anything  \n\uf0fe \uf06e  Vomiting? IF YES, \uf06f vomits everything?   \uf06f  Vomits everything  \nLOOK:  \n\uf06f \uf06e Chest indrawing? (FOR ALL CHILDREN)  \uf06f  Chest indrawing   \nIF COUGH, count breaths in 1 minute:  \n  45   breaths per minute (bpm).  \n \n\uf06f \uf06e Fast breathing:  \n Age 2 months up to 12 months: 50bpm or more  \n Age 12 months up to 5 years: 40bpm or more   \uf06f  Fast breathing    \n\uf06f \uf06e Unusually sleepy or unconscious?  \uf06f  Unusually sleepy or unconscious  \nFor child 6 months up to 5 years, MUAC strap colour:  \nRed       Yellow     Green     \uf0fc    ",
+            "id": "chunk-163",
+            "source": "Unknown",
+            "score": 0.436820865
+          }
+        ]
+      },
+      {
+        "question": "Has the child had any recent exposure to someone with a respiratory infection or any known allergens?",
+        "answer": "No, the child has not been exposed to anyone with a respiratory infection or any known allergens recently.",
+        "type": "MC",
+        "citations": [
+          {
+            "text": "for how long?    3  days  \uf06f  Cough for 14 days or more  \n\uf06f \uf06e  Diarrhoea (3 or more loose stools in 24 hours)?  \n            IF YES, for how long?       days.  \uf06f  Diarrhoea for 14 days  \n or more  \uf06f  Diarrhoea  (less than 14 \n days AND no blood in \n stool)  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \uf06f  Blood in stool  \n\uf06f \uf06e Convulsions?  \uf06f  Convulsions   \uf06f \uf06e  Fever (reported or now)  \n            IF YES, started    2   days ago.  \uf06f  Fever for last 7 days  \n or more  \uf06f  Fever (less than 7 days)  \n in a malaria area  \n\uf06f \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf06f not able to drink or feed anything?   \uf06f  Not able to drink or  \n feed anything  \n\uf06f \uf06e  Vomiting? IF YES, \uf06f vomits everything?   \uf06f  Vomits everything  \nLOOK:  \n\uf06f \uf06e Chest indrawing? (FOR ALL CHILDREN)  \uf06f  Chest indrawing   \nIF COUGH, count breaths in 1 minute:  \n  45   breaths per minute (bpm).  \n \n\uf0fe \uf06e Fast breathing:  \n Age 2 months up to 12 months: 50bpm or more  \n Age 12 months up to 5 years: 40bpm or more    \n \n\uf06f  Fast breathing    \n\uf06f \uf06e Unusually sleepy or unconscious?  \uf06f  Unusually sleepy or unconscious  \nFor child 6 months up to 5 years, MUAC strap colour:  \nRed     Yellow     Green     \uf0fc     \uf06f  Red on MUAC strap  \n",
+            "id": "chunk-205",
+            "source": "Unknown",
+            "score": 0.632364154
+          },
+          {
+            "text": "  \uf06e   \n\uf0fe \uf06e Cough? If YES, for how long?    3  days  \uf06f  Cough for 14 days or more  \n\uf06f \uf06e  Diarrhoea (3 or more loose stools in 24 hours)?  \n            IF YES, for how long?       days.  \uf06f  Diarrhoea for 14 days  \n or more  \uf06f  Diarrhoea  (less than 14 \n days AND no blood in \n stool)  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \uf06f  Blood in stool  \n\uf06f \uf06e Convulsions?  \uf06f  Convulsions   \uf0fe \uf06e  Fever (reported or now)  \n            IF YES, started    2   days ago.  \uf06f  Fever for last 7 days  \n or more  \uf06f  Fever (less than 7 days)  \n in a malaria area  \n\uf06f \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf06f not able to drink or feed anything?   \uf06f  Not able to drink or  \n feed anything  \n\uf0fe \uf06e  Vomiting? IF YES, \uf06f vomits everything?   \uf06f  Vomits everything  \nLOOK:  \n\uf06f \uf06e Chest indrawing? (FOR ALL CHILDREN)  \uf06f  Chest indrawing   \nIF COUGH, count breaths in 1 minute:  \n  45   breaths per minute (bpm).  \n \n\uf06f \uf06e Fast breathing:  \n Age 2 months up to 12 months: 50bpm or more  \n Age 12 months up to 5 years: 40bpm or more   \uf06f  Fast breathing    \n\uf06f \uf06e Unusually sleepy or unconscious?  \uf06f  Unusually sleepy or unconscious  \nFor child 6 months up to 5 years, MUAC strap colour:  \nRed       Yellow     Green     \uf0fc    ",
+            "id": "chunk-163",
+            "source": "Unknown",
+            "score": 0.631720424
+          },
+          {
+            "text": "S, for how long?       days  \n\uf06f \uf06e  Diarrhoea (loose stools)        days.  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \n\uf06f \uf06e Convulsions?  \uf06f \uf06e  Fever (reported or now) Since    2   days ago.  \n\uf06f \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf06f not able to drink or feed anything?   \n\uf06f \uf06e  Vomiting? IF YES, \uf06f vomits everything?   \n\uf06f \uf06e Chest indrawing? (FOR ALL CHILDREN)  \nIF COUGH, count breaths in 1 minute:  \n      breaths per minute (bpm).  \n \n\uf06f \uf06e Fast breathing:  \n Age 2 months up to 12 months: 50bpm or more  \n Age 12 months up to 5 years: 40bpm or more  \n\uf06f \uf06e Unusually sleepy or unconscious?  \nFor child 6 months up to 5 years, MUAC strap colour:  \nRed     Yellow     Green          \n\uf06f \uf06e  Swelling of both feet?   \nAny OTHER PROBLEM or reason referred:              \nReferred to (name of health facility):              \nReferred by (name of CHW):         Date:    Time:      \uf06f  Cough for 14 days or more  \n\uf06f  Diarrhoea for 14 days or more  \uf06f  ORS solution for diarrhoea  \n\uf06f  Blood in stool  \n\uf06f  Convulsions  \uf06f  Fever for last 7 days or more  \n\uf06f  Not able to drink or  \n feed anything  \n\uf06f  Vomits everything  \n\uf06f  Chest indrawing  \n \n\uf06f  Unusually sleepy or unconscious  \n\uf06f  Red on MUAC strap  \n\uf06f",
+            "id": "chunk-201",
+            "source": "Unknown",
+            "score": 0.628052652
+          },
+          {
+            "text": "\nChild 3  Yes No \nChild 4  Yes No \nChild 5  Yes No \nChild 6  Yes No \nChild 7  Yes No \n \n  \n \nParticipant Manual: Caring for the sick child in the community  26 \n Look for signs of illness (continued)  \n\uf06f Fast breathing  \nAnother sign of pneumonia is fast breathing. To look for fast breathing, count the child\u2019s \nbreaths for one full minute.  Count the breaths of all children with cough . \nTell the caregiver you are going to count her child\u2019s breathing. Ask her to keep her child calm. \nIf the child is sleeping, do not wake the child.  \nThe child must be quiet and calm when you count breaths. If the child is frightened, crying, \nangry, or moving  around, you will not be able to do an accurate count.   \n \nChoose a place on the child\u2019s chest or stomach where you can easily see the body move as \nthe child breathes in. To count the breaths in one minute:   \n1. Use a watch with a second hand (or a digital watch , or a timer) . Put the watch in a place \nwhere you can see the watch and the child\u2019s breathing.  \n2. Look for breathing movement anywhere on the child\u2019s chest or stomach.  \nStart counting the child\u2019s breaths when the child is calm. Start when the second \nhand on the watch reache s ",
+            "id": "chunk-49",
+            "source": "Unknown",
+            "score": 0.596351743
+          },
+          {
+            "text": "SK and LOOK  \nASK: What are the child\u2019s problems?  \nIf not reported, then ask to be sure  \nYES,  sign present   \uf0e0 Tick \uf0fe No sign  \uf0e0 Circle  \uf06e \n\uf0fe \uf06e Cough? If YES, for how long?    2  days  \n\uf06f \uf06e  Diarrhoea (3 or more loose stools in 24 hours)?  \n            IF YES, for how long?         days.  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \n\uf06f \uf06e Convulsions?  \uf0fe \uf06e  Fever (reported or now)  \n            IF YES, started        days ago.  \n\uf0fe \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf06f not able to drink or feed anything?   \n\uf0fe \uf06e  Vomiting? IF YES, \uf0fe vomits everything?   Any DANGER SIGN  \n   \n2. DECIDE: Refer or treat child  \n (Tick \uf0fe decision)  SICK but NO danger sign  \n \n \n\uf06f  Cough for 14 days or more  \n\uf06f  Diarrhoea for 14 days  \n or more  \uf06f  Diarrhoea  (less than 14 \n days AND no blood in \n stool)  \uf06f  Blood in stool  \n\uf06f  Convulsions  \n \uf06f  Fever for last 7 days  \n or more  \uf0fe  Fever (less than 7 days)  \n in a malaria area  \n\uf0fe  Not able to drink or  \n feed anything  \nLOOK:  \n\uf06f \uf06e Chest indrawing? (FOR ALL CHILDREN)  \uf06f  Chest indrawing   \nIF COUGH, count breaths in 1 minute:  \n    36   breaths per minute (bpm).  \n  \n\uf06f \uf06e Fast breathing:  \n Age 2 months up to 12 months: 50bpm or more   \uf06f  Fa",
+            "id": "chunk-76",
+            "source": "Unknown",
+            "score": 0.59588486
+          }
+        ]
+      },
+      {
+        "question": "Has the child experienced any recent changes in appetite or weight loss?",
+        "answer": "No, the child has not experienced any recent changes in appetite or weight loss.",
+        "type": "MC",
+        "citations": [
+          {
+            "text": "S, for how long?       days  \n\uf06f \uf06e  Diarrhoea (loose stools)        days.  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \n\uf06f \uf06e Convulsions?  \uf06f \uf06e  Fever (reported or now) Since    2   days ago.  \n\uf06f \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf06f not able to drink or feed anything?   \n\uf06f \uf06e  Vomiting? IF YES, \uf06f vomits everything?   \n\uf06f \uf06e Chest indrawing? (FOR ALL CHILDREN)  \nIF COUGH, count breaths in 1 minute:  \n      breaths per minute (bpm).  \n \n\uf06f \uf06e Fast breathing:  \n Age 2 months up to 12 months: 50bpm or more  \n Age 12 months up to 5 years: 40bpm or more  \n\uf06f \uf06e Unusually sleepy or unconscious?  \nFor child 6 months up to 5 years, MUAC strap colour:  \nRed     Yellow     Green          \n\uf06f \uf06e  Swelling of both feet?   \nAny OTHER PROBLEM or reason referred:              \nReferred to (name of health facility):              \nReferred by (name of CHW):         Date:    Time:      \uf06f  Cough for 14 days or more  \n\uf06f  Diarrhoea for 14 days or more  \uf06f  ORS solution for diarrhoea  \n\uf06f  Blood in stool  \n\uf06f  Convulsions  \uf06f  Fever for last 7 days or more  \n\uf06f  Not able to drink or  \n feed anything  \n\uf06f  Vomits everything  \n\uf06f  Chest indrawing  \n \n\uf06f  Unusually sleepy or unconscious  \n\uf06f  Red on MUAC strap  \n\uf06f",
+            "id": "chunk-201",
+            "source": "Unknown",
+            "score": 0.587771118
+          },
+          {
+            "text": "  \uf06e   \n\uf0fe \uf06e Cough? If YES, for how long?    3  days  \uf06f  Cough for 14 days or more  \n\uf06f \uf06e  Diarrhoea (3 or more loose stools in 24 hours)?  \n            IF YES, for how long?       days.  \uf06f  Diarrhoea for 14 days  \n or more  \uf06f  Diarrhoea  (less than 14 \n days AND no blood in \n stool)  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \uf06f  Blood in stool  \n\uf06f \uf06e Convulsions?  \uf06f  Convulsions   \uf0fe \uf06e  Fever (reported or now)  \n            IF YES, started    2   days ago.  \uf06f  Fever for last 7 days  \n or more  \uf06f  Fever (less than 7 days)  \n in a malaria area  \n\uf06f \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf06f not able to drink or feed anything?   \uf06f  Not able to drink or  \n feed anything  \n\uf0fe \uf06e  Vomiting? IF YES, \uf06f vomits everything?   \uf06f  Vomits everything  \nLOOK:  \n\uf06f \uf06e Chest indrawing? (FOR ALL CHILDREN)  \uf06f  Chest indrawing   \nIF COUGH, count breaths in 1 minute:  \n  45   breaths per minute (bpm).  \n \n\uf06f \uf06e Fast breathing:  \n Age 2 months up to 12 months: 50bpm or more  \n Age 12 months up to 5 years: 40bpm or more   \uf06f  Fast breathing    \n\uf06f \uf06e Unusually sleepy or unconscious?  \uf06f  Unusually sleepy or unconscious  \nFor child 6 months up to 5 years, MUAC strap colour:  \nRed       Yellow     Green     \uf0fc    ",
+            "id": "chunk-163",
+            "source": "Unknown",
+            "score": 0.583319664
+          },
+          {
+            "text": "for how long?    3  days  \uf06f  Cough for 14 days or more  \n\uf06f \uf06e  Diarrhoea (3 or more loose stools in 24 hours)?  \n            IF YES, for how long?       days.  \uf06f  Diarrhoea for 14 days  \n or more  \uf06f  Diarrhoea  (less than 14 \n days AND no blood in \n stool)  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \uf06f  Blood in stool  \n\uf06f \uf06e Convulsions?  \uf06f  Convulsions   \uf06f \uf06e  Fever (reported or now)  \n            IF YES, started    2   days ago.  \uf06f  Fever for last 7 days  \n or more  \uf06f  Fever (less than 7 days)  \n in a malaria area  \n\uf06f \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf06f not able to drink or feed anything?   \uf06f  Not able to drink or  \n feed anything  \n\uf06f \uf06e  Vomiting? IF YES, \uf06f vomits everything?   \uf06f  Vomits everything  \nLOOK:  \n\uf06f \uf06e Chest indrawing? (FOR ALL CHILDREN)  \uf06f  Chest indrawing   \nIF COUGH, count breaths in 1 minute:  \n  45   breaths per minute (bpm).  \n \n\uf0fe \uf06e Fast breathing:  \n Age 2 months up to 12 months: 50bpm or more  \n Age 12 months up to 5 years: 40bpm or more    \n \n\uf06f  Fast breathing    \n\uf06f \uf06e Unusually sleepy or unconscious?  \uf06f  Unusually sleepy or unconscious  \nFor child 6 months up to 5 years, MUAC strap colour:  \nRed     Yellow     Green     \uf0fc     \uf06f  Red on MUAC strap  \n",
+            "id": "chunk-205",
+            "source": "Unknown",
+            "score": 0.579262078
+          },
+          {
+            "text": "r for 2 or 3 \nminutes at a time  Yes No  \n9. Child age 4 years has swelling of both feet  Yes No  \n10. Child age 6 months has chest indrawing  Yes No  \n11. Child age 2 years has a YELLOW reading on the MUAC strap  Yes No  \n12. Child age 10 months has had diarrhoea with 4 loose stools since \nyesterday morning  Yes No  \n13. Child age 8 months has a RED reading on the MUAC strap  Yes No  \n14. Child age 36 months has had a very hot body since last night in a \nmalaria area  Yes No  \n15. Child age 4 years has had loose and smelly stools with white mucus for \nthree days  Yes No  \n16. Child age 4 months has chest indrawing while breastfeeding  Yes No  \n17. Child age 4 and a half years has been coughing for 2 months  Yes No  \n18. Child age 2 years has diarrhoea with blood in her stools  Yes No  \n19. Child age 2 years has had diarrhoea for one week with no blood in her \nstools  Yes No  \n20. Child age 18 months has had a low fever (not very hot) for 2 weeks  Yes No  \n21. Child in a malaria area has had fever and vomiting (not everything) for 3 \ndays  Yes No  \n \nParticipant Manual: Caring for the sick child in the community  43 \n SICK but NO DANGER SIGN: Treat the child  \nLook at the far right",
+            "id": "chunk-70",
+            "source": "Unknown",
+            "score": 0.576999426
+          },
+          {
+            "text": "aria area), and cough with \nfast breathing.  \nIn this secti on, you will learn to:  \n\uf0b7 Identify danger signs.  \n\uf0b7 Identify signs of illness (that are not danger signs).  \n\uf0b7 Decide if the child must be referred to the health facility or whether you can treat the \nchild in the community.  \nAny DANGER SIGN: Refer the child  \nOn the r ecording form, the middle column \u2014Any DANGER SIGN? \u2014lists the danger signs. \n[Find the column that lists the danger signs.]  \nAny one of these signs is a reason to refer the child URGENTLY to the health facility. Using \nthe information you have about the child,  tick [\uf0fc] any danger sign or signs you find.  \nThe first seven danger signs are found by asking the caregiver about the child\u2019s problems.  \n\uf06f Cough for 14  days or more  \nA child who has had cough for 14 days or more has a danger sign. The child may have \ntubercu losis (TB), asthma, whooping cough, or another problem. The child needs more \nassessment and treatment at the health facility. Refer a child with cough for 14 days or \nmore.  \n \n  \n \nParticipant Manual: Caring for the sick child in the community  39 \n \uf06f Diarrhoea for 14 days or more  \nDiarrhoea often stops on its own in 3 or 4 days. Diarrh",
+            "id": "chunk-63",
+            "source": "Unknown",
+            "score": 0.576132715
+          }
+        ]
+      },
+      {
+        "question": "Has the child had any recent changes in their sleeping patterns or increased irritability?",
+        "answer": "No, the child has not experienced any recent changes in their sleeping patterns or increased irritability.",
+        "type": "MC",
+        "citations": [
+          {
+            "text": "S, for how long?       days  \n\uf06f \uf06e  Diarrhoea (loose stools)        days.  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \n\uf06f \uf06e Convulsions?  \uf06f \uf06e  Fever (reported or now) Since    2   days ago.  \n\uf06f \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf06f not able to drink or feed anything?   \n\uf06f \uf06e  Vomiting? IF YES, \uf06f vomits everything?   \n\uf06f \uf06e Chest indrawing? (FOR ALL CHILDREN)  \nIF COUGH, count breaths in 1 minute:  \n      breaths per minute (bpm).  \n \n\uf06f \uf06e Fast breathing:  \n Age 2 months up to 12 months: 50bpm or more  \n Age 12 months up to 5 years: 40bpm or more  \n\uf06f \uf06e Unusually sleepy or unconscious?  \nFor child 6 months up to 5 years, MUAC strap colour:  \nRed     Yellow     Green          \n\uf06f \uf06e  Swelling of both feet?   \nAny OTHER PROBLEM or reason referred:              \nReferred to (name of health facility):              \nReferred by (name of CHW):         Date:    Time:      \uf06f  Cough for 14 days or more  \n\uf06f  Diarrhoea for 14 days or more  \uf06f  ORS solution for diarrhoea  \n\uf06f  Blood in stool  \n\uf06f  Convulsions  \uf06f  Fever for last 7 days or more  \n\uf06f  Not able to drink or  \n feed anything  \n\uf06f  Vomits everything  \n\uf06f  Chest indrawing  \n \n\uf06f  Unusually sleepy or unconscious  \n\uf06f  Red on MUAC strap  \n\uf06f",
+            "id": "chunk-201",
+            "source": "Unknown",
+            "score": 0.617423475
+          },
+          {
+            "text": "  \uf06e   \n\uf0fe \uf06e Cough? If YES, for how long?    3  days  \uf06f  Cough for 14 days or more  \n\uf06f \uf06e  Diarrhoea (3 or more loose stools in 24 hours)?  \n            IF YES, for how long?       days.  \uf06f  Diarrhoea for 14 days  \n or more  \uf06f  Diarrhoea  (less than 14 \n days AND no blood in \n stool)  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \uf06f  Blood in stool  \n\uf06f \uf06e Convulsions?  \uf06f  Convulsions   \uf0fe \uf06e  Fever (reported or now)  \n            IF YES, started    2   days ago.  \uf06f  Fever for last 7 days  \n or more  \uf06f  Fever (less than 7 days)  \n in a malaria area  \n\uf06f \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf06f not able to drink or feed anything?   \uf06f  Not able to drink or  \n feed anything  \n\uf0fe \uf06e  Vomiting? IF YES, \uf06f vomits everything?   \uf06f  Vomits everything  \nLOOK:  \n\uf06f \uf06e Chest indrawing? (FOR ALL CHILDREN)  \uf06f  Chest indrawing   \nIF COUGH, count breaths in 1 minute:  \n  45   breaths per minute (bpm).  \n \n\uf06f \uf06e Fast breathing:  \n Age 2 months up to 12 months: 50bpm or more  \n Age 12 months up to 5 years: 40bpm or more   \uf06f  Fast breathing    \n\uf06f \uf06e Unusually sleepy or unconscious?  \uf06f  Unusually sleepy or unconscious  \nFor child 6 months up to 5 years, MUAC strap colour:  \nRed       Yellow     Green     \uf0fc    ",
+            "id": "chunk-163",
+            "source": "Unknown",
+            "score": 0.606956363
+          },
+          {
+            "text": "for how long?    3  days  \uf06f  Cough for 14 days or more  \n\uf06f \uf06e  Diarrhoea (3 or more loose stools in 24 hours)?  \n            IF YES, for how long?       days.  \uf06f  Diarrhoea for 14 days  \n or more  \uf06f  Diarrhoea  (less than 14 \n days AND no blood in \n stool)  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \uf06f  Blood in stool  \n\uf06f \uf06e Convulsions?  \uf06f  Convulsions   \uf06f \uf06e  Fever (reported or now)  \n            IF YES, started    2   days ago.  \uf06f  Fever for last 7 days  \n or more  \uf06f  Fever (less than 7 days)  \n in a malaria area  \n\uf06f \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf06f not able to drink or feed anything?   \uf06f  Not able to drink or  \n feed anything  \n\uf06f \uf06e  Vomiting? IF YES, \uf06f vomits everything?   \uf06f  Vomits everything  \nLOOK:  \n\uf06f \uf06e Chest indrawing? (FOR ALL CHILDREN)  \uf06f  Chest indrawing   \nIF COUGH, count breaths in 1 minute:  \n  45   breaths per minute (bpm).  \n \n\uf0fe \uf06e Fast breathing:  \n Age 2 months up to 12 months: 50bpm or more  \n Age 12 months up to 5 years: 40bpm or more    \n \n\uf06f  Fast breathing    \n\uf06f \uf06e Unusually sleepy or unconscious?  \uf06f  Unusually sleepy or unconscious  \nFor child 6 months up to 5 years, MUAC strap colour:  \nRed     Yellow     Green     \uf0fc     \uf06f  Red on MUAC strap  \n",
+            "id": "chunk-205",
+            "source": "Unknown",
+            "score": 0.600711823
+          },
+          {
+            "text": "orted by the caregiver and \nfound by you.  Assume the child has no other relevant condition for deciding whether to refer \nthe child.  \nDoes the child  have a danger sign ? Circle Yes or No. Should you urgently refer the child \nto the health facility?  Tick [\uf0fc] if the child should be referred. To guide your decision, use the \nrecording form.  \nDoes the child have a danger sign? (Circle Yes or No.)  Refer child ? \nTick [\uf0fc] \n1. Child age 11 months has had cough during three days; he is not \ninterested in eating but will breastfeed  Yes No  \n2. Child age 4 months is breathing 48 breaths per minute  Yes No  \n3. Child age 2 years vomits all liquid and food her mother gives her  Yes No  \n4. Child age 3 months frequently holds his breath while exercising his \narms and legs  Yes No  \n5. Child age 12 months is too weak to drink or eat anything  Yes No  \n6. Child age 3 years with cough cannot swallow  Yes No  \n7. Child age 10 months vomits ground food but continues to breastfeed for \nshort periods of time  Yes No  \n8. Arms and legs of child, age 4 months, stiffen and shudder for 2 or 3 \nminutes at a time  Yes No  \n9. Child age 4 years has swelling of both feet  Yes No  \n10. Child age 6 month",
+            "id": "chunk-69",
+            "source": "Unknown",
+            "score": 0.597681046
+          },
+          {
+            "text": "r for 2 or 3 \nminutes at a time  Yes No  \n9. Child age 4 years has swelling of both feet  Yes No  \n10. Child age 6 months has chest indrawing  Yes No  \n11. Child age 2 years has a YELLOW reading on the MUAC strap  Yes No  \n12. Child age 10 months has had diarrhoea with 4 loose stools since \nyesterday morning  Yes No  \n13. Child age 8 months has a RED reading on the MUAC strap  Yes No  \n14. Child age 36 months has had a very hot body since last night in a \nmalaria area  Yes No  \n15. Child age 4 years has had loose and smelly stools with white mucus for \nthree days  Yes No  \n16. Child age 4 months has chest indrawing while breastfeeding  Yes No  \n17. Child age 4 and a half years has been coughing for 2 months  Yes No  \n18. Child age 2 years has diarrhoea with blood in her stools  Yes No  \n19. Child age 2 years has had diarrhoea for one week with no blood in her \nstools  Yes No  \n20. Child age 18 months has had a low fever (not very hot) for 2 weeks  Yes No  \n21. Child in a malaria area has had fever and vomiting (not everything) for 3 \ndays  Yes No  \n \nParticipant Manual: Caring for the sick child in the community  43 \n SICK but NO DANGER SIGN: Treat the child  \nLook at the far right",
+            "id": "chunk-70",
+            "source": "Unknown",
+            "score": 0.596720159
+          }
+        ]
+      },
+      {
+        "question": "Has the child had any recent exposure to cold weather or been in environments with significant air pollution?",
+        "answer": "No, the child has not been exposed to cold weather nor been in environments with significant air pollution recently.",
+        "type": "MC",
+        "citations": [
+          {
+            "text": "S, for how long?       days  \n\uf06f \uf06e  Diarrhoea (loose stools)        days.  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \n\uf06f \uf06e Convulsions?  \uf06f \uf06e  Fever (reported or now) Since    2   days ago.  \n\uf06f \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf06f not able to drink or feed anything?   \n\uf06f \uf06e  Vomiting? IF YES, \uf06f vomits everything?   \n\uf06f \uf06e Chest indrawing? (FOR ALL CHILDREN)  \nIF COUGH, count breaths in 1 minute:  \n      breaths per minute (bpm).  \n \n\uf06f \uf06e Fast breathing:  \n Age 2 months up to 12 months: 50bpm or more  \n Age 12 months up to 5 years: 40bpm or more  \n\uf06f \uf06e Unusually sleepy or unconscious?  \nFor child 6 months up to 5 years, MUAC strap colour:  \nRed     Yellow     Green          \n\uf06f \uf06e  Swelling of both feet?   \nAny OTHER PROBLEM or reason referred:              \nReferred to (name of health facility):              \nReferred by (name of CHW):         Date:    Time:      \uf06f  Cough for 14 days or more  \n\uf06f  Diarrhoea for 14 days or more  \uf06f  ORS solution for diarrhoea  \n\uf06f  Blood in stool  \n\uf06f  Convulsions  \uf06f  Fever for last 7 days or more  \n\uf06f  Not able to drink or  \n feed anything  \n\uf06f  Vomits everything  \n\uf06f  Chest indrawing  \n \n\uf06f  Unusually sleepy or unconscious  \n\uf06f  Red on MUAC strap  \n\uf06f",
+            "id": "chunk-201",
+            "source": "Unknown",
+            "score": 0.632687569
+          },
+          {
+            "text": "  \uf06e   \n\uf0fe \uf06e Cough? If YES, for how long?    3  days  \uf06f  Cough for 14 days or more  \n\uf06f \uf06e  Diarrhoea (3 or more loose stools in 24 hours)?  \n            IF YES, for how long?       days.  \uf06f  Diarrhoea for 14 days  \n or more  \uf06f  Diarrhoea  (less than 14 \n days AND no blood in \n stool)  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \uf06f  Blood in stool  \n\uf06f \uf06e Convulsions?  \uf06f  Convulsions   \uf0fe \uf06e  Fever (reported or now)  \n            IF YES, started    2   days ago.  \uf06f  Fever for last 7 days  \n or more  \uf06f  Fever (less than 7 days)  \n in a malaria area  \n\uf06f \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf06f not able to drink or feed anything?   \uf06f  Not able to drink or  \n feed anything  \n\uf0fe \uf06e  Vomiting? IF YES, \uf06f vomits everything?   \uf06f  Vomits everything  \nLOOK:  \n\uf06f \uf06e Chest indrawing? (FOR ALL CHILDREN)  \uf06f  Chest indrawing   \nIF COUGH, count breaths in 1 minute:  \n  45   breaths per minute (bpm).  \n \n\uf06f \uf06e Fast breathing:  \n Age 2 months up to 12 months: 50bpm or more  \n Age 12 months up to 5 years: 40bpm or more   \uf06f  Fast breathing    \n\uf06f \uf06e Unusually sleepy or unconscious?  \uf06f  Unusually sleepy or unconscious  \nFor child 6 months up to 5 years, MUAC strap colour:  \nRed       Yellow     Green     \uf0fc    ",
+            "id": "chunk-163",
+            "source": "Unknown",
+            "score": 0.623564303
+          },
+          {
+            "text": "for how long?    3  days  \uf06f  Cough for 14 days or more  \n\uf06f \uf06e  Diarrhoea (3 or more loose stools in 24 hours)?  \n            IF YES, for how long?       days.  \uf06f  Diarrhoea for 14 days  \n or more  \uf06f  Diarrhoea  (less than 14 \n days AND no blood in \n stool)  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \uf06f  Blood in stool  \n\uf06f \uf06e Convulsions?  \uf06f  Convulsions   \uf06f \uf06e  Fever (reported or now)  \n            IF YES, started    2   days ago.  \uf06f  Fever for last 7 days  \n or more  \uf06f  Fever (less than 7 days)  \n in a malaria area  \n\uf06f \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf06f not able to drink or feed anything?   \uf06f  Not able to drink or  \n feed anything  \n\uf06f \uf06e  Vomiting? IF YES, \uf06f vomits everything?   \uf06f  Vomits everything  \nLOOK:  \n\uf06f \uf06e Chest indrawing? (FOR ALL CHILDREN)  \uf06f  Chest indrawing   \nIF COUGH, count breaths in 1 minute:  \n  45   breaths per minute (bpm).  \n \n\uf0fe \uf06e Fast breathing:  \n Age 2 months up to 12 months: 50bpm or more  \n Age 12 months up to 5 years: 40bpm or more    \n \n\uf06f  Fast breathing    \n\uf06f \uf06e Unusually sleepy or unconscious?  \uf06f  Unusually sleepy or unconscious  \nFor child 6 months up to 5 years, MUAC strap colour:  \nRed     Yellow     Green     \uf0fc     \uf06f  Red on MUAC strap  \n",
+            "id": "chunk-205",
+            "source": "Unknown",
+            "score": 0.615174115
+          },
+          {
+            "text": "orted by the caregiver and \nfound by you.  Assume the child has no other relevant condition for deciding whether to refer \nthe child.  \nDoes the child  have a danger sign ? Circle Yes or No. Should you urgently refer the child \nto the health facility?  Tick [\uf0fc] if the child should be referred. To guide your decision, use the \nrecording form.  \nDoes the child have a danger sign? (Circle Yes or No.)  Refer child ? \nTick [\uf0fc] \n1. Child age 11 months has had cough during three days; he is not \ninterested in eating but will breastfeed  Yes No  \n2. Child age 4 months is breathing 48 breaths per minute  Yes No  \n3. Child age 2 years vomits all liquid and food her mother gives her  Yes No  \n4. Child age 3 months frequently holds his breath while exercising his \narms and legs  Yes No  \n5. Child age 12 months is too weak to drink or eat anything  Yes No  \n6. Child age 3 years with cough cannot swallow  Yes No  \n7. Child age 10 months vomits ground food but continues to breastfeed for \nshort periods of time  Yes No  \n8. Arms and legs of child, age 4 months, stiffen and shudder for 2 or 3 \nminutes at a time  Yes No  \n9. Child age 4 years has swelling of both feet  Yes No  \n10. Child age 6 month",
+            "id": "chunk-69",
+            "source": "Unknown",
+            "score": 0.611427724
+          },
+          {
+            "text": "r for 2 or 3 \nminutes at a time  Yes No  \n9. Child age 4 years has swelling of both feet  Yes No  \n10. Child age 6 months has chest indrawing  Yes No  \n11. Child age 2 years has a YELLOW reading on the MUAC strap  Yes No  \n12. Child age 10 months has had diarrhoea with 4 loose stools since \nyesterday morning  Yes No  \n13. Child age 8 months has a RED reading on the MUAC strap  Yes No  \n14. Child age 36 months has had a very hot body since last night in a \nmalaria area  Yes No  \n15. Child age 4 years has had loose and smelly stools with white mucus for \nthree days  Yes No  \n16. Child age 4 months has chest indrawing while breastfeeding  Yes No  \n17. Child age 4 and a half years has been coughing for 2 months  Yes No  \n18. Child age 2 years has diarrhoea with blood in her stools  Yes No  \n19. Child age 2 years has had diarrhoea for one week with no blood in her \nstools  Yes No  \n20. Child age 18 months has had a low fever (not very hot) for 2 weeks  Yes No  \n21. Child in a malaria area has had fever and vomiting (not everything) for 3 \ndays  Yes No  \n \nParticipant Manual: Caring for the sick child in the community  43 \n SICK but NO DANGER SIGN: Treat the child  \nLook at the far right",
+            "id": "chunk-70",
+            "source": "Unknown",
+            "score": 0.609820127
+          }
+        ]
+      }
+    ],
+    "exam_responses": [],
+    "diagnosis": {
+      "diagnosis": "Based on the information provided and adhering strictly to the medical guide content:\n\n- Primary Diagnosis: The primary diagnosis cannot be definitively determined from the medical guide information provided as there are no specific symptoms, such as fast breathing, fever, or unusual sleepiness, mentioned that match the guide's criteria for a specific diagnosis.\n\n- Differential Diagnoses: Without specific symptoms such as fever, chest indrawing, unusually sleepy or unconscious state, or details on breathing rate, it's challenging to pinpoint a differential diagnosis from the medical guide. The guide suggests observing for signs like fast breathing, fever, and the child's general alertness to assess their condition further.\n\n- Treatment Plan: The medical guide does not provide a direct treatment plan without a clear diagnosis. However, it emphasizes treating the child if they are sick but show no danger signs, suggesting supportive care and monitoring for any changes in the child's condition that could indicate a more serious illness. For coughs not accompanied by fast breathing or other severe symptoms, the guide implies a watchful waiting approach might be appropriate, ensuring the child is comfortable and hydrated while monitoring for any developments.",
+      "treatment": "Based on the medical guide information provided and the patient's symptoms, here is a streamlined treatment plan:\n\n1. Ensure the child is comfortable and in a safe, calm environment.\n2. Offer the child fluids to keep them hydrated.\n3. Monitor the child for any new symptoms such as:\n   - Fast breathing: For a child aged 2 months up to 12 months, this is 50 breaths per minute or more. For a child aged 12 months up to 5 years, it's 40 breaths per minute or more.\n   - Fever: Check if the child feels hotter than usual to touch or if the caregiver reports the child having a fever.\n   - Unusual sleepiness or difficulty waking the child.\n   - Signs of difficulty in drinking or feeding.\n   - Vomiting: Especially if the child vomits everything they drink or eat.\n   - Chest indrawing, which is a sign of difficulty breathing.\n   - Swelling of both feet.\n4. If the child develops any of the above symptoms, reassess using the guide to determine the next steps based on the specific symptom.\n5. If cough persists for 14 days or more, consider this as a reason for referral.\n6. If any danger signs develop (as listed in the guide: unusually sleepy or unconscious, red on MUAC strap, not able to drink or feed anything, vomits everything, chest indrawing), refer immediately to a healthcare facility.\n7. Continue to monitor the child's general well-being, ensuring they are eating, drinking, and playing as normal.\n\nNote: The medical guide does not provide specific treatment recommendations without a clear diagnosis. The steps above are focused on supportive care and monitoring for any changes that would necessitate further medical intervention or referral.",
+      "citations": [
+        {
+          "source": "Unknown",
+          "score": 0.432712138
+        },
+        {
+          "source": "Unknown",
+          "score": 0.42975688
+        },
+        {
+          "source": "Unknown",
+          "score": 0.403910726
+        }
+      ],
+      "chunks_used": [
+        {
+          "text": "r for 2 or 3 \nminutes at a time  Yes No  \n9. Child age 4 years has swelling of both feet  Yes No  \n10. Child age 6 months has chest indrawing  Yes No  \n11. Child age 2 years has a YELLOW reading on the MUAC strap  Yes No  \n12. Child age 10 months has had diarrhoea with 4 loose stools since \nyesterday morning  Yes No  \n13. Child age 8 months has a RED reading on the MUAC strap  Yes No  \n14. Child age 36 months has had a very hot body since last night in a \nmalaria area  Yes No  \n15. Child age 4 years has had loose and smelly stools with white mucus for \nthree days  Yes No  \n16. Child age 4 months has chest indrawing while breastfeeding  Yes No  \n17. Child age 4 and a half years has been coughing for 2 months  Yes No  \n18. Child age 2 years has diarrhoea with blood in her stools  Yes No  \n19. Child age 2 years has had diarrhoea for one week with no blood in her \nstools  Yes No  \n20. Child age 18 months has had a low fever (not very hot) for 2 weeks  Yes No  \n21. Child in a malaria area has had fever and vomiting (not everything) for 3 \ndays  Yes No  \n \nParticipant Manual: Caring for the sick child in the community  43 \n SICK but NO DANGER SIGN: Treat the child  \nLook at the far right",
+          "id": "chunk-70",
+          "source": "Unknown",
+          "score": 0.432712138
+        },
+        {
+          "text": "r minute?  Does the child have fast breathing?  \nMano    Yes No \nWumbi    Yes No \n Age?  Breaths per minute?  Does the child have fast breathing?  \nChild 1    Yes No \nChild 2    Yes No \nChild 3    Yes No \nChild 4    Yes No \n\n \nParticipant Manual: Caring for the sick child in the community  30 \n  \nLook for signs of illness (continued)  \n\uf06f Unusually sl eepy  or unconscious  \nWhile looking for signs of illness, look at the child\u2019s general condition. Look to see if the child \nis unusually sleepy or unconscious.  \nIf the child has been sleeping and you have not seen the child awake, ask the caregiver if the \nchild seems unusually sleepy. Gently try to wake the child by moving the child\u2019s arms or legs. \nIf the child is difficult to wake, see if the child responds when the caregiver claps.  \nAn unusually sleepy  child  is not alert when the child should be. The child is drowsy and \ndoes not seem to notice what is around him or her.  \nAn unconscious child  cannot awaken. The child does not respond when touched or spoken \nto. An unusually sleepy or unconscious child will not be fussy or crying.  \nIn contrast, an alert child pays attention to things and people around him or her. Even when \nt",
+          "id": "chunk-53",
+          "source": "Unknown",
+          "score": 0.42975688
+        },
+        {
+          "text": "S, for how long?       days  \n\uf06f \uf06e  Diarrhoea (loose stools)        days.  \n\uf06f \uf06e If DIARRHOEA, blood in stool?  \n\uf06f \uf06e Convulsions?  \uf06f \uf06e  Fever (reported or now) Since    2   days ago.  \n\uf06f \uf06e  Difficulty drinking or feeding?  \n            IF YES, \uf06f not able to drink or feed anything?   \n\uf06f \uf06e  Vomiting? IF YES, \uf06f vomits everything?   \n\uf06f \uf06e Chest indrawing? (FOR ALL CHILDREN)  \nIF COUGH, count breaths in 1 minute:  \n      breaths per minute (bpm).  \n \n\uf06f \uf06e Fast breathing:  \n Age 2 months up to 12 months: 50bpm or more  \n Age 12 months up to 5 years: 40bpm or more  \n\uf06f \uf06e Unusually sleepy or unconscious?  \nFor child 6 months up to 5 years, MUAC strap colour:  \nRed     Yellow     Green          \n\uf06f \uf06e  Swelling of both feet?   \nAny OTHER PROBLEM or reason referred:              \nReferred to (name of health facility):              \nReferred by (name of CHW):         Date:    Time:      \uf06f  Cough for 14 days or more  \n\uf06f  Diarrhoea for 14 days or more  \uf06f  ORS solution for diarrhoea  \n\uf06f  Blood in stool  \n\uf06f  Convulsions  \uf06f  Fever for last 7 days or more  \n\uf06f  Not able to drink or  \n feed anything  \n\uf06f  Vomits everything  \n\uf06f  Chest indrawing  \n \n\uf06f  Unusually sleepy or unconscious  \n\uf06f  Red on MUAC strap  \n\uf06f",
+          "id": "chunk-201",
+          "source": "Unknown",
+          "score": 0.403910726
+        }
+      ]
+    },
+    "structured_questions": [],
+    "examination_history": []
+  },
+  "grades": {
+    "grading_True diagnosis ": 1.0,
+    "grading_Presents with": 0.0,
+    "grading_Required questions": 0.0,
+    "grading_Optional questions": 0.0,
+    "grading_Required exams <<May need to have \"right\" answer for this row>>": 0.0,
+    "grading_Final diagnosis": 0.0,
+    "grading_Treatment plan": 1.0,
+    "grading_Follow-up instructions": 0.0
+  }
+}

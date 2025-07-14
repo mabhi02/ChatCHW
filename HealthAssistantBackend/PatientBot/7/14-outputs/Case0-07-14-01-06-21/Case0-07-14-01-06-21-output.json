@@ -1,0 +1,66 @@
+{
+  "case_id": 0,
+  "case_results": {
+    "initial_responses": [
+      {
+        "question": "What is the patient's age?",
+        "answer": 1,
+        "type": "NUM"
+      },
+      {
+        "question": "Who is accompanying the patient?",
+        "answer": [
+          "1"
+        ],
+        "type": "MCM"
+      },
+      {
+        "question": "Please describe what brings you here today",
+        "answer": "Cough",
+        "type": "FREE"
+      }
+    ],
+    "followup_responses": [],
+    "exam_responses": [],
+    "diagnosis": {
+      "diagnosis": "Based on the information provided in the medical guide, a specific diagnosis cannot be determined without additional details about the patient's symptoms, the duration of the cough, and any accompanying signs such as chest indrawing or fast breathing.\n\n- Primary Diagnosis: Insufficient information to determine a primary diagnosis. The complaint of \"cough\" is too broad and could be associated with a range of conditions from a common cold to more serious illnesses like pneumonia, depending on additional symptoms and signs not provided in the patient information.\n\n- Differential Diagnoses: Possible differential diagnoses based on the guide could include a common cold, pneumonia (if chest indrawing or fast breathing were observed), tuberculosis, asthma, or whooping cough if the cough has persisted for 14 days or more. The exact condition would depend on further signs and symptoms not specified in the patient information.\n\n- Treatment Plan: Without specific details on the duration of the cough and the presence or absence of danger signs such as chest indrawing, fast breathing, or the cough lasting for 14 days or more, a definitive treatment plan cannot be recommended. If any danger signs are present, the guide advises urgent referral to a health facility for further assessment and treatment. If no danger signs are present, the condition might be managed in the community setting, but specific management steps cannot be provided without more information.",
+      "treatment": "ACTION PLAN:\n\n1. Ask the caregiver about the duration of the cough. If the cough has lasted for 14 days or more, proceed to the next step. If not, continue monitoring the patient.\n2. Check for any danger signs: cough for 14 days or more, diarrhea for 14 days or more, fast breathing, chest indrawing, unusually sleepy or unconscious.\n3. If the child has a cough for 14 days or more, refer to the possibility of tuberculosis (TB), asthma, whooping cough, or another problem that requires further assessment.\n4. Look for chest indrawing to identify severe pneumonia, especially in children with a cough or cold, or those having difficulty breathing.\n5. If any danger signs are present, including chest indrawing or a cough lasting for 14 days or more, refer the child URGENTLY to a health facility for further assessment and treatment.\n6. If no danger signs are present and the cough has not lasted for 14 days or more, continue to monitor the child in the community setting. Specific treatment recommendations cannot be provided without further information.\n\nNote: The medical guide does not provide specific treatment steps for managing a cough without danger signs in the community setting.",
+      "citations": [
+        {
+          "source": "Unknown",
+          "score": 0.376435101
+        },
+        {
+          "source": "Unknown",
+          "score": 0.361095935
+        }
+      ],
+      "chunks_used": [
+        {
+          "text": "aria area), and cough with \nfast breathing.  \nIn this secti on, you will learn to:  \n\uf0b7 Identify danger signs.  \n\uf0b7 Identify signs of illness (that are not danger signs).  \n\uf0b7 Decide if the child must be referred to the health facility or whether you can treat the \nchild in the community.  \nAny DANGER SIGN: Refer the child  \nOn the r ecording form, the middle column \u2014Any DANGER SIGN? \u2014lists the danger signs. \n[Find the column that lists the danger signs.]  \nAny one of these signs is a reason to refer the child URGENTLY to the health facility. Using \nthe information you have about the child,  tick [\uf0fc] any danger sign or signs you find.  \nThe first seven danger signs are found by asking the caregiver about the child\u2019s problems.  \n\uf06f Cough for 14  days or more  \nA child who has had cough for 14 days or more has a danger sign. The child may have \ntubercu losis (TB), asthma, whooping cough, or another problem. The child needs more \nassessment and treatment at the health facility. Refer a child with cough for 14 days or \nmore.  \n \n  \n \nParticipant Manual: Caring for the sick child in the community  39 \n \uf06f Diarrhoea for 14 days or more  \nDiarrhoea often stops on its own in 3 or 4 days. Diarrh",
+          "id": "chunk-63",
+          "source": "Unknown",
+          "score": 0.376435101
+        },
+        {
+          "text": " breathing, and unusually \nsleepy or unconscious.  \nThese signs require skill and practice to learn to identify them and use them to determine \nwhat the child needs. You will practise looking for these signs in exercises, on videotapes, \nand in children in the health facility.  \n \n\uf06f Chest indrawing  \nChildren often have cough and colds. A child may have a cough because moisture drips from \nthe nose down the back of the throat. The child with only a cough or cold is not seriously ill.  \nSometimes a child with cough, however, is very sic k. The child might have pneumonia. \nPneumonia is an infection of the lungs.  \nPneumonia can be severe. You identify SEVERE PNEUMONIA by looking for chest \nindrawing.   \nWhen pneumonia is severe, the lungs become very stiff. Breathing with very stiff lungs \ncause s chest indrawing. The chest works hard to pull in the air, and breathing can be difficult. \nChildren with severe pneumonia must be referred to a health facility.  \nLook for chest indrawing in all sick children. Pay special attention to children with cough or  \ncold, or children who are having any difficult breathing.  \nTo look for chest indrawing, the child must be calm. The child should not",
+          "id": "chunk-45",
+          "source": "Unknown",
+          "score": 0.361095935
+        }
+      ]
+    },
+    "structured_questions": [],
+    "examination_history": []
+  },
+  "grades": {
+    "grading_True diagnosis ": 0.0,
+    "grading_Presents with": 0.0,
+    "grading_Required questions": 0.0,
+    "grading_Optional questions": 0.0,
+    "grading_Required exams <<May need to have \"right\" answer for this row>>": 0.0,
+    "grading_Final diagnosis": 0.0,
+    "grading_Treatment plan": 0.0,
+    "grading_Follow-up instructions": 0.0
+  }
+}
