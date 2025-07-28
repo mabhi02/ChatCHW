@@ -171,7 +171,7 @@ def generate_danger_question(danger_signs: List[Dict], patient_info: Dict):
         print(f"   Searching for: '{core_danger_sign}' (from: '{danger_sign_name[:50]}...')")
         
         # Do a specific vector search for the core danger sign
-        index = pc.Index("who-guide")
+        index = pc.Index("who-guide-old")
         
         # Search specifically for the core danger sign terms
         search_queries = [
