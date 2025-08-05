@@ -351,6 +351,65 @@ def rephrase_danger_sign_question(danger_sign_text: str) -> str:
         else:
             return f"Does the patient have {danger_sign_lower}?"
 
+def check_similar_questions(new_question: str, previous_questions: List[str]) -> bool:
+    """Check if a new question is similar to any previously asked questions using GPT."""
+    if not previous_questions:
+        return False
+    
+    try:
+        # Create a list of previous questions for comparison
+        previous_questions_text = "\n".join([f"- {q}" for q in previous_questions])
+        
+        prompt = f"""
+        You are a medical assistant checking for duplicate or similar questions.
+        
+        Previous questions asked:
+        {previous_questions_text}
+        
+        New question: {new_question}
+        
+        Determine if the new question is asking about the same medical issue as any of the previous questions.
+        Consider synonyms and different ways of asking the same thing.
+        
+        Examples of similar questions:
+        - "Is the patient unable to drink or eat anything?" vs "Does the patient have trouble drinking and feeding?"
+        - "Does the patient have chest pain?" vs "Is the patient experiencing chest discomfort?"
+        - "Does the patient have fever?" vs "Is the patient running a temperature?"
+        
+        Respond with ONLY "YES" if the new question is similar to any previous question, or "NO" if it's different.
+        """
+        
+        completion = openai.ChatCompletion.create(
+            model="gpt-4-0125-preview",
+            messages=[
+                {"role": "system", "content": "You are a medical assistant that identifies duplicate or similar medical questions."},
+                {"role": "user", "content": prompt}
+            ],
+            max_tokens=10,
+            temperature=0.1
+        )
+        
+        response = completion.choices[0].message.content.strip().upper()
+        is_similar = response == "YES"
+        
+        print(f"Checking similarity: '{new_question}' vs {len(previous_questions)} previous questions")
+        print(f"GPT response: {response} (similar: {is_similar})")
+        
+        return is_similar
+        
+    except Exception as e:
+        print(f"Error checking question similarity: {e}")
+        # Fallback: simple keyword matching
+        new_question_lower = new_question.lower()
+        for prev_question in previous_questions:
+            prev_lower = prev_question.lower()
+            # Check for common medical terms that might indicate similarity
+            common_terms = ['drink', 'eat', 'feeding', 'fever', 'temperature', 'pain', 'chest', 'breathing']
+            for term in common_terms:
+                if term in new_question_lower and term in prev_lower:
+                    return True
+        return False
+
 def ask_danger_sign_questions(symptoms: List[str], index, session_data=None) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
     """Ask danger sign questions for each symptom using RAG from WHO guide."""
     danger_sign_responses = []
@@ -422,6 +481,17 @@ def ask_danger_sign_questions(symptoms: List[str], index, session_data=None) -> 
                     continue
                 seen_questions.add(question.lower())
                 
+                # Check for similar questions using GPT
+                if session_data and 'followup_responses' in session_data:
+                    previous_questions = []
+                    for response in session_data['followup_responses']:
+                        if 'question' in response:
+                            previous_questions.append(response['question'])
+                    
+                    if check_similar_questions(question, previous_questions):
+                        print(f"Skipping similar question (GPT detected): {question}")
+                        continue
+                
                 danger_sign_responses.append({
                     'symptom': symptoms[0] if symptoms else 'unknown',
                     'question': question,
@@ -452,10 +522,24 @@ def parse_examination_text(text):
         procedure = ""
         
         for line in lines:
-            if line.startswith("Examination:"):
-                examination_name = line.split("Examination:")[1].strip()
-            elif line.startswith("Procedure:"):
-                procedure = line.split("Procedure:")[1].strip()
+            line = line.strip()
+            # More flexible parsing - handle variations in formatting
+            if "examination:" in line.lower():
+                # Handle both "Examination:" and "examination:" (case insensitive)
+                parts = line.split(":", 1)
+                if len(parts) > 1:
+                    examination_name = parts[1].strip()
+            elif "procedure:" in line.lower():
+                # Handle both "Procedure:" and "procedure:" (case insensitive)
+                parts = line.split(":", 1)
+                if len(parts) > 1:
+                    procedure = parts[1].strip()
+        
+        # If we still don't have an examination name, try to extract from the first line
+        if not examination_name and lines:
+            first_line = lines[0].strip()
+            if first_line and not first_line.lower().startswith(("procedure:", "examination:")):
+                examination_name = first_line
         
         return {
             "examination": examination_name,
@@ -1070,6 +1154,8 @@ def generate_followup_question(session_data):
 
 def is_useful_examination(examination_text: str) -> bool:
     """Determine if an examination is useful and has measurable outcomes."""
+    print(f"DEBUG: Checking if examination is useful: '{examination_text}'")
+    
     # List of generic/unhelpful examination patterns to skip
     generic_patterns = [
         "general examination",
@@ -1089,21 +1175,25 @@ def is_useful_examination(examination_text: str) -> bool:
     # Skip if it matches generic patterns
     for pattern in generic_patterns:
         if pattern in examination_lower:
+            print(f"DEBUG: Rejecting generic pattern '{pattern}' in '{examination_text}'")
             return False
     
     # Skip if it's too vague (less than 10 characters or just common words)
     if len(examination_text.strip()) < 10:
+        print(f"DEBUG: Rejecting too short examination: '{examination_text}' (length: {len(examination_text.strip())})")
         return False
     
     # Skip if it's just asking for general assessment
     vague_terms = ["assess", "evaluate", "check", "examine", "look at", "observe"]
     if any(term in examination_lower for term in vague_terms) and len(examination_text.split()) < 5:
+        print(f"DEBUG: Rejecting vague examination: '{examination_text}'")
         return False
     
+    print(f"DEBUG: Accepting examination: '{examination_text}'")
     return True
 
 def generate_examination(session_data):
-    """Generate examination using RAG"""
+    """Generate the next examination based on the patient's symptoms and previous examinations."""
     try:
         initial_complaint = next((resp['answer'] for resp in session_data['initial_responses'] 
                             if resp['question'] == "Please describe what brings you here today"), "")
@@ -1120,98 +1210,92 @@ def generate_examination(session_data):
         
         print(f"Already performed examinations: {performed_examinations}")
         
-        # Use RAG to generate examination
-        index = pc.Index("who-guide-old")
-        exam_query = f"examination procedure {initial_complaint} {symptoms_text}"
-        embedding = get_embedding_batch([exam_query])[0]
-        relevant_docs = vectorQuotesWithSource(embedding, index, top_k=3)
-        
-        # Save citations to database
-        session_id = next((k for k, v in sessions.items() if v == session_data), 'default')
-        save_session_chunks_to_neondb(session_id, "examination", relevant_docs)
-        
-        medical_guide_content = "\n\n".join([doc['text'] for doc in relevant_docs])
-        
-        # Add context about performed examinations to avoid duplicates
-        performed_exams_context = ""
-        if performed_examinations:
-            performed_exams_context = f"\n\nIMPORTANT: The following examinations have already been performed and should NOT be repeated:\n" + "\n".join([f"- {exam}" for exam in performed_examinations])
-        
-        prompt = get_main_examination_prompt(
-            initial_complaint=initial_complaint,
-            symptoms=symptoms_text,
-            previous_exams=previous_exams_text
-        ) + performed_exams_context
-        
-        completion = openai.ChatCompletion.create(
-            model="gpt-4-0125-preview",
-            messages=[
-                {"role": "system", "content": "CRITICAL: You are a WHO Community Health Worker assistant. You can ONLY use information from the WHO medical guide provided in the prompt. Do NOT use any medical knowledge from your training. Generate SPECIFIC examinations with measurable outcomes, not generic assessments. Do NOT repeat examinations that have already been performed."},
-                {"role": "user", "content": prompt}
-            ],
-            max_tokens=300,
-            temperature=0.3
-        )
-        
-        output = completion.choices[0].message.content.strip()
-        
-        # Parse examination text and extract options
-        exam_data = parse_examination_text(output)
-        
-        # Check if this examination has already been performed
-        new_examination_name = exam_data.get('examination', '').lower().strip()
-        if new_examination_name in performed_examinations:
-            print(f"Skipping duplicate examination: {exam_data.get('examination', '')}")
-            # Try to generate a different examination
-            return generate_specific_examination(session_data)
-        
-        # Check if the examination is useful
-        if not is_useful_examination(exam_data.get('examination', '')):
-            print(f"Skipping generic examination: {exam_data.get('examination', '')}")
-            # Try to generate a more specific examination
-            return generate_specific_examination(session_data)
-        
-        # Extract options from the output if they exist
-        options = []
-        lines = output.split('\n')
-        for line in lines:
-            if line.strip().startswith('#:'):
-                option_text = line.strip()[2:].strip()  # Remove '#:' prefix
-                if option_text:
-                    options.append({
-                        "id": len(options) + 1,
-                        "text": option_text
-                    })
-        
-        # If no options found, provide default options
-        if not options:
-            options = [
-                {"id": 1, "text": "Normal finding"},
-                {"id": 2, "text": "Abnormal finding"},
-                {"id": 3, "text": "Unable to perform examination"},
-                {"id": 4, "text": "Other (please specify)"}
-            ]
-        
-        # Add options to exam_data
-        exam_data['options'] = options
-        exam_data['type'] = 'MC'
-        session_data['current_examination'] = exam_data
-        
-        # Format output to include options
-        options_text = "\n".join([f"{opt['id']}. {opt['text']}" for opt in options])
-        formatted_output = f"{output}\n\nPlease select the examination result:\n{options_text}"
-        
-        return jsonify({
-            "status": "success",
-            "output": formatted_output,
-            "metadata": {
-                "phase": session_data['phase'],
-                "examination": exam_data,
-                "citations": relevant_docs,
-                "question_type": "MC",
-                "options": options
+        # HARDCODED EXAMINATION LIST - Only use these three tests
+        allowed_examinations = [
+            {
+                "name": "RDT for Malaria",
+                "procedure": "Use a rapid diagnostic test kit to detect malaria parasites in the patient's blood. Follow the kit instructions carefully.",
+                "relevant_symptoms": ["fever", "chills", "malaria", "headache", "body aches", "sweating"],
+                "options": [
+                    {"id": 1, "text": "Positive for malaria"},
+                    {"id": 2, "text": "Negative for malaria"},
+                    {"id": 3, "text": "Invalid test result"},
+                    {"id": 4, "text": "Unable to perform test"}
+                ]
+            },
+            {
+                "name": "MUAC Strap",
+                "procedure": "Measure the Mid-Upper Arm Circumference using a MUAC strap. Wrap the strap around the patient's left arm, midway between the shoulder and elbow. Read the measurement at the arrow.",
+                "relevant_symptoms": ["malnutrition", "weight loss", "poor appetite", "weakness", "child", "infant"],
+                "options": [
+                    {"id": 1, "text": "Normal (>13.5 cm)"},
+                    {"id": 2, "text": "Moderate malnutrition (11.5-13.5 cm)"},
+                    {"id": 3, "text": "Severe malnutrition (<11.5 cm)"},
+                    {"id": 4, "text": "Unable to measure"}
+                ]
+            },
+            {
+                "name": "Thermometer",
+                "procedure": "Use a digital thermometer to measure the patient's body temperature. Place the thermometer under the tongue or in the armpit for 2-3 minutes.",
+                "relevant_symptoms": ["fever", "chills", "hot", "temperature", "sweating", "infection"],
+                "options": [
+                    {"id": 1, "text": "Normal temperature (36.5-37.5°C)"},
+                    {"id": 2, "text": "Low fever (37.6-38.5°C)"},
+                    {"id": 3, "text": "High fever (>38.5°C)"},
+                    {"id": 4, "text": "Hypothermia (<36.5°C)"},
+                    {"id": 5, "text": "Unable to measure"}
+                ]
             }
-        })
+        ]
+        
+        # Check which examinations are relevant based on symptoms
+        relevant_examinations = []
+        all_symptoms = [initial_complaint.lower()] + [symptom.lower() for symptom in session_data['symptoms']]
+        
+        for exam in allowed_examinations:
+            # Check if any of the patient's symptoms match the relevant symptoms for this examination
+            is_relevant = any(symptom in exam["relevant_symptoms"] for symptom in all_symptoms)
+            
+            # Also check if the examination name itself is mentioned in symptoms
+            exam_name_lower = exam["name"].lower()
+            if any(exam_name_lower in symptom for symptom in all_symptoms):
+                is_relevant = True
+            
+            if is_relevant:
+                relevant_examinations.append(exam)
+        
+        print(f"Relevant examinations based on symptoms: {[exam['name'] for exam in relevant_examinations]}")
+        
+        # Find the next examination that hasn't been performed
+        for exam in relevant_examinations:
+            if exam["name"].lower() not in performed_examinations:
+                exam_data = {
+                    "examination": exam["name"],
+                    "procedure": exam["procedure"],
+                    "type": "MC",
+                    "options": exam["options"]
+                }
+                
+                session_data['current_examination'] = exam_data
+                
+                options_text = "\n".join([f"{opt['id']}. {opt['text']}" for opt in exam_data['options']])
+                formatted_output = f"Examination: {exam['name']}\nProcedure: {exam['procedure']}\n\nPlease select the examination result:\n{options_text}"
+                
+                return jsonify({
+                    "status": "success",
+                    "output": formatted_output,
+                    "metadata": {
+                        "phase": session_data['phase'],
+                        "examination": exam_data,
+                        "citations": [],
+                        "question_type": "MC",
+                        "options": exam_data['options']
+                    }
+                })
+        
+        # If all relevant examinations have been performed, move to final results
+        print("All relevant examinations have been performed, moving to final results")
+        return generate_final_results(session_data)
         
     except Exception as e:
         print(f"Error in generate_examination: {str(e)}")
@@ -1234,101 +1318,92 @@ def generate_specific_examination(session_data):
             if 'examination' in exam:
                 performed_examinations.add(exam['examination'].lower().strip())
         
-        # Use a more specific prompt for targeted examinations
-        performed_exams_context = ""
-        if performed_examinations:
-            performed_exams_context = f"\n\nIMPORTANT: The following examinations have already been performed and should NOT be repeated:\n" + "\n".join([f"- {exam}" for exam in performed_examinations])
-        
-        specific_prompt = f"""
-        Based on the WHO medical guide, generate ONE specific examination for a patient with:
-        Complaint: {initial_complaint}
-        Symptoms: {symptoms_text}
-        
-        Generate a SPECIFIC examination that has clear, measurable outcomes. Examples:
-        - Temperature measurement
-        - Respiratory rate counting
-        - Blood pressure measurement
-        - Specific physical findings
-        
-        Do NOT generate generic examinations like "general physical examination" or "complete assessment".
-        {performed_exams_context}
-        
-        Format your response as:
-        Examination: [specific examination name]
-        Procedure: [how to perform it]
-        #: [specific finding 1]
-        #: [specific finding 2]
-        #: [specific finding 3]
-        """
-        
-        completion = openai.ChatCompletion.create(
-            model="gpt-4-0125-preview",
-            messages=[
-                {"role": "system", "content": "You are a WHO Community Health Worker assistant. Generate SPECIFIC examinations with measurable outcomes. Do NOT repeat examinations that have already been performed."},
-                {"role": "user", "content": specific_prompt}
-            ],
-            max_tokens=200,
-            temperature=0.2
-        )
-        
-        output = completion.choices[0].message.content.strip()
-        
-        # Parse examination text and extract options
-        exam_data = parse_examination_text(output)
-        
-        # Check if this examination has already been performed
-        new_examination_name = exam_data.get('examination', '').lower().strip()
-        if new_examination_name in performed_examinations:
-            print(f"Skipping duplicate examination in specific generation: {exam_data.get('examination', '')}")
-            # If we still get a duplicate, try one more time with a different approach
-            return generate_final_examination_fallback(session_data)
-        
-        # Check if the examination is useful
-        if not is_useful_examination(exam_data.get('examination', '')):
-            print(f"Skipping generic examination in specific generation: {exam_data.get('examination', '')}")
-            return generate_final_examination_fallback(session_data)
-        
-        # Extract options from the output if they exist
-        options = []
-        lines = output.split('\n')
-        for line in lines:
-            if line.strip().startswith('#:'):
-                option_text = line.strip()[2:].strip()
-                if option_text:
-                    options.append({
-                        "id": len(options) + 1,
-                        "text": option_text
-                    })
-        
-        # If no options found, provide default options
-        if not options:
-            options = [
-                {"id": 1, "text": "Normal finding"},
-                {"id": 2, "text": "Abnormal finding"},
-                {"id": 3, "text": "Unable to perform examination"},
-                {"id": 4, "text": "Other (please specify)"}
-            ]
-        
-        # Add options to exam_data
-        exam_data['options'] = options
-        exam_data['type'] = 'MC'
-        session_data['current_examination'] = exam_data
-        
-        # Format output to include options
-        options_text = "\n".join([f"{opt['id']}. {opt['text']}" for opt in options])
-        formatted_output = f"{output}\n\nPlease select the examination result:\n{options_text}"
-        
-        return jsonify({
-            "status": "success",
-            "output": formatted_output,
-            "metadata": {
-                "phase": session_data['phase'],
-                "examination": exam_data,
-                "citations": [],
-                "question_type": "MC",
-                "options": options
+        # HARDCODED EXAMINATION LIST - Only use these three tests
+        allowed_examinations = [
+            {
+                "name": "RDT for Malaria",
+                "procedure": "Use a rapid diagnostic test kit to detect malaria parasites in the patient's blood. Follow the kit instructions carefully.",
+                "relevant_symptoms": ["fever", "chills", "malaria", "headache", "body aches", "sweating"],
+                "options": [
+                    {"id": 1, "text": "Positive for malaria"},
+                    {"id": 2, "text": "Negative for malaria"},
+                    {"id": 3, "text": "Invalid test result"},
+                    {"id": 4, "text": "Unable to perform test"}
+                ]
+            },
+            {
+                "name": "MUAC Strap",
+                "procedure": "Measure the Mid-Upper Arm Circumference using a MUAC strap. Wrap the strap around the patient's left arm, midway between the shoulder and elbow. Read the measurement at the arrow.",
+                "relevant_symptoms": ["malnutrition", "weight loss", "poor appetite", "weakness", "child", "infant"],
+                "options": [
+                    {"id": 1, "text": "Normal (>13.5 cm)"},
+                    {"id": 2, "text": "Moderate malnutrition (11.5-13.5 cm)"},
+                    {"id": 3, "text": "Severe malnutrition (<11.5 cm)"},
+                    {"id": 4, "text": "Unable to measure"}
+                ]
+            },
+            {
+                "name": "Thermometer",
+                "procedure": "Use a digital thermometer to measure the patient's body temperature. Place the thermometer under the tongue or in the armpit for 2-3 minutes.",
+                "relevant_symptoms": ["fever", "chills", "hot", "temperature", "sweating", "infection"],
+                "options": [
+                    {"id": 1, "text": "Normal temperature (36.5-37.5°C)"},
+                    {"id": 2, "text": "Low fever (37.6-38.5°C)"},
+                    {"id": 3, "text": "High fever (>38.5°C)"},
+                    {"id": 4, "text": "Hypothermia (<36.5°C)"},
+                    {"id": 5, "text": "Unable to measure"}
+                ]
             }
-        })
+        ]
+        
+        # Check which examinations are relevant based on symptoms
+        relevant_examinations = []
+        all_symptoms = [initial_complaint.lower()] + [symptom.lower() for symptom in session_data['symptoms']]
+        
+        for exam in allowed_examinations:
+            # Check if any of the patient's symptoms match the relevant symptoms for this examination
+            is_relevant = any(symptom in exam["relevant_symptoms"] for symptom in all_symptoms)
+            
+            # Also check if the examination name itself is mentioned in symptoms
+            exam_name_lower = exam["name"].lower()
+            if any(exam_name_lower in symptom for symptom in all_symptoms):
+                is_relevant = True
+            
+            if is_relevant:
+                relevant_examinations.append(exam)
+        
+        print(f"Relevant examinations based on symptoms (specific): {[exam['name'] for exam in relevant_examinations]}")
+        
+        # Find the next examination that hasn't been performed
+        for exam in relevant_examinations:
+            if exam["name"].lower() not in performed_examinations:
+                exam_data = {
+                    "examination": exam["name"],
+                    "procedure": exam["procedure"],
+                    "type": "MC",
+                    "options": exam["options"]
+                }
+                
+                session_data['current_examination'] = exam_data
+                
+                options_text = "\n".join([f"{opt['id']}. {opt['text']}" for opt in exam_data['options']])
+                formatted_output = f"Examination: {exam['name']}\nProcedure: {exam['procedure']}\n\nPlease select the examination result:\n{options_text}"
+                
+                return jsonify({
+                    "status": "success",
+                    "output": formatted_output,
+                    "metadata": {
+                        "phase": session_data['phase'],
+                        "examination": exam_data,
+                        "citations": [],
+                        "question_type": "MC",
+                        "options": exam_data['options']
+                    }
+                })
+        
+        # If all relevant examinations have been performed, move to final results
+        print("All relevant examinations have been performed (specific), moving to final results")
+        return generate_final_results(session_data)
         
     except Exception as e:
         print(f"Error in generate_specific_examination: {str(e)}")
@@ -1346,35 +1421,80 @@ def generate_final_examination_fallback(session_data):
             if 'examination' in exam:
                 performed_examinations.add(exam['examination'].lower().strip())
         
-        # Create a simple, unique examination based on what hasn't been done
-        common_examinations = [
-            "Temperature measurement",
-            "Blood pressure measurement", 
-            "Respiratory rate counting",
-            "Heart rate measurement",
-            "Skin examination",
-            "Eye examination",
-            "Throat examination"
+        initial_complaint = next((resp['answer'] for resp in session_data['initial_responses'] 
+                            if resp['question'] == "Please describe what brings you here today"), "")
+        symptoms_text = "\n".join([f"- {symptom}" for symptom in session_data['symptoms']])
+        
+        # HARDCODED EXAMINATION LIST - Only use these three tests
+        allowed_examinations = [
+            {
+                "name": "RDT for Malaria",
+                "procedure": "Use a rapid diagnostic test kit to detect malaria parasites in the patient's blood. Follow the kit instructions carefully.",
+                "relevant_symptoms": ["fever", "chills", "malaria", "headache", "body aches", "sweating"],
+                "options": [
+                    {"id": 1, "text": "Positive for malaria"},
+                    {"id": 2, "text": "Negative for malaria"},
+                    {"id": 3, "text": "Invalid test result"},
+                    {"id": 4, "text": "Unable to perform test"}
+                ]
+            },
+            {
+                "name": "MUAC Strap",
+                "procedure": "Measure the Mid-Upper Arm Circumference using a MUAC strap. Wrap the strap around the patient's left arm, midway between the shoulder and elbow. Read the measurement at the arrow.",
+                "relevant_symptoms": ["malnutrition", "weight loss", "poor appetite", "weakness", "child", "infant"],
+                "options": [
+                    {"id": 1, "text": "Normal (>13.5 cm)"},
+                    {"id": 2, "text": "Moderate malnutrition (11.5-13.5 cm)"},
+                    {"id": 3, "text": "Severe malnutrition (<11.5 cm)"},
+                    {"id": 4, "text": "Unable to measure"}
+                ]
+            },
+            {
+                "name": "Thermometer",
+                "procedure": "Use a digital thermometer to measure the patient's body temperature. Place the thermometer under the tongue or in the armpit for 2-3 minutes.",
+                "relevant_symptoms": ["fever", "chills", "hot", "temperature", "sweating", "infection"],
+                "options": [
+                    {"id": 1, "text": "Normal temperature (36.5-37.5°C)"},
+                    {"id": 2, "text": "Low fever (37.6-38.5°C)"},
+                    {"id": 3, "text": "High fever (>38.5°C)"},
+                    {"id": 4, "text": "Hypothermia (<36.5°C)"},
+                    {"id": 5, "text": "Unable to measure"}
+                ]
+            }
         ]
         
-        # Find an examination that hasn't been performed
-        for exam in common_examinations:
-            if exam.lower() not in performed_examinations:
+        # Check which examinations are relevant based on symptoms
+        relevant_examinations = []
+        all_symptoms = [initial_complaint.lower()] + [symptom.lower() for symptom in session_data['symptoms']]
+        
+        for exam in allowed_examinations:
+            # Check if any of the patient's symptoms match the relevant symptoms for this examination
+            is_relevant = any(symptom in exam["relevant_symptoms"] for symptom in all_symptoms)
+            
+            # Also check if the examination name itself is mentioned in symptoms
+            exam_name_lower = exam["name"].lower()
+            if any(exam_name_lower in symptom for symptom in all_symptoms):
+                is_relevant = True
+            
+            if is_relevant:
+                relevant_examinations.append(exam)
+        
+        print(f"Relevant examinations based on symptoms (fallback): {[exam['name'] for exam in relevant_examinations]}")
+        
+        # Find the next examination that hasn't been performed
+        for exam in relevant_examinations:
+            if exam["name"].lower() not in performed_examinations:
                 exam_data = {
-                    "examination": exam,
-                    "procedure": f"Perform {exam.lower()}",
+                    "examination": exam["name"],
+                    "procedure": exam["procedure"],
                     "type": "MC",
-                    "options": [
-                        {"id": 1, "text": "Normal"},
-                        {"id": 2, "text": "Abnormal"},
-                        {"id": 3, "text": "Unable to perform"}
-                    ]
+                    "options": exam["options"]
                 }
                 
                 session_data['current_examination'] = exam_data
                 
                 options_text = "\n".join([f"{opt['id']}. {opt['text']}" for opt in exam_data['options']])
-                formatted_output = f"Examination: {exam}\nProcedure: {exam_data['procedure']}\n\nPlease select the result:\n{options_text}"
+                formatted_output = f"Examination: {exam['name']}\nProcedure: {exam['procedure']}\n\nPlease select the examination result:\n{options_text}"
                 
                 return jsonify({
                     "status": "success",
@@ -1388,9 +1508,8 @@ def generate_final_examination_fallback(session_data):
                     }
                 })
         
-        # If all common examinations have been performed, move to final results
-        print("All common examinations performed, moving to final results")
-        session_data['phase'] = "complete"
+        # If all relevant examinations have been performed, move to final results
+        print("All relevant examinations have been performed (fallback), moving to final results")
         return generate_final_results(session_data)
         
     except Exception as e:
