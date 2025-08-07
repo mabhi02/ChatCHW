@@ -18,17 +18,9 @@ apt-get install -y build-essential python3-dev || true
 echo "Upgrading pip and installing setuptools..."
 pip install --no-cache-dir --upgrade pip setuptools wheel
 
-# Install numpy first with specific version
-echo "Installing numpy..."
-pip install --no-cache-dir numpy==1.24.3
-
-# Install pandas with specific flags and no build isolation
-echo "Installing pandas..."
-pip install --no-cache-dir pandas==1.5.3 --no-build-isolation --no-deps
-
-# Install remaining dependencies
-echo "Installing remaining dependencies..."
-pip install --no-cache-dir -r requirements.txt
+# Install dependencies with simpler approach
+echo "Installing dependencies..."
+pip install --no-cache-dir -r requirements-simple.txt
 
 # Apply PyTorch fixes BEFORE running cleanup
 echo "Setting up PyTorch stub modules..."

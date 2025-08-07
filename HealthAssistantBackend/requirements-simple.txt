@@ -1,0 +1,34 @@
+# Core application
+Flask==3.0.3
+Flask-Cors==4.0.0
+python-dotenv==1.0.1
+gunicorn==21.2.0
+
+# API Clients
+groq
+openai==0.28.0
+pinecone==4.0.0
+
+# Data processing - minimal versions for Python 3.13
+numpy
+pandas
+matplotlib
+seaborn
+scikit-learn
+
+# ML/AI - minimal versions
+torch --index-url https://download.pytorch.org/whl/cpu
+transformers
+tqdm
+
+# Utilities
+requests==2.31.0
+typing-extensions
+Jinja2==3.1.2
+pymongo
+bson
+psutil
+
+# Build dependencies
+setuptools>=65.0.0
+wheel>=0.38.0
