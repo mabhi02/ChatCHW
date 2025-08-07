@@ -92,6 +92,11 @@ interface MessageMetadata {
     text: string;
     originalText: string;
   }>;
+  numeric_input?: boolean;
+  min_value?: number;
+  max_value?: number;
+  step?: number;
+  default_value?: number;
 }
 
 interface TranslationCache {
@@ -617,27 +622,28 @@ export function MedicalChat(): JSX.Element {
             </div>
           )}
 
-          {(showOtherInput || currentMetadata?.question_type === 'NUM' || currentMetadata?.question_type === 'FREE') && (
+          {(showOtherInput || currentMetadata?.question_type === 'NUMERIC' || currentMetadata?.question_type === 'FREE') && (
             <form onSubmit={(e) => {
               e.preventDefault();
               if (!inputText.trim() || isProcessing) return;
               handleSubmission(inputText);
             }} className="flex space-x-2">
-              {currentMetadata?.question_type === 'NUM' && 
+              {currentMetadata?.question_type === 'NUMERIC' && 
                messages.length > 0 && 
                messages[messages.length - 1].originalContent.includes("age") ? (
                 // Age slider component
                 <div className="flex-1 flex flex-col space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span>1</span>
-                    <span className="font-medium">{inputText || "50"} years</span>
-                    <span>100</span>
+                    <span>{currentMetadata?.min_value || 0}</span>
+                    <span className="font-medium">{inputText || (currentMetadata?.default_value || 30)} years</span>
+                    <span>{currentMetadata?.max_value || 120}</span>
                   </div>
                   <input
                     type="range"
-                    min="1"
-                    max="100"
-                    value={inputText || "50"}
+                    min={currentMetadata?.min_value || 0}
+                    max={currentMetadata?.max_value || 120}
+                    step={currentMetadata?.step || 1}
+                    value={inputText || (currentMetadata?.default_value || 30)}
                     onChange={(e) => setInputText(e.target.value)}
                     className="w-full h-2 bg-primary/20 rounded-lg appearance-none cursor-pointer accent-primary"
                     disabled={isProcessing}

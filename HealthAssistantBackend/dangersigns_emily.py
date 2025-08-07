@@ -42,204 +42,132 @@ def vectorQuotesWithSource(embedding: List[float], index, top_k: int = 5) -> Lis
         print(f"Error querying Pinecone: {e}")
         return []
 
-def identify_danger_signs(patient_complaint: str, patient_age: int = 30, patient_sex: str = 'Unknown'):
+def identify_danger_signs(complaint: str, symptoms: List[str], index) -> Dict[str, Any]:
     """
-    NEW RAG-FIRST APPROACH:
-    1. Search guidelines for patient_complaint
-    2. Retrieve relevant WHO guideline sections  
-    3. Extract danger signs mentioned in those sections
-    4. Return in same format as original function
-    
-    SEARCH STRATEGY:
-    - Try: "fever danger signs", "fever warning signs", "fever red flags"
-    - Also: "fever assessment", "fever guidelines"
-    
-    EXTRACTION STRATEGY:
-    - Look for: "check for", "warning signs", "assess for"
-    - Parse retrieved text for specific danger signs
+    Identify danger signs from patient complaint and symptoms using RAG.
+    Improved to be more relevant and prevent asking irrelevant questions.
     """
-    
-    # 1. Generate search queries
-
-
-    # Do a specific vector search for the danger signs (given the patient's issues)
-    index = pc.Index("who-guide-old")
-    
-    individual_symptoms = patient_complaint.lower().replace(" and ", ",").replace("&", ",").split(",")
-    individual_symptoms = [s.strip() for s in individual_symptoms if s.strip()]
-    age_modifier = "child" if patient_age < 18 else "adult"
-
-    # are they age / sex dependent???
-    # should I try to seperate if there are multiple patient complaints?
-    search_queries = []
-    for symptom in individual_symptoms:
-        search_queries.extend([
-            f"{symptom}",
-            f"{symptom} {age_modifier}",
-            f"{symptom} danger signs",
-            f"{symptom} {age_modifier} danger signs"
-        ])
-    
-    # Also try combined
-    search_queries.extend([
-        f"{patient_complaint}",
-        f"{patient_complaint} {age_modifier}",
-        f"{patient_complaint} danger signs"
-    ])
-
-    # 2. Search guidelines database 
-
-    all_relevant_docs = []
-    for query in search_queries:
+    try:
+        print(f"Identifying danger signs from complaint: '{complaint}' and symptoms: {symptoms}")
+        
+        # Create a focused query based on the actual symptoms
+        if symptoms:
+            # Use the identified symptoms to create a focused query
+            symptom_query = " ".join(symptoms)
+            query = f"danger signs for: {symptom_query}"
+        else:
+            # Fallback to complaint if no symptoms identified
+            query = f"danger signs for: {complaint}"
+        
+        print(f"Using focused query: {query}")
+        
+        # Get embedding for the focused query
         embedding = get_embedding_batch([query])[0]
-        docs = vectorQuotesWithSource(embedding, index, top_k=2)  # Reduced from 3 to 2
-        all_relevant_docs.extend(docs)
-     
-    # Remove duplicates and sort by relevance
-    seen_ids = set()
-    unique_docs = []
-    for doc in all_relevant_docs:
-        if doc['id'] not in seen_ids:
-            seen_ids.add(doc['id'])
-            unique_docs.append(doc)
-    
-    # print(unique_docs)
+        relevant_docs = vectorQuotesWithSource(embedding, index, top_k=3)  # Reduced from 5 to 3
+        
+        print(f"Found {len(relevant_docs)} relevant documents")
+        
+        if not relevant_docs:
+            print("No relevant documents found")
+            return {
+                "status": "success", 
+                "danger_signs": [],
+                "citations": []
+            }
+        
+        # Use medical guide content to identify danger signs
+        medical_guide_content = "\n\n".join([doc['text'] for doc in relevant_docs])
+        
+        # Create a more focused prompt that emphasizes relevance
+        danger_sign_prompt = f"""
+        CRITICAL: You are a WHO Community Health Worker assistant. You can ONLY use information from the WHO medical guide provided below. Do NOT use any medical knowledge from your training.
+        
+        Patient complaint: "{complaint}"
+        Identified symptoms: {symptoms}
+        
+        Based ONLY on the WHO medical guide content below, identify the MOST RELEVANT danger signs that are:
+        1. Specifically related to the patient's symptoms: {symptoms}
+        2. Explicitly mentioned in the WHO medical guide content above
+        3. Most critical for immediate assessment
+        
+        WHO Medical Guide Content:
+        {medical_guide_content}
+        
+        IMPORTANT RULES:
+        - ONLY identify danger signs that are DIRECTLY relevant to the patient's symptoms
+        - If the patient has fever/chills, focus on fever-related danger signs
+        - If the patient has cough, focus on respiratory danger signs
+        - If the patient has diarrhea, focus on diarrhea-related danger signs
+        - Do NOT identify danger signs that are unrelated to the patient's symptoms
+        - Limit to 2-3 most critical danger signs maximum
+        
+        Return ONLY the specific danger signs that are relevant to the patient's symptoms, formatted as a simple comma-separated list (e.g., "chest indrawing, fast breathing").
+        If no relevant danger signs can be identified from the WHO medical guide, respond with "none"
+        
+        Remember: Use ONLY information from the WHO guide above, not your medical training. Focus on relevance to the patient's specific symptoms.
+        """
+        
+        print("Sending danger sign identification prompt to OpenAI")
+        response = get_openai_completion(
+            danger_sign_prompt,
+            max_tokens=100,
+            temperature=0.3
+        )
+        
+        print(f"OpenAI response: {response}")
+        
+        # Parse the response to extract danger signs
+        if response.lower().strip() == "none":
+            print("No danger signs identified")
+            return {
+                "status": "success", 
+                "danger_signs": [],
+                "citations": relevant_docs
+            }
+        
+        # Parse danger signs from response
+        danger_signs = [s.strip() for s in response.split(',')]
+        danger_signs = [s for s in danger_signs if s and len(s) > 2]
+        
+        # LIMIT: Only take the first 3 most relevant danger signs
+        MAX_DANGER_SIGNS = 3
+        danger_signs = danger_signs[:MAX_DANGER_SIGNS]
+        
+        print(f"Parsed danger signs (limited to {MAX_DANGER_SIGNS}): {danger_signs}")
+        
+        # Convert to structured format
+        final_danger_signs = []
+        seen_signs = set()
 
-    text = " ".join(doc['text'] for doc in unique_docs)
+        for sign in danger_signs:
+            clean_sign = sign.strip()
+            if clean_sign and clean_sign.lower() not in seen_signs:
+                seen_signs.add(clean_sign.lower())
+                final_danger_signs.append({
+                    "danger_sign": clean_sign,
+                    "priority": "HIGH"
+                })
 
-    # 3. Parse results for danger signs
-    danger_signs = []
-    sentences = text.split(".")
-    for sentence in sentences:
-        sentence_lower = sentence.lower().strip()
+        # LIMIT: Only return the first 3 most relevant danger signs
+        MAX_DANGER_SIGNS = 3
+        final_danger_signs = final_danger_signs[:MAX_DANGER_SIGNS]
         
-        # Look for "danger sign" anywhere in sentence
-        if "danger sign" in sentence_lower:
-            danger_signs.append(sentence.strip())
+        print(f"Final cleaned danger signs (limited to {MAX_DANGER_SIGNS}): {len(final_danger_signs)}")
+        for sign in final_danger_signs:
+            print(f"  - {sign['danger_sign']}")
         
-        # Look for "refer" anywhere in sentence  
-        if "refer" in sentence_lower:
-            danger_signs.append(sentence.strip())
+        return {
+            "status": "success", 
+            "danger_signs": final_danger_signs,
+            "citations": relevant_docs
+        }
         
-
-
-    # extract list items
-    lines = text.split('\n')
-    for line in lines:
-        line = line.strip()
-        
-        # Check if it looks like a list item (has dots and ends with number)
-        if '.....' in line and line[-2:].strip().isdigit():
-            # Extract the part before the dots
-            danger_sign = line.split('.')[0].strip()
-            if danger_sign and len(danger_sign) > 5:  # Skip very short ones
-                danger_signs.append(danger_sign)
-
-
-    # 4. Return formatted danger signs
-    
-    # Remove duplicates and clean up
-    cleaned_danger_signs = []
-    seen_signs = set()
-
-    for sign in danger_signs:
-        # Clean up the text
-        clean_sign = sign.strip()
-        clean_sign = ' '.join(clean_sign.split())  # Remove extra whitespace
-        
-        # Skip very short or empty signs
-        if len(clean_sign) < 5:
-            continue
-            
-        # Skip duplicates (case insensitive)
-        if clean_sign.lower() not in seen_signs:
-            seen_signs.add(clean_sign.lower())
-            cleaned_danger_signs.append(clean_sign)
-
-    # print(f"Found {len(cleaned_danger_signs)} unique danger signs:")
-    # for sign in cleaned_danger_signs:
-    #     print(f"  - {sign}")
-
-    # Better filtering - catch more actual danger signs
-    real_danger_signs = []
-
-    # Complete danger signs cleaning pipeline
-    final_danger_signs = []
-    seen_signs = set()
-
-    for sign in danger_signs:
-        # Initial cleanup
-        clean_sign = sign.strip()
-        clean_sign = ' '.join(clean_sign.split())  # Remove extra whitespace
-        
-        # Skip very short signs
-        if len(clean_sign) < 5:
-            continue
-        
-        # Skip instructional text
-        sign_lower = clean_sign.lower()
-        if any(skip_word in sign_lower for skip_word in [
-            "learn to", "section", "column", "tick", "find the column",
-            "using the information", "there are", "participant manual",
-            "recording form", "you will", "you may find"
-        ]):
-            continue
-        
-        # Skip very long instructional sentences
-        if len(clean_sign) > 200:
-            continue
-        
-        # Only keep signs with actual medical danger patterns
-        danger_patterns = [
-            "days or more", "cannot", "not able", "vomit", "convulsion",
-            "chest indrawing", "sleepy", "unconscious", "difficulty breathing",
-            "blood in", "fast breathing"
-        ]
-        
-        has_danger_pattern = any(pattern in sign_lower for pattern in danger_patterns)
-        if not has_danger_pattern:
-            continue
-        
-        # Clean up symbols and formatting
-        clean_sign = clean_sign.replace('\uf06f', '').replace('\uf0b7', '').replace('\uf06e', '')
-        
-        # Remove explanatory text
-        if ' A child who' in clean_sign:
-            clean_sign = clean_sign.split(' A child who')[0].strip()
-        if ', however, is a danger sign' in clean_sign:
-            clean_sign = clean_sign.split(', however, is a danger sign')[0].strip()
-        
-        # Extract core danger sign from "refer" statements
-        if clean_sign.lower().startswith('refer a child with '):
-            clean_sign = clean_sign[19:].strip()
-        elif clean_sign.lower().startswith('refer a child who has had '):
-            clean_sign = clean_sign[26:].strip()
-        elif clean_sign.lower().startswith('refer a child who '):
-            clean_sign = clean_sign[18:].strip()
-        
-        # Remove additional junk
-        clean_sign = clean_sign.split('IF YES')[0].strip()
-        clean_sign = clean_sign.split('Any DANGER SIGN')[0].strip()
-        
-        # Final formatting cleanup
-        clean_sign = ' '.join(clean_sign.split()).strip()
-        
-        # Add if not duplicate and meaningful
-        if len(clean_sign) > 3 and clean_sign.lower() not in seen_signs:
-            seen_signs.add(clean_sign.lower())
-            final_danger_signs.append({
-                "danger_sign": clean_sign,
-                "priority": "HIGH"
-            })
-
-    print(f"Final cleaned danger signs: {len(final_danger_signs)}")
-    for sign in final_danger_signs:
-        print(f"  - {sign['danger_sign']}")
-    # For now, return empty structure so other code doesn't break
-    return {
-        "status": "success", 
-        "danger_signs": final_danger_signs,
-        "patient_info": {"complaint": patient_complaint, "age": patient_age, "sex": patient_sex}
+    except Exception as e:
+        print(f"Error in identify_danger_signs: {str(e)}")
+        return {
+            "status": "error",
+            "danger_signs": [],
+            "citations": []
     }
 
 

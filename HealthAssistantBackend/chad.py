@@ -282,6 +282,202 @@ def generate_question_with_options(input_data: List[Dict[str, Any]]) -> Dict[str
             "type": "MC"
         }
 
+def generate_robust_question_with_options(initial_complaint: str, previous_responses: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """
+    Generate a follow-up question with guaranteed options based on patient input.
+    Uses symptom-specific templates to ensure options are always provided.
+    """
+    try:
+        # Convert complaint to lowercase for matching
+        complaint_lower = initial_complaint.lower()
+        
+        # Symptom-specific question templates
+        symptom_questions = {
+            'diarrhea': [
+                {
+                    "question": "How long have you been experiencing diarrhea?",
+                    "options": [
+                        {"id": 1, "text": "Less than 24 hours"},
+                        {"id": 2, "text": "1-3 days"},
+                        {"id": 3, "text": "4-7 days"},
+                        {"id": 4, "text": "More than a week"},
+                        {"id": 5, "text": "Other (please specify)"}
+                    ]
+                },
+                {
+                    "question": "How many times do you have diarrhea per day?",
+                    "options": [
+                        {"id": 1, "text": "1-2 times"},
+                        {"id": 2, "text": "3-5 times"},
+                        {"id": 3, "text": "6-10 times"},
+                        {"id": 4, "text": "More than 10 times"},
+                        {"id": 5, "text": "Other (please specify)"}
+                    ]
+                },
+                {
+                    "question": "Do you have any other symptoms with the diarrhea?",
+                    "options": [
+                        {"id": 1, "text": "No other symptoms"},
+                        {"id": 2, "text": "Stomach pain/cramps"},
+                        {"id": 3, "text": "Nausea or vomiting"},
+                        {"id": 4, "text": "Fever"},
+                        {"id": 5, "text": "Other (please specify)"}
+                    ]
+                }
+            ],
+            'fever': [
+                {
+                    "question": "What is your temperature?",
+                    "options": [
+                        {"id": 1, "text": "Below 100°F (37.8°C)"},
+                        {"id": 2, "text": "100-101°F (37.8-38.3°C)"},
+                        {"id": 3, "text": "101-103°F (38.3-39.4°C)"},
+                        {"id": 4, "text": "Above 103°F (39.4°C)"},
+                        {"id": 5, "text": "Other (please specify)"}
+                    ]
+                },
+                {
+                    "question": "How long have you had the fever?",
+                    "options": [
+                        {"id": 1, "text": "Less than 24 hours"},
+                        {"id": 2, "text": "1-3 days"},
+                        {"id": 3, "text": "4-7 days"},
+                        {"id": 4, "text": "More than a week"},
+                        {"id": 5, "text": "Other (please specify)"}
+                    ]
+                }
+            ],
+            'pain': [
+                {
+                    "question": "Where is the pain located?",
+                    "options": [
+                        {"id": 1, "text": "Head"},
+                        {"id": 2, "text": "Chest"},
+                        {"id": 3, "text": "Stomach/Abdomen"},
+                        {"id": 4, "text": "Back"},
+                        {"id": 5, "text": "Other (please specify)"}
+                    ]
+                },
+                {
+                    "question": "How would you describe the pain?",
+                    "options": [
+                        {"id": 1, "text": "Dull ache"},
+                        {"id": 2, "text": "Sharp/stabbing"},
+                        {"id": 3, "text": "Throbbing"},
+                        {"id": 4, "text": "Cramping"},
+                        {"id": 5, "text": "Other (please specify)"}
+                    ]
+                }
+            ],
+            'cough': [
+                {
+                    "question": "What type of cough do you have?",
+                    "options": [
+                        {"id": 1, "text": "Dry cough"},
+                        {"id": 2, "text": "Wet/productive cough"},
+                        {"id": 3, "text": "Barking cough"},
+                        {"id": 4, "text": "Wheezing cough"},
+                        {"id": 5, "text": "Other (please specify)"}
+                    ]
+                },
+                {
+                    "question": "How long have you been coughing?",
+                    "options": [
+                        {"id": 1, "text": "Less than a week"},
+                        {"id": 2, "text": "1-2 weeks"},
+                        {"id": 3, "text": "2-4 weeks"},
+                        {"id": 4, "text": "More than a month"},
+                        {"id": 5, "text": "Other (please specify)"}
+                    ]
+                }
+            ]
+        }
+        
+        # General questions for any symptom
+        general_questions = [
+            {
+                "question": "When did your symptoms first begin?",
+                "options": [
+                    {"id": 1, "text": "Within the last 24 hours"},
+                    {"id": 2, "text": "In the past week"},
+                    {"id": 3, "text": "Several weeks ago"},
+                    {"id": 4, "text": "More than a month ago"},
+                    {"id": 5, "text": "Other (please specify)"}
+                ]
+            },
+            {
+                "question": "How severe are your symptoms?",
+                "options": [
+                    {"id": 1, "text": "Mild - noticeable but not interfering"},
+                    {"id": 2, "text": "Moderate - somewhat interfering"},
+                    {"id": 3, "text": "Severe - significantly interfering"},
+                    {"id": 4, "text": "Very severe - unable to function"},
+                    {"id": 5, "text": "Other (please specify)"}
+                ]
+            },
+            {
+                "question": "Do you have any other symptoms?",
+                "options": [
+                    {"id": 1, "text": "No other symptoms"},
+                    {"id": 2, "text": "Yes, mild additional symptoms"},
+                    {"id": 3, "text": "Yes, moderate additional symptoms"},
+                    {"id": 4, "text": "Yes, severe additional symptoms"},
+                    {"id": 5, "text": "Other (please specify)"}
+                ]
+            }
+        ]
+        
+        # Determine which question set to use based on symptoms
+        questions_to_use = general_questions
+        
+        for symptom, symptom_questions in symptom_questions.items():
+            if symptom in complaint_lower:
+                questions_to_use = symptom_questions
+                break
+        
+        # Get previously asked questions
+        asked_questions = set()
+        for resp in previous_responses:
+            if 'question' in resp:
+                asked_questions.add(resp['question'])
+        
+        # Find first unused question
+        for question_data in questions_to_use:
+            if question_data['question'] not in asked_questions:
+                return {
+                    "question": question_data['question'],
+                    "options": question_data['options'],
+                    "type": "MC"
+                }
+        
+        # If all specific questions used, return a general follow-up
+        return {
+            "question": "How does this affect your daily activities?",
+            "options": [
+                {"id": 1, "text": "Not at all"},
+                {"id": 2, "text": "Slightly limiting"},
+                {"id": 3, "text": "Moderately limiting"},
+                {"id": 4, "text": "Severely limiting"},
+                {"id": 5, "text": "Other (please specify)"}
+            ],
+            "type": "MC"
+        }
+        
+    except Exception as e:
+        print(f"Error in generate_robust_question_with_options: {e}")
+        # Return a fallback question if there's an error
+        return {
+            "question": "How long have you been experiencing these symptoms?",
+            "options": [
+                {"id": 1, "text": "Less than 24 hours"},
+                {"id": 2, "text": "1-7 days"},
+                {"id": 3, "text": "1-4 weeks"},
+                {"id": 4, "text": "More than a month"},
+                {"id": 5, "text": "Other (please specify)"}
+            ],
+            "type": "MC"
+        }
+
 def process_with_matrix(current_text: str, previous_responses: List[Dict], 
                        context_text: str = "") -> Dict[str, Any]:
     """Process input through MATRIX system with enhanced error handling."""
@@ -420,6 +616,9 @@ __all__ = [
     'parse_question_data',
     'store_examination',
     'generate_question_with_options',
+    'generate_robust_question_with_options',
+    'get_relevant_danger_signs',
+    'generate_danger_sign_questions',
     'initialize_session',
     'get_session_data'
 ]
@@ -882,6 +1081,96 @@ def extract_examination_and_options(examinations: List[Dict[str, Any]], exam_num
 
     return examVals
 
+def get_relevant_danger_signs(initial_complaint: str, symptoms: List[str], index) -> List[Dict[str, Any]]:
+    """
+    Get relevant danger signs from the medical guide based on the patient's condition.
+    Only returns danger signs that are specifically relevant to the patient's symptoms.
+    """
+    try:
+        # Create context for danger sign search
+        context = f"Initial complaint: {initial_complaint}\nSymptoms: {', '.join(symptoms)}"
+        
+        # Get embeddings for danger sign search
+        embedding = get_embedding_batch([context])[0]
+        
+        # Search for danger signs in the medical guide
+        danger_signs_query = f"danger signs {initial_complaint} symptoms"
+        danger_embedding = get_embedding_batch([danger_signs_query])[0]
+        
+        # Get relevant documents
+        relevant_docs = vectorQuotesWithSource(danger_embedding, index, top_k=5)
+        
+        if not relevant_docs:
+            return []
+        
+        # Filter for actual danger signs (not just general information)
+        danger_signs = []
+        for doc in relevant_docs:
+            text = doc['text'].lower()
+            # Look for specific danger sign indicators
+            if any(phrase in text for phrase in [
+                'danger sign', 'dangerous', 'emergency', 'urgent', 'severe',
+                'immediate', 'critical', 'life-threatening', 'refer immediately'
+            ]):
+                danger_signs.append({
+                    "sign": doc['text'],
+                    "source": doc.get('source', 'Medical guide'),
+                    "relevance": doc.get('score', 0.0)
+                })
+        
+        # Sort by relevance
+        danger_signs.sort(key=lambda x: x['relevance'], reverse=True)
+        
+        return danger_signs[:3]  # Return top 3 most relevant danger signs
+        
+    except Exception as e:
+        print(f"Error getting relevant danger signs: {e}")
+        return []
+
+def generate_danger_sign_questions(initial_complaint: str, symptoms: List[str], index) -> List[Dict[str, Any]]:
+    """
+    Generate questions about relevant danger signs based on the patient's condition.
+    Only asks about danger signs that are specifically relevant to their symptoms.
+    """
+    try:
+        # Get relevant danger signs from RAG
+        relevant_danger_signs = get_relevant_danger_signs(initial_complaint, symptoms, index)
+        
+        if not relevant_danger_signs:
+            return []
+        
+        # Generate questions for each relevant danger sign
+        danger_sign_questions = []
+        
+        for i, danger_sign in enumerate(relevant_danger_signs[:2]):  # Limit to 2 most relevant
+            # Extract the danger sign text
+            sign_text = danger_sign['sign']
+            
+            # Create a question about this specific danger sign
+            question = f"Do you have any of these symptoms: {sign_text[:100]}...?"
+            
+            options = [
+                {"id": 1, "text": "No, I don't have these symptoms"},
+                {"id": 2, "text": "Yes, I have some of these symptoms"},
+                {"id": 3, "text": "Yes, I have most/all of these symptoms"},
+                {"id": 4, "text": "I'm not sure"},
+                {"id": 5, "text": "Other (please specify)"}
+            ]
+            
+            danger_sign_questions.append({
+                "question": question,
+                "options": options,
+                "type": "MC",
+                "danger_sign": sign_text,
+                "source": danger_sign['source']
+            })
+        
+        return danger_sign_questions
+        
+    except Exception as e:
+        print(f"Error generating danger sign questions: {e}")
+        return []
+
 def main():
     """Main function to run the CHW assistant"""
     try:
@@ -932,57 +1221,71 @@ def main():
         print("\nBased on your responses, I'll ask some follow-up questions.")
         index = pc.Index("who-guide-old")
         
+        # Track symptoms for danger sign assessment
+        symptoms = []
+        for resp in followup_responses:
+            if isinstance(resp.get('answer'), str):
+                symptoms.append(resp.get('answer'))
+        
+        # Check if we should ask danger sign questions
+        danger_signs_asked = any('danger sign' in resp.get('question', '').lower() for resp in followup_responses)
+        
         while True:
             try:
-                context = f"Initial complaint: {initial_complaint}\n"
-                if followup_responses:
-                    context += "Previous responses:\n"
-                    for resp in followup_responses:
-                        context += f"Q: {resp['question']}\nA: {resp['answer']}\n"
+                # First, check for relevant danger signs if not already asked
+                if not danger_signs_asked and len(followup_responses) >= 2:
+                    danger_sign_questions = generate_danger_sign_questions(initial_complaint, symptoms, index)
+                    
+                    if danger_sign_questions:
+                        # Ask danger sign questions first
+                        for danger_question in danger_sign_questions:
+                            print(f"\n{danger_question['question']}")
+                            print_options(danger_question['options'])
+                            
+                            while True:
+                                answer = input("Enter your choice (enter the number): ").strip()
+                                
+                                if validate_mc_input(answer, danger_question['options']):
+                                    if answer == "5":
+                                        custom_answer = input("Please specify your answer: ").strip()
+                                        answer_text = custom_answer
+                                    else:
+                                        answer_text = next(opt['text'] for opt in danger_question['options'] if str(opt['id']) == answer)
+                                    
+                                    # Store danger sign response
+                                    followup_responses.append({
+                                        "question": danger_question['question'],
+                                        "answer": answer_text,
+                                        "type": "MC",
+                                        "danger_sign": danger_question['danger_sign'],
+                                        "source": danger_question['source'],
+                                        "citations": []
+                                    })
+                                    
+                                    # Update symptoms list
+                                    symptoms.append(answer_text)
+                                    break
+                                    
+                                print("Invalid input, please try again.")
+                        
+                        # Mark danger signs as asked
+                        danger_signs_asked = True
+                        continue
                 
-                embedding = get_embedding_batch([context])[0]
-                relevant_docs = vectorQuotesWithSource(embedding, index)
+                # Use robust question generation instead of AI-generated questions
+                question_data = generate_robust_question_with_options(initial_complaint, followup_responses)
                 
-                if not relevant_docs:
-                    print("Error: Could not generate relevant question.")
+                if not question_data or 'question' not in question_data or 'options' not in question_data:
+                    print("Error: Could not generate question with options.")
                     continue
                 
-                combined_context = " ".join([doc["text"] for doc in relevant_docs[:2]])
+                question = question_data['question']
+                options = question_data['options']
                 
-                previous_questions = "\n".join([f"- {resp['question']}" for resp in followup_responses])
-                
-                prompt = get_main_followup_question_prompt(
-                    initial_complaint=initial_complaint,
-                    previous_questions=previous_questions,
-                    combined_context=combined_context
-                )
-                
-                question = get_openai_completion(
-                    prompt=prompt,
-                    max_tokens=150,
-                    temperature=0.3
-                )
-                
-                # Generate options
-                options_prompt = f'''Generate 4 concise answers for: "{question}"
-                Clear, mutually exclusive options.
-                Return each option on a new line (1-4).'''
-                
-                options_text = get_openai_completion(
-                    prompt=options_prompt,
-                    max_tokens=100,
-                    temperature=0.2
-                )
-                
-                options = []
-                for i, opt in enumerate(options_text.strip().split('\n')):
-                    if opt.strip():
-                        text = opt.strip()
-                        if text[0].isdigit() and text[1] in ['.','-',')']:
-                            text = text[2:].strip()
-                        options.append({"id": i+1, "text": text})
-                
-                options.append({"id": 5, "text": "Other (please specify)"})
+                # Ensure we have at least 4 options plus "Other"
+                if len(options) < 4:
+                    print("Error: Not enough options generated.")
+                    continue
                 
                 # Use MATRIX to judge similarity and get pattern analysis
                 matrix_output = process_with_matrix(question, followup_responses)
@@ -1006,7 +1309,7 @@ def main():
                             "question": question,
                             "answer": answer_text,
                             "type": "MC",
-                            "citations": relevant_docs[-5:]
+                            "citations": []  # No citations for template-based questions
                         })
                         
                         # Parse and store question data
@@ -1015,7 +1318,7 @@ def main():
                             options, 
                             answer_text, 
                             matrix_output, 
-                            relevant_docs[-5:]
+                            []  # No citations for template-based questions
                         )
                         
                         # Print global arrays after each answer

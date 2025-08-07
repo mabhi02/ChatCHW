@@ -139,7 +139,7 @@ def setup_database_tables():
 # Initialize database tables
 setup_database_tables()
 
-# Initial screening questions (same as original)
+# Initial screening questions - Original format as specified
 questions_init = [
     {
         "question": "What is the patient's sex?",
@@ -154,13 +154,7 @@ questions_init = [
     },
     {
         "question": "What is the patient's age?",
-        "type": "NUM",
-        "range": {
-            "min": 0,
-            "max": 120,
-            "step": 1,
-            "unit": "years"
-        }
+        "type": "NUMERIC"
     },
     {
         "question": "Does the patient have a caregiver?",
@@ -175,7 +169,7 @@ questions_init = [
     },
     {
         "question": "Who is accompanying the patient?",
-        "type": "MCM",
+        "type": "MC",
         "options": [
             {"id": 1, "text": "None"},
             {"id": 2, "text": "Relatives"},
@@ -243,12 +237,12 @@ def get_openai_completion(prompt: str, max_tokens: int = 150, temperature: float
         return ""
 
 def identify_symptoms_from_complaint(complaint: str, index) -> Tuple[List[str], List[Dict[str, Any]]]:
-    """Identify symptoms from the initial complaint using RAG from WHO guide."""
+    """Identify symptoms from patient complaint using RAG"""
     try:
         print(f"Identifying symptoms from complaint: '{complaint}'")
         # Use RAG to identify symptoms mentioned in the complaint
         embedding = get_embedding_batch([complaint])[0]
-        relevant_docs = vectorQuotesWithSource(embedding, index, top_k=5)
+        relevant_docs = vectorQuotesWithSource(embedding, index, top_k=3)  # Reduced from 5 to 3
         
         print(f"Found {len(relevant_docs)} relevant documents")
         
@@ -262,14 +256,15 @@ def identify_symptoms_from_complaint(complaint: str, index) -> Tuple[List[str], 
         symptom_identification_prompt = f"""
         CRITICAL: You are a WHO Community Health Worker assistant. You can ONLY use information from the WHO medical guide provided below. Do NOT use any medical knowledge from your training.
         
-        Based ONLY on the WHO medical guide content below, identify the main symptoms mentioned in this patient complaint: "{complaint}"
+        Based ONLY on the WHO medical guide content below, identify the MOST IMPORTANT symptoms mentioned in this patient complaint: "{complaint}"
         
         WHO Medical Guide Content:
         {medical_guide_content}
         
-        Return ONLY the specific symptoms that are:
+        Return ONLY the 2-3 most critical symptoms that are:
         1. Mentioned in the patient's complaint
         2. Explicitly covered in the WHO medical guide content above
+        3. Most relevant for medical assessment
         
         IMPORTANT: 
         - If the patient mentions "fever", "hot", "temperature", or similar terms, and fever is mentioned in the WHO guide, include "fever"
@@ -278,34 +273,44 @@ def identify_symptoms_from_complaint(complaint: str, index) -> Tuple[List[str], 
         - If the patient mentions "diarrhea", "diarrhoea", "loose stools", or similar terms, and diarrhea is mentioned in the WHO guide, include "diarrhea"
         - If the patient mentions "vomit", "vomiting", "nausea", or similar terms, and vomiting is mentioned in the WHO guide, include "vomiting"
         
-        Format your response as a simple comma-separated list of symptoms (e.g., "fever, cough, diarrhea")
+        CRITICAL RULES:
+        - ONLY identify symptoms that are EXPLICITLY mentioned in the patient's complaint
+        - Do NOT infer symptoms that are not mentioned
+        - If the patient says "fever and chills", do NOT add "diarrhea" or other unrelated symptoms
+        - Focus on the PRIMARY symptoms the patient is complaining about
+        - Limit to 2-3 most important symptoms maximum
+        
+        Format your response as a simple comma-separated list of 2-3 symptoms (e.g., "fever, cough")
         If no symptoms can be identified from the WHO medical guide, respond with "none"
         
-        Remember: Use ONLY information from the WHO guide above, not your medical training.
+        Remember: Use ONLY information from the WHO guide above, not your medical training. Limit to 2-3 most important symptoms that are explicitly mentioned in the complaint.
         """
         
         print("Sending symptom identification prompt to OpenAI")
         response = get_openai_completion(
-            prompt=symptom_identification_prompt,
+            symptom_identification_prompt,
             max_tokens=100,
-            temperature=0.1
+            temperature=0.3
         )
         
-        print(f"OpenAI response: '{response}'")
+        print(f"OpenAI response: {response}")
         
         if response.lower().strip() == "none":
             print("No symptoms identified")
-            return [], []
+            return [], relevant_docs
         
         # Parse the response to extract symptoms
         symptoms = [s.strip() for s in response.split(',')]
         symptoms = [s for s in symptoms if s and len(s) > 2]
+        # LIMIT: Only take the first 3 symptoms maximum
+        MAX_SYMPTOMS = 3
+        symptoms = symptoms[:MAX_SYMPTOMS]
         
-        print(f"Parsed symptoms: {symptoms}")
+        print(f"Parsed symptoms (limited to {MAX_SYMPTOMS}): {symptoms}")
         return symptoms, relevant_docs
         
     except Exception as e:
-        print(f"Error identifying symptoms from complaint: {e}")
+        print(f"Error in identify_symptoms_from_complaint: {str(e)}")
         return [], []
 
 def rephrase_danger_sign_question(danger_sign_text: str) -> str:
@@ -352,167 +357,37 @@ def rephrase_danger_sign_question(danger_sign_text: str) -> str:
             return f"Does the patient have {danger_sign_lower}?"
 
 def check_similar_questions(new_question: str, previous_questions: List[str]) -> bool:
-    """Check if a new question is similar to any previously asked questions using GPT."""
-    if not previous_questions:
-        return False
+    """Check if a question is too similar to previously asked questions"""
+    new_question_lower = new_question.lower()
     
-    try:
-        # Create a list of previous questions for comparison
-        previous_questions_text = "\n".join([f"- {q}" for q in previous_questions])
+    for prev_question in previous_questions:
+        prev_lower = prev_question.lower()
         
-        prompt = f"""
-        You are a medical assistant checking for duplicate or similar questions.
+        # Check for exact matches
+        if new_question_lower == prev_lower:
+            return True
         
-        Previous questions asked:
-        {previous_questions_text}
+        # Check for key medical terms that should not be repeated
+        key_terms = ['chest indrawing', 'fever', 'drink', 'eat', 'breathing', 'pain', 'headache']
+        for term in key_terms:
+            if term in new_question_lower and term in prev_lower:
+                return True
         
-        New question: {new_question}
+        # Check for high similarity (more than 80% similar words)
+        new_words = set(new_question_lower.split())
+        prev_words = set(prev_lower.split())
         
-        Determine if the new question is asking about the same medical issue as any of the previous questions.
-        Consider synonyms and different ways of asking the same thing.
-        
-        Examples of similar questions:
-        - "Is the patient unable to drink or eat anything?" vs "Does the patient have trouble drinking and feeding?"
-        - "Does the patient have chest pain?" vs "Is the patient experiencing chest discomfort?"
-        - "Does the patient have fever?" vs "Is the patient running a temperature?"
-        
-        Respond with ONLY "YES" if the new question is similar to any previous question, or "NO" if it's different.
-        """
-        
-        completion = openai.ChatCompletion.create(
-            model="gpt-4-0125-preview",
-            messages=[
-                {"role": "system", "content": "You are a medical assistant that identifies duplicate or similar medical questions."},
-                {"role": "user", "content": prompt}
-            ],
-            max_tokens=10,
-            temperature=0.1
-        )
-        
-        response = completion.choices[0].message.content.strip().upper()
-        is_similar = response == "YES"
-        
-        print(f"Checking similarity: '{new_question}' vs {len(previous_questions)} previous questions")
-        print(f"GPT response: {response} (similar: {is_similar})")
-        
-        return is_similar
-        
-    except Exception as e:
-        print(f"Error checking question similarity: {e}")
-        # Fallback: simple keyword matching
-        new_question_lower = new_question.lower()
-        for prev_question in previous_questions:
-            prev_lower = prev_question.lower()
-            # Check for common medical terms that might indicate similarity
-            common_terms = ['drink', 'eat', 'feeding', 'fever', 'temperature', 'pain', 'chest', 'breathing']
-            for term in common_terms:
-                if term in new_question_lower and term in prev_lower:
-                    return True
-        return False
+        if new_words and prev_words:
+            intersection = new_words.intersection(prev_words)
+            union = new_words.union(prev_words)
+            similarity = len(intersection) / len(union)
+            
+            if similarity > 0.8:
+                return True
+    
+    return False
 
-def ask_danger_sign_questions(symptoms: List[str], index, session_data=None) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
-    """Ask danger sign questions for each symptom using RAG from WHO guide."""
-    danger_sign_responses = []
-    all_citations = []
-    
-    print(f"Generating danger sign questions for symptoms: {symptoms}")
-    
-    # Get patient age from session data (default to 30 if not available)
-    patient_age = 30
-    if session_data and 'initial_responses' in session_data:
-        for response in session_data['initial_responses']:
-            if response['question'] == "What is the patient's age?":
-                try:
-                    patient_age = int(response['answer'])
-                    print(f"Extracted patient age: {patient_age}")
-                except (ValueError, TypeError):
-                    patient_age = 30
-                    print(f"Could not parse age '{response['answer']}', using default: {patient_age}")
-                break
-    
-    # Get patient sex from session data (default to 'Unknown' if not available)
-    patient_sex = 'Unknown'
-    if session_data and 'initial_responses' in session_data:
-        for response in session_data['initial_responses']:
-            if response['question'] == "What is the patient's sex?":
-                patient_sex = response['answer']
-                print(f"Extracted patient sex: {patient_sex}")
-                break
-    
-    # Combine all symptoms into a single complaint
-    combined_complaint = " and ".join(symptoms)
-    print(f"Combined complaint for danger sign search: {combined_complaint}")
-    
-    try:
-        # Use the proven working function
-        danger_signs_result = identify_danger_signs(combined_complaint, patient_age, patient_sex)
-        print(f"Danger signs result: {danger_signs_result}")
-        
-        # Extract danger signs from the result
-        if danger_signs_result and 'danger_signs' in danger_signs_result:
-            danger_signs = danger_signs_result['danger_signs']
-            print(f"Found {len(danger_signs)} danger signs: {danger_signs}")
-            
-            # Convert danger signs to questions with proper options (deduplicated)
-            seen_questions = set()
-            seen_danger_signs = set()  # Track the actual danger sign text to avoid duplicates
-            
-            for danger_sign in danger_signs:
-                if isinstance(danger_sign, dict) and 'danger_sign' in danger_sign:
-                    danger_sign_text = danger_sign['danger_sign']
-                elif isinstance(danger_sign, str):
-                    danger_sign_text = danger_sign
-                else:
-                    continue
-                
-                # Skip if we've already seen this exact danger sign
-                if danger_sign_text.lower() in seen_danger_signs:
-                    print(f"Skipping duplicate danger sign: {danger_sign_text}")
-                    continue
-                seen_danger_signs.add(danger_sign_text.lower())
-                
-                # Rephrase the danger sign into a coherent question
-                question = rephrase_danger_sign_question(danger_sign_text)
-                print(f"Rephrased question: {question}")
-                
-                # Skip if we've already seen this question
-                if question.lower() in seen_questions:
-                    print(f"Skipping duplicate question: {question}")
-                    continue
-                seen_questions.add(question.lower())
-                
-                # Check for similar questions using GPT
-                if session_data and 'followup_responses' in session_data:
-                    previous_questions = []
-                    for response in session_data['followup_responses']:
-                        if 'question' in response:
-                            previous_questions.append(response['question'])
-                    
-                    if check_similar_questions(question, previous_questions):
-                        print(f"Skipping similar question (GPT detected): {question}")
-                        continue
-                
-                danger_sign_responses.append({
-                    'symptom': symptoms[0] if symptoms else 'unknown',
-                    'question': question,
-                    'answer': None,
-                    'type': 'MC',
-                    'options': [
-                        {"id": 1, "text": "Yes"},
-                        {"id": 2, "text": "No"},
-                        {"id": 3, "text": "Not sure"}
-                    ]
-                })
-        
-        # Get citations from the result if available
-        if danger_signs_result and 'citations' in danger_signs_result:
-            all_citations.extend(danger_signs_result['citations'])
-            
-    except Exception as e:
-        print(f"Error using identify_danger_signs: {e}")
-    
-    print(f"Total danger sign responses generated: {len(danger_sign_responses)}")
-    return danger_sign_responses, all_citations
+
 
 def parse_examination_text(text):
     """Parse examination text to extract examination name and procedure"""
@@ -777,8 +652,26 @@ def start_assessment():
         if first_question['type'] in ['MC', 'MCM']:
             options_text = "\n".join([f"{opt['id']}. {opt['text']}" for opt in first_question['options']])
             output = f"{first_question['question']}\n\n{options_text}"
+        elif first_question['type'] == 'NUMERIC':
+            output = first_question['question']
         else:
             output = first_question['question']
+        
+        # Prepare metadata based on question type
+        metadata = {
+            'question_type': first_question['type'],
+            'options': first_question.get('options', [])
+        }
+        
+        # Add numeric-specific metadata for slider rendering
+        if first_question['type'] == 'NUMERIC':
+            metadata.update({
+                'numeric_input': True,
+                'min_value': 0,
+                'max_value': 120,
+                'step': 1,
+                'default_value': 30
+            })
         
         # Save assistant message to conversation history
         save_conversation_message(
@@ -786,10 +679,7 @@ def start_assessment():
             message_type='assistant',
             phase='initial',
             content=output,
-            metadata={
-                'question_type': first_question['type'],
-                'options': first_question.get('options', [])
-            }
+            metadata=metadata
         )
         
         return jsonify({
@@ -798,7 +688,8 @@ def start_assessment():
             "metadata": {
                 "phase": session_data['phase'],
                 "question_type": first_question['type'],
-                "options": first_question.get('options', [])
+                "options": first_question.get('options', []),
+                **metadata
             }
         })
         
@@ -849,8 +740,26 @@ def process_input():
                     if next_question['type'] in ['MC', 'MCM']:
                         options_text = "\n".join([f"{opt['id']}. {opt['text']}" for opt in next_question['options']])
                         output = f"{next_question['question']}\n\n{options_text}"
+                    elif next_question['type'] == 'NUMERIC':
+                        output = next_question['question']
                     else:
                         output = next_question['question']
+                        
+                    # Prepare metadata based on question type
+                    metadata = {
+                        'question_type': next_question['type'],
+                        'options': next_question.get('options', [])
+                    }
+                    
+                    # Add numeric-specific metadata for slider rendering
+                    if next_question['type'] == 'NUMERIC':
+                        metadata.update({
+                            'numeric_input': True,
+                            'min_value': 0,
+                            'max_value': 120,
+                            'step': 1,
+                            'default_value': 30
+                        })
                         
                     # Save assistant message to conversation history
                     save_conversation_message(
@@ -858,10 +767,7 @@ def process_input():
                         message_type='assistant',
                         phase='initial',
                         content=output,
-                        metadata={
-                            'question_type': next_question['type'],
-                            'options': next_question.get('options', [])
-                        }
+                        metadata=metadata
                     )
                         
                     return jsonify({
@@ -870,7 +776,8 @@ def process_input():
                         "metadata": {
                             "phase": session_data['phase'],
                             "question_type": next_question['type'],
-                            "options": next_question.get('options', [])
+                            "options": next_question.get('options', []),
+                            **metadata
                         }
                     })
                 else:
@@ -889,33 +796,28 @@ def process_input():
                     # Save citations to database
                     save_session_chunks_to_neondb(session_id, "symptom_identification", citations)
                     
-                    # Generate danger sign questions
-                    print(f"Identified symptoms: {symptoms}")
-                    danger_sign_responses, danger_citations = ask_danger_sign_questions(symptoms, index, session_data)
-                    print(f"Generated {len(danger_sign_responses)} danger sign questions")
-                    session_data['danger_sign_responses'] = danger_sign_responses
-                    session_data['citations'].extend(danger_citations)
-                    
-                    # Save danger sign citations to database
-                    save_session_chunks_to_neondb(session_id, "danger_signs", danger_citations)
-                    
-                    if danger_sign_responses:
-                        # Ask first danger sign question
-                        first_danger_question = danger_sign_responses[0]
-                        options_text = "\n".join([f"{opt['id']}. {opt['text']}" for opt in first_danger_question['options']])
-                        output = f"Based on your symptoms, I need to check for any danger signs. Please answer the following question:\n\n{first_danger_question['question']}\n\n{options_text}"
+                    # PRIORITIZE IMMEDIATE EXAMINATIONS
+                    # Check if immediate examinations are needed based on symptoms
+                    immediate_exam = check_for_immediate_examination(symptoms, initial_complaint)
+                    if immediate_exam:
+                        print(f"Prioritizing immediate examination: {immediate_exam['name']}")
+                        session_data['phase'] = "immediate_exam"
+                        session_data['current_immediate_exam'] = immediate_exam
+                        
+                        options_text = "\n".join([f"{opt['id']}. {opt['text']}" for opt in immediate_exam['options']])
+                        output = f"Based on your symptoms, I need to perform an immediate examination. Let me conduct a {immediate_exam['name'].lower()}:\n\n{immediate_exam['procedure']}\n\n{options_text}"
                         
                         # Save assistant message to conversation history
                         save_conversation_message(
                             session_id=session_id,
                             message_type='assistant',
-                            phase='followup',
+                            phase='immediate_exam',
                             content=output,
                             metadata={
-                                'danger_sign_question': True, 
-                                'symptom': first_danger_question['symptom'],
-                                'question_type': first_danger_question['type'],
-                                'options': first_danger_question['options']
+                                'immediate_examination': True,
+                                'examination_name': immediate_exam['name'],
+                                'question_type': 'MC',
+                                'options': immediate_exam['options']
                             }
                         )
                         
@@ -924,30 +826,256 @@ def process_input():
                             "output": output,
                             "metadata": {
                                 "phase": session_data['phase'],
-                                "danger_sign_question": True,
-                                "symptom": first_danger_question['symptom'],
-                                "question_type": first_danger_question['type'],
-                                "options": first_danger_question['options']
+                                "immediate_examination": True,
+                                "examination_name": immediate_exam['name'],
+                                "question_type": 'MC',
+                                "options": immediate_exam['options']
                             }
                         })
-                    else:
-                        # No danger signs found, generate a simple followup question instead
-                        print("No danger signs found, generating followup question")
-                        response = generate_followup_question(session_data)
+                    
+                    # SMART ASSESSMENT FLOW
+                    # Use intelligent questioning instead of rigid phases
+                    print("Starting smart assessment flow")
+                    session_data['phase'] = "smart_assessment"
+                    
+                    # Get smart questions based on symptoms and medical guide
+                    smart_questions = get_smart_questions(symptoms, initial_complaint, index, session_data)
+                    
+                    if smart_questions:
+                        # Store smart questions for the session
+                        session_data['smart_questions'] = smart_questions
+                        session_data['current_question_index'] = 0
+                        
+                        # Ask the first smart question
+                        first_question = smart_questions[0]
+                        options_text = "\n".join([f"{opt['id']}. {opt['text']}" for opt in first_question['options']])
+                        output = f"Now I need to ask you some important questions to properly assess your condition:\n\n{first_question['question']}\n\n{options_text}"
                         
                         # Save assistant message to conversation history
                         save_conversation_message(
                             session_id=session_id,
                             message_type='assistant',
-                            phase='followup',
-                            content=response.json['output'],
-                            metadata=response.json['metadata']
+                            phase='smart_assessment',
+                            content=output,
+                            metadata={
+                                'smart_question': True,
+                                'question': first_question['question'],
+                                'question_type': first_question['type'],
+                                'options': first_question['options'],
+                                'question_index': 0
+                            }
                         )
                         
-                        return response
+                        return jsonify({
+                            "status": "success",
+                            "output": output,
+                            "metadata": {
+                                "phase": session_data['phase'],
+                                "smart_question": True,
+                                "question": first_question['question'],
+                                "question_type": first_question['type'],
+                                "options": first_question['options'],
+                                "question_index": 0
+                            }
+                        })
+                    else:
+                        # Fallback to traditional danger sign questions if no smart questions found
+                        print("No smart questions found, falling back to danger sign questions")
+                        session_data['phase'] = "followup"
+                        
+                        # Generate danger sign questions
+                        print(f"Identified symptoms: {symptoms}")
+                        danger_sign_result = identify_danger_signs(initial_complaint, symptoms, index)
+                        danger_sign_responses = []
+                        danger_citations = []
+                        
+                        if danger_sign_result['status'] == 'success':
+                            danger_signs = danger_sign_result['danger_signs']
+                            danger_citations = danger_sign_result.get('citations', [])
+                            print(f"Found {len(danger_signs)} danger signs: {danger_signs}")
+                            
+                            # Convert danger signs to questions with proper options (deduplicated)
+                            seen_questions = set()
+                            for danger_sign in danger_signs:
+                                if isinstance(danger_sign, dict) and 'danger_sign' in danger_sign:
+                                    danger_sign_text = danger_sign['danger_sign']
+                                    
+                                    # Create a focused question based on the danger sign
+                                    question = rephrase_danger_sign_question(danger_sign_text)
+                                    
+                                    # Skip if we've already asked a similar question
+                                    if check_similar_questions(question, seen_questions):
+                                        continue
+                                    
+                                    seen_questions.add(question)
+                                    
+                                    danger_sign_responses.append({
+                                        "question": question,
+                                        "type": "MC",
+                                        "symptom": danger_sign_text,
+                                        "options": [
+                                            {"id": 1, "text": "Yes"},
+                                            {"id": 2, "text": "No"},
+                                            {"id": 3, "text": "Not sure"}
+                                        ]
+                                    })
+                        
+                        print(f"Generated {len(danger_sign_responses)} danger sign questions")
+                        session_data['danger_sign_responses'] = danger_sign_responses
+                        session_data['citations'].extend(danger_citations)
+                        
+                        # Save danger sign citations to database
+                        save_session_chunks_to_neondb(session_id, "danger_signs", danger_citations)
+                        
+                        if danger_sign_responses:
+                            # Ask first danger sign question
+                            first_danger_question = danger_sign_responses[0]
+                            options_text = "\n".join([f"{opt['id']}. {opt['text']}" for opt in first_danger_question['options']])
+                            output = f"Now I need to check for any danger signs. Please answer the following question:\n\n{first_danger_question['question']}\n\n{options_text}"
+                            
+                            # Save assistant message to conversation history
+                            save_conversation_message(
+                                session_id=session_id,
+                                message_type='assistant',
+                                phase='followup',
+                                content=output,
+                                metadata={
+                                    'danger_sign_question': True, 
+                                    'symptom': first_danger_question['symptom'],
+                                    'question_type': first_danger_question['type'],
+                                    'options': first_danger_question['options']
+                                }
+                            )
+                            
+                            return jsonify({
+                                "status": "success",
+                                "output": output,
+                                "metadata": {
+                                    "phase": session_data['phase'],
+                                    "danger_sign_question": True,
+                                    "symptom": first_danger_question['symptom'],
+                                    "question_type": first_danger_question['type'],
+                                    "options": first_danger_question['options']
+                                }
+                            })
+                        else:
+                            # No danger signs, move to examination phase
+                            session_data['phase'] = "exam"
+                            response = generate_examination(session_data)
+                            
+                            # Save assistant message to conversation history
+                            save_conversation_message(
+                                session_id=session_id,
+                                message_type='assistant',
+                                phase='exam',
+                                content=response.json['output'],
+                                metadata=response.json['metadata']
+                            )
+                            
+                            return response
                     
             except Exception as e:
                 print(f"Error in initial phase: {str(e)}")
+                raise
+                
+        elif session_data['phase'] == "immediate_exam":
+            try:
+                # Store immediate examination response
+                current_exam = session_data.get('current_immediate_exam', {})
+                current_exam['result'] = user_input
+                
+                # Store the complete examination-answer pair
+                session_data['exam_responses'].append({
+                    "examination": current_exam.get('name', 'Unknown'),
+                    "procedure": current_exam.get('procedure', ''),
+                    "result": user_input,
+                    "type": 'MC',
+                    "options": current_exam.get('options', []),
+                    "immediate": True
+                })
+                
+                # After immediate examination, move to smart assessment
+                session_data['phase'] = "smart_assessment"
+                
+                # Get symptoms and initial complaint for smart questioning
+                symptoms = session_data.get('symptoms', [])
+                initial_complaint = next((resp['answer'] for resp in session_data['initial_responses'] 
+                                if resp['question'] == "Please describe what brings you here today"), "")
+                
+                # Ensure index is available
+                index = pc.Index("who-guide-old")
+                
+                # Get smart questions based on symptoms and medical guide
+                smart_questions = get_smart_questions(symptoms, initial_complaint, index, session_data)
+                
+                if smart_questions:
+                    # Store smart questions for the session
+                    session_data['smart_questions'] = smart_questions
+                    session_data['current_question_index'] = 0
+                    
+                    # Ask the first smart question
+                    first_question = smart_questions[0]
+                    options_text = "\n".join([f"{opt['id']}. {opt['text']}" for opt in first_question['options']])
+                    output = f"Thank you for the test result. Now I need to ask you some important questions to properly assess your condition:\n\n{first_question['question']}\n\n{options_text}"
+                    
+                    # Save assistant message to conversation history
+                    save_conversation_message(
+                        session_id=session_id,
+                        message_type='assistant',
+                        phase='smart_assessment',
+                        content=output,
+                        metadata={
+                            'smart_question': True,
+                            'question': first_question['question'],
+                            'question_type': first_question['type'],
+                            'options': first_question['options'],
+                            'question_index': 0
+                        }
+                    )
+                    
+                    return jsonify({
+                        "status": "success",
+                        "output": output,
+                        "metadata": {
+                            "phase": session_data['phase'],
+                            "smart_question": True,
+                            "question": first_question['question'],
+                            "question_type": first_question['type'],
+                            "options": first_question['options'],
+                            "question_index": 0
+                        }
+                    })
+                else:
+                    # No smart questions found, move to examination phase
+                    session_data['phase'] = "exam"
+                    
+                    # Add a brief transition message
+                    transition_output = "Thank you for the test result. Now I'll perform additional examinations to better understand your condition."
+                    
+                    # Save transition message to conversation history
+                    save_conversation_message(
+                        session_id=session_id,
+                        message_type='assistant',
+                        phase='smart_assessment',
+                        content=transition_output,
+                        metadata={'transition': True}
+                    )
+                    
+                    response = generate_examination(session_data)
+                    
+                    # Save assistant message to conversation history
+                    save_conversation_message(
+                        session_id=session_id,
+                        message_type='assistant',
+                        phase='exam',
+                        content=response.json['output'],
+                        metadata=response.json['metadata']
+                    )
+                    
+                    return response
+                    
+            except Exception as e:
+                print(f"Error in immediate_exam phase: {str(e)}")
                 raise
                 
         elif session_data['phase'] == "followup":
@@ -1088,6 +1216,245 @@ def process_input():
                 print(f"Error in exam phase: {str(e)}")
                 raise
                 
+        elif session_data['phase'] == "smart_assessment":
+            try:
+                # Store the smart question response
+                current_question_index = session_data.get('current_question_index', 0)
+                smart_questions = session_data.get('smart_questions', [])
+                
+                if current_question_index < len(smart_questions):
+                    current_question = smart_questions[current_question_index]
+                    
+                    # Store the response
+                    if 'smart_responses' not in session_data:
+                        session_data['smart_responses'] = []
+                    
+                    session_data['smart_responses'].append({
+                        "question": current_question['question'],
+                        "answer": user_input,
+                        "type": current_question['type'],
+                        "options": current_question['options']
+                    })
+                    
+                    # Move to next question
+                    session_data['current_question_index'] = current_question_index + 1
+                    
+                    # Check if we have more questions to ask
+                    if session_data['current_question_index'] < len(smart_questions):
+                        # Ask the next smart question
+                        next_question = smart_questions[session_data['current_question_index']]
+                        options_text = "\n".join([f"{opt['id']}. {opt['text']}" for opt in next_question['options']])
+                        output = f"Thank you. Now I need to ask you another important question:\n\n{next_question['question']}\n\n{options_text}"
+                        
+                        # Save assistant message to conversation history
+                        save_conversation_message(
+                            session_id=session_id,
+                            message_type='assistant',
+                            phase='smart_assessment',
+                            content=output,
+                            metadata={
+                                'smart_question': True,
+                                'question': next_question['question'],
+                                'question_type': next_question['type'],
+                                'options': next_question['options'],
+                                'question_index': session_data['current_question_index']
+                            }
+                        )
+                        
+                        return jsonify({
+                            "status": "success",
+                            "output": output,
+                            "metadata": {
+                                "phase": session_data['phase'],
+                                "smart_question": True,
+                                "question": next_question['question'],
+                                "question_type": next_question['type'],
+                                "options": next_question['options'],
+                                "question_index": session_data['current_question_index']
+                            }
+                        })
+                    else:
+                        # All smart questions answered, determine next step
+                        print("All smart questions answered, determining next step")
+                        
+                        # Get symptoms and initial complaint for decision making
+                        symptoms = session_data.get('symptoms', [])
+                        initial_complaint = next((resp['answer'] for resp in session_data['initial_responses'] 
+                                        if resp['question'] == "Please describe what brings you here today"), "")
+                        
+                        # Ensure index is available for decision making
+                        index = pc.Index("who-guide-old")
+                        
+                        # Use intelligent decision making
+                        next_step = determine_next_assessment_step(symptoms, initial_complaint, session_data, index)
+                        print(f"Next step determined: {next_step}")
+                        
+                        if next_step['action'] == "continue_questions":
+                            # Need more questions, get additional smart questions
+                            additional_questions = get_smart_questions(symptoms, initial_complaint, index, session_data)
+                            if additional_questions:
+                                # Double-check: Filter out questions we've already asked (extra safety)
+                                asked_questions = [resp['question'] for resp in session_data.get('smart_responses', [])]
+                                new_questions = []
+                                
+                                for q in additional_questions:
+                                    # Check for exact matches and similar questions
+                                    is_duplicate = False
+                                    for asked_q in asked_questions:
+                                        if q['question'].lower().strip() == asked_q.lower().strip():
+                                            is_duplicate = True
+                                            break
+                                        # Also check for similar questions using the existing function
+                                        if check_similar_questions(q['question'], [asked_q]):
+                                            is_duplicate = True
+                                            break
+                                    
+                                    if not is_duplicate:
+                                        new_questions.append(q)
+                                
+                                print(f"Additional questions generated: {len(additional_questions)}")
+                                print(f"After deduplication: {len(new_questions)} new questions")
+                                
+                                if new_questions:
+                                    # Limit additional questions to prevent endless questioning
+                                    MAX_ADDITIONAL_QUESTIONS = 2
+                                    limited_new_questions = new_questions[:MAX_ADDITIONAL_QUESTIONS]
+                                    session_data['smart_questions'].extend(limited_new_questions)
+                                    next_question = limited_new_questions[0]
+                                    options_text = "\n".join([f"{opt['id']}. {opt['text']}" for opt in next_question['options']])
+                                    output = f"I need to ask you a few more questions to complete the assessment:\n\n{next_question['question']}\n\n{options_text}"
+                                    
+                                    # Save assistant message to conversation history
+                                    save_conversation_message(
+                                        session_id=session_id,
+                                        message_type='assistant',
+                                        phase='smart_assessment',
+                                        content=output,
+                                        metadata={
+                                            'smart_question': True,
+                                            'question': next_question['question'],
+                                            'question_type': next_question['type'],
+                                            'options': next_question['options'],
+                                            'question_index': len(session_data.get('smart_responses', []))
+                                        }
+                                    )
+                                    
+                                    return jsonify({
+                                        "status": "success",
+                                        "output": output,
+                                        "metadata": {
+                                            "phase": session_data['phase'],
+                                            "smart_question": True,
+                                            "question": next_question['question'],
+                                            "question_type": next_question['type'],
+                                            "options": next_question['options']
+                                        }
+                                    })
+                                else:
+                                    # No new questions, move to examination
+                                    session_data['phase'] = "exam"
+                                    response = generate_examination(session_data)
+                                    
+                                    # Save assistant message to conversation history
+                                    save_conversation_message(
+                                        session_id=session_id,
+                                        message_type='assistant',
+                                        phase='exam',
+                                        content=response.json['output'],
+                                        metadata=response.json['metadata']
+                                    )
+                                    
+                                    return response
+                            else:
+                                # No additional questions, move to examination
+                                session_data['phase'] = "exam"
+                                response = generate_examination(session_data)
+                                
+                                # Save assistant message to conversation history
+                                save_conversation_message(
+                                    session_id=session_id,
+                                    message_type='assistant',
+                                    phase='exam',
+                                    content=response.json['output'],
+                                    metadata=response.json['metadata']
+                                )
+                                
+                                return response
+                                
+                        elif next_step['action'] == "perform_examination":
+                            # Move to examination phase
+                            session_data['phase'] = "exam"
+                            response = generate_examination(session_data)
+                            
+                            # Save assistant message to conversation history
+                            save_conversation_message(
+                                session_id=session_id,
+                                message_type='assistant',
+                                phase='exam',
+                                content=response.json['output'],
+                                metadata=response.json['metadata']
+                            )
+                            
+                            return response
+                            
+                        elif next_step['action'] == "make_diagnosis":
+                            # Move to final results
+                            session_data['phase'] = "final"
+                            response = generate_final_results(session_data)
+                            
+                            # Save assistant message to conversation history
+                            save_conversation_message(
+                                session_id=session_id,
+                                message_type='assistant',
+                                phase='final',
+                                content=response.json['output'],
+                                metadata=response.json['metadata']
+                            )
+                            
+                            return response
+                            
+                        elif next_step['action'] == "refer_immediately":
+                            # Immediate referral needed
+                            output = f"Based on your responses, you need immediate medical attention. Please go to the nearest hospital or health facility as soon as possible. {next_step['reason']}"
+                            
+                            # Save assistant message to conversation history
+                            save_conversation_message(
+                                session_id=session_id,
+                                message_type='assistant',
+                                phase='referral',
+                                content=output,
+                                metadata={'immediate_referral': True, 'reason': next_step['reason']}
+                            )
+                            
+                            return jsonify({
+                                "status": "success",
+                                "output": output,
+                                "metadata": {
+                                    "phase": "referral",
+                                    "immediate_referral": True,
+                                    "reason": next_step['reason']
+                                }
+                            })
+                        else:
+                            # Default to examination
+                            session_data['phase'] = "exam"
+                            response = generate_examination(session_data)
+                            
+                            # Save assistant message to conversation history
+                            save_conversation_message(
+                                session_id=session_id,
+                                message_type='assistant',
+                                phase='exam',
+                                content=response.json['output'],
+                                metadata=response.json['metadata']
+                            )
+                            
+                            return response
+                            
+            except Exception as e:
+                print(f"Error in smart_assessment phase: {str(e)}")
+                raise
+                
         else:
             return jsonify({
                 "status": "error",
@@ -1210,17 +1577,16 @@ def generate_examination(session_data):
         
         print(f"Already performed examinations: {performed_examinations}")
         
-        # HARDCODED EXAMINATION LIST - Only use these three tests
+        # HARDCODED EXAMINATION LIST - Only use these three tests with yes/no options
         allowed_examinations = [
             {
                 "name": "RDT for Malaria",
                 "procedure": "Use a rapid diagnostic test kit to detect malaria parasites in the patient's blood. Follow the kit instructions carefully.",
                 "relevant_symptoms": ["fever", "chills", "malaria", "headache", "body aches", "sweating"],
                 "options": [
-                    {"id": 1, "text": "Positive for malaria"},
-                    {"id": 2, "text": "Negative for malaria"},
-                    {"id": 3, "text": "Invalid test result"},
-                    {"id": 4, "text": "Unable to perform test"}
+                    {"id": 1, "text": "Yes - Positive for malaria"},
+                    {"id": 2, "text": "No - Negative for malaria"},
+                    {"id": 3, "text": "Other (please specify)"}
                 ]
             },
             {
@@ -1228,10 +1594,9 @@ def generate_examination(session_data):
                 "procedure": "Measure the Mid-Upper Arm Circumference using a MUAC strap. Wrap the strap around the patient's left arm, midway between the shoulder and elbow. Read the measurement at the arrow.",
                 "relevant_symptoms": ["malnutrition", "weight loss", "poor appetite", "weakness", "child", "infant"],
                 "options": [
-                    {"id": 1, "text": "Normal (>13.5 cm)"},
-                    {"id": 2, "text": "Moderate malnutrition (11.5-13.5 cm)"},
-                    {"id": 3, "text": "Severe malnutrition (<11.5 cm)"},
-                    {"id": 4, "text": "Unable to measure"}
+                    {"id": 1, "text": "Yes - Normal (>13.5 cm)"},
+                    {"id": 2, "text": "No - Malnutrition detected"},
+                    {"id": 3, "text": "Other (please specify)"}
                 ]
             },
             {
@@ -1239,11 +1604,9 @@ def generate_examination(session_data):
                 "procedure": "Use a digital thermometer to measure the patient's body temperature. Place the thermometer under the tongue or in the armpit for 2-3 minutes.",
                 "relevant_symptoms": ["fever", "chills", "hot", "temperature", "sweating", "infection"],
                 "options": [
-                    {"id": 1, "text": "Normal temperature (36.5-37.5°C)"},
-                    {"id": 2, "text": "Low fever (37.6-38.5°C)"},
-                    {"id": 3, "text": "High fever (>38.5°C)"},
-                    {"id": 4, "text": "Hypothermia (<36.5°C)"},
-                    {"id": 5, "text": "Unable to measure"}
+                    {"id": 1, "text": "Yes - Normal temperature"},
+                    {"id": 2, "text": "No - Fever detected"},
+                    {"id": 3, "text": "Other (please specify)"}
                 ]
             }
         ]
@@ -1266,8 +1629,10 @@ def generate_examination(session_data):
         
         print(f"Relevant examinations based on symptoms: {[exam['name'] for exam in relevant_examinations]}")
         
-        # Find the next examination that hasn't been performed
-        for exam in relevant_examinations:
+        # LIMIT: Only perform the most relevant examination (first one)
+        if relevant_examinations:
+            # Take only the first (most relevant) examination
+            exam = relevant_examinations[0]
             if exam["name"].lower() not in performed_examinations:
                 exam_data = {
                     "examination": exam["name"],
@@ -1293,8 +1658,8 @@ def generate_examination(session_data):
                     }
                 })
         
-        # If all relevant examinations have been performed, move to final results
-        print("All relevant examinations have been performed, moving to final results")
+        # If no relevant examinations or all have been performed, move to final results
+        print("No relevant examinations or all examinations performed, moving to final results")
         return generate_final_results(session_data)
         
     except Exception as e:
@@ -1318,17 +1683,16 @@ def generate_specific_examination(session_data):
             if 'examination' in exam:
                 performed_examinations.add(exam['examination'].lower().strip())
         
-        # HARDCODED EXAMINATION LIST - Only use these three tests
+        # HARDCODED EXAMINATION LIST - Only use these three tests with yes/no options
         allowed_examinations = [
             {
                 "name": "RDT for Malaria",
                 "procedure": "Use a rapid diagnostic test kit to detect malaria parasites in the patient's blood. Follow the kit instructions carefully.",
                 "relevant_symptoms": ["fever", "chills", "malaria", "headache", "body aches", "sweating"],
                 "options": [
-                    {"id": 1, "text": "Positive for malaria"},
-                    {"id": 2, "text": "Negative for malaria"},
-                    {"id": 3, "text": "Invalid test result"},
-                    {"id": 4, "text": "Unable to perform test"}
+                    {"id": 1, "text": "Yes - Positive for malaria"},
+                    {"id": 2, "text": "No - Negative for malaria"},
+                    {"id": 3, "text": "Other (please specify)"}
                 ]
             },
             {
@@ -1336,10 +1700,9 @@ def generate_specific_examination(session_data):
                 "procedure": "Measure the Mid-Upper Arm Circumference using a MUAC strap. Wrap the strap around the patient's left arm, midway between the shoulder and elbow. Read the measurement at the arrow.",
                 "relevant_symptoms": ["malnutrition", "weight loss", "poor appetite", "weakness", "child", "infant"],
                 "options": [
-                    {"id": 1, "text": "Normal (>13.5 cm)"},
-                    {"id": 2, "text": "Moderate malnutrition (11.5-13.5 cm)"},
-                    {"id": 3, "text": "Severe malnutrition (<11.5 cm)"},
-                    {"id": 4, "text": "Unable to measure"}
+                    {"id": 1, "text": "Yes - Normal (>13.5 cm)"},
+                    {"id": 2, "text": "No - Malnutrition detected"},
+                    {"id": 3, "text": "Other (please specify)"}
                 ]
             },
             {
@@ -1347,11 +1710,9 @@ def generate_specific_examination(session_data):
                 "procedure": "Use a digital thermometer to measure the patient's body temperature. Place the thermometer under the tongue or in the armpit for 2-3 minutes.",
                 "relevant_symptoms": ["fever", "chills", "hot", "temperature", "sweating", "infection"],
                 "options": [
-                    {"id": 1, "text": "Normal temperature (36.5-37.5°C)"},
-                    {"id": 2, "text": "Low fever (37.6-38.5°C)"},
-                    {"id": 3, "text": "High fever (>38.5°C)"},
-                    {"id": 4, "text": "Hypothermia (<36.5°C)"},
-                    {"id": 5, "text": "Unable to measure"}
+                    {"id": 1, "text": "Yes - Normal temperature"},
+                    {"id": 2, "text": "No - Fever detected"},
+                    {"id": 3, "text": "Other (please specify)"}
                 ]
             }
         ]
@@ -1374,8 +1735,10 @@ def generate_specific_examination(session_data):
         
         print(f"Relevant examinations based on symptoms (specific): {[exam['name'] for exam in relevant_examinations]}")
         
-        # Find the next examination that hasn't been performed
-        for exam in relevant_examinations:
+        # LIMIT: Only perform the most relevant examination (first one)
+        if relevant_examinations:
+            # Take only the first (most relevant) examination
+            exam = relevant_examinations[0]
             if exam["name"].lower() not in performed_examinations:
                 exam_data = {
                     "examination": exam["name"],
@@ -1401,8 +1764,8 @@ def generate_specific_examination(session_data):
                     }
                 })
         
-        # If all relevant examinations have been performed, move to final results
-        print("All relevant examinations have been performed (specific), moving to final results")
+        # If no relevant examinations or all have been performed, move to final results
+        print("No relevant examinations or all examinations performed (specific), moving to final results")
         return generate_final_results(session_data)
         
     except Exception as e:
@@ -1425,17 +1788,16 @@ def generate_final_examination_fallback(session_data):
                             if resp['question'] == "Please describe what brings you here today"), "")
         symptoms_text = "\n".join([f"- {symptom}" for symptom in session_data['symptoms']])
         
-        # HARDCODED EXAMINATION LIST - Only use these three tests
+        # HARDCODED EXAMINATION LIST - Only use these three tests with yes/no options
         allowed_examinations = [
             {
                 "name": "RDT for Malaria",
                 "procedure": "Use a rapid diagnostic test kit to detect malaria parasites in the patient's blood. Follow the kit instructions carefully.",
                 "relevant_symptoms": ["fever", "chills", "malaria", "headache", "body aches", "sweating"],
                 "options": [
-                    {"id": 1, "text": "Positive for malaria"},
-                    {"id": 2, "text": "Negative for malaria"},
-                    {"id": 3, "text": "Invalid test result"},
-                    {"id": 4, "text": "Unable to perform test"}
+                    {"id": 1, "text": "Yes - Positive for malaria"},
+                    {"id": 2, "text": "No - Negative for malaria"},
+                    {"id": 3, "text": "Other (please specify)"}
                 ]
             },
             {
@@ -1443,10 +1805,9 @@ def generate_final_examination_fallback(session_data):
                 "procedure": "Measure the Mid-Upper Arm Circumference using a MUAC strap. Wrap the strap around the patient's left arm, midway between the shoulder and elbow. Read the measurement at the arrow.",
                 "relevant_symptoms": ["malnutrition", "weight loss", "poor appetite", "weakness", "child", "infant"],
                 "options": [
-                    {"id": 1, "text": "Normal (>13.5 cm)"},
-                    {"id": 2, "text": "Moderate malnutrition (11.5-13.5 cm)"},
-                    {"id": 3, "text": "Severe malnutrition (<11.5 cm)"},
-                    {"id": 4, "text": "Unable to measure"}
+                    {"id": 1, "text": "Yes - Normal (>13.5 cm)"},
+                    {"id": 2, "text": "No - Malnutrition detected"},
+                    {"id": 3, "text": "Other (please specify)"}
                 ]
             },
             {
@@ -1454,11 +1815,9 @@ def generate_final_examination_fallback(session_data):
                 "procedure": "Use a digital thermometer to measure the patient's body temperature. Place the thermometer under the tongue or in the armpit for 2-3 minutes.",
                 "relevant_symptoms": ["fever", "chills", "hot", "temperature", "sweating", "infection"],
                 "options": [
-                    {"id": 1, "text": "Normal temperature (36.5-37.5°C)"},
-                    {"id": 2, "text": "Low fever (37.6-38.5°C)"},
-                    {"id": 3, "text": "High fever (>38.5°C)"},
-                    {"id": 4, "text": "Hypothermia (<36.5°C)"},
-                    {"id": 5, "text": "Unable to measure"}
+                    {"id": 1, "text": "Yes - Normal temperature"},
+                    {"id": 2, "text": "No - Fever detected"},
+                    {"id": 3, "text": "Other (please specify)"}
                 ]
             }
         ]
@@ -1481,8 +1840,10 @@ def generate_final_examination_fallback(session_data):
         
         print(f"Relevant examinations based on symptoms (fallback): {[exam['name'] for exam in relevant_examinations]}")
         
-        # Find the next examination that hasn't been performed
-        for exam in relevant_examinations:
+        # LIMIT: Only perform the most relevant examination (first one)
+        if relevant_examinations:
+            # Take only the first (most relevant) examination
+            exam = relevant_examinations[0]
             if exam["name"].lower() not in performed_examinations:
                 exam_data = {
                     "examination": exam["name"],
@@ -1508,8 +1869,8 @@ def generate_final_examination_fallback(session_data):
                     }
                 })
         
-        # If all relevant examinations have been performed, move to final results
-        print("All relevant examinations have been performed (fallback), moving to final results")
+        # If no relevant examinations or all have been performed, move to final results
+        print("No relevant examinations or all examinations performed (fallback), moving to final results")
         return generate_final_results(session_data)
         
     except Exception as e:
@@ -1521,8 +1882,9 @@ def generate_final_examination_fallback(session_data):
 
 def should_continue_examinations(session_data):
     """Determine if more examinations are needed"""
-    # Simple logic: continue if less than 3 examinations
-    return len(session_data['exam_responses']) < 3
+    # LIMIT: Only perform 2 examinations maximum
+    MAX_EXAMINATIONS = 2
+    return len(session_data['exam_responses']) < MAX_EXAMINATIONS
 
 def generate_final_results(session_data):
     """Generate final diagnosis and treatment using RAG"""
@@ -1609,6 +1971,363 @@ def get_conversation_history(session_id):
             "status": "error",
             "message": str(e)
         })
+
+def check_for_immediate_examination(symptoms: List[str], initial_complaint: str) -> Optional[Dict[str, Any]]:
+    """
+    Check if an immediate examination should be performed based on symptoms.
+    Only prioritize examinations that are CRITICAL for immediate decision-making.
+    """
+    # Convert to lowercase for matching
+    symptoms_lower = [s.lower() for s in symptoms]
+    complaint_lower = initial_complaint.lower()
+    
+    # Define CRITICAL immediate examinations only
+    critical_examinations = [
+        {
+            "name": "RDT for Malaria",
+            "procedure": "Use a rapid diagnostic test kit to detect malaria parasites in the patient's blood. Follow the kit instructions carefully.",
+            "relevant_symptoms": ["fever", "chills", "malaria", "headache", "body aches", "sweating"],
+            "relevant_keywords": ["malaria", "fever", "chills", "hot", "temperature"],
+            "priority": 1,  # Highest priority
+            "critical_reason": "Malaria requires immediate treatment and can be life-threatening",
+            "options": [
+                {"id": 1, "text": "Yes - Positive for malaria"},
+                {"id": 2, "text": "No - Negative for malaria"},
+                {"id": 3, "text": "Other (please specify)"}
+            ]
+        },
+        {
+            "name": "MUAC Strap",
+            "procedure": "Measure the Mid-Upper Arm Circumference using a MUAC strap. Wrap the strap around the patient's left arm, midway between the shoulder and elbow. Read the measurement at the arrow.",
+            "relevant_symptoms": ["malnutrition", "weight loss", "poor appetite", "weakness", "child", "infant"],
+            "relevant_keywords": ["malnutrition", "weight loss", "weakness", "child", "infant"],
+            "priority": 2,
+            "critical_reason": "Severe malnutrition requires immediate intervention",
+            "options": [
+                {"id": 1, "text": "Yes - Normal (>13.5 cm)"},
+                {"id": 2, "text": "No - Malnutrition detected"},
+                {"id": 3, "text": "Other (please specify)"}
+            ]
+        }
+    ]
+    
+    # Check for critical examination matches
+    matched_exams = []
+    
+    for exam in critical_examinations:
+        # Check if any symptoms match
+        symptom_match = any(symptom in exam["relevant_symptoms"] for symptom in symptoms_lower)
+        
+        # Check if any keywords are in the complaint
+        keyword_match = any(keyword in complaint_lower for keyword in exam["relevant_keywords"])
+        
+        # Check if examination name is mentioned
+        name_match = exam["name"].lower() in complaint_lower
+        
+        if symptom_match or keyword_match or name_match:
+            matched_exams.append(exam)
+    
+    # Return the highest priority examination if any matches
+    if matched_exams:
+        # Sort by priority (lower number = higher priority)
+        matched_exams.sort(key=lambda x: x["priority"])
+        return matched_exams[0]
+    
+    return None
+
+def generate_appropriate_options(question: str) -> List[Dict[str, Any]]:
+    """
+    Generate appropriate multiple-choice options based on the question type.
+    """
+    question_lower = question.lower()
+    
+    # Time-related questions
+    if any(word in question_lower for word in ["how long", "duration", "when did", "started", "began"]):
+        return [
+            {"id": 1, "text": "Less than 24 hours"},
+            {"id": 2, "text": "1-3 days"},
+            {"id": 3, "text": "3-7 days"},
+            {"id": 4, "text": "More than 7 days"}
+        ]
+    
+    # Age-related questions
+    elif any(word in question_lower for word in ["age", "how old", "years old"]):
+        return [
+            {"id": 1, "text": "Under 5 years"},
+            {"id": 2, "text": "5-12 years"},
+            {"id": 3, "text": "13-18 years"},
+            {"id": 4, "text": "Over 18 years"}
+        ]
+    
+    # Severity/intensity questions
+    elif any(word in question_lower for word in ["severe", "mild", "moderate", "how bad", "intensity", "level"]):
+        return [
+            {"id": 1, "text": "Mild"},
+            {"id": 2, "text": "Moderate"},
+            {"id": 3, "text": "Severe"},
+            {"id": 4, "text": "Very severe"}
+        ]
+    
+    # Frequency questions
+    elif any(word in question_lower for word in ["how often", "frequency", "times", "episodes"]):
+        return [
+            {"id": 1, "text": "Once or twice"},
+            {"id": 2, "text": "Several times"},
+            {"id": 3, "text": "Many times"},
+            {"id": 4, "text": "Continuous"}
+        ]
+    
+    # Location questions
+    elif any(word in question_lower for word in ["where", "location", "which part", "area"]):
+        return [
+            {"id": 1, "text": "Head/Neck"},
+            {"id": 2, "text": "Chest"},
+            {"id": 3, "text": "Abdomen"},
+            {"id": 4, "text": "Limbs"},
+            {"id": 5, "text": "All over"}
+        ]
+    
+    # Yes/No questions (default for most medical assessment questions)
+    else:
+        return [
+            {"id": 1, "text": "Yes"},
+            {"id": 2, "text": "No"},
+            {"id": 3, "text": "Not sure"}
+        ]
+
+def get_smart_questions(symptoms: List[str], initial_complaint: str, index, session_data: Dict[str, Any]) -> List[Dict[str, Any]]:
+    """
+    Use vector database to get relevant information and make intelligent decisions about what questions to ask.
+    This is the core intelligence module for determining the assessment flow.
+    """
+    try:
+        print(f"Getting smart questions for symptoms: {symptoms}")
+        
+        # Get already asked questions to avoid duplicates
+        already_asked = []
+        if 'smart_responses' in session_data:
+            already_asked = [resp['question'] for resp in session_data['smart_responses']]
+        print(f"Already asked questions: {already_asked}")
+        
+        # Create a comprehensive query to get relevant medical information
+        query = f"assessment questions for: {initial_complaint} symptoms: {' '.join(symptoms)}"
+        embedding = get_embedding_batch([query])[0]
+        relevant_docs = vectorQuotesWithSource(embedding, index, top_k=5)
+        
+        if not relevant_docs:
+            print("No relevant documents found for smart questioning")
+            return []
+        
+        # Use medical guide content to determine what questions to ask
+        medical_guide_content = "\n\n".join([doc['text'] for doc in relevant_docs])
+        
+        # Include already asked questions in the prompt to avoid duplicates
+        already_asked_text = ""
+        if already_asked:
+            already_asked_text = f"\nALREADY ASKED QUESTIONS (DO NOT REPEAT THESE):\n" + "\n".join([f"- {q}" for q in already_asked])
+        
+        smart_questioning_prompt = f"""
+        CRITICAL: You are a WHO Community Health Worker assistant. You can ONLY use information from the WHO medical guide provided below. Do NOT use any medical knowledge from your training.
+        
+        Patient complaint: "{initial_complaint}"
+        Identified symptoms: {symptoms}
+        {already_asked_text}
+        
+        Based ONLY on the WHO medical guide content below, determine what questions should be asked next to properly assess this patient. Focus on:
+        1. Danger signs that are relevant to the patient's symptoms
+        2. Key assessment questions that will help determine the next steps
+        3. Questions that will help differentiate between different possible conditions
+        
+        WHO Medical Guide Content:
+        {medical_guide_content}
+        
+        IMPORTANT RULES:
+        - Ask questions that are DIRECTLY relevant to the patient's symptoms
+        - Focus on questions that will help determine if the patient needs immediate referral
+        - Ask questions that will help identify the most likely diagnosis
+        - Limit to 3-4 most important questions maximum
+        - Make questions specific and actionable
+        - Prefer questions that can be answered with Yes/No, specific time periods, or clear categories
+        - Avoid vague or open-ended questions
+        - DO NOT repeat any questions that have already been asked
+        - If all relevant questions have already been asked, respond with "none"
+        
+        QUESTION TYPES TO PREFER:
+        - "Does the patient have [specific symptom]?" (Yes/No)
+        - "How long has [symptom] lasted?" (Time periods)
+        - "Is the patient able to [specific action]?" (Yes/No)
+        - "Where is the [symptom] located?" (Body areas)
+        - "How severe is the [symptom]?" (Severity levels)
+        
+        Return ONLY the specific questions that should be asked, formatted as a simple comma-separated list (e.g., "Does the patient have chest indrawing?, Is the patient able to drink?, How long has the fever lasted?").
+        IMPORTANT: Each question should be a complete sentence ending with a question mark, separated by commas.
+        If no relevant questions can be identified from the WHO medical guide, respond with "none"
+        
+        Remember: Use ONLY information from the WHO guide above, not your medical training. Focus on questions that will help make a proper assessment.
+        """
+        
+        print("Sending smart questioning prompt to OpenAI")
+        response = get_openai_completion(
+            smart_questioning_prompt,
+            max_tokens=200,
+            temperature=0.3
+        )
+        
+        print(f"OpenAI response for smart questions: {response}")
+        
+        if response.lower().strip() == "none":
+            print("No smart questions identified")
+            return []
+        
+        # Parse the response to extract questions
+        # First split by commas, then clean up each question
+        raw_questions = [q.strip() for q in response.split(',')]
+        questions = []
+        
+        for q in raw_questions:
+            # Remove any leading/trailing whitespace and punctuation
+            q = q.strip()
+            if q:
+                # If the question doesn't end with '?', add it
+                if not q.endswith('?'):
+                    q = q + '?'
+                # Only add questions that are substantial (more than 5 characters)
+                if len(q) > 5:
+                    questions.append(q)
+                    print(f"Parsed question: '{q}'")
+        
+        # Limit to 4 questions maximum
+        MAX_QUESTIONS = 4
+        questions = questions[:MAX_QUESTIONS]
+        
+        print(f"Parsed smart questions (limited to {MAX_QUESTIONS}): {questions}")
+        
+        # Convert to structured format with appropriate options for each question
+        smart_questions = []
+        for i, question in enumerate(questions, 1):
+            # Generate appropriate options based on question type
+            options = generate_appropriate_options(question)
+            
+            print(f"Smart question {i}: {question}")
+            print(f"Generated options: {options}")
+            
+            smart_questions.append({
+                "question": question,
+                "type": "MC",
+                "priority": i,
+                "options": options
+            })
+        
+        print(f"Final smart questions with options: {smart_questions}")
+        return smart_questions
+        
+    except Exception as e:
+        print(f"Error in get_smart_questions: {str(e)}")
+        return []
+
+# Test function to verify option generation (can be removed later)
+def test_option_generation():
+    """Test the generate_appropriate_options function"""
+    test_cases = [
+        ("How long has the fever lasted?", "time"),
+        ("What is the patient age?", "age"),
+        ("How severe is the pain?", "severity"),
+        ("Does the patient have chest indrawing?", "yes_no")
+    ]
+    
+    for question, expected_type in test_cases:
+        options = generate_appropriate_options(question)
+        print(f"Question: {question}")
+        print(f"Expected type: {expected_type}")
+        print(f"Options: {options}")
+        print("---")
+
+def determine_next_assessment_step(symptoms: List[str], initial_complaint: str, session_data: Dict[str, Any], index) -> Dict[str, Any]:
+    """
+    Make intelligent decisions about the next step in the assessment based on current information.
+    This is the core decision-making module.
+    """
+    try:
+        print(f"Determining next assessment step for symptoms: {symptoms}")
+        
+        # Check if we have enough information to make a diagnosis
+        current_responses = session_data.get('followup_responses', [])
+        exam_responses = session_data.get('exam_responses', [])
+        
+        # Get relevant medical information from vector database
+        query = f"assessment criteria for: {initial_complaint} symptoms: {' '.join(symptoms)}"
+        embedding = get_embedding_batch([query])[0]
+        relevant_docs = vectorQuotesWithSource(embedding, index, top_k=3)
+        
+        if not relevant_docs:
+            print("No relevant documents found for assessment decision")
+            return {"action": "continue_questions", "reason": "Need more information"}
+        
+        medical_guide_content = "\n\n".join([doc['text'] for doc in relevant_docs])
+        
+        # Count smart questions already asked
+        smart_responses = session_data.get('smart_responses', [])
+        total_questions_asked = len(current_responses) + len(smart_responses)
+        
+        # Hard limit: if we've asked too many questions, move to examination
+        MAX_TOTAL_QUESTIONS = 6
+        if total_questions_asked >= MAX_TOTAL_QUESTIONS:
+            print(f"Reached maximum questions limit ({MAX_TOTAL_QUESTIONS}), moving to examination")
+            return {"action": "perform_examination", "reason": "Maximum questions limit reached"}
+        
+        decision_prompt = f"""
+        CRITICAL: You are a WHO Community Health Worker assistant. You can ONLY use information from the WHO medical guide provided below. Do NOT use any medical knowledge from your training.
+        
+        Patient complaint: "{initial_complaint}"
+        Symptoms: {symptoms}
+        Total questions already answered: {total_questions_asked}
+        Examinations performed: {len(exam_responses)}
+        
+        Based ONLY on the WHO medical guide content below, determine what should be done next:
+        1. "continue_questions" - if more questions are needed for proper assessment
+        2. "perform_examination" - if a specific examination is needed
+        3. "make_diagnosis" - if enough information is available to make a diagnosis
+        4. "refer_immediately" - if the patient needs immediate referral
+        
+        WHO Medical Guide Content:
+        {medical_guide_content}
+        
+        IMPORTANT RULES:
+        - Only make diagnosis if the guide provides clear criteria and you have sufficient information
+        - Refer immediately if any danger signs are present
+        - Be conservative about continuing questions - prefer examinations or diagnosis if possible
+        - If more than 4-5 questions have been asked, prefer to move to examination or diagnosis
+        - Perform examinations only if they are specifically mentioned in the guide for this condition
+        - Only continue questions if absolutely necessary for proper assessment
+        
+        Return ONLY one of: "continue_questions", "perform_examination", "make_diagnosis", "refer_immediately"
+        """
+        
+        print("Sending assessment decision prompt to OpenAI")
+        response = get_openai_completion(
+            decision_prompt,
+            max_tokens=50,
+            temperature=0.1
+        )
+        
+        print(f"OpenAI decision response: {response}")
+        
+        action = response.strip().lower()
+        
+        if action == "continue_questions":
+            return {"action": "continue_questions", "reason": "Need more information for proper assessment"}
+        elif action == "perform_examination":
+            return {"action": "perform_examination", "reason": "Specific examination needed"}
+        elif action == "make_diagnosis":
+            return {"action": "make_diagnosis", "reason": "Sufficient information available"}
+        elif action == "refer_immediately":
+            return {"action": "refer_immediately", "reason": "Danger signs or critical condition detected"}
+        else:
+            return {"action": "continue_questions", "reason": "Default to asking more questions"}
+            
+    except Exception as e:
+        print(f"Error in determine_next_assessment_step: {str(e)}")
+        return {"action": "continue_questions", "reason": "Error occurred, defaulting to questions"}
 
 if __name__ == "__main__":
     # Verify connection to WHO medical guide
