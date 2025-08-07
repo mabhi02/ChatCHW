@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: health-assistant-backend
+    env: python
+    buildCommand: chmod +x build.sh && ./build.sh
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.7
+      - key: PIP_NO_CACHE_DIR
+        value: "1"
+      - key: CFLAGS
+        value: "-O2"
+      - key: CXXFLAGS
+        value: "-O2"

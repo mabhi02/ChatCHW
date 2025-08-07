@@ -4,8 +4,27 @@ set -o errexit
 
 echo "Starting deployment build..."
 
-# Install dependencies
+# Set environment variables to help with compilation
+export CFLAGS="-O2"
+export CXXFLAGS="-O2"
+export LDFLAGS="-Wl,--strip-all"
+
+# Install system dependencies if needed
+echo "Installing system dependencies..."
+apt-get update -qq || true
+apt-get install -y build-essential python3-dev || true
+
+# Install dependencies with specific flags for pandas
 echo "Installing dependencies..."
+pip install --no-cache-dir --upgrade pip setuptools wheel
+
+# Install numpy first (pandas dependency)
+pip install --no-cache-dir numpy==1.24.3
+
+# Install pandas with specific flags
+pip install --no-cache-dir pandas==1.5.3 --no-build-isolation
+
+# Install remaining dependencies
 pip install --no-cache-dir -r requirements.txt
 
 # Apply PyTorch fixes BEFORE running cleanup

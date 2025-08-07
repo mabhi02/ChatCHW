@@ -9,22 +9,22 @@ groq
 openai==0.28.0
 pinecone==4.0.0
 
-# Data processing
-numpy==1.26.4
-matplotlib
-pandas==2.2.2
-seaborn
-scikit-learn==1.4.2
+# Data processing - using more stable versions for deployment
+numpy==1.24.3
+matplotlib==3.7.2
+pandas==1.5.3
+seaborn==0.12.2
+scikit-learn==1.3.0
 
-# ML/AI
-torch==2.2.1 --index-url https://download.pytorch.org/whl/cpu
-transformers==4.37.2
-tqdm==4.66.4
+# ML/AI - using CPU-only versions for deployment
+torch==2.0.1+cpu --index-url https://download.pytorch.org/whl/cpu
+transformers==4.35.2
+tqdm==4.66.1
 
 # Utilities
 requests==2.31.0
-typing-extensions==4.11.0
-Jinja2==3.1.4
-pymongo==4.6.1
+typing-extensions==4.8.0
+Jinja2==3.1.2
+pymongo==4.5.0
 bson
-psutil
+psutil==5.9.5
