@@ -103,6 +103,33 @@ class _CudaDeviceProperties:
         
 def get_device_properties(device):
     return _CudaDeviceProperties(device)
+
+# Add Stream class for CUDA compatibility
+class Stream:
+    def __init__(self, device=None):
+        self.device = device or 0
+    
+    def __enter__(self):
+        return self
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        pass
+    
+    def synchronize(self):
+        pass
+
+def Stream(device=None):
+    return Stream(device)
+
+# Add other commonly used CUDA functions
+def empty_cache():
+    pass
+
+def synchronize():
+    pass
+
+def set_device(device):
+    pass
 """
     with open(cuda_init, 'w') as f:
         f.write(cuda_content)
