@@ -2103,6 +2103,32 @@ def get_smart_questions(symptoms: List[str], initial_complaint: str, index, sess
     try:
         print(f"Getting smart questions for symptoms: {symptoms}")
         
+        # Check if this is a diarrhea case - if so, use hardcoded diarrhea questions
+        is_diarrhea_case = any(term in initial_complaint.lower() or any(term in symptom.lower() for symptom in symptoms)
+                          for term in ['diarrhea', 'diarrhoea', 'loose stools'])
+        
+        if is_diarrhea_case:
+            print("Diarrhea case detected - using hardcoded diarrhea questions")
+            diarrhea_questions = get_diarrhea_specific_questions()
+            
+            # Check if diarrhea questions have already been asked
+            already_asked = []
+            if 'smart_responses' in session_data:
+                already_asked = [resp['question'] for resp in session_data['smart_responses']]
+            
+            # Filter out already asked diarrhea questions
+            remaining_diarrhea_questions = []
+            for question in diarrhea_questions:
+                if question['question'] not in already_asked:
+                    remaining_diarrhea_questions.append(question)
+            
+            if remaining_diarrhea_questions:
+                print(f"Returning {len(remaining_diarrhea_questions)} remaining diarrhea questions")
+                return remaining_diarrhea_questions
+            else:
+                print("All diarrhea questions have been asked, proceeding to diagnosis")
+                return []
+        
         # Get already asked questions to avoid duplicates
         already_asked = []
         if 'smart_responses' in session_data:
@@ -2214,7 +2240,6 @@ def get_smart_questions(symptoms: List[str], initial_complaint: str, index, sess
             smart_questions.append({
                 "question": question,
                 "type": "MC",
-                "priority": i,
                 "options": options
             })
         
@@ -2249,6 +2274,29 @@ def determine_next_assessment_step(symptoms: List[str], initial_complaint: str, 
     """
     try:
         print(f"Determining next assessment step for symptoms: {symptoms}")
+        
+        # Check if this is a diarrhea case - if so, ensure all diarrhea questions are answered
+        is_diarrhea_case = any(term in initial_complaint.lower() or any(term in symptom.lower() for symptom in symptoms)
+                          for term in ['diarrhea', 'diarrhoea', 'loose stools'])
+        
+        if is_diarrhea_case:
+            print("Diarrhea case detected - checking if all diarrhea questions have been answered")
+            diarrhea_questions = get_diarrhea_specific_questions()
+            smart_responses = session_data.get('smart_responses', [])
+            
+            # Check if all diarrhea questions have been answered
+            answered_diarrhea_questions = set()
+            for response in smart_responses:
+                for question in diarrhea_questions:
+                    if response['question'] == question['question']:
+                        answered_diarrhea_questions.add(question['question'])
+            
+            if len(answered_diarrhea_questions) < len(diarrhea_questions):
+                remaining_count = len(diarrhea_questions) - len(answered_diarrhea_questions)
+                print(f"Diarrhea case: {remaining_count} questions remaining, must continue asking")
+                return {"action": "continue_questions", "reason": f"Diarrhea case: {remaining_count} essential questions remaining"}
+            else:
+                print("All diarrhea questions answered, can proceed to diagnosis")
         
         # Check if we have enough information to make a diagnosis
         current_responses = session_data.get('followup_responses', [])
@@ -2328,6 +2376,38 @@ def determine_next_assessment_step(symptoms: List[str], initial_complaint: str, 
     except Exception as e:
         print(f"Error in determine_next_assessment_step: {str(e)}")
         return {"action": "continue_questions", "reason": "Error occurred, defaulting to questions"}
+
+def get_diarrhea_specific_questions() -> List[Dict[str, Any]]:
+    """
+    Return hardcoded diarrhea-specific questions based on WHO guidelines.
+    These questions must be asked before proceeding to diagnosis for diarrhea cases.
+    Reduced to bare minimum essential questions for efficiency.
+    """
+    diarrhea_questions = [
+        {
+            "question": "How many days has the child had diarrhea?",
+            "type": "MC", 
+            "priority": 1,
+            "options": [
+                {"id": "1", "text": "Less than 14 days"},
+                {"id": "2", "text": "14 days or more"},
+                {"id": "3", "text": "Not sure about the exact duration"}
+            ]
+        },
+        {
+            "question": "Is the child able to drink or breastfeed normally?",
+            "type": "MC",
+            "priority": 2,
+            "options": [
+                {"id": "1", "text": "Yes, child drinks normally"},
+                {"id": "2", "text": "No, child vomits everything"},
+                {"id": "3", "text": "Child drinks slowly or reluctantly"},
+                {"id": "4", "text": "Not sure"}
+            ]
+        }
+    ]
+    
+    return diarrhea_questions
 
 if __name__ == "__main__":
     # Verify connection to WHO medical guide
