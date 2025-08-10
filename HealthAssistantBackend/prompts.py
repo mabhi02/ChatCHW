@@ -15,6 +15,9 @@ Key findings: {key_findings}
 THE FOLLOWING MEDICAL GUIDE INFORMATION IS YOUR ONLY SOURCE OF KNOWLEDGE:
 {diagnosis_content}
 
+SPECIAL INSTRUCTIONS FOR DIARRHEA CASES:
+If the patient has diarrhea, diarrhoea, or loose stools, you MUST include zinc supplementation in the treatment plan according to WHO 2012 guidelines, even if the medical guide doesn't explicitly mention it.
+
 IMPORTANT INSTRUCTIONS:
 1. ONLY use information contained in the medical guide above to formulate your response.
 2. Do NOT add any medical knowledge from your pretraining.
@@ -72,6 +75,10 @@ Previous questions asked:
 
 Relevant medical context:
 {combined_context}
+
+SPECIAL INSTRUCTIONS FOR DIARRHEA CASES:
+If the patient has diarrhea, diarrhoea, or loose stools, you MUST ask about duration using this EXACT format:
+"For how long has the child had diarrhoea? 1. 3 days 2. 14 days or more 3. 7 days or more 4. Not specified 5. Other (please specify)"
 
 Generate ONE focused, relevant follow-up question that is different from the previous questions.
 Like do not ask both "How long have you had the pain?" and "How severe is the pain?", as they are too similar. It should only be like one or the other
@@ -576,6 +583,20 @@ Based ONLY on the medical guide information, what NEW examination should be perf
 '''
 
 def get_diagnosis_prompt(initial_complaint: str, symptoms_text: str, exam_results_text: str, medical_guide_content: str) -> str:
+    # Check if this is a diarrhea case
+    is_diarrhea_case = any(term in initial_complaint.lower() or term in symptoms_text.lower() 
+                          for term in ['diarrhea', 'diarrhoea', 'loose stools'])
+    
+    diarrhea_instruction = ""
+    if is_diarrhea_case:
+        diarrhea_instruction = """
+SPECIAL INSTRUCTIONS FOR DIARRHEA CASES:
+- You MUST include zinc supplementation in the treatment plan according to WHO 2012 guidelines
+- Zinc should be given for 10-14 days as part of the diarrhea treatment
+- Do not skip zinc even if the medical guide doesn't explicitly mention it
+- Include both ORS and zinc in the treatment plan
+"""
+    
     return f'''Patient information:
 Initial complaint: "{initial_complaint}"
 
@@ -599,10 +620,23 @@ IMPORTANT INSTRUCTIONS:
    - Confidence level (high/medium/low)
    - Reasoning based on guide content
 
-Based ONLY on the medical guide information, what is the diagnosis?
-'''
+Based ONLY on the medical guide information, what is the diagnosis?{diarrhea_instruction}'''
 
 def get_treatment_prompt(initial_complaint: str, symptoms_text: str, exam_results_text: str, diagnosis: str, medical_guide_content: str) -> str:
+    # Check if this is a diarrhea case
+    is_diarrhea_case = any(term in initial_complaint.lower() or term in symptoms_text.lower() or term in diagnosis.lower() 
+                          for term in ['diarrhea', 'diarrhoea', 'loose stools'])
+    
+    diarrhea_instruction = ""
+    if is_diarrhea_case:
+        diarrhea_instruction = """
+SPECIAL INSTRUCTIONS FOR DIARRHEA TREATMENT:
+- You MUST include zinc supplementation in the treatment plan according to WHO 2012 guidelines
+- Zinc should be given for 10-14 days as part of the diarrhea treatment
+- Do not skip zinc even if the medical guide doesn't explicitly mention it
+- Include both ORS and zinc in the treatment plan
+"""
+    
     return f'''Patient information:
 Initial complaint: "{initial_complaint}"
 
@@ -629,8 +663,7 @@ IMPORTANT INSTRUCTIONS:
    - Follow-up recommendations (if mentioned in guide)
    - Referral recommendations (if mentioned in guide)
 
-Based ONLY on the medical guide information, what is the recommended treatment?
-'''
+Based ONLY on the medical guide information, what is the recommended treatment?{diarrhea_instruction}'''
 
 def get_main_followup_question_prompt(initial_complaint: str, previous_questions: str, combined_context: str) -> str:
     return f'''Based on the patient's initial complaint: "{initial_complaint}"
@@ -640,6 +673,10 @@ Previous questions asked:
 
 Relevant medical context:
 {combined_context}
+
+SPECIAL INSTRUCTIONS FOR DIARRHEA CASES:
+If the patient has diarrhea, diarrhoea, or loose stools, you MUST ask about duration using this EXACT format:
+"For how long has the child had diarrhoea? 1. 3 days 2. 14 days or more 3. 7 days or more 4. Not specified 5. Other (please specify)"
 
 Generate ONE focused, relevant follow-up question that is different from the previous questions.
 Like do not ask both "How long have you had the pain?" and "How severe is the pain?", as they are too similar. It should only be like one or the other
