@@ -1,0 +1,49 @@
+# CPU-Only Requirements for ChatCHW
+# This file is optimized for systems without CUDA/GPU support
+# Use this instead of requirements.txt for CPU-only setups
+
+# Core application
+Flask==3.0.3
+Flask-Cors==4.0.0
+python-dotenv==1.0.1
+gunicorn==21.2.0
+
+# API Clients
+groq
+openai==0.28.0
+pinecone==4.0.0
+
+# Data processing
+numpy==1.26.4
+matplotlib
+pandas==2.2.2
+seaborn
+scikit-learn==1.4.2
+
+# ML/AI - CPU-only versions
+# PyTorch CPU-only (explicit CPU installation)
+torch==2.2.1+cpu --index-url https://download.pytorch.org/whl/cpu
+torchvision==0.17.1+cpu --index-url https://download.pytorch.org/whl/cpu
+torchaudio==2.2.1+cpu --index-url https://download.pytorch.org/whl/cpu
+
+# Transformers with CPU optimizations
+transformers==4.37.2
+tqdm==4.66.4
+
+# Utilities
+requests==2.31.0
+typing-extensions==4.11.0
+Jinja2==3.1.4
+pymongo==4.6.1
+bson
+psutil
+
+# Additional CPU optimization packages
+# These help with CPU performance
+numba==0.58.1  # JIT compilation for numerical functions
+joblib==1.3.2  # Parallel processing utilities
+
+# Optional: For better CPU performance
+# Uncomment if you want additional optimizations
+# intel-extension-for-pytorch  # Intel optimizations (if using Intel CPU)
+# mkl  # Intel Math Kernel Library optimizations
