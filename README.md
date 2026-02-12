@@ -6,19 +6,19 @@ An AI-powered health consultation application designed to support Community Heal
 
 1. [Features](#-features)
 2. [Technical Stack](#️-technical-stack)
-3. [ML Architecture & Data Flow](#-ml-architecture--data-flow)
-4. [Prerequisites](#-prerequisites)
-5. [Installation](#-installation)
-6. [Running the Application](#️-running-the-application)
+3. [Prerequisites](#-prerequisites)
+4. [Installation](#-installation)
+5. [Running the Application](#️-running-the-application)
+6. [ML Architecture & Data Flow](#-ml-architecture--data-flow)
 7. [Application Flow](#-application-flow)
 8. [System Architecture](#-system-architecture)
 9. [API Endpoints](#-api-endpoints)
 10. [Testing](#-testing)
 11. [Security & Privacy](#-security--privacy)
-12. [Future Development](#-future-development)
-13. [License](#-license)
-14. [Authors](#-repo-authors)
-15. [Acknowledgments](#-acknowledgments)
+12. [Authors](#-repo-authors)
+13. [Acknowledgments](#-acknowledgments)
+14. [Future Development](#-future-development)
+15. [License](#-license)
 16. [Disclaimer](#️-disclaimer)
 
 ## 🌟 Features
@@ -67,46 +67,46 @@ An AI-powered health consultation application designed to support Community Heal
 
 ### User Interface
 - **Dark Mode Optimization**
-  - Eye-friendly design
-  - High contrast elements
-  - Accessible color scheme
   - Responsive layouts
+  - Eye-friendly design
+  - Accessible color scheme
+  - High contrast elements
   - Intuitive navigation
 
 ## 🛠️ Technical Stack
 
 ### Frontend Technologies
-- **React Native (Expo)**
-  - Cross-platform compatibility
-  - Fast development cycle
-  - Hot reloading support
-  - Native functionality access
-
 - **TypeScript**
   - Type safety
   - Enhanced development experience
   - Better code maintainability
 
+- **React Native (Expo)**
+  - Cross-platform compatibility
+  - Hot reloading support
+  - Fast development cycle
+  - Native functionality access
+
 - **Navigation & UI**
   - React Navigation for routing
-  - Vector Icons for visual elements
   - Native Picker for form inputs
+  - Vector Icons for visual elements
 
 ### Backend Infrastructure
 - **Flask**
-  - RESTful API implementation
   - Lightweight server architecture
+  - RESTful API implementation
   - Easy integration capabilities
+
+- **AI Integration**
+  - OpenAI for embedding generation
+  - Groq API for language processing
+  - Pinecone for vector storage
 
 - **Database**
   - MongoDB for conversation storage
-  - Flexible document structure
   - Scalable data management
-
-- **AI Integration**
-  - Groq API for language processing
-  - OpenAI for embedding generation
-  - Pinecone for vector storage
+  - Flexible document structure
 
 ## 🧠 ML Architecture & Data Flow
 
@@ -370,10 +370,6 @@ python -m pytest
    - Healthcare provider linking
    - Telemedicine features
 
-## 📝 License
-
-This project is licensed under the APACHE License - see the [LICENSE.md](LICENSE.md) file for details.
-
 ## 👥 Repo Authors
 
 - Abhijith Varma Mudunuri - *Engineering* - [mabhi02](https://github.com/mabhi02)
@@ -384,6 +380,10 @@ This project is licensed under the APACHE License - see the [LICENSE.md](LICENSE
 - OpenAI for embedding capabilities
 - Pinecone for vector database services
 - The open-source community for various tools and libraries used
+
+## 📝 License
+
+This project is licensed under the APACHE License - see the [LICENSE.md](LICENSE.md) file for details.
 
 ## ⚠️ Disclaimer
 
