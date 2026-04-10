@@ -1,0 +1,516 @@
+[
+  {
+    "conditions": {
+      "cough_present": true,
+      "cough_duration_days": ">= 14"
+    },
+    "outputs": {
+      "triage": "hospital",
+      "danger_sign": true,
+      "clinic_referral": true,
+      "reason": "cough_for_14_days_or_more",
+      "ref": "p40",
+      "actions": "refer_urgently",
+      "advice": "",
+      "_decision": "decide_module_a"
+    },
+    "metadata": {
+      "decision": "decide_module_a",
+      "hit_policy": "FIRST",
+      "rule_index": 0
+    }
+  },
+  {
+    "conditions": {
+      "fast_breathing_present": true,
+      "chest_indrawing_present": false
+    },
+    "outputs": {
+      "triage": "clinic",
+      "danger_sign": false,
+      "clinic_referral": true,
+      "reason": "fast_breathing",
+      "ref": "p6-6",
+      "actions": "arrange_follow_up_visit,refer_if_child_becomes_sicker",
+      "advice": "",
+      "_decision": "decide_module_a"
+    },
+    "metadata": {
+      "decision": "decide_module_a",
+      "hit_policy": "FIRST",
+      "rule_index": 1
+    }
+  },
+  {
+    "conditions": {
+      "chest_indrawing_present": true
+    },
+    "outputs": {
+      "triage": "hospital",
+      "danger_sign": true,
+      "clinic_referral": true,
+      "reason": "chest_indrawing",
+      "ref": "p43",
+      "actions": "refer_urgently,prepare_for_oxygen_if_available",
+      "advice": "",
+      "_decision": "decide_module_a"
+    },
+    "metadata": {
+      "decision": "decide_module_a",
+      "hit_policy": "FIRST",
+      "rule_index": 2
+    }
+  },
+  {
+    "conditions": {},
+    "outputs": {
+      "triage": "home",
+      "danger_sign": false,
+      "clinic_referral": false,
+      "reason": "no_specific_issue",
+      "ref": "p46",
+      "actions": "",
+      "advice": "",
+      "_decision": "decide_module_a"
+    },
+    "metadata": {
+      "decision": "decide_module_a",
+      "hit_policy": "FIRST",
+      "rule_index": 3
+    }
+  },
+  {
+    "conditions": {
+      "has_diarrhoea": true,
+      "diarrhoea_duration_days": "< 14",
+      "blood_in_stool": false
+    },
+    "outputs": {
+      "triage": "clinic",
+      "danger_sign": false,
+      "clinic_referral": true,
+      "reason": "diarrhoea_less_than_14_days_no_blood",
+      "ref": "p6-6",
+      "actions": "give_ors,give_zinc",
+      "advice": "",
+      "_decision": "decide_module_b"
+    },
+    "metadata": {
+      "decision": "decide_module_b",
+      "hit_policy": "FIRST",
+      "rule_index": 0
+    }
+  },
+  {
+    "conditions": {
+      "diarrhoea_duration_days": ">= 14"
+    },
+    "outputs": {
+      "triage": "hospital",
+      "danger_sign": true,
+      "clinic_referral": true,
+      "reason": "diarrhoea_for_14_days_or_more",
+      "ref": "p43",
+      "actions": "refer_urgently",
+      "advice": "",
+      "_decision": "decide_module_b"
+    },
+    "metadata": {
+      "decision": "decide_module_b",
+      "hit_policy": "FIRST",
+      "rule_index": 1
+    }
+  },
+  {
+    "conditions": {
+      "has_diarrhoea": true,
+      "blood_in_stool": true
+    },
+    "outputs": {
+      "triage": "hospital",
+      "danger_sign": true,
+      "clinic_referral": true,
+      "reason": "blood_in_stool",
+      "ref": "p93",
+      "actions": "refer_urgently",
+      "advice": "",
+      "_decision": "decide_module_b"
+    },
+    "metadata": {
+      "decision": "decide_module_b",
+      "hit_policy": "FIRST",
+      "rule_index": 2
+    }
+  },
+  {
+    "conditions": {},
+    "outputs": {
+      "triage": "home",
+      "danger_sign": false,
+      "clinic_referral": false,
+      "reason": "no_specific_issue",
+      "ref": "p11",
+      "actions": "teach_how_to_give_ors_solution,give_zinc",
+      "advice": "",
+      "_decision": "decide_module_b"
+    },
+    "metadata": {
+      "decision": "decide_module_b",
+      "hit_policy": "FIRST",
+      "rule_index": 3
+    }
+  },
+  {
+    "conditions": {
+      "hot_with_fever": true,
+      "fever_duration_days": "< 7",
+      "malaria_area": true,
+      "rdt_available": true,
+      "rdt_result": "positive"
+    },
+    "outputs": {
+      "triage": "home",
+      "danger_sign": false,
+      "clinic_referral": false,
+      "reason": "rdt_positive_for_malaria",
+      "ref": "p45",
+      "actions": "give_antimalarial_per_protocol",
+      "advice": "",
+      "_decision": "decide_module_c"
+    },
+    "metadata": {
+      "decision": "decide_module_c",
+      "hit_policy": "FIRST",
+      "rule_index": 0
+    }
+  },
+  {
+    "conditions": {
+      "hot_with_fever": true,
+      "fever_duration_days": "< 7",
+      "malaria_area": true,
+      "rdt_available": true,
+      "rdt_result": "negative"
+    },
+    "outputs": {
+      "triage": "home",
+      "danger_sign": false,
+      "clinic_referral": false,
+      "reason": "fever_less_than_7_days_rdt_negative",
+      "ref": "p45",
+      "actions": "",
+      "advice": "",
+      "_decision": "decide_module_c"
+    },
+    "metadata": {
+      "decision": "decide_module_c",
+      "hit_policy": "FIRST",
+      "rule_index": 1
+    }
+  },
+  {
+    "conditions": {
+      "hot_with_fever": true,
+      "fever_duration_days": "< 7",
+      "malaria_area": true,
+      "rdt_available": false,
+      "rdt_result": "not_done"
+    },
+    "outputs": {
+      "triage": "home",
+      "danger_sign": false,
+      "clinic_referral": false,
+      "reason": "fever_in_malaria_area_no_rdt",
+      "ref": "p45",
+      "actions": "",
+      "advice": "",
+      "_decision": "decide_module_c"
+    },
+    "metadata": {
+      "decision": "decide_module_c",
+      "hit_policy": "FIRST",
+      "rule_index": 2
+    }
+  },
+  {
+    "conditions": {
+      "hot_with_fever": true,
+      "fever_duration_days": ">= 7"
+    },
+    "outputs": {
+      "triage": "hospital",
+      "danger_sign": true,
+      "clinic_referral": true,
+      "reason": "fever_for_last_7_days_or_more",
+      "ref": "p43",
+      "actions": "refer_urgently",
+      "advice": "",
+      "_decision": "decide_module_c"
+    },
+    "metadata": {
+      "decision": "decide_module_c",
+      "hit_policy": "FIRST",
+      "rule_index": 3
+    }
+  },
+  {
+    "conditions": {
+      "muac_result": "red"
+    },
+    "outputs": {
+      "triage": "hospital",
+      "danger_sign": true,
+      "clinic_referral": true,
+      "reason": "red_on_muac_strap",
+      "ref": "p43",
+      "actions": "refer",
+      "advice": "",
+      "_decision": "decide_module_d"
+    },
+    "metadata": {
+      "decision": "decide_module_d",
+      "hit_policy": "FIRST",
+      "rule_index": 0
+    }
+  },
+  {
+    "conditions": {
+      "muac_result": "yellow",
+      "swelling_of_both_feet": false
+    },
+    "outputs": {
+      "triage": "clinic",
+      "danger_sign": false,
+      "clinic_referral": true,
+      "reason": "yellow_on_muac_strap",
+      "ref": "p46",
+      "actions": "counsel_on_feeding,refer_for_supplemental_feeding,refer_to_community_based_feeding_programme",
+      "advice": "",
+      "_decision": "decide_module_d"
+    },
+    "metadata": {
+      "decision": "decide_module_d",
+      "hit_policy": "FIRST",
+      "rule_index": 1
+    }
+  },
+  {
+    "conditions": {
+      "swelling_of_both_feet": true
+    },
+    "outputs": {
+      "triage": "hospital",
+      "danger_sign": true,
+      "clinic_referral": true,
+      "reason": "swelling_of_both_feet",
+      "ref": "p38",
+      "actions": "urgent_refer",
+      "advice": "",
+      "_decision": "decide_module_d"
+    },
+    "metadata": {
+      "decision": "decide_module_d",
+      "hit_policy": "FIRST",
+      "rule_index": 2
+    }
+  },
+  {
+    "conditions": {},
+    "outputs": {
+      "triage": "home",
+      "danger_sign": false,
+      "clinic_referral": false,
+      "reason": "no_specific_issue",
+      "ref": "p6-6",
+      "actions": "",
+      "advice": "",
+      "_decision": "decide_module_d"
+    },
+    "metadata": {
+      "decision": "decide_module_d",
+      "hit_policy": "FIRST",
+      "rule_index": 3
+    }
+  },
+  {
+    "conditions": {
+      "cough_with_fast_breathing": true,
+      "chest_indrawing": false
+    },
+    "outputs": {
+      "triage": "clinic",
+      "danger_sign": false,
+      "clinic_referral": true,
+      "reason": "fast_breathing",
+      "ref": "p6-6",
+      "actions": "arrange_follow_up_visit,refer_if_child_becomes_sicker",
+      "advice": "",
+      "_decision": "decide_module_e"
+    },
+    "metadata": {
+      "decision": "decide_module_e",
+      "hit_policy": "FIRST",
+      "rule_index": 0
+    }
+  },
+  {
+    "conditions": {
+      "chest_indrawing": true
+    },
+    "outputs": {
+      "triage": "hospital",
+      "danger_sign": true,
+      "clinic_referral": true,
+      "reason": "chest_indrawing",
+      "ref": "p43",
+      "actions": "refer_urgently,prepare_for_oxygen_if_available",
+      "advice": "",
+      "_decision": "decide_module_e"
+    },
+    "metadata": {
+      "decision": "decide_module_e",
+      "hit_policy": "FIRST",
+      "rule_index": 1
+    }
+  },
+  {
+    "conditions": {
+      "cough_with_fast_breathing": false,
+      "chest_indrawing": false
+    },
+    "outputs": {
+      "triage": "home",
+      "danger_sign": false,
+      "clinic_referral": false,
+      "reason": "no_specific_issue",
+      "ref": "p46",
+      "actions": "",
+      "advice": "",
+      "_decision": "decide_module_e"
+    },
+    "metadata": {
+      "decision": "decide_module_e",
+      "hit_policy": "FIRST",
+      "rule_index": 2
+    }
+  },
+  {
+    "conditions": {
+      "decide_module_a.triage": "hospital",
+      "decide_module_a.danger_sign": true
+    },
+    "outputs": {
+      "triage": "hospital",
+      "danger_sign": true,
+      "clinic_referral": true,
+      "reason": "aggregated_danger_sign",
+      "ref": "p6-6",
+      "actions": "",
+      "advice": "",
+      "_decision": "aggregate_final"
+    },
+    "metadata": {
+      "decision": "aggregate_final",
+      "hit_policy": "FIRST",
+      "rule_index": 0
+    }
+  },
+  {
+    "conditions": {
+      "decide_module_a.danger_sign": false,
+      "decide_module_b.triage": "hospital",
+      "decide_module_b.danger_sign": true
+    },
+    "outputs": {
+      "triage": "hospital",
+      "danger_sign": true,
+      "clinic_referral": true,
+      "reason": "aggregated_danger_sign",
+      "ref": "p6-6",
+      "actions": "",
+      "advice": "",
+      "_decision": "aggregate_final"
+    },
+    "metadata": {
+      "decision": "aggregate_final",
+      "hit_policy": "FIRST",
+      "rule_index": 1
+    }
+  },
+  {
+    "conditions": {
+      "decide_module_a.danger_sign": false,
+      "decide_module_b.danger_sign": false,
+      "decide_module_c.danger_sign": false,
+      "decide_module_d.danger_sign": true,
+      "decide_module_e.danger_sign": false
+    },
+    "outputs": {
+      "triage": "hospital",
+      "danger_sign": true,
+      "clinic_referral": true,
+      "reason": "aggregated_danger_sign",
+      "ref": "p43",
+      "actions": "",
+      "advice": "",
+      "_decision": "aggregate_final"
+    },
+    "metadata": {
+      "decision": "aggregate_final",
+      "hit_policy": "FIRST",
+      "rule_index": 2
+    }
+  },
+  {
+    "conditions": {
+      "decide_module_a.triage": "clinic",
+      "decide_module_a.danger_sign": false,
+      "decide_module_b.triage": "clinic",
+      "decide_module_b.danger_sign": false,
+      "decide_module_c.danger_sign": false,
+      "decide_module_d.triage": "clinic",
+      "decide_module_d.danger_sign": false,
+      "decide_module_e.triage": "clinic",
+      "decide_module_e.danger_sign": false
+    },
+    "outputs": {
+      "triage": "clinic",
+      "danger_sign": false,
+      "clinic_referral": true,
+      "reason": "aggregate_clinic_referral",
+      "ref": "p6-6",
+      "actions": "",
+      "advice": "",
+      "_decision": "aggregate_final"
+    },
+    "metadata": {
+      "decision": "aggregate_final",
+      "hit_policy": "FIRST",
+      "rule_index": 3
+    }
+  },
+  {
+    "conditions": {
+      "decide_module_a.danger_sign": false,
+      "decide_module_b.danger_sign": false,
+      "decide_module_c.danger_sign": false,
+      "decide_module_d.danger_sign": false,
+      "decide_module_e.danger_sign": false
+    },
+    "outputs": {
+      "triage": "home",
+      "danger_sign": false,
+      "clinic_referral": false,
+      "reason": "no_danger_signs",
+      "ref": "p50-50",
+      "actions": "",
+      "advice": "",
+      "_decision": "aggregate_final"
+    },
+    "metadata": {
+      "decision": "aggregate_final",
+      "hit_policy": "FIRST",
+      "rule_index": 4
+    }
+  }
+]
