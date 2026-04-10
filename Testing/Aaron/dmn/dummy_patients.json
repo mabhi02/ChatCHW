@@ -1,0 +1,36 @@
+[
+  {
+    "test_name": "Test 1: Patient 1 -> Module B (Perfect Clinic (contains strings, but just for testing))",
+    "target_module": "decide_module_b",
+    "patient_flags": {
+      "has_diarrhoea": true,
+      "diarrhoea_duration_days": "< 14",
+      "blood_in_stool": false
+    }
+  },
+  {
+    "test_name": "Test 2: Patient 2 -> Module D (Safe Halt / Missing Data)",
+    "target_module": "decide_module_d",
+    "patient_flags": {
+      "swelling_of_both_feet": false
+    }
+  },
+  {
+    "test_name": "Test 3: Patient 3 -> Module D (Emergency Override)",
+    "target_module": "decide_module_d",
+    "patient_flags": {
+      "swelling_of_both_feet": true
+    }
+  },
+  {
+    "test_name": "Test 4: Patient 4 -> Module C (String Matching (parsed rules still contains strings))",
+    "target_module": "decide_module_c",
+    "patient_flags": {
+      "hot_with_fever": true,
+      "fever_duration_days": "< 7",
+      "malaria_area": true,
+      "rdt_available": true,
+      "rdt_result": "positive"
+    }
+  }
+]

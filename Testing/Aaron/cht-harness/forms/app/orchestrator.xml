@@ -1,0 +1,409 @@
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jr="http://openrosa.org/javarosa" xmlns:orx="http://openrosa.org/xforms" xmlns:odk="http://www.opendatakit.org/xforms">
+  <h:head>
+    <h:title>orchestrator</h:title>
+    <model odk:xforms-version="1.0.0">
+      <instance>
+        <data id="orchestrator" prefix="J1!orchestrator!" delimiter="#">
+          <inputs>
+            <meta>
+              <location>
+                <lat/>
+                <long/>
+                <error/>
+                <message/>
+              </location>
+            </meta>
+            <source/>
+            <source_id/>
+            <delivery_uuid/>
+            <contact>
+              <_id/>
+              <name/>
+              <short_name/>
+              <patient_id/>
+              <date_of_birth/>
+              <parent>
+                <_id/>
+                <parent>
+                  <contact>
+                    <chw_name/>
+                    <phone/>
+                  </contact>
+                </parent>
+              </parent>
+            </contact>
+          </inputs>
+          <patient_info>
+            <child_name/>
+            <age_months/>
+            <sex/>
+          </patient_info>
+          <danger_signs>
+            <convulsions_present/>
+            <unusually_sleepy_or_unconscious/>
+            <not_able_to_drink_or_feed_anything/>
+            <vomits_everything/>
+            <chest_indrawing/>
+            <swelling_of_both_feet/>
+            <muac_color/>
+            <danger_sign_present_flag/>
+          </danger_signs>
+          <respiratory>
+            <cough_present/>
+            <cough_duration_days/>
+            <breaths_per_minute/>
+            <fast_breathing_calc/>
+          </respiratory>
+          <diarrhoea>
+            <diarrhoea_present/>
+            <diarrhoea_duration_days/>
+            <blood_in_stool/>
+          </diarrhoea>
+          <fever>
+            <fever_present/>
+            <fever_duration_days/>
+            <rdt_result/>
+          </fever>
+          <clinic_referral_flag/>
+          <triage_reason_code/>
+          <final_triage/>
+          <final_advice/>
+          <final_result_note/>
+          <data>
+            <__child_name/>
+            <__age_months/>
+            <__sex/>
+            <__convulsions_present/>
+            <__unusually_sleepy_or_unconscious/>
+            <__not_able_to_drink_or_feed_anything/>
+            <__vomits_everything/>
+            <__chest_indrawing/>
+            <__swelling_of_both_feet/>
+            <__muac_color/>
+            <__danger_sign_present_flag/>
+            <__cough_present/>
+            <__cough_duration_days/>
+            <__breaths_per_minute/>
+            <__fast_breathing_calc/>
+            <__diarrhoea_present/>
+            <__diarrhoea_duration_days/>
+            <__blood_in_stool/>
+            <__fever_present/>
+            <__fever_duration_days/>
+            <__rdt_result/>
+            <__clinic_referral_flag/>
+            <__triage_reason_code/>
+            <__final_triage/>
+            <__final_advice/>
+            <meta tag="hidden">
+              <__patient_uuid/>
+              <__patient_id/>
+              <__household_uuid/>
+              <__source/>
+              <__source_id/>
+              <__delivery_uuid/>
+            </meta>
+          </data>
+          <meta tag="hidden">
+            <instanceID/>
+          </meta>
+        </data>
+      </instance>
+      <instance id="contact-summary"/>
+      <instance id="user-contact-summary"/>
+      <instance id="yes_no">
+        <root>
+          <item>
+            <name>yes</name>
+            <label>Yes</label>
+          </item>
+          <item>
+            <name>no</name>
+            <label>No</label>
+          </item>
+        </root>
+      </instance>
+      <instance id="muac_color">
+        <root>
+          <item>
+            <name>red</name>
+            <label>Red</label>
+          </item>
+          <item>
+            <name>yellow</name>
+            <label>Yellow</label>
+          </item>
+          <item>
+            <name>green</name>
+            <label>Green</label>
+          </item>
+        </root>
+      </instance>
+      <instance id="rdt_result">
+        <root>
+          <item>
+            <name>positive</name>
+            <label>Positive</label>
+          </item>
+          <item>
+            <name>negative</name>
+            <label>Negative</label>
+          </item>
+        </root>
+      </instance>
+      <instance id="patient_triage">
+        <root>
+          <item>
+            <name>HOME</name>
+            <label>Home Care Recommended</label>
+          </item>
+          <item>
+            <name>CLINIC</name>
+            <label>Clinic Referral</label>
+          </item>
+          <item>
+            <name>HOSPITAL</name>
+            <label>Hospital Referral</label>
+          </item>
+        </root>
+      </instance>
+      <instance id="sex">
+        <root>
+          <item>
+            <name>male</name>
+            <label>Male</label>
+          </item>
+          <item>
+            <name>female</name>
+            <label>Female</label>
+          </item>
+        </root>
+      </instance>
+      <bind nodeset="/data/inputs" relevant="./source = 'user'"/>
+      <bind nodeset="/data/inputs/source" type="string"/>
+      <bind nodeset="/data/inputs/source_id" type="string"/>
+      <bind nodeset="/data/inputs/delivery_uuid" type="string"/>
+      <bind nodeset="/data/inputs/contact/_id" type="string"/>
+      <bind nodeset="/data/inputs/contact/name" type="string"/>
+      <bind nodeset="/data/inputs/contact/short_name" type="string"/>
+      <bind nodeset="/data/inputs/contact/patient_id" type="string"/>
+      <bind nodeset="/data/inputs/contact/date_of_birth" type="string"/>
+      <bind nodeset="/data/inputs/contact/parent/_id" type="string"/>
+      <bind nodeset="/data/inputs/contact/parent/parent/contact/chw_name" type="string"/>
+      <bind nodeset="/data/inputs/contact/parent/parent/contact/phone" type="string"/>
+      <bind nodeset="/data/patient_info/child_name" type="string" required="true()"/>
+      <bind nodeset="/data/patient_info/age_months" type="int" constraint=". &gt;= 0 and . &lt;= 59" required="true()"/>
+      <bind nodeset="/data/patient_info/sex" type="string" required="true()"/>
+      <bind nodeset="/data/danger_signs/convulsions_present" type="string"/>
+      <bind nodeset="/data/danger_signs/unusually_sleepy_or_unconscious" type="string"/>
+      <bind nodeset="/data/danger_signs/not_able_to_drink_or_feed_anything" type="string"/>
+      <bind nodeset="/data/danger_signs/vomits_everything" type="string"/>
+      <bind nodeset="/data/danger_signs/chest_indrawing" type="string"/>
+      <bind nodeset="/data/danger_signs/swelling_of_both_feet" type="string"/>
+      <bind nodeset="/data/danger_signs/muac_color" type="string"/>
+      <bind nodeset="/data/danger_signs/danger_sign_present_flag" type="string" calculate="if( selected( /data/danger_signs/convulsions_present , 'yes') or selected( /data/danger_signs/unusually_sleepy_or_unconscious , 'yes') or selected( /data/danger_signs/not_able_to_drink_or_feed_anything , 'yes') or selected( /data/danger_signs/vomits_everything , 'yes') or selected( /data/danger_signs/chest_indrawing , 'yes') or selected( /data/danger_signs/swelling_of_both_feet , 'yes') or selected( /data/danger_signs/muac_color , 'red'), 'true', 'false')"/>
+      <bind nodeset="/data/respiratory/cough_present" type="string"/>
+      <bind nodeset="/data/respiratory/cough_duration_days" type="int" relevant="selected( /data/respiratory/cough_present , 'yes')" constraint=". &gt;= 0"/>
+      <bind nodeset="/data/respiratory/breaths_per_minute" type="int" relevant="selected( /data/respiratory/cough_present , 'yes')" constraint=". &gt; 0"/>
+      <bind nodeset="/data/respiratory/fast_breathing_calc" type="string" calculate="if( selected( /data/respiratory/cough_present , 'yes') and  /data/patient_info/age_months  &lt;= 12 and  /data/respiratory/breaths_per_minute  &gt; 50, 'true', if( selected( /data/respiratory/cough_present , 'yes') and  /data/patient_info/age_months  &gt; 12 and  /data/respiratory/breaths_per_minute  &gt; 40, 'true', 'false'))"/>
+      <bind nodeset="/data/diarrhoea/diarrhoea_present" type="string"/>
+      <bind nodeset="/data/diarrhoea/diarrhoea_duration_days" type="int" relevant="selected( /data/diarrhoea/diarrhoea_present , 'yes')" constraint=". &gt;= 0"/>
+      <bind nodeset="/data/diarrhoea/blood_in_stool" type="string" relevant="selected( /data/diarrhoea/diarrhoea_present , 'yes')"/>
+      <bind nodeset="/data/fever/fever_present" type="string"/>
+      <bind nodeset="/data/fever/fever_duration_days" type="int" relevant="selected( /data/fever/fever_present , 'yes')" constraint=". &gt;= 0"/>
+      <bind nodeset="/data/fever/rdt_result" type="string" relevant="selected( /data/fever/fever_present , 'yes')"/>
+      <bind nodeset="/data/clinic_referral_flag" type="string" calculate="if( /data/respiratory/cough_duration_days  &gt;= 14 or  /data/diarrhoea/diarrhoea_duration_days  &gt;= 14 or selected( /data/diarrhoea/blood_in_stool , 'yes') or  /data/fever/fever_duration_days  &gt;= 7 or  /data/respiratory/fast_breathing_calc  = 'true' or selected( /data/danger_signs/muac_color , 'yellow'), 'true', 'false')"/>
+      <bind nodeset="/data/triage_reason_code" type="string" calculate="if( /data/danger_signs/danger_sign_present_flag  = 'true', 'DANGER_SIGN_PRIORITY', if( /data/respiratory/fast_breathing_calc  = 'true', 'FAST_BREATHING', if(selected( /data/danger_signs/muac_color , 'yellow'), 'MUAC_YELLOW', if( /data/respiratory/cough_duration_days  &gt;= 14, 'COUGH_CHRONIC', if( /data/diarrhoea/diarrhoea_duration_days  &gt;= 14, 'DIARRHEA_CHRONIC', if(selected( /data/diarrhoea/blood_in_stool , 'yes'), 'BLOOD_IN_STOOL', if( /data/fever/fever_duration_days  &gt;= 7, 'FEVER_CHRONIC', if(selected( /data/fever/fever_present , 'yes') and selected( /data/fever/rdt_result , 'positive'), 'MALARIA_POSITIVE', 'TREAT_AT_HOME'))))))))"/>
+      <bind nodeset="/data/final_triage" type="string" calculate="if( /data/triage_reason_code  = 'DANGER_SIGN_PRIORITY', 'HOSPITAL', if( /data/clinic_referral_flag  = 'true' or  /data/triage_reason_code  = 'FAST_BREATHING' or  /data/triage_reason_code  = 'MUAC_YELLOW' or  /data/triage_reason_code  = 'COUGH_CHRONIC' or  /data/triage_reason_code  = 'DIARRHEA_CHRONIC' or  /data/triage_reason_code  = 'BLOOD_IN_STOOL' or  /data/triage_reason_code  = 'FEVER_CHRONIC', 'CLINIC', 'HOME'))"/>
+      <bind nodeset="/data/final_advice" type="string" calculate="if( /data/triage_reason_code  = 'DANGER_SIGN_PRIORITY', 'Refer to Hospital immediately.', if( /data/triage_reason_code  = 'FAST_BREATHING', 'Refer to Clinic for suspected severe pneumonia.', if( /data/triage_reason_code  = 'MUAC_YELLOW', 'Refer to Clinic for moderate malnutrition.', if( /data/triage_reason_code  = 'COUGH_CHRONIC', 'Refer to Clinic for chronic cough assessment.', if( /data/triage_reason_code  = 'DIARRHEA_CHRONIC', 'Refer to Clinic for persistent diarrhea assessment.', if( /data/triage_reason_code  = 'BLOOD_IN_STOOL', 'Refer to Clinic immediately for dysentery.', if( /data/triage_reason_code  = 'FEVER_CHRONIC', 'Refer to Clinic for prolonged fever investigation.', if( /data/triage_reason_code  = 'MALARIA_POSITIVE', 'Dispense ACTs and provide home care advice.', 'Provide routine health advice and reassess if symptoms worsen.'))))))))"/>
+      <bind nodeset="/data/final_result_note" readonly="true()" type="string"/>
+      <bind nodeset="/data/data" relevant="hidden" required="hidden"/>
+      <bind nodeset="/data/data/__child_name" type="string" calculate=" /data/patient_info/child_name "/>
+      <bind nodeset="/data/data/__age_months" type="string" calculate=" /data/patient_info/age_months "/>
+      <bind nodeset="/data/data/__sex" type="string" calculate=" /data/patient_info/sex "/>
+      <bind nodeset="/data/data/__convulsions_present" type="string" calculate=" /data/danger_signs/convulsions_present "/>
+      <bind nodeset="/data/data/__unusually_sleepy_or_unconscious" type="string" calculate=" /data/danger_signs/unusually_sleepy_or_unconscious "/>
+      <bind nodeset="/data/data/__not_able_to_drink_or_feed_anything" type="string" calculate=" /data/danger_signs/not_able_to_drink_or_feed_anything "/>
+      <bind nodeset="/data/data/__vomits_everything" type="string" calculate=" /data/danger_signs/vomits_everything "/>
+      <bind nodeset="/data/data/__chest_indrawing" type="string" calculate=" /data/danger_signs/chest_indrawing "/>
+      <bind nodeset="/data/data/__swelling_of_both_feet" type="string" calculate=" /data/danger_signs/swelling_of_both_feet "/>
+      <bind nodeset="/data/data/__muac_color" type="string" calculate=" /data/danger_signs/muac_color "/>
+      <bind nodeset="/data/data/__danger_sign_present_flag" type="string" calculate=" /data/danger_signs/danger_sign_present_flag "/>
+      <bind nodeset="/data/data/__cough_present" type="string" calculate=" /data/respiratory/cough_present "/>
+      <bind nodeset="/data/data/__cough_duration_days" type="string" calculate=" /data/respiratory/cough_duration_days "/>
+      <bind nodeset="/data/data/__breaths_per_minute" type="string" calculate=" /data/respiratory/breaths_per_minute "/>
+      <bind nodeset="/data/data/__fast_breathing_calc" type="string" calculate=" /data/respiratory/fast_breathing_calc "/>
+      <bind nodeset="/data/data/__diarrhoea_present" type="string" calculate=" /data/diarrhoea/diarrhoea_present "/>
+      <bind nodeset="/data/data/__diarrhoea_duration_days" type="string" calculate=" /data/diarrhoea/diarrhoea_duration_days "/>
+      <bind nodeset="/data/data/__blood_in_stool" type="string" calculate=" /data/diarrhoea/blood_in_stool "/>
+      <bind nodeset="/data/data/__fever_present" type="string" calculate=" /data/fever/fever_present "/>
+      <bind nodeset="/data/data/__fever_duration_days" type="string" calculate=" /data/fever/fever_duration_days "/>
+      <bind nodeset="/data/data/__rdt_result" type="string" calculate=" /data/fever/rdt_result "/>
+      <bind nodeset="/data/data/__clinic_referral_flag" type="string" calculate=" /data/clinic_referral_flag "/>
+      <bind nodeset="/data/data/__triage_reason_code" type="string" calculate=" /data/triage_reason_code "/>
+      <bind nodeset="/data/data/__final_triage" type="string" calculate=" /data/final_triage "/>
+      <bind nodeset="/data/data/__final_advice" type="string" calculate=" /data/final_advice "/>
+      <bind nodeset="/data/data/meta/__patient_uuid" type="string" calculate="../../../inputs/contact/_id"/>
+      <bind nodeset="/data/data/meta/__patient_id" type="string" calculate="../../../inputs/contact/patient_id"/>
+      <bind nodeset="/data/data/meta/__household_uuid" type="string" calculate="../../../inputs/contact/parent/_id"/>
+      <bind nodeset="/data/data/meta/__source" type="string" calculate="../../../inputs/source"/>
+      <bind nodeset="/data/data/meta/__source_id" type="string" calculate="../../../inputs/source_id"/>
+      <bind nodeset="/data/data/meta/__delivery_uuid" type="string" calculate="../../../inputs/delivery_uuid"/>
+      <bind nodeset="/data/meta/instanceID" type="string" readonly="true()" jr:preload="uid"/>
+    </model>
+  </h:head>
+  <h:body>
+    <group appearance="field-list" ref="/data/inputs">
+      <label>NO_LABEL</label>
+      <group ref="/data/inputs/contact">
+        <label>NO_LABEL</label>
+        <input ref="/data/inputs/contact/_id" appearance="select-contact type-person">
+          <label>What is the patient's name?</label>
+        </input>
+        <group ref="/data/inputs/contact/parent">
+          <label>NO_LABEL</label>
+          <group ref="/data/inputs/contact/parent/parent">
+            <label>NO_LABEL</label>
+            <group ref="/data/inputs/contact/parent/parent/contact">
+              <label>NO_LABEL</label>
+            </group>
+          </group>
+        </group>
+      </group>
+    </group>
+    <group appearance="field-list" ref="/data/patient_info">
+      <label>Patient Information</label>
+      <input ref="/data/patient_info/child_name">
+        <label>Child's name</label>
+      </input>
+      <input ref="/data/patient_info/age_months">
+        <label>Age (in months)</label>
+      </input>
+      <select1 ref="/data/patient_info/sex">
+        <label>Sex</label>
+        <itemset nodeset="instance('sex')/root/item">
+          <value ref="name"/>
+          <label ref="label"/>
+        </itemset>
+      </select1>
+    </group>
+    <group appearance="field-list" ref="/data/danger_signs">
+      <label>Danger Signs</label>
+      <select1 ref="/data/danger_signs/convulsions_present">
+        <label>Convulsions or fits</label>
+        <itemset nodeset="instance('yes_no')/root/item">
+          <value ref="name"/>
+          <label ref="label"/>
+        </itemset>
+      </select1>
+      <select1 ref="/data/danger_signs/unusually_sleepy_or_unconscious">
+        <label>Unusually sleepy or unconscious</label>
+        <itemset nodeset="instance('yes_no')/root/item">
+          <value ref="name"/>
+          <label ref="label"/>
+        </itemset>
+      </select1>
+      <select1 ref="/data/danger_signs/not_able_to_drink_or_feed_anything">
+        <label>Not able to drink or feed anything</label>
+        <itemset nodeset="instance('yes_no')/root/item">
+          <value ref="name"/>
+          <label ref="label"/>
+        </itemset>
+      </select1>
+      <select1 ref="/data/danger_signs/vomits_everything">
+        <label>Vomits everything</label>
+        <itemset nodeset="instance('yes_no')/root/item">
+          <value ref="name"/>
+          <label ref="label"/>
+        </itemset>
+      </select1>
+      <select1 ref="/data/danger_signs/chest_indrawing">
+        <label>Chest indrawing</label>
+        <itemset nodeset="instance('yes_no')/root/item">
+          <value ref="name"/>
+          <label ref="label"/>
+        </itemset>
+      </select1>
+      <select1 ref="/data/danger_signs/swelling_of_both_feet">
+        <label>Swelling of both feet</label>
+        <itemset nodeset="instance('yes_no')/root/item">
+          <value ref="name"/>
+          <label ref="label"/>
+        </itemset>
+      </select1>
+      <select1 ref="/data/danger_signs/muac_color">
+        <label>MUAC color</label>
+        <itemset nodeset="instance('muac_color')/root/item">
+          <value ref="name"/>
+          <label ref="label"/>
+        </itemset>
+      </select1>
+    </group>
+    <group appearance="field-list" ref="/data/respiratory">
+      <label>Cough / Respiratory Assessment</label>
+      <select1 ref="/data/respiratory/cough_present">
+        <label>Does the child have cough or difficult breathing?</label>
+        <itemset nodeset="instance('yes_no')/root/item">
+          <value ref="name"/>
+          <label ref="label"/>
+        </itemset>
+      </select1>
+      <input ref="/data/respiratory/cough_duration_days">
+        <label>If yes, for how many days?</label>
+      </input>
+      <input ref="/data/respiratory/breaths_per_minute">
+        <label>Breaths per minute</label>
+      </input>
+    </group>
+    <group appearance="field-list" ref="/data/diarrhoea">
+      <label>Diarrhea Assessment</label>
+      <select1 ref="/data/diarrhoea/diarrhoea_present">
+        <label>Diarrhea</label>
+        <itemset nodeset="instance('yes_no')/root/item">
+          <value ref="name"/>
+          <label ref="label"/>
+        </itemset>
+      </select1>
+      <input ref="/data/diarrhoea/diarrhoea_duration_days">
+        <label>If yes, for how many days?</label>
+      </input>
+      <select1 ref="/data/diarrhoea/blood_in_stool">
+        <label>Blood in stool</label>
+        <itemset nodeset="instance('yes_no')/root/item">
+          <value ref="name"/>
+          <label ref="label"/>
+        </itemset>
+      </select1>
+    </group>
+    <group appearance="field-list" ref="/data/fever">
+      <label>Fever / Malaria Assessment</label>
+      <select1 ref="/data/fever/fever_present">
+        <label>Does the child have fever?</label>
+        <itemset nodeset="instance('yes_no')/root/item">
+          <value ref="name"/>
+          <label ref="label"/>
+        </itemset>
+      </select1>
+      <input ref="/data/fever/fever_duration_days">
+        <label>If yes, for how many days?</label>
+      </input>
+      <select1 ref="/data/fever/rdt_result">
+        <label>Malaria RDT result</label>
+        <itemset nodeset="instance('rdt_result')/root/item">
+          <value ref="name"/>
+          <label ref="label"/>
+        </itemset>
+      </select1>
+    </group>
+    <input ref="/data/final_result_note">
+      <label> Final Triage Recommendation: <output value=" /data/final_triage "/></label>
+    </input>
+    <group ref="/data/data">
+      <label>NO_LABEL</label>
+      <group ref="/data/data/meta">
+        <label>NO_LABEL</label>
+      </group>
+    </group>
+  </h:body>
+</h:html>

@@ -1,0 +1,26 @@
+[
+  {
+    "patient_row": 1,
+    "age": 24,
+    "complaint": "Routine check",
+    "final_triage": "HOME",
+    "triage_reason_code": "TREAT_AT_HOME",
+    "final_advice": "Provide routine health advice and reassess if symptoms worsen."
+  },
+  {
+    "patient_row": 2,
+    "age": 18,
+    "complaint": "Difficulty breathing",
+    "final_triage": "HOSPITAL",
+    "triage_reason_code": "DANGER_SIGN_PRIORITY",
+    "final_advice": "Refer to Hospital immediately."
+  },
+  {
+    "patient_row": 3,
+    "age": 24,
+    "complaint": "Cough and fast breathing",
+    "final_triage": "CLINIC",
+    "triage_reason_code": "FAST_BREATHING",
+    "final_advice": "Refer to Clinic for suspected severe pneumonia."
+  }
+]
