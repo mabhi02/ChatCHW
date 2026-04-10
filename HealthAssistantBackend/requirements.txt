@@ -21,6 +21,9 @@ torch==2.2.1 --index-url https://download.pytorch.org/whl/cpu
 transformers==4.37.2
 tqdm==4.66.4
 
+# DMN parsing (dmnParser)
+lxml
+
 # Utilities
 requests==2.31.0
 typing-extensions==4.11.0
