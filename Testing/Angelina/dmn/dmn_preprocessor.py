@@ -30,6 +30,8 @@ from typing import Optional
 # Field mapping from output.json: docs/dmn_mapping_note.md
 # ──────────────────────────────────────────────────────────────────────────────
 DMN_INPUT_SCHEMA = {
+
+    "age_months":                int,   # age * 12
     # ── Module A & E (Cough / Respiratory) ──────────────────────────────────
     "cough_present":             bool,  # complaint == "Cough"
     "cough_duration_days":       int,   # duration in days; 0 if no cough
@@ -50,6 +52,17 @@ DMN_INPUT_SCHEMA = {
     # ── Module D (Nutrition) ─────────────────────────────────────────────────
     "muac_result":               str,   # "red" | "yellow" | "green" — default "green"
     "swelling_of_both_feet":     bool,  # context flag — default False
+
+    # has_<module> — whether this module should run for this patient
+    "has_cough":                 bool,  # alias of cough_present for dispatcher
+    "has_diarrhea":              bool,  # alias of has_diarrhoea for dispatcher
+    "has_fever":                 bool,  # alias of hot_with_fever for dispatcher
+
+    # <module>_done — set False on entry, updated by engine after each module runs
+    "cough_mod_done":            bool,  # default False
+    "diarrhea_mod_done":         bool,  # default False
+    "fever_mod_done":            bool,  # default False
+    "nutrition_mod_done":        bool,  # default False
 }
 
 
@@ -177,6 +190,10 @@ def to_dmn_input(patient: dict, context: Optional[dict] = None) -> dict:
 
     # ── Assemble ─────────────────────────────────────────────────────────────
     return {
+
+        # Demographics 
+        "age_months":                age * 12,
+        
         # Module A & E — Cough / Respiratory
         "cough_present":             cough_present,
         "cough_duration_days":       duration_days if cough_present else 0,
@@ -200,6 +217,17 @@ def to_dmn_input(patient: dict, context: Optional[dict] = None) -> dict:
         # Module D — Nutrition (context-supplied)
         "muac_result":               muac_result,
         "swelling_of_both_feet":     swelling_of_both_feet,
+
+        # Dispatcher flags (professor's new orchestration model)
+        "has_cough":                 cough_present,
+        "has_diarrhea":              has_diarrhoea,
+        "has_fever":                 hot_with_fever,
+ 
+        # module_done flags — initialized False, updated by engine after each run
+        "cough_mod_done":            False,
+        "diarrhea_mod_done":         False,
+        "fever_mod_done":            False,
+        "nutrition_mod_done":        False,
     }
 
 
