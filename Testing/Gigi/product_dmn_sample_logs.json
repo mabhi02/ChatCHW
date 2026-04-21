@@ -1,0 +1,444 @@
+[
+  {
+    "timestamp": "2026-04-21T21:49:09.655591+00:00",
+    "patient_id": "row_2",
+    "inputs": {
+      "demo_age_months": 36,
+      "q_cough_present": true,
+      "q_cough_duration_days": 5,
+      "q_cough_days": 5,
+      "q_has_diarrhoea": false,
+      "q_diarrhoea_present": false,
+      "q_diarrhoea_duration_days": 0,
+      "q_diarrhoea_days": 0,
+      "q_blood_in_stool": false,
+      "q_has_fever": true,
+      "q_fever_present": true,
+      "q_fever_duration_days": 5,
+      "q_fever_days": 5,
+      "q_convulsions_present": false,
+      "hx_convulsions": false,
+      "q_able_to_drink_feed": true,
+      "ex_not_able_to_drink_or_feed": false,
+      "q_vomits_everything": false,
+      "ex_vomits_everything": false,
+      "ex_chest_indrawing": false,
+      "ex_unusually_sleepy_unconscious": false,
+      "ex_unusually_sleepy_or_unconscious": false,
+      "ex_bilateral_foot_oedema": false,
+      "ex_swelling_both_feet": false,
+      "ex_respiratory_rate_bpm": 0,
+      "v_muac_category": "green",
+      "v_muac_mm": 130,
+      "p_malaria_endemic_area": false,
+      "p_malaria_area": false,
+      "hx_malaria_area": false,
+      "lab_rdt_result": "not_done",
+      "lab_rdt_malaria_result": "not_done",
+      "p_rdt_positive": false,
+      "_row_number": 2
+    },
+    "module_results": {
+      "mod_assess": {
+        "triage": "home",
+        "danger_sign": false,
+        "reason": "No danger signs, no acute illness, MUAC green (>=125mm), no oedema: well child. Check vaccination status and provide general home care/prevention advice.",
+        "matched_rule_index": 8
+      },
+      "mod_danger_sign_check": {
+        "triage": "home",
+        "danger_sign": false,
+        "reason": "No danger signs detected. Child does not require urgent referral from this module. Proceed to condition-specific assessment modules (diarrhoea, fever, cough/fast breathing, malnutrition). Provide standard home care advice: more fluids, continue feeding, when to return (cannot drink or feed, becomes sicker, develops blood in stool), use bednet. Follow up in 3 days.",
+        "matched_rule_index": 3
+      },
+      "mod_check_vaccines": {
+        "triage": "home",
+        "danger_sign": false,
+        "reason": "No vaccine card present; advise caregiver to bring card to health facility to verify vaccination status and catch up on any missed vaccines.",
+        "matched_rule_index": 0
+      },
+      "mod_fever_malaria_treatment": {
+        "triage": "home",
+        "danger_sign": false,
+        "reason": "Fever <7 days but child is NOT in a malaria area: RDT and AL are not indicated. Provide home care advice and follow up in 3 days. Other modules will assess other causes of fever.",
+        "matched_rule_index": 11
+      },
+      "mod_malnutrition_screening": {
+        "triage": "home",
+        "danger_sign": false,
+        "reason": "",
+        "matched_rule_index": null
+      },
+      "mod_home_care_advice": {
+        "triage": "home",
+        "danger_sign": false,
+        "reason": "Child assessed with no illness, no malnutrition, vaccinations current. Provide general preventive home care advice. No follow-up scheduled.",
+        "matched_rule_index": 14
+      }
+    },
+    "final_outcome": {
+      "triage": "home",
+      "danger_sign": false,
+      "clinic_referral": false,
+      "reason": "",
+      "ref": "",
+      "actions": "adv_home_care_more_fluids; adv_home_care_continue_feeding; adv_home_care_when_to_return; adv_home_care_bednet; adv_vaccine_card_missing; adv_vaccines_due; adv_refer_for_vaccines; fu_vaccine_referral_advised; adv_home_care; adv_fluids_given; adv_feeding_given; adv_when_to_return_given"
+    },
+    "execution_trace": [
+      "mod_assess",
+      "mod_danger_sign_check",
+      "mod_check_vaccines",
+      "mod_fever_malaria_treatment",
+      "mod_malnutrition_screening",
+      "mod_home_care_advice"
+    ]
+  },
+  {
+    "timestamp": "2026-04-21T21:49:09.655831+00:00",
+    "patient_id": "row_3",
+    "inputs": {
+      "demo_age_months": 48,
+      "q_cough_present": true,
+      "q_cough_duration_days": 2,
+      "q_cough_days": 2,
+      "q_has_diarrhoea": false,
+      "q_diarrhoea_present": false,
+      "q_diarrhoea_duration_days": 0,
+      "q_diarrhoea_days": 0,
+      "q_blood_in_stool": false,
+      "q_has_fever": true,
+      "q_fever_present": true,
+      "q_fever_duration_days": 2,
+      "q_fever_days": 2,
+      "q_convulsions_present": false,
+      "hx_convulsions": false,
+      "q_able_to_drink_feed": true,
+      "ex_not_able_to_drink_or_feed": false,
+      "q_vomits_everything": false,
+      "ex_vomits_everything": false,
+      "ex_chest_indrawing": true,
+      "ex_unusually_sleepy_unconscious": false,
+      "ex_unusually_sleepy_or_unconscious": false,
+      "ex_bilateral_foot_oedema": false,
+      "ex_swelling_both_feet": false,
+      "ex_respiratory_rate_bpm": 40,
+      "v_muac_category": "green",
+      "v_muac_mm": 130,
+      "p_malaria_endemic_area": false,
+      "p_malaria_area": false,
+      "hx_malaria_area": false,
+      "lab_rdt_result": "not_done",
+      "lab_rdt_malaria_result": "not_done",
+      "p_rdt_positive": false,
+      "_row_number": 3
+    },
+    "module_results": {
+      "mod_assess": {
+        "triage": "hospital",
+        "danger_sign": true,
+        "reason": "danger_sign_present",
+        "matched_rule_index": 0
+      }
+    },
+    "final_outcome": {
+      "triage": "hospital",
+      "danger_sign": true,
+      "clinic_referral": false,
+      "reason": "danger_sign_present",
+      "ref": "hospital",
+      "actions": ""
+    },
+    "execution_trace": [
+      "mod_assess"
+    ]
+  },
+  {
+    "timestamp": "2026-04-21T21:49:09.657541+00:00",
+    "patient_id": "row_4",
+    "inputs": {
+      "demo_age_months": 876,
+      "q_cough_present": false,
+      "q_cough_duration_days": 0,
+      "q_cough_days": 0,
+      "q_has_diarrhoea": true,
+      "q_diarrhoea_present": true,
+      "q_diarrhoea_duration_days": 1,
+      "q_diarrhoea_days": 1,
+      "q_blood_in_stool": false,
+      "q_has_fever": false,
+      "q_fever_present": false,
+      "q_fever_duration_days": 0,
+      "q_fever_days": 0,
+      "q_convulsions_present": false,
+      "hx_convulsions": false,
+      "q_able_to_drink_feed": true,
+      "ex_not_able_to_drink_or_feed": false,
+      "q_vomits_everything": false,
+      "ex_vomits_everything": false,
+      "ex_chest_indrawing": false,
+      "ex_unusually_sleepy_unconscious": false,
+      "ex_unusually_sleepy_or_unconscious": false,
+      "ex_bilateral_foot_oedema": false,
+      "ex_swelling_both_feet": false,
+      "ex_respiratory_rate_bpm": 0,
+      "v_muac_category": "green",
+      "v_muac_mm": 130,
+      "p_malaria_endemic_area": false,
+      "p_malaria_area": false,
+      "hx_malaria_area": false,
+      "lab_rdt_result": "not_done",
+      "lab_rdt_malaria_result": "not_done",
+      "p_rdt_positive": false,
+      "_row_number": 4
+    },
+    "module_results": {
+      "mod_assess": {
+        "triage": "home",
+        "danger_sign": false,
+        "reason": "No danger signs. No pneumonia. Uncomplicated diarrhoea (<14 days, no blood). Optionally co-existing uncomplicated fever in malaria area. Flag diarrhoea and conditionally fever treatment modules, home care, and vaccine check.",
+        "matched_rule_index": 4
+      },
+      "mod_danger_sign_check": {
+        "triage": "home",
+        "danger_sign": false,
+        "reason": "No danger signs detected. Child does not require urgent referral from this module. Proceed to condition-specific assessment modules (diarrhoea, fever, cough/fast breathing, malnutrition). Provide standard home care advice: more fluids, continue feeding, when to return (cannot drink or feed, becomes sicker, develops blood in stool), use bednet. Follow up in 3 days.",
+        "matched_rule_index": 3
+      },
+      "mod_check_vaccines": {
+        "triage": "home",
+        "danger_sign": false,
+        "reason": "No vaccine card present; advise caregiver to bring card to health facility to verify vaccination status and catch up on any missed vaccines.",
+        "matched_rule_index": 0
+      },
+      "mod_diarrhoea_treatment": {
+        "triage": "home",
+        "danger_sign": false,
+        "reason": "",
+        "matched_rule_index": null
+      },
+      "mod_malnutrition_screening": {
+        "triage": "home",
+        "danger_sign": false,
+        "reason": "Child is outside the 6mo-5yr age range for MUAC-based malnutrition screening. Module marked done without malnutrition classification.",
+        "matched_rule_index": 5
+      },
+      "mod_home_care_advice": {
+        "triage": "home",
+        "danger_sign": false,
+        "reason": "Child assessed with no illness, no malnutrition, vaccinations current. Provide general preventive home care advice. No follow-up scheduled.",
+        "matched_rule_index": 14
+      }
+    },
+    "final_outcome": {
+      "triage": "home",
+      "danger_sign": false,
+      "clinic_referral": false,
+      "reason": "",
+      "ref": "",
+      "actions": "adv_home_care_more_fluids; adv_home_care_continue_feeding; adv_home_care_when_to_return; adv_home_care_bednet; adv_vaccine_card_missing; adv_vaccines_due; adv_refer_for_vaccines; fu_vaccine_referral_advised; adv_fluids_given; adv_feeding_given; adv_when_to_return_given; adv_bednet_given"
+    },
+    "execution_trace": [
+      "mod_assess",
+      "mod_danger_sign_check",
+      "mod_check_vaccines",
+      "mod_diarrhoea_treatment",
+      "mod_malnutrition_screening",
+      "mod_home_care_advice"
+    ]
+  },
+  {
+    "timestamp": "2026-04-21T21:49:09.659936+00:00",
+    "patient_id": "row_5",
+    "inputs": {
+      "demo_age_months": 204,
+      "q_cough_present": false,
+      "q_cough_duration_days": 0,
+      "q_cough_days": 0,
+      "q_has_diarrhoea": true,
+      "q_diarrhoea_present": true,
+      "q_diarrhoea_duration_days": 2,
+      "q_diarrhoea_days": 2,
+      "q_blood_in_stool": false,
+      "q_has_fever": true,
+      "q_fever_present": true,
+      "q_fever_duration_days": 2,
+      "q_fever_days": 2,
+      "q_convulsions_present": false,
+      "hx_convulsions": false,
+      "q_able_to_drink_feed": true,
+      "ex_not_able_to_drink_or_feed": false,
+      "q_vomits_everything": false,
+      "ex_vomits_everything": false,
+      "ex_chest_indrawing": false,
+      "ex_unusually_sleepy_unconscious": false,
+      "ex_unusually_sleepy_or_unconscious": false,
+      "ex_bilateral_foot_oedema": false,
+      "ex_swelling_both_feet": false,
+      "ex_respiratory_rate_bpm": 0,
+      "v_muac_category": "green",
+      "v_muac_mm": 130,
+      "p_malaria_endemic_area": false,
+      "p_malaria_area": false,
+      "hx_malaria_area": false,
+      "lab_rdt_result": "not_done",
+      "lab_rdt_malaria_result": "not_done",
+      "p_rdt_positive": false,
+      "_row_number": 5
+    },
+    "module_results": {
+      "mod_assess": {
+        "triage": "home",
+        "danger_sign": false,
+        "reason": "",
+        "matched_rule_index": null
+      },
+      "mod_danger_sign_check": {
+        "triage": "home",
+        "danger_sign": false,
+        "reason": "No danger signs detected. Child does not require urgent referral from this module. Proceed to condition-specific assessment modules (diarrhoea, fever, cough/fast breathing, malnutrition). Provide standard home care advice: more fluids, continue feeding, when to return (cannot drink or feed, becomes sicker, develops blood in stool), use bednet. Follow up in 3 days.",
+        "matched_rule_index": 3
+      },
+      "mod_check_vaccines": {
+        "triage": "home",
+        "danger_sign": false,
+        "reason": "No vaccine card present; advise caregiver to bring card to health facility to verify vaccination status and catch up on any missed vaccines.",
+        "matched_rule_index": 0
+      },
+      "mod_diarrhoea_treatment": {
+        "triage": "home",
+        "danger_sign": false,
+        "reason": "",
+        "matched_rule_index": null
+      },
+      "mod_fever_malaria_treatment": {
+        "triage": "home",
+        "danger_sign": false,
+        "reason": "",
+        "matched_rule_index": null
+      },
+      "mod_malnutrition_screening": {
+        "triage": "home",
+        "danger_sign": false,
+        "reason": "Child is outside the 6mo-5yr age range for MUAC-based malnutrition screening. Module marked done without malnutrition classification.",
+        "matched_rule_index": 5
+      },
+      "mod_home_care_advice": {
+        "triage": "home",
+        "danger_sign": false,
+        "reason": "Child assessed with no illness, no malnutrition, vaccinations current. Provide general preventive home care advice. No follow-up scheduled.",
+        "matched_rule_index": 14
+      }
+    },
+    "final_outcome": {
+      "triage": "home",
+      "danger_sign": false,
+      "clinic_referral": false,
+      "reason": "",
+      "ref": "",
+      "actions": "adv_home_care_more_fluids; adv_home_care_continue_feeding; adv_home_care_when_to_return; adv_home_care_bednet; adv_vaccine_card_missing; adv_vaccines_due; adv_refer_for_vaccines; fu_vaccine_referral_advised; adv_fluids_given; adv_feeding_given; adv_when_to_return_given; adv_bednet_given"
+    },
+    "execution_trace": [
+      "mod_assess",
+      "mod_danger_sign_check",
+      "mod_check_vaccines",
+      "mod_diarrhoea_treatment",
+      "mod_fever_malaria_treatment",
+      "mod_malnutrition_screening",
+      "mod_home_care_advice"
+    ]
+  },
+  {
+    "timestamp": "2026-04-21T21:49:09.662058+00:00",
+    "patient_id": "row_6",
+    "inputs": {
+      "demo_age_months": 768,
+      "q_cough_present": true,
+      "q_cough_duration_days": 3,
+      "q_cough_days": 3,
+      "q_has_diarrhoea": false,
+      "q_diarrhoea_present": false,
+      "q_diarrhoea_duration_days": 0,
+      "q_diarrhoea_days": 0,
+      "q_blood_in_stool": false,
+      "q_has_fever": true,
+      "q_fever_present": true,
+      "q_fever_duration_days": 3,
+      "q_fever_days": 3,
+      "q_convulsions_present": false,
+      "hx_convulsions": false,
+      "q_able_to_drink_feed": true,
+      "ex_not_able_to_drink_or_feed": false,
+      "q_vomits_everything": false,
+      "ex_vomits_everything": false,
+      "ex_chest_indrawing": false,
+      "ex_unusually_sleepy_unconscious": false,
+      "ex_unusually_sleepy_or_unconscious": false,
+      "ex_bilateral_foot_oedema": false,
+      "ex_swelling_both_feet": false,
+      "ex_respiratory_rate_bpm": 0,
+      "v_muac_category": "green",
+      "v_muac_mm": 130,
+      "p_malaria_endemic_area": false,
+      "p_malaria_area": false,
+      "hx_malaria_area": false,
+      "lab_rdt_result": "not_done",
+      "lab_rdt_malaria_result": "not_done",
+      "p_rdt_positive": false,
+      "_row_number": 6
+    },
+    "module_results": {
+      "mod_assess": {
+        "triage": "home",
+        "danger_sign": false,
+        "reason": "No danger signs, no acute illness, MUAC green (>=125mm), no oedema: well child. Check vaccination status and provide general home care/prevention advice.",
+        "matched_rule_index": 8
+      },
+      "mod_danger_sign_check": {
+        "triage": "home",
+        "danger_sign": false,
+        "reason": "No danger signs detected. Child does not require urgent referral from this module. Proceed to condition-specific assessment modules (diarrhoea, fever, cough/fast breathing, malnutrition). Provide standard home care advice: more fluids, continue feeding, when to return (cannot drink or feed, becomes sicker, develops blood in stool), use bednet. Follow up in 3 days.",
+        "matched_rule_index": 3
+      },
+      "mod_check_vaccines": {
+        "triage": "home",
+        "danger_sign": false,
+        "reason": "No vaccine card present; advise caregiver to bring card to health facility to verify vaccination status and catch up on any missed vaccines.",
+        "matched_rule_index": 0
+      },
+      "mod_fever_malaria_treatment": {
+        "triage": "home",
+        "danger_sign": false,
+        "reason": "",
+        "matched_rule_index": null
+      },
+      "mod_malnutrition_screening": {
+        "triage": "home",
+        "danger_sign": false,
+        "reason": "Child is outside the 6mo-5yr age range for MUAC-based malnutrition screening. Module marked done without malnutrition classification.",
+        "matched_rule_index": 5
+      },
+      "mod_home_care_advice": {
+        "triage": "home",
+        "danger_sign": false,
+        "reason": "Child assessed with no illness, no malnutrition, vaccinations current. Provide general preventive home care advice. No follow-up scheduled.",
+        "matched_rule_index": 14
+      }
+    },
+    "final_outcome": {
+      "triage": "home",
+      "danger_sign": false,
+      "clinic_referral": false,
+      "reason": "",
+      "ref": "",
+      "actions": "adv_home_care_more_fluids; adv_home_care_continue_feeding; adv_home_care_when_to_return; adv_home_care_bednet; adv_vaccine_card_missing; adv_vaccines_due; adv_refer_for_vaccines; fu_vaccine_referral_advised; adv_fluids_given; adv_feeding_given; adv_when_to_return_given; adv_bednet_given"
+    },
+    "execution_trace": [
+      "mod_assess",
+      "mod_danger_sign_check",
+      "mod_check_vaccines",
+      "mod_fever_malaria_treatment",
+      "mod_malnutrition_screening",
+      "mod_home_care_advice"
+    ]
+  }
+]
