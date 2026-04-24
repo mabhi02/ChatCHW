@@ -1,19 +1,17 @@
+// test.js
 // Orchestrator Harness Prototype
-//
+
 // Loads the orchestrator XLSForm via the CHT test harness, runs patients
-// through the full form, and captures the output in Emett's execution log
-// schema for cross-engine comparison.
-//
-// Context: the /api/v2/records endpoint on our local CHT server can't find
-// the orchestrator form ("Form not found: ORCHESTRATOR"), and the DMN approach
-// requires strictly normalized values, so this is an alternative.
+// through the full form, and captures the output in an execution log
+// consistent with Emett's schema.
+// Log can be found in harness_execution_log.json after running the tests.
 
 const { expect } = require('chai');
 const Harness = require('cht-conf-test-harness');
 const fs = require('fs');
+const { translate } = require('./translator');
 
 const harness = new Harness({ verbose: true });
-
 
 // Convert orchestrator's "yes"/"no" and "true"/"false" strings
 // into actual booleans for Emett's schema
@@ -86,7 +84,6 @@ function toLogEntry(patientId, harnessResult) {
   };
 }
 
-
 describe('Orchestrator harness prototype', () => {
 
   // Shared log across all tests in this suite
@@ -104,28 +101,26 @@ describe('Orchestrator harness prototype', () => {
   });
   beforeEach(async () => { return await harness.clear(); });
 
-
-  // Answer structure reference (max 19 questions as flat array):
-  //  1. child_name (string)
-  //  2. age_months (int 0-59, must be JS number not string)
-  //  3. sex (male/female)
-  //  4-9. danger signs: convulsions, sleepy, not_drinking, vomits,
-  //       chest_indrawing, swelling (yes/no)
-  //  10. muac_color (red/yellow/green)
-  //  11. cough_present (yes/no), if yes: +cough_duration_days, +breaths_per_minute
-  //  next: diarrhoea_present (yes/no), if yes: +diarrhoea_duration_days, +blood_in_stool
-  //  next: fever_present (yes/no), if yes: +fever_duration_days, +rdt_result
-
-
   it('healthy patient → home', async () => {
-    const result = await harness.fillForm('orchestrator', [
-      'Test Child', 24, 'male',
-      'no', 'no', 'no', 'no', 'no', 'no', 'green',
-      'no',
-      'no',
-      'no'
-    ]);
+    // Patient record with named fields — translator converts to flat array
+    const patient = {
+      child_name: 'Test Child',
+      age_months: 24,
+      sex: 'male',
+      convulsions_present: 'no',
+      unusually_sleepy_or_unconscious: 'no',
+      not_able_to_drink_or_feed_anything: 'no',
+      vomits_everything: 'no',
+      chest_indrawing: 'no',
+      swelling_of_both_feet: 'no',
+      muac_color: 'green',
+      cough_present: 'no',
+      diarrhoea_present: 'no',
+      fever_present: 'no'
+    };
 
+    const answers = translate(patient);
+    const result = await harness.fillForm('orchestrator', answers);
     const logEntry = toLogEntry('row_1', result);
     executionLog.push(logEntry);
 
@@ -138,17 +133,26 @@ describe('Orchestrator harness prototype', () => {
     expect(logEntry.final_outcome.triage).to.equal('home');
   });
 
-
   it('danger sign (chest indrawing) → hospital', async () => {
     // Patient with a danger sign (chest indrawing), should route to HOSPITAL
-    const result = await harness.fillForm('orchestrator', [
-      'Sick Child', 18, 'female',
-      'no', 'no', 'no', 'no', 'yes', 'no', 'green',
-      'no',
-      'no',
-      'no'
-    ]);
+    const patient = {
+      child_name: 'Sick Child',
+      age_months: 18,
+      sex: 'female',
+      convulsions_present: 'no',
+      unusually_sleepy_or_unconscious: 'no',
+      not_able_to_drink_or_feed_anything: 'no',
+      vomits_everything: 'no',
+      chest_indrawing: 'yes',
+      swelling_of_both_feet: 'no',
+      muac_color: 'green',
+      cough_present: 'no',
+      diarrhoea_present: 'no',
+      fever_present: 'no'
+    };
 
+    const answers = translate(patient);
+    const result = await harness.fillForm('orchestrator', answers);
     const logEntry = toLogEntry('row_2', result);
     executionLog.push(logEntry);
 
@@ -161,18 +165,29 @@ describe('Orchestrator harness prototype', () => {
     expect(logEntry.final_outcome.danger_sign).to.equal(true);
   });
 
-
   it('cough + fast breathing → clinic', async () => {
     // Patient with cough for 3 days, 45 breaths/min
     // Age > 12 months + breaths > 40 triggers FAST_BREATHING, should route to CLINIC
-    const result = await harness.fillForm('orchestrator', [
-      'Cough Child', 24, 'male',
-      'no', 'no', 'no', 'no', 'no', 'no', 'green',
-      'yes', 3, 45,
-      'no',
-      'no'
-    ]);
+    const patient = {
+      child_name: 'Cough Child',
+      age_months: 24,
+      sex: 'male',
+      convulsions_present: 'no',
+      unusually_sleepy_or_unconscious: 'no',
+      not_able_to_drink_or_feed_anything: 'no',
+      vomits_everything: 'no',
+      chest_indrawing: 'no',
+      swelling_of_both_feet: 'no',
+      muac_color: 'green',
+      cough_present: 'yes',
+      cough_duration_days: 3,
+      breaths_per_minute: 45,
+      diarrhoea_present: 'no',
+      fever_present: 'no'
+    };
 
+    const answers = translate(patient);
+    const result = await harness.fillForm('orchestrator', answers);
     const logEntry = toLogEntry('row_3', result);
     executionLog.push(logEntry);
 
@@ -184,5 +199,62 @@ describe('Orchestrator harness prototype', () => {
     expect(logEntry.final_outcome.triage).to.equal('clinic');
     expect(logEntry.final_outcome.clinic_referral).to.equal(true);
     expect(logEntry.final_outcome.reason).to.equal('fast_breathing');
+  });
+
+  it('out-of-order patient data → translator handles correctly', async () => {
+    // Fields are deliberately scrambled — translator should still
+    // produce the correct positional array
+    const patient = {
+      fever_present: 'no',
+      sex: 'female',
+      cough_present: 'yes',
+      chest_indrawing: 'no',
+      age_months: 10,
+      breaths_per_minute: 55,
+      muac_color: 'green',
+      child_name: 'Scrambled Child',
+      vomits_everything: 'no',
+      cough_duration_days: 2,
+      swelling_of_both_feet: 'no',
+      diarrhoea_present: 'no',
+      convulsions_present: 'no',
+      unusually_sleepy_or_unconscious: 'no',
+      not_able_to_drink_or_feed_anything: 'no',
+    };
+
+    const answers = translate(patient);
+    const result = await harness.fillForm('orchestrator', answers);
+    const logEntry = toLogEntry('row_4', result);
+    executionLog.push(logEntry);
+
+    console.log('\n------------ Out-of-Order Patient ------------');
+    console.log(JSON.stringify(logEntry, null, 2));
+    console.log('----------------------------------------------\n');
+
+    // Age 10 months + breaths 55 > 50 threshold for ≤12mo → FAST_BREATHING → CLINIC
+    expect(result.errors).to.be.empty;
+    expect(logEntry.final_outcome.triage).to.equal('clinic');
+    expect(logEntry.final_outcome.reason).to.equal('fast_breathing');
+  });
+
+  it('missing field → throws error instead of defaulting', async () => {
+    // Patient record missing chest_indrawing — should NOT silently default
+    const patient = {
+      child_name: 'Incomplete Child',
+      age_months: 24,
+      sex: 'male',
+      convulsions_present: 'no',
+      unusually_sleepy_or_unconscious: 'no',
+      not_able_to_drink_or_feed_anything: 'no',
+      vomits_everything: 'no',
+      // chest_indrawing intentionally missing
+      swelling_of_both_feet: 'no',
+      muac_color: 'green',
+      cough_present: 'no',
+      diarrhoea_present: 'no',
+      fever_present: 'no'
+    };
+
+    expect(() => translate(patient)).to.throw('Missing required field: chest_indrawing');
   });
 });
