@@ -12,6 +12,12 @@ ChatCHW/
 ├── workflow.md            End-to-end information flow (manual → logic → tests)
 ├── value_added.md         Stakeholder value narrative (Markdown)
 ├── handoff.md             Engineering handoff, risks, checklist
+├── STATUS.md              Current vs planned capabilities
+├── RUNBOOK.md             First successful run + triage path
+├── ARTIFACTS.md           Artifact contracts (producer/consumer/checks)
+├── QUALITY_AND_VERIFICATION.md  Quality model and red-team framing
+├── PLATFORM_INTEGRATION.md Deployment-facing integration checklist
+├── PROVENANCE_TRACE.md    How to trace decisions across artifacts
 ├── Guidelines/            Source policy PDFs (WHO / national manuals)
 ├── Medical/               Clinical reference DMNs (spreadsheets) + verification deck
 ├── Product/               Git submodule → CHW_RLM (FastAPI + Next.js pipeline)
@@ -25,6 +31,12 @@ ChatCHW/
 
 | File | Use when you need… |
 |------|-------------------|
+| **`STATUS.md`** | A single **current / in-progress / planned** view with links to the implementation source-of-truth in `Product/`. |
+| **`RUNBOOK.md`** | Fast setup and first successful extraction run, plus failure triage order. |
+| **`ARTIFACTS.md`** | Artifact contracts: producer, consumer, and validation responsibility. |
+| **`QUALITY_AND_VERIFICATION.md`** | Quality standards framing, risk-to-check matrix, and red-team expectations. |
+| **`PLATFORM_INTEGRATION.md`** | Deployment-facing integration checklist and release expectations. |
+| **`PROVENANCE_TRACE.md`** | How to explain one clinical recommendation from source manual to runtime outputs. |
 | **`workflow.md`** | How a **manual** becomes **`guide_json`**, **`clinical_logic.json`**, **DMN/XLSForm**, then runs through **`Product/` tests** and **`Testing/`** comparisons to **medical-team** reference tables. |
 | **`value_added.md`** | The **why**: CHW constraints, status quo vs Navigator, value propositions, references (Markdown restatement of the former Word “value added” brief). |
 | **`handoff.md`** | **Ownership transfer**: architecture summary, done vs in-progress, risks (including audit notes), links into `Product/`, handoff checklist. |
@@ -99,6 +111,12 @@ Deprecated frontend/backend sketches. **Out of scope** for current architecture;
 | REPL / RLM design | `Product/ORCHESTRATOR.md` |
 | Product philosophy & MOH workflow | `Product/CHW Navigator v1 (1).md` |
 | End-to-end data flow in this repo | **`workflow.md`** |
+| Current vs planned capability status | **`STATUS.md`** |
+| First successful run and triage | **`RUNBOOK.md`** |
+| Artifact ownership and contracts | **`ARTIFACTS.md`** |
+| Quality standards and red-team framing | **`QUALITY_AND_VERIFICATION.md`** |
+| Deployment integration checklist | **`PLATFORM_INTEGRATION.md`** |
+| Decision provenance walkthrough | **`PROVENANCE_TRACE.md`** |
 | Stakeholder value story | **`value_added.md`** |
 | Maintainer handoff | **`handoff.md`** |
 | JSON logic vs sample patients | `Testing/Gigi/README.md` |

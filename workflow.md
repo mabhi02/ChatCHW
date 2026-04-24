@@ -4,6 +4,11 @@ How **information flows** from a **CHW clinical manual** through **machine-assis
 
 For product philosophy and stakeholder value, see **`value_added.md`** at the repository root. For implementation detail, see **`Product/ARCHITECTURE.md`** and **`Product/PIPELINE.md`** (submodule).
 
+State tags used below:
+
+- **Current:** implemented behavior in `Product/` today.
+- **Planned:** target behavior or process not fully operationalized yet.
+
 ---
 
 ## 1. High-level flow
@@ -144,6 +149,26 @@ Comparison is **many-to-many**: JSON executor vs XML DMN vs XLSForm harness vs s
 
 ---
 
+## 8.1 Standard comparison protocol (recommended)
+
+Use this fixed protocol so comparisons are repeatable across teams.
+
+1. **Case set definition (Current + Planned hardening)**
+   - Define named synthetic scenarios (baseline, boundary, comorbidity, stockout).
+   - Store case ids and expected fields in a shared file.
+2. **Execution (Current)**
+   - Run through at least one JSON runner (`Testing/Gigi/`) and one DMN/XLSForm path (`Testing/Angelina/` or `Testing/Aaron/`).
+3. **Output schema normalization (Planned)**
+   - Normalize to common fields: diagnosis, referral level, treatments, follow-up, warnings.
+4. **Diff and triage (Current + Planned hardening)**
+   - Mark each mismatch as: expected guideline delta / extraction error / converter error / harness issue.
+5. **Disposition record (Planned)**
+   - Record owner, fix path, and acceptance decision in release notes.
+
+Use `ARTIFACTS.md`, `QUALITY_AND_VERIFICATION.md`, and `PROVENANCE_TRACE.md` to trace and classify issues.
+
+---
+
 ## 9. End-to-end picture (one sentence per arrow)
 
 **Manual** → **guide_json** (layout-aware parsing) → **labels + REPL** → **`clinical_logic.json`** (auditable IR) → **DMN + Mermaid + XLSForm** (deterministic) → **`Product` test suite + validators** → **`Testing/` harnesses** and **workshop comparison** against **`Medical/` reference tables**.
@@ -155,6 +180,12 @@ Comparison is **many-to-many**: JSON executor vs XML DMN vs XLSForm harness vs s
 | Document | Use |
 |----------|-----|
 | `README.md` | Folder map and submodule clone |
+| `STATUS.md` | Current / in-progress / planned capability map |
+| `RUNBOOK.md` | First successful run and failure triage |
+| `ARTIFACTS.md` | Producer/consumer/check contracts for key artifacts |
+| `QUALITY_AND_VERIFICATION.md` | Quality standards and red-team model |
+| `PLATFORM_INTEGRATION.md` | Deployment-facing integration checklist |
+| `PROVENANCE_TRACE.md` | Trace one clinical decision across layers |
 | `value_added.md` (repo root) | Why the system exists for MOH and partners |
 | `handoff.md` | Engineering handoff and risks |
 | `Product/ARCHITECTURE.md` | Gen 7 implementation truth |

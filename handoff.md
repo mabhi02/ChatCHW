@@ -1,7 +1,7 @@
 # CHW Navigator — engineering handoff
 
 **Purpose:** Give the next owner or squad enough context to run, extend, or transfer the system without re-deriving intent from scattered docs.  
-**Sources:** `Handoff/CHW Navigator hand-off.docx` (program goals and CHT alignment), this repo’s `README.md`, `Product/` submodule docs and code, `Testing/` prototypes, `Medical/` collateral, and `Product/issues.txt` (internal audit synthesis — **triage before treating as current truth**).  
+**Sources:** historical CHW handoff brief (Word), this repo’s `README.md`, `Product/` submodule docs and code, `Testing/` prototypes, `Medical/` collateral, and `Product/issues.txt` (internal audit synthesis — **triage before treating as current truth**).  
 **Last updated:** 2026-04-23  
 
 ---
@@ -33,8 +33,7 @@ This `handoff.md` **does not** replace the Word doc for stakeholder narrative; i
 | `Product/` | **Git submodule** → [`CHW_RLM`](https://github.com/atharvajpatel/CHW_RLM) — primary app and backend. |
 | `Medical/` | Excel DMN teaching modules, verification deck (`Verification-First Clinical Engineering.pptx`). |
 | `Testing/` | DMN runners, parsers, CHT harness experiments (`Gigi/`, `Angelina/`, `Aaron/`). |
-| `Handoff/` | `CHW Navigator hand-off.docx` — program-level handoff notes. |
-| `Project Overview/` | Charter / value Word docs. |
+| Root docs | `STATUS.md`, `RUNBOOK.md`, `ARTIFACTS.md`, `QUALITY_AND_VERIFICATION.md`, `PLATFORM_INTEGRATION.md`, `PROVENANCE_TRACE.md`. |
 | `old/` | Legacy; **do not use** for current architecture. |
 
 ### Product submodule (authoritative implementation)
@@ -91,13 +90,13 @@ Canonical engineering write-up: **`Product/ARCHITECTURE.md`**. Staged research v
 3. **Stage 5 completeness:** why-trace JSON, module queue in XLSForm, compiler patch log — partially built (`Product/PIPELINE.md`).
 4. **Gold `clinical_logic`** for regression: proposed in `ARCHITECTURE.md` §13.12 but not described as committed in this workspace snapshot.
 5. **Community onboarding assets** from Word doc: maintainer manual, synced prompt directory, video walkthrough, standardized failure messages — largely **outside** current repo depth.
-6. **`Handoff/CHW Navigator hand-off.docx`** is not machine-diffable; this markdown should be updated when the Word source changes materially.
+6. Historical Word/PDF brief versions are not machine-diffable; this markdown should be updated when stakeholder narrative changes materially.
 
 ---
 
 ## Outstanding questions
 
-From **`Handoff/CHW Navigator hand-off.docx`** and engineering docs (non-exhaustive):
+From historical handoff notes and engineering docs (non-exhaustive):
 
 - What does the **CHT AI squad** define as MVP: **manual→DMN**, **DMN→XLSForm**, or **full stack** with verification UI?
 - Should every **Maker** prompt have a paired **Red team + Repair** prompt (orchestration policy)?
@@ -136,7 +135,10 @@ From **`Handoff/CHW Navigator hand-off.docx`** and engineering docs (non-exhaust
 | Gate harness code | `Product/backend/eval/gate_harness.py` |
 | DMN JSON black-box runner | `Testing/Gigi/README.md` |
 | CHT harness notes | `Testing/Aaron/cht-harness/notes.md` |
-| Stakeholder handoff (Word) | `Handoff/CHW Navigator hand-off.docx` |
+| Status board | `STATUS.md` |
+| Artifact contracts | `ARTIFACTS.md` |
+| Quality and verification model | `QUALITY_AND_VERIFICATION.md` |
+| Platform integration checklist | `PLATFORM_INTEGRATION.md` |
 
 ---
 
@@ -153,7 +155,7 @@ Use this when transferring to a new lead, vendor, or community squad.
 - [ ] Review **`Product/issues.txt`** and either close items or migrate to GitHub Issues
 - [ ] Confirm **who pays** API invoices and **who holds** MOH relationship for clinical sign-off
 - [ ] Export or archive **Neon/Redis** data policy (PII, retention) if user uploads go beyond test PDFs
-- [ ] Update **this file** and `Handoff/CHW Navigator hand-off.docx` so they stay aligned
+- [ ] Update **this file** and root docs (`STATUS.md`, `RUNBOOK.md`, `ARTIFACTS.md`) together when behavior changes
 
 ---
 
@@ -161,9 +163,9 @@ Use this when transferring to a new lead, vendor, or community squad.
 
 - **Intent (from Word doc):** Move toward **CHT open-source community** collaboration via a **time-bounded squad**; early involvement as **mentors**, then **review**, then hands-off support; named contacts in the source doc include **Mariam**, **Bailey** (needs assessment), and a commitment that **Atharva** (and the author of “Promise me…”) remain reachable for questions — **update names and contact channels here when ownership changes.**
 - **Code ownership:** Day-to-day implementation lives in the **`Product` submodule**; issues and PRs should target that repository for application changes. This **`ChatCHW`** repo can hold umbrella policy PDFs, handoff materials, medical teaching artifacts, and integration tests that span folders.
-- **Binary / non-code assets:** `Handoff/*.docx`, `Project Overview/*.docx`, `Medical/*.xlsx`, `Medical/*.pptx` — ensure the receiving org has **license and redistribution** rights for WHO PDFs and internal decks.
+- **Binary / non-code assets:** `Medical/*.xlsx`, `Medical/*.pptx` and external program briefs — ensure the receiving org has **license and redistribution** rights for WHO PDFs and internal decks.
 - **Legacy:** Do not route new work through `old/`; it exists for archaeology only.
 
 ---
 
-*If you update `Handoff/CHW Navigator hand-off.docx`, append a one-line change log here (date + summary) so git history and Word stay traceable.*
+*If you update key stakeholder narrative, append a one-line change log here (date + summary) so git history stays traceable.*
