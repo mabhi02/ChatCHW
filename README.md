@@ -4,6 +4,21 @@
 
 ---
 
+## What CHW Navigator is (brief)
+
+CHW Navigator exists to reduce the gap between long, complex clinical manuals and what frontline CHWs can safely execute in real visits. Instead of relying on hand-coded “telephone game” implementations, it uses AI-assisted extraction to build **auditable decision artifacts** (DMN/flowcharts/forms), then applies validation and testing before deployment.
+
+In practical terms, the project is designed to:
+
+- Improve guideline fidelity by converting manual logic into deterministic, reviewable artifacts.
+- Make safety review easier for clinicians through decision tables, flowcharts, and delta-focused updates.
+- Support offline-first deployment through compiled forms (for example XLSForm-oriented workflows) rather than bedside LLM inference.
+- Enable faster maintenance when policies change by re-running the pipeline and testing behavior changes explicitly.
+
+The full value narrative (problem framing, value propositions, references, and deployment rationale) is in `value_added.md`.
+
+---
+
 ## Repository layout
 
 ```
