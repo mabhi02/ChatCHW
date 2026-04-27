@@ -1,21 +1,10 @@
 """
 dmn_preprocessor.py
 ───────────────────
-Patient-to-DMN Preprocessor
+Converts one patient record from output.json into a DMN-ready input dictionary
+aligned to the product team's variable naming convention (variables.json).
+
 Angelina Wang
-
-Converts one patient record from output.json into a DMN-ready input
-dictionary that can be passed directly to the DMN execution engine.
-
-DMN-side equivalent of cht_translator.py.
-
-Usage (single patient):
-    from dmn_preprocessor import to_dmn_input
-    dmn_dict = to_dmn_input(patient, context={"malaria_area": True})
-
-Usage (batch):
-    from dmn_preprocessor import batch_preprocess
-    dmn_patients = batch_preprocess("output.json")
 """
 
 from __future__ import annotations
@@ -26,67 +15,64 @@ from typing import Optional
 
 # ──────────────────────────────────────────────────────────────────────────────
 # DMN Input Schema
-# Full field documentation: docs/dmn_input_schema_note.md
-# Field mapping from output.json: docs/dmn_mapping_note.md
+# Field names match product team's variables.json prefixes:
+#   demo_ = demographics
+#   q_    = CHW questions
+#   ex_   = exam findings
+#   hx_   = history / context
+#   lab_  = lab results
+#   v_    = measured values
+#   mod_  = module done flags
+# Full documentation: docs/dmn_input_schema_note.md
+# Field mapping:      docs/dmn_mapping_note.md
 # ──────────────────────────────────────────────────────────────────────────────
 DMN_INPUT_SCHEMA = {
+    # ── Demographics ─────────────────────────────────────────────────────────
+    "demo_child_age_months":              int,   # age * 12
 
-    "age_months":                int,   # age * 12
-    # ── Module A & E (Cough / Respiratory) ──────────────────────────────────
-    "cough_present":             bool,  # complaint == "Cough"
-    "cough_duration_days":       int,   # duration in days; 0 if no cough
-    "fast_breathing_present":    bool,  # RR above WHO age-adjusted threshold
-    "chest_indrawing_present":   bool,  # exam_findings["Chest indrawing"]
-    "cough_with_fast_breathing": bool,  # cough_present AND fast_breathing_present
-    "chest_indrawing":           bool,  # alias for module E (same source as above)
-    # ── Module B (Diarrhoea) ─────────────────────────────────────────────────
-    "has_diarrhoea":             bool,  # complaint == "Diarrhea"
-    "diarrhoea_duration_days":   int,   # duration in days; 0 if no diarrhoea
-    "blood_in_stool":            bool,  # chw_questions["Blood in stool"]
-    # ── Module C (Fever / Malaria) ───────────────────────────────────────────
-    "hot_with_fever":            bool,  # temperature >= 37.5°C
-    "fever_duration_days":       int,   # duration in days; 0 if no fever
-    "malaria_area":              bool,  # context flag — default False
-    "rdt_available":             bool,  # context flag — default False
-    "rdt_result":                str,   # "positive" | "negative" | "not_done"
-    # ── Module D (Nutrition) ─────────────────────────────────────────────────
-    "muac_result":               str,   # "red" | "yellow" | "green" — default "green"
-    "swelling_of_both_feet":     bool,  # context flag — default False
+    # ── Cough / Respiratory ──────────────────────────────────────────────────
+    "q_has_cough":                        bool,  # complaint == "Cough"
+    "q_cough_duration_days":              int,   # duration in days; 0 if no cough
+    "v_respiratory_rate_per_min":         int,   # raw RR value; 0 if absent
+    "ex_chest_indrawing":                 bool,  # exam_findings["Chest indrawing"]
 
-    # has_<module> — whether this module should run for this patient
-    "has_cough":                 bool,  # alias of cough_present for dispatcher
-    "has_diarrhea":              bool,  # alias of has_diarrhoea for dispatcher
-    "has_fever":                 bool,  # alias of hot_with_fever for dispatcher
+    # ── Diarrhoea ────────────────────────────────────────────────────────────
+    "q_has_diarrhoea":                    bool,  # complaint == "Diarrhea"
+    "q_diarrhoea_duration_days":          int,   # duration in days; 0 if no diarrhoea
+    "q_blood_in_stool":                   bool,  # chw_questions["Blood in stool"]
 
-    # <module>_done — set False on entry, updated by engine after each module runs
-    "cough_mod_done":            bool,  # default False
-    "diarrhea_mod_done":         bool,  # default False
-    "fever_mod_done":            bool,  # default False
-    "nutrition_mod_done":        bool,  # default False
+    # ── Fever / Malaria ──────────────────────────────────────────────────────
+    "q_has_fever":                        bool,  # temperature >= 37.5°C
+    "q_fever_duration_days":              int,   # duration in days; 0 if no fever
+    "hx_malaria_area":                    bool,  # context flag — default False
+    "lab_rdt_malaria_result":             str,   # "positive" | "negative" | "not_done"
+
+    # ── Nutrition ────────────────────────────────────────────────────────────
+    "v_muac_strap_colour":                str,   # "red" | "yellow" | "green"
+    "ex_swelling_both_feet":              bool,  # context flag — default False
+
+    # ── Danger signs ─────────────────────────────────────────────────────────
+    "q_convulsions":                      bool,  # not in dataset — default False
+    "q_vomits_everything":                bool,  # not in dataset — default False
+    "q_not_able_to_drink_or_feed":        bool,  # chw_questions["Unable to drink"]
+    "ex_unusually_sleepy_or_unconscious": bool,  # chw_questions["Lethargic"]
+    "is_priority_exit":                   bool,  # default False — set by engine
+
+    # ── Router mod_done flags (product team naming from variables.json) ──────
+    "mod_assess_done":                    bool,  # default False
+    "mod_danger_sign_check_done":         bool,  # default False
+    "mod_diarrhoea_treatment_done":       bool,  # default False
+    "mod_fast_breathing_treatment_done":  bool,  # default False
+    "mod_fever_malaria_treatment_done":   bool,  # default False
+    "mod_malnutrition_screening_done":    bool,  # default False
 }
-
-
-# ──────────────────────────────────────────────────────────────────────────────
-# WHO IMCI fast-breathing thresholds (breaths/min)
-# ──────────────────────────────────────────────────────────────────────────────
-def _fast_breathing_threshold(age_years: int) -> int:
-    """Return the WHO IMCI fast-breathing threshold for the given age in years."""
-    age_months = age_years * 12  # approximate; fine for integer-year ages
-    if age_months < 2:
-        return 60
-    elif age_months < 12:
-        return 50
-    elif age_years < 5:
-        return 40
-    else:
-        return 30
 
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Raw-field helpers
 # ──────────────────────────────────────────────────────────────────────────────
 def _parse_respiratory_rate(rr_raw: str) -> Optional[int]:
-    """Extract integer from strings like '61/min'.  Returns None if absent."""
+    """Extract integer from strings like '61/min'. Returns None if absent."""
     if not rr_raw:
         return None
     match = re.match(r"(\d+)", str(rr_raw).strip())
@@ -94,7 +80,7 @@ def _parse_respiratory_rate(rr_raw: str) -> Optional[int]:
 
 
 def _parse_temperature(temp_raw: str) -> Optional[float]:
-    """Extract float from strings like '39.2°C'.  Returns None if absent."""
+    """Extract float from strings like '39.2°C'. Returns None if absent."""
     if not temp_raw:
         return None
     match = re.search(r"([\d.]+)", str(temp_raw).strip())
@@ -103,7 +89,7 @@ def _parse_temperature(temp_raw: str) -> Optional[float]:
 
 def _duration_in_days(duration: dict) -> int:
     """
-    Normalise duration dict → integer days.
+    Normalise duration dict -> integer days.
     Handles units: days, weeks, months (approximate).
     """
     value = int(duration.get("value", 0))
@@ -112,12 +98,12 @@ def _duration_in_days(duration: dict) -> int:
         return value * 7
     elif unit in ("month", "months"):
         return value * 30
-    else:  # days (or unknown — treat as days)
+    else:
         return value
 
 
 def _yes(value) -> bool:
-    """Coerce a CHW answer to bool.  Handles 'Yes'/'No', True/False, etc."""
+    """Coerce a CHW answer to bool. Handles 'Yes'/'No', True/False, etc."""
     if isinstance(value, bool):
         return value
     return str(value).strip().lower() in ("yes", "true", "1")
@@ -128,106 +114,99 @@ def _yes(value) -> bool:
 # ──────────────────────────────────────────────────────────────────────────────
 def to_dmn_input(patient: dict, context: Optional[dict] = None) -> dict:
     """
-    Convert one patient record from output.json to a flat DMN input dict.
+    Convert one patient record from output.json to a flat DMN input dict
+    using the product team's variable naming convention (variables.json).
 
     Args:
         patient : One element from the output.json list.
-        context : Optional deployment/visit context to supply fields that are
-                  not present in output.json.  Supported keys:
-                    malaria_area       (bool, default False)
-                    rdt_available      (bool, default False)
-                    rdt_result         (str,  default "not_done")
-                    muac_result        (str,  default "green")
+        context : Optional deployment/visit context for fields not in output.json.
+                  Supported keys:
+                    malaria_area          (bool, default False)
+                    rdt_result            (str,  default "not_done")
+                    muac_result           (str,  default "green")
                     swelling_of_both_feet (bool, default False)
 
     Returns:
-        dict: Flat DMN-ready patient dictionary.
+        dict: Flat DMN-ready patient dictionary matching product team field names.
     """
     ctx = context or {}
 
-    complaint      = str(patient.get("complaint", "")).strip()
-    age            = int(patient.get("age", 0))
-    duration       = patient.get("duration", {"value": 0, "unit": "days"})
-    chw            = patient.get("chw_questions", {})
-    exam           = patient.get("exam_findings", {})
+    complaint     = str(patient.get("complaint", "")).strip()
+    age           = int(patient.get("age", 0))
+    duration      = patient.get("duration", {"value": 0, "unit": "days"})
+    chw           = patient.get("chw_questions", {})
+    exam          = patient.get("exam_findings", {})
 
-    duration_days  = _duration_in_days(duration)
+    duration_days = _duration_in_days(duration)
 
     # ── Cough / Respiratory ──────────────────────────────────────────────────
     cough_present  = complaint == "Cough"
-
     rr_raw         = exam.get("Respiratory rate", "")
     rr_value       = _parse_respiratory_rate(rr_raw)
-    threshold      = _fast_breathing_threshold(age)
-    fast_breathing = (rr_value is not None) and (rr_value >= threshold)
-
-    chest_indrawing_raw     = exam.get("Chest indrawing", "")
-    chest_indrawing_bool    = _yes(chest_indrawing_raw)
-
-    cough_with_fast_breathing = cough_present and fast_breathing
+    chest_indrawing = _yes(exam.get("Chest indrawing", ""))
 
     # ── Diarrhoea ────────────────────────────────────────────────────────────
     has_diarrhoea  = complaint == "Diarrhea"
-
-    blood_raw      = chw.get("Blood in stool", chw.get("No blood in stool", ""))
-    # "No blood in stool" key means blood=False; handle both keys
     if "No blood in stool" in chw:
         blood_in_stool = False
     else:
-        blood_in_stool = _yes(blood_raw)
+        blood_in_stool = _yes(chw.get("Blood in stool", ""))
 
     # ── Fever ────────────────────────────────────────────────────────────────
     temp_raw       = exam.get("Temperature", "")
     temp_value     = _parse_temperature(temp_raw)
-    hot_with_fever = (temp_value is not None) and (temp_value >= 37.5)
+    has_fever      = (temp_value is not None) and (temp_value >= 37.5)
+
+    # ── Danger signs ─────────────────────────────────────────────────────────
+    unable_to_drink = _yes(chw.get("Unable to drink", ""))
+    lethargic       = _yes(chw.get("Lethargic", chw.get("Lethargic/unconscious", "")))
 
     # ── Context / deployment fields (not in output.json) ────────────────────
     malaria_area          = bool(ctx.get("malaria_area", False))
-    rdt_available         = bool(ctx.get("rdt_available", False))
     rdt_result            = str(ctx.get("rdt_result", "not_done"))
-    muac_result           = str(ctx.get("muac_result", "green"))
+    muac_colour           = str(ctx.get("muac_result", "green"))
     swelling_of_both_feet = bool(ctx.get("swelling_of_both_feet", False))
 
     # ── Assemble ─────────────────────────────────────────────────────────────
     return {
+        # Demographics
+        "demo_child_age_months":              age * 12,
 
-        # Demographics 
-        "age_months":                age * 12,
-        
-        # Module A & E — Cough / Respiratory
-        "cough_present":             cough_present,
-        "cough_duration_days":       duration_days if cough_present else 0,
-        "fast_breathing_present":    fast_breathing,
-        "chest_indrawing_present":   chest_indrawing_bool,
-        "cough_with_fast_breathing": cough_with_fast_breathing,
-        "chest_indrawing":           chest_indrawing_bool,   # module E alias
+        # Cough / Respiratory
+        "q_has_cough":                        cough_present,
+        "q_cough_duration_days":              duration_days if cough_present else 0,
+        "v_respiratory_rate_per_min":         rr_value if rr_value is not None else 0,
+        "ex_chest_indrawing":                 chest_indrawing,
 
-        # Module B — Diarrhoea
-        "has_diarrhoea":             has_diarrhoea,
-        "diarrhoea_duration_days":   duration_days if has_diarrhoea else 0,
-        "blood_in_stool":            blood_in_stool,
+        # Diarrhoea
+        "q_has_diarrhoea":                    has_diarrhoea,
+        "q_diarrhoea_duration_days":          duration_days if has_diarrhoea else 0,
+        "q_blood_in_stool":                   blood_in_stool,
 
-        # Module C — Fever / Malaria
-        "hot_with_fever":            hot_with_fever,
-        "fever_duration_days":       duration_days if hot_with_fever else 0,
-        "malaria_area":              malaria_area,
-        "rdt_available":             rdt_available,
-        "rdt_result":                rdt_result,
+        # Fever / Malaria
+        "q_has_fever":                        has_fever,
+        "q_fever_duration_days":              duration_days if has_fever else 0,
+        "hx_malaria_area":                    malaria_area,
+        "lab_rdt_malaria_result":             rdt_result,
 
-        # Module D — Nutrition (context-supplied)
-        "muac_result":               muac_result,
-        "swelling_of_both_feet":     swelling_of_both_feet,
+        # Nutrition
+        "v_muac_strap_colour":                muac_colour,
+        "ex_swelling_both_feet":              swelling_of_both_feet,
 
-        # Dispatcher flags (professor's new orchestration model)
-        "has_cough":                 cough_present,
-        "has_diarrhea":              has_diarrhoea,
-        "has_fever":                 hot_with_fever,
- 
-        # module_done flags — initialized False, updated by engine after each run
-        "cough_mod_done":            False,
-        "diarrhea_mod_done":         False,
-        "fever_mod_done":            False,
-        "nutrition_mod_done":        False,
+        # Danger signs
+        "q_convulsions":                      False,   # not in output.json
+        "q_vomits_everything":                False,   # not in output.json
+        "q_not_able_to_drink_or_feed":        unable_to_drink,
+        "ex_unusually_sleepy_or_unconscious": lethargic,
+        "is_priority_exit":                   False,   # set by engine
+
+        # Router mod_done flags — all False on entry, engine updates after each run
+        "mod_assess_done":                    False,
+        "mod_danger_sign_check_done":         False,
+        "mod_diarrhoea_treatment_done":       False,
+        "mod_fast_breathing_treatment_done":  False,
+        "mod_fever_malaria_treatment_done":   False,
+        "mod_malnutrition_screening_done":    False,
     }
 
 
@@ -240,7 +219,6 @@ def batch_preprocess(
 ) -> list[dict]:
     """
     Load output.json and return a list of DMN-ready dicts, one per patient.
-
     Each dict also carries "_row_number" for traceability.
     """
     with open(path, encoding="utf-8") as f:
@@ -265,9 +243,11 @@ if __name__ == "__main__":
     p1 = next(p for p in patients if p["_row_number"] == 3)
     # Example 2: row 5 — Diarrhoea
     p2 = next(p for p in patients if p["_row_number"] == 5)
+    # Example 3: row 9 — Pneumonia fast breathing
+    p3 = next(p for p in patients if p["_row_number"] == 9)
 
     examples = []
-    for patient in [p1, p2]:
+    for patient in [p1, p2, p3]:
         dmn = to_dmn_input(patient)
         dmn["_row_number"]       = patient["_row_number"]
         dmn["_source_complaint"] = patient["complaint"]
@@ -286,4 +266,4 @@ if __name__ == "__main__":
         print(f"\nRow {ex['_row_number']} — {ex['_source_diagnosis']}")
         for k, v in ex.items():
             if not k.startswith("_"):
-                print(f"  {k:<30} {v}")
+                print(f"  {k:<35} {v}")

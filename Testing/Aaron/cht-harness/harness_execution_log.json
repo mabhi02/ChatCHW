@@ -1,6 +1,6 @@
 [
   {
-    "timestamp": "2026-04-17T18:59:26.516Z",
+    "timestamp": "2026-04-24T19:04:08.460Z",
     "patient_id": "row_1",
     "inputs": {
       "age_months": 24,
@@ -29,7 +29,7 @@
     }
   },
   {
-    "timestamp": "2026-04-17T18:59:26.810Z",
+    "timestamp": "2026-04-24T19:04:08.667Z",
     "patient_id": "row_2",
     "inputs": {
       "age_months": 18,
@@ -58,12 +58,41 @@
     }
   },
   {
-    "timestamp": "2026-04-17T18:59:27.030Z",
+    "timestamp": "2026-04-24T19:04:08.868Z",
     "patient_id": "row_3",
     "inputs": {
       "age_months": 24,
       "cough_present": true,
       "cough_duration_days": 3,
+      "fast_breathing_present": true,
+      "chest_indrawing_present": false,
+      "has_diarrhoea": false,
+      "diarrhoea_duration_days": null,
+      "blood_in_stool": false,
+      "rdt_result": "not_done",
+      "muac_result": "green"
+    },
+    "execution_trace": {
+      "engine": "xlsform_harness",
+      "form_name": "orchestrator",
+      "status": "success"
+    },
+    "final_outcome": {
+      "triage": "clinic",
+      "danger_sign": false,
+      "clinic_referral": true,
+      "reason": "fast_breathing",
+      "ref": "",
+      "actions": "Refer to Clinic for suspected severe pneumonia."
+    }
+  },
+  {
+    "timestamp": "2026-04-24T19:04:09.111Z",
+    "patient_id": "row_4",
+    "inputs": {
+      "age_months": 10,
+      "cough_present": true,
+      "cough_duration_days": 2,
       "fast_breathing_present": true,
       "chest_indrawing_present": false,
       "has_diarrhoea": false,
