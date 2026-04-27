@@ -1,0 +1,1575 @@
+{
+  "total_labels": 173,
+  "labels_by_type": {
+    "supply_list": [
+      {
+        "span": "Sick Child Recording Form",
+        "id": "equip_sick_child_recording_form",
+        "type": "supply_list",
+        "subtype": "equipment",
+        "quote_context": "For every visit, the CHW completes the Sick Child Recording Form.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "zinc tablet",
+        "id": "supply_zinc_tablets",
+        "type": "supply_list",
+        "subtype": "consumable",
+        "quote_context": "Dissolve the zinc tablet (or half tablet) in breast milk or clean water on a spoon.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "250 mg tablets",
+        "id": "supply_amoxicillin_250mg",
+        "type": "supply_list",
+        "subtype": "consumable",
+        "quote_context": "Oral amoxicillin dosage (250 mg tablets):",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "equip_timer",
+        "id": "equip_timer",
+        "type": "supply_list",
+        "subtype": "equipment",
+        "quote_context": "Count the child's breaths for one full minute while the child is calm and quiet.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "MUAC (Mid-Upper Arm Circumference) strap",
+        "id": "equip_muac_strap",
+        "type": "supply_list",
+        "subtype": "equipment",
+        "quote_context": "Use the MUAC (Mid-Upper Arm Circumference) strap on children age 6 months up to 5 years.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "ORS (Oral Rehydration Salts)",
+        "id": "supply_ors",
+        "type": "supply_list",
+        "subtype": "consumable",
+        "quote_context": "Give ORS (Oral Rehydration Salts) and zinc supplement.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "zinc supplement",
+        "id": "supply_zinc",
+        "type": "supply_list",
+        "subtype": "consumable",
+        "quote_context": "Give ORS (Oral Rehydration Salts) and zinc supplement.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "amoxicillin",
+        "id": "supply_amoxicillin",
+        "type": "supply_list",
+        "subtype": "consumable",
+        "quote_context": "If breathing is normal and child is improving, complete the full 5-day course of amoxicillin.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "Rapid Diagnostic Test (RDT) for malaria",
+        "id": "supply_rdt_malaria",
+        "type": "supply_list",
+        "subtype": "consumable",
+        "quote_context": "Do a Rapid Diagnostic Test (RDT) for malaria before treating.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "Antimalarial AL (Artemether-Lumefantrine)",
+        "id": "supply_al_artemether_lumefantrine",
+        "type": "supply_list",
+        "subtype": "consumable",
+        "quote_context": "Antimalarial AL (Artemether-Lumefantrine) dosage:",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "6 tablets",
+        "id": "supply_al_6_tablets_2mo_3yr",
+        "type": "supply_list",
+        "subtype": "consumable",
+        "quote_context": "2 months up to 3 years 1 tablet AL Twice daily 3 days / 6 tablets",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "12 tablets",
+        "id": "supply_al_12_tablets_3yr_5yr",
+        "type": "supply_list",
+        "subtype": "consumable",
+        "quote_context": "3 years up to 5 years 2 tablets AL Twice daily 3 days / 12 tablets",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      }
+    ],
+    "variables": [
+      {
+        "span": "Does the child have a cough?",
+        "id": "q_has_cough",
+        "type": "variables",
+        "subtype": "self_reported_symptom",
+        "quote_context": "Ask: Does the child have a cough? If yes, for how long?",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "for how long?",
+        "id": "q_cough_duration_days",
+        "type": "variables",
+        "subtype": "self_reported_symptom",
+        "quote_context": "Ask: Does the child have a cough? If yes, for how long?",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Does the child have fever now or in the last 3 days?",
+        "id": "q_has_fever",
+        "type": "variables",
+        "subtype": "self_reported_symptom",
+        "quote_context": "Ask: Does the child have fever now or in the last 3 days? If yes, when did it start?",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "when did it start?",
+        "id": "q_fever_onset_days",
+        "type": "variables",
+        "subtype": "self_reported_symptom",
+        "quote_context": "If yes, when did it start? Fever for 7 days or more is a danger sign.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Identify fever by the caregiver's report or by feeling the child's stomach or underarm",
+        "id": "ex_fever_by_touch",
+        "type": "variables",
+        "subtype": "examination_finding",
+        "quote_context": "Identify fever by the caregiver's report or by feeling the child's stomach or underarm.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "For how long?",
+        "id": "q_diarrhoea_duration_days",
+        "type": "variables",
+        "subtype": "self_reported_symptom",
+        "quote_context": "Ask: For how long? Is there blood in the stool?",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Is there blood in the stool?",
+        "id": "q_blood_in_stool",
+        "type": "variables",
+        "subtype": "self_reported_symptom",
+        "quote_context": "Ask: For how long? Is there blood in the stool?",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "A convulsion during the current illness is a danger sign",
+        "id": "q_convulsions",
+        "type": "variables",
+        "subtype": "self_reported_symptom",
+        "quote_context": "A convulsion during the current illness is a danger sign. The child needs urgent referral.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "sick children age 2 months up to 5 years",
+        "id": "demo_age_eligible_2mo_to_5yr",
+        "type": "variables",
+        "subtype": "demographics",
+        "quote_context": "This manual trains community health workers (CHWs) to assess, classify, and treat sick children age 2 months up to 5 years in the community",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "date",
+        "id": "demo_visit_date",
+        "type": "variables",
+        "subtype": "demographics",
+        "quote_context": "Record: date, CHW name, child's name, age (years and months), sex, caregiver's name and relationship (mother/father/other), and address.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "CHW name",
+        "id": "demo_chw_name",
+        "type": "variables",
+        "subtype": "demographics",
+        "quote_context": "Record: date, CHW name, child's name, age (years and months), sex, caregiver's name and relationship (mother/father/other), and address.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "child's name",
+        "id": "demo_child_name",
+        "type": "variables",
+        "subtype": "demographics",
+        "quote_context": "Record: date, CHW name, child's name, age (years and months), sex",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "age (years and months)",
+        "id": "demo_age_months",
+        "type": "variables",
+        "subtype": "demographics",
+        "quote_context": "Record: date, CHW name, child's name, age (years and months), sex",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "sex",
+        "id": "demo_sex",
+        "type": "variables",
+        "subtype": "demographics",
+        "quote_context": "Record: date, CHW name, child's name, age (years and months), sex, caregiver's name",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "caregiver's name and relationship (mother/father/other)",
+        "id": "demo_caregiver_name_relationship",
+        "type": "variables",
+        "subtype": "demographics",
+        "quote_context": "sex, caregiver's name and relationship (mother/father/other), and address.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "address",
+        "id": "demo_address",
+        "type": "variables",
+        "subtype": "demographics",
+        "quote_context": "caregiver's name and relationship (mother/father/other), and address.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "ASK the caregiver about the child's problems",
+        "id": "q_child_problems",
+        "type": "variables",
+        "subtype": "self_reported_symptom",
+        "quote_context": "ASK the caregiver about the child's problems, then LOOK for signs of illness.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "What are the child's problems?",
+        "id": "q_presenting_complaints",
+        "type": "variables",
+        "subtype": "self_reported_symptom",
+        "quote_context": "3.1 ASK: What are the child's problems?",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Count the child's breaths for one full minute while the child is calm and quiet",
+        "id": "v_respiratory_rate_per_min",
+        "type": "variables",
+        "subtype": "quantitative_measurement",
+        "quote_context": "Count the child's breaths for one full minute while the child is calm and quiet.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Look at the lower chest wall when the child breathes IN",
+        "id": "ex_chest_indrawing",
+        "type": "variables",
+        "subtype": "examination_finding",
+        "quote_context": "Look at the lower chest wall when the child breathes IN. Chest indrawing is when the lower chest wall goes IN when the child breathes in.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "A child who vomits everything and cannot hold anything down has a danger sign",
+        "id": "q_vomits_everything",
+        "type": "variables",
+        "subtype": "self_reported_symptom",
+        "quote_context": "A child who vomits everything and cannot hold anything down has a danger sign.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "A child who cannot drink or feed anything at all has a danger sign",
+        "id": "q_not_able_to_drink_or_feed",
+        "type": "variables",
+        "subtype": "self_reported_symptom",
+        "quote_context": "A child who cannot drink or feed anything at all has a danger sign.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Ask the caregiver to offer the child a drink or breastfeed",
+        "id": "ex_offer_drink_or_breastfeed",
+        "type": "variables",
+        "subtype": "examination_finding",
+        "quote_context": "Ask the caregiver to offer the child a drink or breastfeed.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "A child who is unusually sleepy, difficult to wake, or unconscious has a danger sign",
+        "id": "q_unusually_sleepy_or_unconscious",
+        "type": "variables",
+        "subtype": "self_reported_symptom",
+        "quote_context": "A child who is unusually sleepy, difficult to wake, or unconscious has a danger sign.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Try to wake the child by clapping or speaking loudly",
+        "id": "ex_attempt_wake_child",
+        "type": "variables",
+        "subtype": "examination_finding",
+        "quote_context": "Try to wake the child by clapping or speaking loudly.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Is the child still having diarrhoea?",
+        "id": "q_followup_diarrhoea_persists",
+        "type": "variables",
+        "subtype": "self_reported_symptom",
+        "quote_context": "After 3 days: Is the child still having diarrhoea?",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Does the child still have fever?",
+        "id": "q_followup_fever_persists",
+        "type": "variables",
+        "subtype": "self_reported_symptom",
+        "quote_context": "After 3 days: Does the child still have fever?",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "RDT was positive",
+        "id": "lab_rdt_malaria_positive",
+        "type": "variables",
+        "subtype": "point_of_care_test",
+        "quote_context": "If RDT was positive and antimalarial was given, the child should improve.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "RDT was negative",
+        "id": "lab_rdt_malaria_negative",
+        "type": "variables",
+        "subtype": "point_of_care_test",
+        "quote_context": "If RDT was negative and fever persists, refer.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "antimalarial was given",
+        "id": "prev_antimalarial_given",
+        "type": "variables",
+        "subtype": "prior_encounter_state",
+        "quote_context": "If RDT was positive and antimalarial was given, the child should improve.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "3 or more loose or watery stools in 24 hours",
+        "id": "q_stool_count_per_day",
+        "type": "variables",
+        "subtype": "self_reported_symptom",
+        "quote_context": "Diarrhoea is 3 or more loose or watery stools in 24 hours.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Wrap the strap around the child's left upper arm, midway between shoulder and elbow",
+        "id": "ex_muac_measurement_technique",
+        "type": "variables",
+        "subtype": "examination_step",
+        "quote_context": "Wrap the strap around the child's left upper arm, midway between shoulder and elbow. Read the colour:",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "Read the colour",
+        "id": "ex_muac_colour",
+        "type": "variables",
+        "subtype": "examination_finding",
+        "quote_context": "Wrap the strap around the child's left upper arm, midway between shoulder and elbow. Read the colour:",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "swelling of both feet (oedema)",
+        "id": "ex_bilateral_foot_oedema",
+        "type": "variables",
+        "subtype": "examination_finding",
+        "quote_context": "Also check for swelling of both feet (oedema). Press thumbs gently on the top of each foot for 3 seconds.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "Press thumbs gently on the top of each foot for 3 seconds",
+        "id": "ex_oedema_press_test",
+        "type": "variables",
+        "subtype": "examination_step",
+        "quote_context": "Press thumbs gently on the top of each foot for 3 seconds. If dents remain on BOTH feet, the child has severe malnutrition.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "no blood",
+        "id": "q_diarrhoea_no_blood",
+        "type": "variables",
+        "subtype": "self_reported_symptom",
+        "quote_context": "5.1 Diarrhoea (less than 14 days, no blood, no danger sign)",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "Is the child still coughing?",
+        "id": "q_still_coughing_followup",
+        "type": "variables",
+        "subtype": "self_reported_symptom",
+        "quote_context": "After 3 days: Is the child still coughing? Count breaths again.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "Count breaths again",
+        "id": "v_respiratory_rate_followup_per_min",
+        "type": "variables",
+        "subtype": "quantitative_measurement",
+        "quote_context": "Is the child still coughing? Count breaths again. If still fast breathing, refer.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "child's name",
+        "id": "demo_child_name",
+        "type": "variables",
+        "subtype": "demographics",
+        "quote_context": "Write a referral note including: child's name, age, date, reason for referral, danger signs found, treatment already given, and your name.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "age",
+        "id": "demo_child_age",
+        "type": "variables",
+        "subtype": "demographics",
+        "quote_context": "Write a referral note including: child's name, age, date, reason for referral, danger signs found, treatment already given, and your name.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "date",
+        "id": "sys_referral_date",
+        "type": "variables",
+        "subtype": "system_context",
+        "quote_context": "Write a referral note including: child's name, age, date, reason for referral, danger signs found, treatment already given, and your name.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "reason for referral",
+        "id": "ref_reason",
+        "type": "variables",
+        "subtype": "referral_data",
+        "quote_context": "Write a referral note including: child's name, age, date, reason for referral, danger signs found, treatment already given, and your name.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "danger signs found",
+        "id": "ref_danger_signs_found",
+        "type": "variables",
+        "subtype": "referral_data",
+        "quote_context": "Write a referral note including: child's name, age, date, reason for referral, danger signs found, treatment already given, and your name.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "treatment already given",
+        "id": "ref_treatment_given",
+        "type": "variables",
+        "subtype": "referral_data",
+        "quote_context": "Write a referral note including: child's name, age, date, reason for referral, danger signs found, treatment already given, and your name.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "Do a Rapid Diagnostic Test (RDT) for malaria before treating",
+        "id": "lab_rdt_malaria",
+        "type": "variables",
+        "subtype": "point_of_care_test",
+        "quote_context": "Do a Rapid Diagnostic Test (RDT) for malaria before treating. Do not give antimalarial medicine unless the RDT is positive.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "in a malaria area",
+        "id": "hx_malaria_area",
+        "type": "variables",
+        "subtype": "baseline_context",
+        "quote_context": "5.2 Fever (less than 7 days) in a malaria area",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "diarrhoea",
+        "id": "q_has_diarrhoea",
+        "type": "variables",
+        "subtype": "self_reported_symptom",
+        "quote_context": "Children without danger signs who have diarrhoea, fever (in a malaria area), or cough with fast breathing may be treated at home.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "fever",
+        "id": "q_has_fever",
+        "type": "variables",
+        "subtype": "self_reported_symptom",
+        "quote_context": "Children without danger signs who have diarrhoea, fever (in a malaria area), or cough with fast breathing may be treated at home.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "cough with fast breathing",
+        "id": "q_cough_with_fast_breathing",
+        "type": "variables",
+        "subtype": "self_reported_symptom",
+        "quote_context": "Children without danger signs who have diarrhoea, fever (in a malaria area), or cough with fast breathing may be treated at home.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "your name",
+        "id": "demo_chw_name",
+        "type": "variables",
+        "subtype": "demographics",
+        "quote_context": "Write a referral note including: child's name, age, date, reason for referral, danger signs found, treatment already given, and your name.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      }
+    ],
+    "predicates": [
+      {
+        "span": "A cough for 14 days or more is a danger sign",
+        "id": "p_cough_14_days_or_more",
+        "type": "predicates",
+        "subtype": "danger_sign_threshold",
+        "quote_context": "A cough for 14 days or more is a danger sign.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Fever for 7 days or more is a danger sign",
+        "id": "p_fever_7_days_or_more",
+        "type": "predicates",
+        "subtype": "danger_sign_threshold",
+        "quote_context": "Fever for 7 days or more is a danger sign.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Diarrhoea is 3 or more loose or watery stools in 24 hours",
+        "id": "p_diarrhoea_3_or_more_stools",
+        "type": "predicates",
+        "subtype": "definition_threshold",
+        "quote_context": "Diarrhoea is 3 or more loose or watery stools in 24 hours.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Diarrhoea for 14 days or more is a danger sign",
+        "id": "p_diarrhoea_14_days_or_more",
+        "type": "predicates",
+        "subtype": "danger_sign_threshold",
+        "quote_context": "Diarrhoea for 14 days or more is a danger sign.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Blood in stool (dysentery) is a danger sign",
+        "id": "p_blood_in_stool_danger",
+        "type": "predicates",
+        "subtype": "danger_sign",
+        "quote_context": "Blood in stool (dysentery) is a danger sign.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "A convulsion during the current illness is a danger sign",
+        "id": "p_convulsion_danger",
+        "type": "predicates",
+        "subtype": "danger_sign",
+        "quote_context": "A convulsion during the current illness is a danger sign. The child needs urgent referral.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "2 months up to 12 months 50 breaths per minute or more",
+        "id": "p_fast_breathing_2mo_to_12mo",
+        "type": "predicates",
+        "subtype": "age_based_threshold",
+        "quote_context": "Fast breathing thresholds by age: Age group Fast breathing if 2 months up to 12 months 50 breaths per minute or more",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "12 months up to 5 years 40 breaths per minute or more",
+        "id": "p_fast_breathing_12mo_to_5yr",
+        "type": "predicates",
+        "subtype": "age_based_threshold",
+        "quote_context": "12 months up to 5 years 40 breaths per minute or more",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Chest indrawing is when the lower chest wall goes IN when the child breathes in",
+        "id": "p_chest_indrawing",
+        "type": "predicates",
+        "subtype": "danger_sign",
+        "quote_context": "Chest indrawing is when the lower chest wall goes IN when the child breathes in. This is a danger sign indicating severe pneumonia.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "A child who vomits everything and cannot hold anything down has a danger sign",
+        "id": "p_vomits_everything_danger",
+        "type": "predicates",
+        "subtype": "danger_sign",
+        "quote_context": "A child who vomits everything and cannot hold anything down has a danger sign.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "A child who cannot drink or feed anything at all has a danger sign",
+        "id": "p_not_able_to_drink_or_feed_danger",
+        "type": "predicates",
+        "subtype": "danger_sign",
+        "quote_context": "A child who cannot drink or feed anything at all has a danger sign.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "A child who is unusually sleepy, difficult to wake, or unconscious has a danger sign",
+        "id": "p_unusually_sleepy_or_unconscious_danger",
+        "type": "predicates",
+        "subtype": "danger_sign",
+        "quote_context": "A child who is unusually sleepy, difficult to wake, or unconscious has a danger sign.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "children age 6 months up to 5 years",
+        "id": "p_age_6mo_to_5yr_muac_eligible",
+        "type": "predicates",
+        "subtype": "age_cutoff",
+        "quote_context": "Use the MUAC (Mid-Upper Arm Circumference) strap on children age 6 months up to 5 years.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "If dents remain on BOTH feet, the child has severe malnutrition",
+        "id": "p_bilateral_pitting_oedema",
+        "type": "predicates",
+        "subtype": "threshold_flag",
+        "quote_context": "If dents remain on BOTH feet, the child has severe malnutrition. Refer urgently.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "Children without danger signs who have diarrhoea, fever (in a malaria area), or cough with fast breathing may be treated at home",
+        "id": "p_eligible_home_treatment",
+        "type": "predicates",
+        "subtype": "eligibility_flag",
+        "quote_context": "Children without danger signs who have diarrhoea, fever (in a malaria area), or cough with fast breathing may be treated at home.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "less than 14 days",
+        "id": "p_diarrhoea_less_14_days",
+        "type": "predicates",
+        "subtype": "duration_cutoff",
+        "quote_context": "5.1 Diarrhoea (less than 14 days, no blood, no danger sign)",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "less than 7 days",
+        "id": "p_fever_less_7_days",
+        "type": "predicates",
+        "subtype": "duration_cutoff",
+        "quote_context": "5.2 Fever (less than 7 days) in a malaria area",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "Do not give antimalarial medicine unless the RDT is positive",
+        "id": "p_rdt_positive_for_antimalarial",
+        "type": "predicates",
+        "subtype": "threshold_flag",
+        "quote_context": "Do not give antimalarial medicine unless the RDT is positive.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "2 months up to 3 years",
+        "id": "p_age_2mo_to_3yr",
+        "type": "predicates",
+        "subtype": "age_cutoff",
+        "quote_context": "2 months up to 3 years 1 tablet AL Twice daily 3 days / 6 tablets",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "3 years up to 5 years",
+        "id": "p_age_3yr_to_5yr",
+        "type": "predicates",
+        "subtype": "age_cutoff",
+        "quote_context": "3 years up to 5 years 2 tablets AL Twice daily 3 days / 12 tablets",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "no chest indrawing",
+        "id": "p_no_chest_indrawing",
+        "type": "predicates",
+        "subtype": "threshold_flag",
+        "quote_context": "5.3 Cough with fast breathing (pneumonia, no chest indrawing)",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "p_still_fast_breathing_followup",
+        "id": "p_still_fast_breathing_followup",
+        "type": "predicates",
+        "subtype": "threshold_flag",
+        "quote_context": "Count breaths again. If still fast breathing, refer.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      }
+    ],
+    "modules": [
+      {
+        "span": "treat diarrhoea, confirmed malaria, and pneumonia (cough with fast breathing) at home",
+        "id": "mod_imci_community",
+        "type": "modules",
+        "subtype": "scope",
+        "quote_context": "CHWs identify signs of illness, treat diarrhoea, confirmed malaria, and pneumonia (cough with fast breathing) at home",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "This is a danger sign indicating severe pneumonia",
+        "id": "dx_severe_pneumonia",
+        "type": "modules",
+        "subtype": "classification",
+        "quote_context": "This is a danger sign indicating severe pneumonia. The child must be calm; do not assess while crying or breastfeeding.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Oral amoxicillin dosage (250 mg tablets)",
+        "id": "mod_amoxicillin_dosing",
+        "type": "modules",
+        "subtype": "treatment_dosing",
+        "quote_context": "Oral amoxicillin dosage (250 mg tablets):",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Cough",
+        "id": "mod_cough",
+        "type": "modules",
+        "subtype": "decision_module",
+        "quote_context": "Cough\nAsk: Does the child have a cough?",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Fever",
+        "id": "mod_fever",
+        "type": "modules",
+        "subtype": "decision_module",
+        "quote_context": "Fever\nAsk: Does the child have fever now or in the last 3 days?",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Diarrhoea",
+        "id": "mod_diarrhoea",
+        "type": "modules",
+        "subtype": "decision_module",
+        "quote_context": "Diarrhoea\nDiarrhoea is 3 or more loose or watery stools in 24 hours.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Fast breathing",
+        "id": "mod_fast_breathing",
+        "type": "modules",
+        "subtype": "decision_module",
+        "quote_context": "Fast breathing\nCount the child's breaths for one full minute while the child is calm and quiet.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Convulsions",
+        "id": "mod_convulsions",
+        "type": "modules",
+        "subtype": "decision_module",
+        "quote_context": "Convulsions\nA convulsion during the current illness is a danger sign.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Chest indrawing",
+        "id": "mod_chest_indrawing",
+        "type": "modules",
+        "subtype": "decision_module",
+        "quote_context": "Chest indrawing\nLook at the lower chest wall when the child breathes IN.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Vomiting everything",
+        "id": "mod_vomiting_everything",
+        "type": "modules",
+        "subtype": "decision_module",
+        "quote_context": "Vomiting everything\nA child who vomits everything and cannot hold anything down has a danger sign.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Not able to drink or feed",
+        "id": "mod_not_able_to_drink_or_feed",
+        "type": "modules",
+        "subtype": "decision_module",
+        "quote_context": "Not able to drink or feed\nA child who cannot drink or feed anything at all has a danger sign.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Unusually sleepy or unconscious",
+        "id": "mod_unusually_sleepy_or_unconscious",
+        "type": "modules",
+        "subtype": "decision_module",
+        "quote_context": "Unusually sleepy or unconscious\nA child who is unusually sleepy, difficult to wake, or unconscious has a danger sign.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Zinc supplement dosage",
+        "id": "mod_zinc_dosing",
+        "type": "modules",
+        "subtype": "treatment_dosing",
+        "quote_context": "Zinc supplement dosage:",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Follow-up for diarrhoea",
+        "id": "mod_followup_diarrhoea",
+        "type": "modules",
+        "subtype": "follow_up_module",
+        "quote_context": "7.1 Follow-up for diarrhoea",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Follow-up for fever / malaria",
+        "id": "mod_followup_fever_malaria",
+        "type": "modules",
+        "subtype": "follow_up_module",
+        "quote_context": "7.2 Follow-up for fever / malaria",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "RDT procedure (summary)",
+        "id": "mod_rdt_procedure",
+        "type": "modules",
+        "subtype": "procedure_module",
+        "quote_context": "RDT procedure (summary):",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "ORS preparation and administration",
+        "id": "mod_ors_preparation",
+        "type": "modules",
+        "subtype": "treatment_module",
+        "quote_context": "ORS preparation and administration:",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "HOME CARE ADVICE (for all children treated at home)",
+        "id": "mod_home_care_advice",
+        "type": "modules",
+        "subtype": "advice_module",
+        "quote_context": "6. HOME CARE ADVICE (for all children treated at home)",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Medicines",
+        "id": "mod_medicines",
+        "type": "modules",
+        "subtype": "supply_section",
+        "quote_context": "Medicines",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Diagnostic equipment",
+        "id": "mod_diagnostic_equipment",
+        "type": "modules",
+        "subtype": "supply_section",
+        "quote_context": "Diagnostic equipment",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Other supplies",
+        "id": "mod_other_supplies",
+        "type": "modules",
+        "subtype": "supply_section",
+        "quote_context": "Other supplies",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "LOOK for signs of illness",
+        "id": "mod_look_examination",
+        "type": "modules",
+        "subtype": "examination_step",
+        "quote_context": "ASK the caregiver about the child's problems, then LOOK for signs of illness.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "LOOK for signs of severe malnutrition",
+        "id": "mod_severe_malnutrition",
+        "type": "modules",
+        "subtype": "decision_module",
+        "quote_context": "3.3 LOOK for signs of severe malnutrition",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "DECIDE: REFER OR TREAT",
+        "id": "mod_decide_refer_or_treat",
+        "type": "modules",
+        "subtype": "decision_module",
+        "quote_context": "4. DECIDE: REFER OR TREAT",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "Danger signs requiring URGENT referral",
+        "id": "mod_danger_signs",
+        "type": "modules",
+        "subtype": "decision_module",
+        "quote_context": "4.1 Danger signs requiring URGENT referral",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "Diarrhoea (less than 14 days, no blood, no danger sign)",
+        "id": "mod_diarrhoea",
+        "type": "modules",
+        "subtype": "decision_module",
+        "quote_context": "5.1 Diarrhoea (less than 14 days, no blood, no danger sign)",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "Follow-up for cough with fast breathing",
+        "id": "mod_followup_cough_fast_breathing",
+        "type": "modules",
+        "subtype": "follow_up_module",
+        "quote_context": "7.3 Follow-up for cough with fast breathing",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "REFERRAL PROCEDURES",
+        "id": "mod_referral_procedures",
+        "type": "modules",
+        "subtype": "decision_module",
+        "quote_context": "8. REFERRAL PROCEDURES",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "CHW MEDICINE KIT AND SUPPLIES",
+        "id": "mod_chw_supply_kit",
+        "type": "modules",
+        "subtype": "supply_module",
+        "quote_context": "9. CHW MEDICINE KIT AND SUPPLIES",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "Fever (less than 7 days) in a malaria area",
+        "id": "mod_fever_malaria",
+        "type": "modules",
+        "subtype": "decision_module",
+        "quote_context": "5.2 Fever (less than 7 days) in a malaria area",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "Cough with fast breathing (pneumonia, no chest indrawing)",
+        "id": "mod_pneumonia",
+        "type": "modules",
+        "subtype": "decision_module",
+        "quote_context": "5.3 Cough with fast breathing (pneumonia, no chest indrawing)",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      }
+    ],
+    "phrase_bank": [
+      {
+        "span": "The child needs urgent referral",
+        "id": "ref_convulsion_urgent",
+        "type": "phrase_bank",
+        "subtype": "referral_message",
+        "quote_context": "A convulsion during the current illness is a danger sign. The child needs urgent referral.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "The child must be calm; do not assess while crying or breastfeeding",
+        "id": "m_chest_indrawing_calm_instruction",
+        "type": "phrase_bank",
+        "subtype": "examination_instruction",
+        "quote_context": "The child must be calm; do not assess while crying or breastfeeding.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "A child who vomits sometimes but can hold down some fluids does not have this sign",
+        "id": "m_vomiting_differentiation",
+        "type": "phrase_bank",
+        "subtype": "clinical_guidance",
+        "quote_context": "A child who vomits sometimes but can hold down some fluids does not have this sign.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "2 months up to 6 months 1/2 tablet Once daily 10 days / 5 tablets",
+        "id": "rx_zinc_2mo_to_6mo",
+        "type": "phrase_bank",
+        "subtype": "medication_dosing",
+        "quote_context": "Age Dose Frequency Duration / Supply 2 months up to 6 months 1/2 tablet Once daily 10 days / 5 tablets",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "6 months up to 5 years 1 tablet Once daily 10 days / 10 tablets",
+        "id": "rx_zinc_6mo_to_5yr",
+        "type": "phrase_bank",
+        "subtype": "medication_dosing",
+        "quote_context": "6 months up to 5 years 1 tablet Once daily 10 days / 10 tablets",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Dissolve the zinc tablet (or half tablet) in breast milk or clean water on a spoon",
+        "id": "tx_zinc_administration",
+        "type": "phrase_bank",
+        "subtype": "treatment_instruction",
+        "quote_context": "Dissolve the zinc tablet (or half tablet) in breast milk or clean water on a spoon.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Give the full 10 days even if diarrhoea stops",
+        "id": "adv_zinc_full_course_10_days",
+        "type": "phrase_bank",
+        "subtype": "advice",
+        "quote_context": "Give the full 10 days even if diarrhoea stops.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Zinc reduces severity, shortens duration, and prevents diarrhoea for up to 3 months",
+        "id": "m_zinc_benefits",
+        "type": "phrase_bank",
+        "subtype": "counseling_message",
+        "quote_context": "Zinc reduces severity, shortens duration, and prevents diarrhoea for up to 3 months.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "2 months up to 12 months 1 tablet Twice daily 5 days / 10 tablets",
+        "id": "rx_amoxicillin_2mo_to_12mo",
+        "type": "phrase_bank",
+        "subtype": "medication_dosing",
+        "quote_context": "Age Dose Frequency Duration / Supply 2 months up to 12 months 1 tablet Twice daily 5 days / 10 tablets",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "12 months up to 5 years 2 tablets Twice daily 5 days / 20 tablets",
+        "id": "rx_amoxicillin_12mo_to_5yr",
+        "type": "phrase_bank",
+        "subtype": "medication_dosing",
+        "quote_context": "12 months up to 5 years 2 tablets Twice daily 5 days / 20 tablets",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Check expiration date",
+        "id": "tx_check_expiration_date",
+        "type": "phrase_bank",
+        "subtype": "treatment_instruction",
+        "quote_context": "Check expiration date. Crush the tablet and mix with breast milk or water.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Crush the tablet and mix with breast milk or water",
+        "id": "tx_amoxicillin_administration",
+        "type": "phrase_bank",
+        "subtype": "treatment_instruction",
+        "quote_context": "Crush the tablet and mix with breast milk or water.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Give the first dose in front of you",
+        "id": "tx_first_dose_observed",
+        "type": "phrase_bank",
+        "subtype": "treatment_instruction",
+        "quote_context": "Give the first dose in front of you.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Give the full 5 days even if the child feels better",
+        "id": "adv_amoxicillin_full_course_5_days",
+        "type": "phrase_bank",
+        "subtype": "advice",
+        "quote_context": "Give the full 5 days even if the child feels better.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Follow up ALL children treated at home in 3 days",
+        "id": "fu_followup_3_days",
+        "type": "phrase_bank",
+        "subtype": "follow_up_schedule",
+        "quote_context": "Follow up ALL children treated at home in 3 days.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "If the child is not better or is worse at follow-up, refer to a health facility",
+        "id": "ref_not_improving_at_followup",
+        "type": "phrase_bank",
+        "subtype": "referral_message",
+        "quote_context": "If the child is not better or is worse at follow-up, refer to a health facility.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "If yes and for less than 14 days, continue ORS and zinc",
+        "id": "tx_continue_ors_zinc_if_less_14_days",
+        "type": "phrase_bank",
+        "subtype": "treatment_instruction",
+        "quote_context": "If yes and for less than 14 days, continue ORS and zinc.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "If 14 days or more, refer",
+        "id": "ref_diarrhoea_14_days_or_more",
+        "type": "phrase_bank",
+        "subtype": "referral_message",
+        "quote_context": "If 14 days or more, refer.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Ensure the caregiver is giving zinc for the full 10 days",
+        "id": "adv_ensure_zinc_10_days",
+        "type": "phrase_bank",
+        "subtype": "advice",
+        "quote_context": "Ensure the caregiver is giving zinc for the full 10 days.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "If RDT was positive and antimalarial was given, the child should improve. If still febrile, refer.",
+        "id": "ref_rdt_positive_still_febrile",
+        "type": "phrase_bank",
+        "subtype": "referral_message",
+        "quote_context": "If RDT was positive and antimalarial was given, the child should improve. If still febrile, refer.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "If RDT was negative and fever persists, refer",
+        "id": "ref_rdt_negative_fever_persists",
+        "type": "phrase_bank",
+        "subtype": "referral_message",
+        "quote_context": "If RDT was negative and fever persists, refer.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "Refer urgently",
+        "id": "ref_severe_malnutrition_urgent",
+        "type": "phrase_bank",
+        "subtype": "referral_message",
+        "quote_context": "If dents remain on BOTH feet, the child has severe malnutrition. Refer urgently.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "A child with any danger sign is too ill to treat in the community",
+        "id": "m_danger_sign_too_ill_community",
+        "type": "phrase_bank",
+        "subtype": "message",
+        "quote_context": "A child with any danger sign is too ill to treat in the community. Give the first dose of medicine before referral if the child can drink.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "Give the first dose of medicine before referral if the child can drink",
+        "id": "tx_first_dose_before_referral",
+        "type": "phrase_bank",
+        "subtype": "treatment_instruction",
+        "quote_context": "Give the first dose of medicine before referral if the child can drink. Write a referral note.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "Write a referral note",
+        "id": "proc_write_referral_note",
+        "type": "phrase_bank",
+        "subtype": "procedure",
+        "quote_context": "Give the first dose of medicine before referral if the child can drink. Write a referral note. Arrange transportation.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "Arrange transportation",
+        "id": "proc_arrange_transportation",
+        "type": "phrase_bank",
+        "subtype": "procedure",
+        "quote_context": "Write a referral note. Arrange transportation.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "Give ORS (Oral Rehydration Salts) and zinc supplement",
+        "id": "tx_diarrhoea_ors_zinc",
+        "type": "phrase_bank",
+        "subtype": "treatment_instruction",
+        "quote_context": "Give ORS (Oral Rehydration Salts) and zinc supplement.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "After 3 days",
+        "id": "fu_cough_fast_breathing_3_days",
+        "type": "phrase_bank",
+        "subtype": "follow_up_schedule",
+        "quote_context": "After 3 days: Is the child still coughing? Count breaths again.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "If still fast breathing, refer",
+        "id": "ref_persistent_fast_breathing",
+        "type": "phrase_bank",
+        "subtype": "referral_message",
+        "quote_context": "Count breaths again. If still fast breathing, refer.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "If breathing is normal and child is improving, complete the full 5-day course of amoxicillin",
+        "id": "tx_complete_amoxicillin_5_days",
+        "type": "phrase_bank",
+        "subtype": "treatment_instruction",
+        "quote_context": "If breathing is normal and child is improving, complete the full 5-day course of amoxicillin.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "Explain to the caregiver why the child must go to the health facility",
+        "id": "m_explain_referral_reason",
+        "type": "phrase_bank",
+        "subtype": "message",
+        "quote_context": "When referring a child: 1. Explain to the caregiver why the child must go to the health facility.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "Write a referral note including: child's name, age, date, reason for referral, danger signs found, treatment already given, and your name",
+        "id": "proc_write_referral_note_details",
+        "type": "phrase_bank",
+        "subtype": "procedure",
+        "quote_context": "2. Write a referral note including: child's name, age, date, reason for referral, danger signs found, treatment already given, and your name.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "Give the first dose of any appropriate medicine before referral",
+        "id": "tx_first_dose_prereferral",
+        "type": "phrase_bank",
+        "subtype": "treatment_instruction",
+        "quote_context": "3. Give the first dose of any appropriate medicine before referral.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "Help arrange transportation",
+        "id": "proc_arrange_transport",
+        "type": "phrase_bank",
+        "subtype": "procedure",
+        "quote_context": "4. Help arrange transportation.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "If fever, keep the child cool during travel",
+        "id": "adv_keep_cool_during_travel",
+        "type": "phrase_bank",
+        "subtype": "advice",
+        "quote_context": "5. If fever, keep the child cool during travel.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "If diarrhoea, give ORS solution during travel",
+        "id": "adv_ors_during_travel",
+        "type": "phrase_bank",
+        "subtype": "advice",
+        "quote_context": "6. If diarrhoea, give ORS solution during travel.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "Follow up the child after return, at least once a week until well",
+        "id": "fu_post_referral_weekly",
+        "type": "phrase_bank",
+        "subtype": "follow_up_schedule",
+        "quote_context": "7. Follow up the child after return, at least once a week until well.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "2 months up to 3 years 1 tablet AL Twice daily 3 days / 6 tablets",
+        "id": "rx_al_2mo_to_3yr",
+        "type": "phrase_bank",
+        "subtype": "medication_dosing",
+        "quote_context": "Age Dose Frequency Duration / Supply 2 months up to 3 years 1 tablet AL Twice daily 3 days / 6 tablets",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "3 years up to 5 years 2 tablets AL Twice daily 3 days / 12 tablets",
+        "id": "rx_al_3yr_to_5yr",
+        "type": "phrase_bank",
+        "subtype": "medication_dosing",
+        "quote_context": "3 years up to 5 years 2 tablets AL Twice daily 3 days / 12 tablets",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "1 tablet AL",
+        "id": "rx_al_dose_1_tablet",
+        "type": "phrase_bank",
+        "subtype": "medication_dosing",
+        "quote_context": "2 months up to 3 years 1 tablet AL Twice daily 3 days / 6 tablets",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "2 tablets AL",
+        "id": "rx_al_dose_2_tablets",
+        "type": "phrase_bank",
+        "subtype": "medication_dosing",
+        "quote_context": "3 years up to 5 years 2 tablets AL Twice daily 3 days / 12 tablets",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "Twice daily",
+        "id": "rx_al_frequency_twice_daily",
+        "type": "phrase_bank",
+        "subtype": "medication_dosing",
+        "quote_context": "1 tablet AL Twice daily 3 days / 6 tablets",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "3 days",
+        "id": "rx_al_duration_3_days",
+        "type": "phrase_bank",
+        "subtype": "medication_dosing",
+        "quote_context": "1 tablet AL Twice daily 3 days / 6 tablets",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "Give first dose immediately",
+        "id": "tx_al_first_dose_immediately",
+        "type": "phrase_bank",
+        "subtype": "treatment_instruction",
+        "quote_context": "Give first dose immediately. Second dose 8 hours later.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "Second dose 8 hours later",
+        "id": "tx_al_second_dose_8hr",
+        "type": "phrase_bank",
+        "subtype": "treatment_instruction",
+        "quote_context": "Give first dose immediately. Second dose 8 hours later. Then morning and evening for 2 more days.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "Then morning and evening for 2 more days",
+        "id": "tx_al_morning_evening_2_days",
+        "type": "phrase_bank",
+        "subtype": "treatment_instruction",
+        "quote_context": "Second dose 8 hours later. Then morning and evening for 2 more days.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "Crush tablet and mix with breast milk, water, or food",
+        "id": "adv_al_crush_mix",
+        "type": "phrase_bank",
+        "subtype": "advice",
+        "quote_context": "Crush tablet and mix with breast milk, water, or food.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "If the child spits out the entire dose, give another",
+        "id": "tx_al_repeat_if_spit",
+        "type": "phrase_bank",
+        "subtype": "treatment_instruction",
+        "quote_context": "If the child spits out the entire dose, give another.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "If unable to take medicine, refer to health facility",
+        "id": "ref_unable_take_medicine",
+        "type": "phrase_bank",
+        "subtype": "referral_message",
+        "quote_context": "If unable to take medicine, refer to health facility.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "If RDT is negative: do not give antimalarial",
+        "id": "tx_rdt_negative_no_antimalarial",
+        "type": "phrase_bank",
+        "subtype": "treatment_instruction",
+        "quote_context": "If RDT is negative: do not give antimalarial. Follow up in 3 days.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "Follow up in 3 days",
+        "id": "fu_fever_rdt_negative_3_days",
+        "type": "phrase_bank",
+        "subtype": "follow_up_schedule",
+        "quote_context": "If RDT is negative: do not give antimalarial. Follow up in 3 days.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "If fever persists at follow-up, refer to health facility",
+        "id": "ref_persistent_fever_followup",
+        "type": "phrase_bank",
+        "subtype": "referral_message",
+        "quote_context": "If fever persists at follow-up, refer to health facility.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "5-day course of amoxicillin",
+        "id": "rx_amoxicillin_duration_5_days",
+        "type": "phrase_bank",
+        "subtype": "medication_dosing",
+        "quote_context": "If breathing is normal and child is improving, complete the full 5-day course of amoxicillin.",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      }
+    ],
+    "router": [
+      {
+        "span": "urgently refer children with danger signs to a health facility",
+        "id": "ref_danger_signs_urgent",
+        "type": "router",
+        "subtype": "danger_sign_referral",
+        "quote_context": "and urgently refer children with danger signs to a health facility.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "identify problems, decide to refer or treat, give medicine, advise on home care, and schedule follow-up",
+        "id": "mod_visit_workflow",
+        "type": "router",
+        "subtype": "workflow_sequence",
+        "quote_context": "The form guides the visit: identify problems, decide to refer or treat, give medicine, advise on home care, and schedule follow-up.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "The findings determine whether to refer or treat at home",
+        "id": "mod_refer_or_treat_decision",
+        "type": "router",
+        "subtype": "triage_decision",
+        "quote_context": "The findings determine whether to refer or treat at home.",
+        "_chunk_index": 0,
+        "_section_id": "zinc_supplement_dosage+oral_amoxicillin_dosage_250_mg_tablets+fast_breathing"
+      },
+      {
+        "span": "If ANY of these danger signs are present, refer the child urgently",
+        "id": "router_any_danger_sign_refer",
+        "type": "router",
+        "subtype": "danger_sign_shortcircuit",
+        "quote_context": "If ANY of these danger signs are present, refer the child urgently:",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      },
+      {
+        "span": "No danger sign: TREAT AT HOME",
+        "id": "router_no_danger_sign_treat_home",
+        "type": "router",
+        "subtype": "triage_decision",
+        "quote_context": "4.2 No danger sign: TREAT AT HOME",
+        "_chunk_index": 1,
+        "_section_id": "based_on_who_unicef_2012_isbn_978_92_4_154804_5+antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community"
+      }
+    ],
+    "integrative": []
+  }
+}

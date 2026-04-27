@@ -1,0 +1,54 @@
+graph TD
+    classDef start fill:#6b7280,stroke:#374151,color:#fff
+    classDef router fill:#0891b2,stroke:#0e7490,color:#fff
+    classDef emergency fill:#dc2626,stroke:#7f1d1d,color:#fff,stroke-width:3px
+    classDef assess fill:#8b5cf6,stroke:#6d28d9,color:#fff
+    classDef module fill:#4488ff,stroke:#2266cc,color:#fff
+    classDef integrative fill:#16a34a,stroke:#14532d,color:#fff
+    classDef done fill:#059669,stroke:#064e3b,color:#fff
+
+    START(["Patient arrives"]):::start
+    ROUTER{{"Router<br/>hit policy: PRIORITY<br/>9 rules"}}:::router
+
+    START --> ROUTER
+
+    EXIT["<b>PRIORITY_EXIT</b><br/>if any module set<br/>is_priority_exit = true<br/>-> urgent referral"]:::emergency
+    ROUTER -->|"P0: priority exit"| EXIT
+
+    ASSESS["<b>mod_assess</b><br/>Identify Problems - ASK and LOOK<br/>9 rules (UNIQUE)"]:::assess
+    ROUTER -->|"P1: first visit"| ASSESS
+
+    DANGER["<b>mod_danger_sign_check</b><br/>Danger Sign Check and Referral Decision<br/>4 rules (UNIQUE)"]:::emergency
+    ROUTER -->|"P2: after assess"| DANGER
+
+    VAX["<b>mod_check_vaccines</b><br/>Check Vaccines Received<br/>13 rules (UNIQUE)"]:::module
+    ROUTER -->|"P100: always"| VAX
+
+    DIAR["<b>mod_diarrhoea_treatment</b><br/>Diarrhoea - ORS + Zinc<br/>6 rules (UNIQUE)"]:::module
+    ROUTER -->|"P100: if q_has_diarrhoea"| DIAR
+
+    FB["<b>mod_fast_breathing_treatment</b><br/>Fast Breathing - Amoxicillin<br/>5 rules (UNIQUE)"]:::module
+    ROUTER -->|"P100: if p_fast_breathing"| FB
+
+    FEV["<b>mod_fever_malaria_treatment</b><br/>Fever/Malaria - RDT + AL<br/>12 rules (UNIQUE)"]:::module
+    ROUTER -->|"P100: if q_has_fever"| FEV
+
+    MAL["<b>mod_malnutrition_screening</b><br/>Malnutrition - MUAC + Oedema<br/>6 rules (UNIQUE)"]:::module
+    ROUTER -->|"P100: after assess"| MAL
+
+    HOME["<b>mod_home_care_advice</b><br/>Home Care Advice and Follow-Up<br/>15 rules (UNIQUE)"]:::module
+    ROUTER -->|"P999: closing (always)"| HOME
+
+    INT["<b>Integrative merge</b><br/>* highest referral wins<br/>* treatments additive<br/>* shortest follow-up"]:::integrative
+    EXIT --> INT
+    ASSESS --> INT
+    DANGER --> INT
+    VAX --> INT
+    DIAR --> INT
+    FB --> INT
+    FEV --> INT
+    MAL --> INT
+    HOME --> INT
+
+    DONE(["Care plan complete<br/>DMN + XLSForm emitted"]):::done
+    INT --> DONE

@@ -1,0 +1,22 @@
+message_id,category,text,module_context,source_section_id
+adv_al_second_dose_8hr,treatment,Advise to give 2nd dose after 8 hours and to give dose twice daily for 2 more days.,mod_fever_malaria_treatment,child_3_karen_shah+checking_questions+exercise_2_optional
+adv_check_expiration_date,safety,"All medicines have an expiration date, after which they may not be effective or could be harmful.",all,follow_up_the_sick_child_treated_at_home+take_home_messages_for_this_section_p39+take_home_messages_for_this_section_p64
+adv_complete_amoxicillin_5_days,treatment,"Emphasize that it is important to give the amoxicillin for the full 5 days, even if the child feels better.",mod_fast_breathing_treatment,exercise_decide_on_the_dose_of_amoxicillin_to_give_a_child+demonstration_and_practice_decide_on_treatment_for_the_child+how_much_zinc_do_you_give_a_child_age_6_months_up_to_5_years
+adv_counsel_feeding_yellow_muac,nutrition,"Counsel caregiver on feeding or refer the child to a supplementary feeding programme, if available.",mod_malnutrition_screening,exercise_2_optional+child_juanita_vald_z+child_1_jackie_marks
+adv_first_dose_in_presence,treatment,The caregiver should give the first dose of treatment in your presence.,mod_diarrhoea_treatment,follow_up_the_sick_child_treated_at_home+take_home_messages_for_this_section_p39+take_home_messages_for_this_section_p64
+adv_give_fluids_continue_feeding,home_care,Advise caregiver to give more fluids and continue feeding.,mod_home_care_advice,contents+give_ors
+adv_next_vaccine_when_where,vaccination,"Advise caregiver, if needed: WHEN and WHERE is the next vaccine to be given?",mod_check_vaccines,child_3_karen_shah+checking_questions+exercise_2_optional
+adv_sleep_under_itn,malaria_prevention,Advise caregiver on sleeping under a bednet (ITN).,mod_home_care_advice,contents+give_ors
+adv_when_to_return,home_care,"Advise on when to return: go to nearest health facility immediately if child cannot drink or feed, becomes sicker, or has blood in the stool.",mod_home_care_advice,contents+give_ors
+adv_zinc_full_10_days,treatment,"Give zinc for the full 10 days, even if the diarrhoea stops.",mod_diarrhoea_treatment,give_oral_medicine_and_advise_the_caregiver+any_danger_sign_refer_the_child_continued+discussion_select_a_pre_referral_treatment
+fu_follow_up_3_days,follow_up,Follow up child in 3 days.,mod_home_care_advice,contents+give_ors
+fu_weekly_until_well,follow_up,Follow up child on return at least once a week until child is well.,mod_danger_sign_check,contents+give_ors
+m_explain_referral_reason,referral_counseling,Explain why the child needs to go to the health facility.,mod_danger_sign_check,contents+give_ors
+ref_arrange_transportation,referral,"Arrange transportation, and help solve other difficulties in referral.",mod_danger_sign_check,contents+give_ors
+ref_urgent_danger_sign,referral,"If any danger sign, REFER URGENTLY to health facility.",mod_danger_sign_check,assist_referral+invalid_result+begin_treatment
+ref_write_referral_note,referral,Write a referral note.,mod_danger_sign_check,contents+give_ors
+tx_give_al_if_rdt_positive,treatment,"If RDT is positive, give oral antimalarial AL (Artemether-Lumefantrine). Give twice daily for 3 days.",mod_fever_malaria_treatment,child_3_karen_shah+checking_questions+exercise_2_optional
+tx_give_amoxicillin,treatment,Give oral antibiotic (amoxicillin tablet - 250mg). Give twice daily for 5 days.,mod_fast_breathing_treatment,give_oral_amoxicillin+yellow_on_muac_strap+part_1_demonstration
+tx_give_ors,treatment,Give ORS. Help caregiver give child ORS solution in front of you until child is no longer thirsty.,mod_diarrhoea_treatment,child_3_karen_shah+checking_questions+exercise_2_optional
+tx_give_zinc,treatment,Give zinc supplement. Give 1 dose daily for 10 days.,mod_diarrhoea_treatment,child_3_karen_shah+checking_questions+exercise_2_optional
+tx_rectal_artesunate_prereferral,pre_referral,Give rectal artesunate suppository (100 mg) for pre-referral treatment of fever with severe danger signs.,mod_danger_sign_check,course_objectives+child_1_siew_chin+give_ors_solution

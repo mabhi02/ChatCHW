@@ -1,0 +1,56 @@
+{
+  "total_chunks": 2,
+  "distribution": {
+    "trivial": 0,
+    "easy": 0,
+    "medium": 1,
+    "hard": 0,
+    "extreme": 1
+  },
+  "chunks": [
+    {
+      "difficulty": "extreme",
+      "score": 0.4616,
+      "recommended_passes": 5,
+      "features": {
+        "ttr": 0.1833,
+        "list_ratio": 0.4884,
+        "imperative_ratio": 0.1656,
+        "rep_rate": 4.09,
+        "secs_per_10k": 13.49,
+        "num_sections": 19,
+        "chars": 14085
+      },
+      "chunk_index": 0,
+      "sections": [
+        "cough",
+        "fever",
+        "diarrhoea",
+        "medicines",
+        "convulsions"
+      ]
+    },
+    {
+      "difficulty": "medium",
+      "score": 0.2638,
+      "recommended_passes": 3,
+      "features": {
+        "ttr": 0.2715,
+        "list_ratio": 0.1429,
+        "imperative_ratio": 0.2182,
+        "rep_rate": 3.08,
+        "secs_per_10k": 11.64,
+        "num_sections": 5,
+        "chars": 4294
+      },
+      "chunk_index": 1,
+      "sections": [
+        "7_3_follow_up_for_cough_with_fast_breathing",
+        "5_2_fever_less_than_7_days_in_a_malaria_area",
+        "antimalarial_al_artemether_lumefantrine_dosage",
+        "based_on_who_unicef_2012_isbn_978_92_4_154804_5",
+        "participant_manual_compressed_test_edition_2_000_words"
+      ]
+    }
+  ]
+}

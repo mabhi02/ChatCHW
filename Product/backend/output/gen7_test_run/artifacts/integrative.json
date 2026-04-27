@@ -1,0 +1,48 @@
+{
+  "rules": [
+    {
+      "id": "integ_referral_priority",
+      "modules_involved": [
+        "mod_danger_signs",
+        "mod_cough",
+        "mod_fever",
+        "mod_diarrhoea",
+        "mod_malnutrition"
+      ],
+      "combine_rule": "highest_referral_wins",
+      "referral_priority": "highest",
+      "treatment_combination": "If any module outputs ref_urgent_hospital=true, the child must be referred urgently. Pre-referral treatments from all modules are still given."
+    },
+    {
+      "id": "integ_treatment_additive",
+      "modules_involved": [
+        "mod_cough",
+        "mod_fever",
+        "mod_diarrhoea"
+      ],
+      "combine_rule": "treatments_additive",
+      "referral_priority": "N/A",
+      "treatment_combination": "Treatments from all applicable modules are given together unless contraindicated. A child with pneumonia AND malaria AND diarrhoea receives amoxicillin + AL + ORS + zinc."
+    },
+    {
+      "id": "integ_followup_shortest",
+      "modules_involved": [
+        "mod_cough",
+        "mod_fever",
+        "mod_diarrhoea"
+      ],
+      "combine_rule": "shortest_followup_wins",
+      "referral_priority": "N/A",
+      "treatment_combination": "The shortest follow-up interval across all active modules determines the return date."
+    },
+    {
+      "id": "integ_danger_overrides_all",
+      "modules_involved": [
+        "mod_danger_signs"
+      ],
+      "combine_rule": "danger_sign_short_circuit",
+      "referral_priority": "immediate",
+      "treatment_combination": "If any danger sign present, refer urgently regardless of other classifications. Give first dose of all applicable treatments before referral."
+    }
+  ]
+}

@@ -1,0 +1,399 @@
+{
+  "total_labels": 54,
+  "labels_by_type": {
+    "supply_list": [
+      {
+        "span": "zinc supplement",
+        "id": "supply_zinc_tablet",
+        "type": "supply_list",
+        "quote_context": "Zinc supplement dosage:",
+        "_chunk_index": 0,
+        "_section_id": "fast_breathing+fever+chest_indrawing"
+      },
+      {
+        "span": "oral amoxicillin (250 mg tablets)",
+        "id": "supply_amoxicillin_250mg_tablet",
+        "type": "supply_list",
+        "quote_context": "Oral amoxicillin dosage (250 mg tablets):",
+        "_chunk_index": 0,
+        "_section_id": "fast_breathing+fever+chest_indrawing"
+      },
+      {
+        "span": "MUAC (Mid-Upper Arm Circumference) strap",
+        "id": "equip_muac_strap",
+        "type": "supply_list",
+        "quote_context": "Use the MUAC (Mid-Upper Arm Circumference) strap on children age 6 months up to 5 years.",
+        "_chunk_index": 1,
+        "_section_id": "antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community+7_3_follow_up_for_cough_with_fast_breathing"
+      },
+      {
+        "span": "ORS (Oral Rehydration Salts)",
+        "id": "supply_ors",
+        "type": "supply_list",
+        "quote_context": "Give ORS (Oral Rehydration Salts) and zinc supplement.",
+        "_chunk_index": 1,
+        "_section_id": "antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community+7_3_follow_up_for_cough_with_fast_breathing"
+      },
+      {
+        "span": "zinc supplement",
+        "id": "supply_zinc_supplement",
+        "type": "supply_list",
+        "quote_context": "Give ORS (Oral Rehydration Salts) and zinc supplement.",
+        "_chunk_index": 1,
+        "_section_id": "antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community+7_3_follow_up_for_cough_with_fast_breathing"
+      },
+      {
+        "span": "Rapid Diagnostic Test (RDT)",
+        "id": "supply_rdt_malaria",
+        "type": "supply_list",
+        "quote_context": "Do a Rapid Diagnostic Test (RDT) for malaria before treating.",
+        "_chunk_index": 1,
+        "_section_id": "antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community+7_3_follow_up_for_cough_with_fast_breathing"
+      },
+      {
+        "span": "Artemether-Lumefantrine",
+        "id": "supply_artemether_lumefantrine",
+        "type": "supply_list",
+        "quote_context": "Antimalarial AL (Artemether-Lumefantrine) dosage:",
+        "_chunk_index": 1,
+        "_section_id": "antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community+7_3_follow_up_for_cough_with_fast_breathing"
+      }
+    ],
+    "variables": [
+      {
+        "span": "cough",
+        "id": "q_has_cough",
+        "type": "variables",
+        "quote_context": "Ask: Does the child have a cough?",
+        "_chunk_index": 0,
+        "_section_id": "fast_breathing+fever+chest_indrawing"
+      },
+      {
+        "span": "fever",
+        "id": "q_has_fever",
+        "type": "variables",
+        "quote_context": "Ask: Does the child have fever now or in the last 3 days?",
+        "_chunk_index": 0,
+        "_section_id": "fast_breathing+fever+chest_indrawing"
+      },
+      {
+        "span": "3 or more loose or watery stools in 24 hours",
+        "id": "q_diarrhoea_stool_count",
+        "type": "variables",
+        "quote_context": "Diarrhoea is 3 or more loose or watery stools in 24 hours.",
+        "_chunk_index": 0,
+        "_section_id": "fast_breathing+fever+chest_indrawing"
+      },
+      {
+        "span": "blood in the stool",
+        "id": "q_blood_in_stool",
+        "type": "variables",
+        "quote_context": "Is there blood in the stool?",
+        "_chunk_index": 0,
+        "_section_id": "fast_breathing+fever+chest_indrawing"
+      },
+      {
+        "span": "2 months up to 5 years",
+        "id": "demo_age_range",
+        "type": "variables",
+        "quote_context": "to assess, classify, and treat sick children age 2 months up to 5 years",
+        "_chunk_index": 0,
+        "_section_id": "fast_breathing+fever+chest_indrawing"
+      },
+      {
+        "span": "chest indrawing",
+        "id": "ex_chest_indrawing",
+        "type": "variables",
+        "quote_context": "Chest indrawing is when the lower chest wall goes IN when the child breathes in.",
+        "_chunk_index": 0,
+        "_section_id": "fast_breathing+fever+chest_indrawing"
+      },
+      {
+        "span": "6 months up to 5 years",
+        "id": "demo_age_6mo_to_5yr",
+        "type": "variables",
+        "quote_context": "Use the MUAC (Mid-Upper Arm Circumference) strap on children age 6 months up to 5 years.",
+        "_chunk_index": 1,
+        "_section_id": "antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community+7_3_follow_up_for_cough_with_fast_breathing"
+      },
+      {
+        "span": "swelling of both feet (oedema)",
+        "id": "ex_bilateral_foot_oedema",
+        "type": "variables",
+        "quote_context": "Also check for swelling of both feet (oedema).",
+        "_chunk_index": 1,
+        "_section_id": "antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community+7_3_follow_up_for_cough_with_fast_breathing"
+      },
+      {
+        "span": "cough with fast breathing",
+        "id": "ex_cough_fast_breathing",
+        "type": "variables",
+        "quote_context": "Children without danger signs who have diarrhoea, fever (in a malaria area), or cough with fast breathing may be treated at home.",
+        "_chunk_index": 1,
+        "_section_id": "antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community+7_3_follow_up_for_cough_with_fast_breathing"
+      },
+      {
+        "span": "2 months up to 3 years",
+        "id": "demo_age_2mo_to_3yr",
+        "type": "variables",
+        "quote_context": "2 months up to 3 years 1 tablet AL Twice daily 3 days / 6 tablets",
+        "_chunk_index": 1,
+        "_section_id": "antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community+7_3_follow_up_for_cough_with_fast_breathing"
+      },
+      {
+        "span": "3 years up to 5 years",
+        "id": "demo_age_3yr_to_5yr",
+        "type": "variables",
+        "quote_context": "3 years up to 5 years 2 tablets AL Twice daily 3 days / 12 tablets",
+        "_chunk_index": 1,
+        "_section_id": "antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community+7_3_follow_up_for_cough_with_fast_breathing"
+      }
+    ],
+    "predicates": [
+      {
+        "span": "A cough for 14 days or more is a danger sign",
+        "id": "p_cough_duration_danger_sign",
+        "type": "predicates",
+        "quote_context": "A cough for 14 days or more is a danger sign.",
+        "_chunk_index": 0,
+        "_section_id": "fast_breathing+fever+chest_indrawing"
+      },
+      {
+        "span": "Fever for 7 days or more is a danger sign",
+        "id": "p_fever_duration_danger_sign",
+        "type": "predicates",
+        "quote_context": "Fever for 7 days or more is a danger sign.",
+        "_chunk_index": 0,
+        "_section_id": "fast_breathing+fever+chest_indrawing"
+      },
+      {
+        "span": "Diarrhoea for 14 days or more is a danger sign",
+        "id": "p_diarrhoea_duration_danger_sign",
+        "type": "predicates",
+        "quote_context": "Diarrhoea for 14 days or more is a danger sign.",
+        "_chunk_index": 0,
+        "_section_id": "fast_breathing+fever+chest_indrawing"
+      },
+      {
+        "span": "Blood in stool (dysentery) is a danger sign",
+        "id": "p_blood_in_stool_danger_sign",
+        "type": "predicates",
+        "quote_context": "Blood in stool (dysentery) is a danger sign.",
+        "_chunk_index": 0,
+        "_section_id": "fast_breathing+fever+chest_indrawing"
+      },
+      {
+        "span": "A convulsion during the current illness is a danger sign",
+        "id": "p_convulsion_danger_sign",
+        "type": "predicates",
+        "quote_context": "A convulsion during the current illness is a danger sign.",
+        "_chunk_index": 0,
+        "_section_id": "fast_breathing+fever+chest_indrawing"
+      },
+      {
+        "span": "50 breaths per minute or more",
+        "id": "p_fast_breathing_threshold_2_to_12_months",
+        "type": "predicates",
+        "quote_context": "Fast breathing if 2 months up to 12 months 50 breaths per minute or more",
+        "_chunk_index": 0,
+        "_section_id": "fast_breathing+fever+chest_indrawing"
+      },
+      {
+        "span": "40 breaths per minute or more",
+        "id": "p_fast_breathing_threshold_12_months_to_5_years",
+        "type": "predicates",
+        "quote_context": "Fast breathing if 12 months up to 5 years 40 breaths per minute or more",
+        "_chunk_index": 0,
+        "_section_id": "fast_breathing+fever+chest_indrawing"
+      },
+      {
+        "span": "This is a danger sign indicating severe pneumonia",
+        "id": "p_chest_indrawing_danger_sign",
+        "type": "predicates",
+        "quote_context": "This is a danger sign indicating severe pneumonia.",
+        "_chunk_index": 0,
+        "_section_id": "fast_breathing+fever+chest_indrawing"
+      },
+      {
+        "span": "vomits everything and cannot hold anything down",
+        "id": "p_vomiting_everything_danger_sign",
+        "type": "predicates",
+        "quote_context": "A child who vomits everything and cannot hold anything down has a danger sign.",
+        "_chunk_index": 0,
+        "_section_id": "fast_breathing+fever+chest_indrawing"
+      },
+      {
+        "span": "cannot drink or feed anything at all",
+        "id": "p_not_able_to_drink_or_feed_danger_sign",
+        "type": "predicates",
+        "quote_context": "A child who cannot drink or feed anything at all has a danger sign.",
+        "_chunk_index": 0,
+        "_section_id": "fast_breathing+fever+chest_indrawing"
+      },
+      {
+        "span": "unusually sleepy, difficult to wake, or unconscious",
+        "id": "p_unusually_sleepy_or_unconscious_danger_sign",
+        "type": "predicates",
+        "quote_context": "A child who is unusually sleepy, difficult to wake, or unconscious has a danger sign.",
+        "_chunk_index": 0,
+        "_section_id": "fast_breathing+fever+chest_indrawing"
+      },
+      {
+        "span": "If 14 days or more, refer",
+        "id": "p_diarrhoea_followup_duration_danger_sign",
+        "type": "predicates",
+        "quote_context": "If yes and for less than 14 days, continue ORS and zinc. If 14 days or more, refer.",
+        "_chunk_index": 0,
+        "_section_id": "fast_breathing+fever+chest_indrawing"
+      },
+      {
+        "span": "dents remain on BOTH feet",
+        "id": "p_dents_remain_both_feet",
+        "type": "predicates",
+        "quote_context": "If dents remain on BOTH feet, the child has severe malnutrition.",
+        "_chunk_index": 1,
+        "_section_id": "antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community+7_3_follow_up_for_cough_with_fast_breathing"
+      },
+      {
+        "span": "severe malnutrition",
+        "id": "dx_severe_malnutrition",
+        "type": "predicates",
+        "quote_context": "If dents remain on BOTH feet, the child has severe malnutrition.",
+        "_chunk_index": 1,
+        "_section_id": "antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community+7_3_follow_up_for_cough_with_fast_breathing"
+      },
+      {
+        "span": "Refer urgently",
+        "id": "ref_urgent_severe_malnutrition",
+        "type": "predicates",
+        "quote_context": "If dents remain on BOTH feet, the child has severe malnutrition. Refer urgently.",
+        "_chunk_index": 1,
+        "_section_id": "antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community+7_3_follow_up_for_cough_with_fast_breathing"
+      },
+      {
+        "span": "ANY of these danger signs are present",
+        "id": "p_any_danger_sign_present",
+        "type": "predicates",
+        "quote_context": "If ANY of these danger signs are present, refer the child urgently.",
+        "_chunk_index": 1,
+        "_section_id": "antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community+7_3_follow_up_for_cough_with_fast_breathing"
+      },
+      {
+        "span": "Give the first dose of medicine before referral if the child can drink",
+        "id": "tx_first_dose_before_referral",
+        "type": "predicates",
+        "quote_context": "Give the first dose of medicine before referral if the child can drink.",
+        "_chunk_index": 1,
+        "_section_id": "antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community+7_3_follow_up_for_cough_with_fast_breathing"
+      },
+      {
+        "span": "referral note",
+        "id": "proc_write_referral_note",
+        "type": "predicates",
+        "quote_context": "Write a referral note.",
+        "_chunk_index": 1,
+        "_section_id": "antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community+7_3_follow_up_for_cough_with_fast_breathing"
+      },
+      {
+        "span": "still fast breathing",
+        "id": "p_still_fast_breathing_at_followup",
+        "type": "predicates",
+        "quote_context": "If still fast breathing, refer.",
+        "_chunk_index": 1,
+        "_section_id": "antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community+7_3_follow_up_for_cough_with_fast_breathing"
+      },
+      {
+        "span": "complete the full 5-day course of amoxicillin",
+        "id": "rx_amoxicillin_5day_course",
+        "type": "predicates",
+        "quote_context": "If breathing is normal and child is improving, complete the full 5-day course of amoxicillin.",
+        "_chunk_index": 1,
+        "_section_id": "antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community+7_3_follow_up_for_cough_with_fast_breathing"
+      },
+      {
+        "span": "RDT is positive",
+        "id": "p_rdt_malaria_positive",
+        "type": "predicates",
+        "quote_context": "Do not give antimalarial medicine unless the RDT is positive.",
+        "_chunk_index": 1,
+        "_section_id": "antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community+7_3_follow_up_for_cough_with_fast_breathing"
+      },
+      {
+        "span": "1 tablet AL Twice daily 3 days / 6 tablets",
+        "id": "rx_al_1tab_bd_3days_age_2mo_3yr",
+        "type": "predicates",
+        "quote_context": "2 months up to 3 years 1 tablet AL Twice daily 3 days / 6 tablets",
+        "_chunk_index": 1,
+        "_section_id": "antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community+7_3_follow_up_for_cough_with_fast_breathing"
+      },
+      {
+        "span": "2 tablets AL Twice daily 3 days / 12 tablets",
+        "id": "rx_al_2tab_bd_3days_age_3yr_5yr",
+        "type": "predicates",
+        "quote_context": "3 years up to 5 years 2 tablets AL Twice daily 3 days / 12 tablets",
+        "_chunk_index": 1,
+        "_section_id": "antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community+7_3_follow_up_for_cough_with_fast_breathing"
+      },
+      {
+        "span": "Give first dose immediately. Second dose 8 hours later. Then morning and evening for 2 more days.",
+        "id": "rx_al_dosing_schedule",
+        "type": "predicates",
+        "quote_context": "Give first dose immediately. Second dose 8 hours later. Then morning and evening for 2 more days.",
+        "_chunk_index": 1,
+        "_section_id": "antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community+7_3_follow_up_for_cough_with_fast_breathing"
+      },
+      {
+        "span": "Crush tablet and mix with breast milk, water, or food.",
+        "id": "proc_crush_tablet_mix",
+        "type": "predicates",
+        "quote_context": "Crush tablet and mix with breast milk, water, or food.",
+        "_chunk_index": 1,
+        "_section_id": "antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community+7_3_follow_up_for_cough_with_fast_breathing"
+      },
+      {
+        "span": "If the child spits out the entire dose, give another.",
+        "id": "proc_repeat_dose_if_spat_out",
+        "type": "predicates",
+        "quote_context": "If the child spits out the entire dose, give another.",
+        "_chunk_index": 1,
+        "_section_id": "antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community+7_3_follow_up_for_cough_with_fast_breathing"
+      },
+      {
+        "span": "If unable to take medicine, refer to health facility.",
+        "id": "ref_unable_to_take_medicine",
+        "type": "predicates",
+        "quote_context": "If unable to take medicine, refer to health facility.",
+        "_chunk_index": 1,
+        "_section_id": "antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community+7_3_follow_up_for_cough_with_fast_breathing"
+      },
+      {
+        "span": "RDT is negative",
+        "id": "p_rdt_malaria_negative",
+        "type": "predicates",
+        "quote_context": "If RDT is negative: do not give antimalarial.",
+        "_chunk_index": 1,
+        "_section_id": "antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community+7_3_follow_up_for_cough_with_fast_breathing"
+      },
+      {
+        "span": "Follow up in 3 days",
+        "id": "proc_followup_3days_rdt_negative",
+        "type": "predicates",
+        "quote_context": "If RDT is negative: do not give antimalarial. Follow up in 3 days.",
+        "_chunk_index": 1,
+        "_section_id": "antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community+7_3_follow_up_for_cough_with_fast_breathing"
+      },
+      {
+        "span": "If fever persists at follow-up, refer to health facility.",
+        "id": "ref_fever_persists_at_followup",
+        "type": "predicates",
+        "quote_context": "If fever persists at follow-up, refer to health facility.",
+        "_chunk_index": 1,
+        "_section_id": "antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community+7_3_follow_up_for_cough_with_fast_breathing"
+      }
+    ],
+    "modules": [],
+    "phrase_bank": [],
+    "router": [],
+    "integrative": []
+  }
+}

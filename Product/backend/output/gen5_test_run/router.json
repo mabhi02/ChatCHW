@@ -1,0 +1,113 @@
+{
+  "hit_policy": "FIRST",
+  "rows": [
+    {
+      "priority": 0,
+      "condition": "p_any_general_danger_sign || p_any_referral_danger_sign",
+      "output_module": "mod_danger_sign_check",
+      "description": "Short-circuit: any general danger sign (convulsions, not able to drink/feed, vomiting everything, unusually sleepy/unconscious) or referral danger sign (chest indrawing, cough >=14d, fever >=7d, diarrhoea >=14d, blood in stool, MUAC red, bilateral foot oedema) triggers urgent referral pathway"
+    },
+    {
+      "priority": 1,
+      "condition": "p_severe_malnutrition",
+      "output_module": "mod_referral",
+      "description": "MUAC red or bilateral foot oedema indicates severe malnutrition; refer urgently"
+    },
+    {
+      "priority": 2,
+      "condition": "p_cough_present && p_cough_duration_danger",
+      "output_module": "mod_referral",
+      "description": "Cough for 14 days or more is a danger sign; refer"
+    },
+    {
+      "priority": 3,
+      "condition": "p_fever_present && p_fever_duration_danger",
+      "output_module": "mod_referral",
+      "description": "Fever for 7 days or more is a danger sign; refer"
+    },
+    {
+      "priority": 4,
+      "condition": "p_diarrhoea_present && p_diarrhoea_duration_danger",
+      "output_module": "mod_referral",
+      "description": "Diarrhoea for 14 days or more is a danger sign; refer"
+    },
+    {
+      "priority": 5,
+      "condition": "p_blood_in_stool",
+      "output_module": "mod_referral",
+      "description": "Blood in stool (dysentery) is a danger sign; refer"
+    },
+    {
+      "priority": 10,
+      "condition": "p_cough_present && !p_cough_duration_danger",
+      "output_module": "mod_classify_cough",
+      "description": "Cough present and duration < 14 days; classify cough and check for fast breathing / pneumonia"
+    },
+    {
+      "priority": 11,
+      "condition": "p_fever_present && p_fever_under_7_days",
+      "output_module": "mod_classify_fever",
+      "description": "Fever present and duration < 7 days; perform RDT and classify fever"
+    },
+    {
+      "priority": 12,
+      "condition": "p_diarrhoea_present && !p_diarrhoea_duration_danger",
+      "output_module": "mod_classify_diarrhoea",
+      "description": "Diarrhoea present and duration < 14 days without blood in stool; classify diarrhoea"
+    },
+    {
+      "priority": 13,
+      "condition": "p_muac_eligible",
+      "output_module": "mod_classify_malnutrition",
+      "description": "Age-eligible child; assess MUAC and check for bilateral foot oedema"
+    },
+    {
+      "priority": 20,
+      "condition": "p_pneumonia_treatable",
+      "output_module": "mod_tx_pneumonia",
+      "description": "Fast breathing without chest indrawing; treat pneumonia with amoxicillin at home"
+    },
+    {
+      "priority": 21,
+      "condition": "p_malaria_treatable",
+      "output_module": "mod_tx_malaria",
+      "description": "RDT positive and no danger signs; treat malaria with AL at home"
+    },
+    {
+      "priority": 22,
+      "condition": "p_diarrhoea_treatable",
+      "output_module": "mod_tx_diarrhoea",
+      "description": "Diarrhoea without danger signs; treat with ORS and zinc at home"
+    },
+    {
+      "priority": 23,
+      "condition": "p_rdt_invalid",
+      "output_module": "mod_classify_fever",
+      "description": "RDT result invalid; repeat test with new RDT"
+    },
+    {
+      "priority": 24,
+      "condition": "p_rdt_negative && p_fever_present",
+      "output_module": "mod_follow_up",
+      "description": "RDT negative with fever; do not give antimalarial, follow up in 3 days, refer if fever persists"
+    },
+    {
+      "priority": 30,
+      "condition": "p_muac_yellow",
+      "output_module": "mod_home_care_advice",
+      "description": "MUAC yellow indicates moderate malnutrition; refer to supplementary feeding if available and provide home care advice"
+    },
+    {
+      "priority": 40,
+      "condition": "q_follow_up_diarrhoea_still_present || q_follow_up_fever_still_present || q_follow_up_cough_still_present",
+      "output_module": "mod_follow_up",
+      "description": "Follow-up visit at 3 days for any treated condition; reassess and refer if not improving"
+    },
+    {
+      "priority": 50,
+      "condition": "p_muac_green && !p_cough_present && !p_fever_present && !p_diarrhoea_present",
+      "output_module": "mod_home_care_advice",
+      "description": "No illness signs and MUAC green; provide routine home care advice and counsel caregiver on when to return immediately"
+    }
+  ]
+}

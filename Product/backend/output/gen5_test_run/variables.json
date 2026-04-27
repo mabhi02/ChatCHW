@@ -1,0 +1,290 @@
+[
+  {
+    "id": "demo_date",
+    "display_name": "Date of encounter",
+    "kind": "demographic",
+    "unit": null,
+    "data_type": "date",
+    "source_quote": "date",
+    "source_section_id": "date"
+  },
+  {
+    "id": "demo_chw_name",
+    "display_name": "CHW name",
+    "kind": "demographic",
+    "unit": null,
+    "data_type": "string",
+    "source_quote": "CHW name",
+    "source_section_id": "chw_name"
+  },
+  {
+    "id": "demo_child_name",
+    "display_name": "Child's name",
+    "kind": "demographic",
+    "unit": null,
+    "data_type": "string",
+    "source_quote": "child's name",
+    "source_section_id": "child_name"
+  },
+  {
+    "id": "demo_age_months",
+    "display_name": "Age in months",
+    "kind": "demographic",
+    "unit": "months",
+    "data_type": "integer",
+    "source_quote": "age (years and months)",
+    "source_section_id": "age_years_months"
+  },
+  {
+    "id": "demo_sex",
+    "display_name": "Sex",
+    "kind": "demographic",
+    "unit": null,
+    "data_type": "categorical",
+    "source_quote": "sex",
+    "source_section_id": "sex"
+  },
+  {
+    "id": "demo_caregiver_name",
+    "display_name": "Caregiver's name",
+    "kind": "demographic",
+    "unit": null,
+    "data_type": "string",
+    "source_quote": "caregiver's name",
+    "source_section_id": "caregiver_name"
+  },
+  {
+    "id": "demo_caregiver_relationship",
+    "display_name": "Caregiver relationship to child",
+    "kind": "demographic",
+    "unit": null,
+    "data_type": "categorical",
+    "source_quote": "relationship (mother/father/other)",
+    "source_section_id": "caregiver_relationship"
+  },
+  {
+    "id": "demo_address",
+    "display_name": "Address",
+    "kind": "demographic",
+    "unit": null,
+    "data_type": "string",
+    "source_quote": "address",
+    "source_section_id": "address"
+  },
+  {
+    "id": "q_child_problems",
+    "display_name": "Caregiver's description of child's problems",
+    "kind": "symptom",
+    "unit": null,
+    "data_type": "string",
+    "source_quote": "ASK the caregiver about the child's problems",
+    "source_section_id": "child_problems"
+  },
+  {
+    "id": "q_cough_presence",
+    "display_name": "Does the child have a cough?",
+    "kind": "symptom",
+    "unit": null,
+    "data_type": "boolean",
+    "source_quote": "Does the child have a cough?",
+    "source_section_id": "cough_presence"
+  },
+  {
+    "id": "q_cough_duration_days",
+    "display_name": "Duration of cough in days",
+    "kind": "symptom",
+    "unit": "days",
+    "data_type": "integer",
+    "source_quote": "If yes, for how long? A cough for 14 days or more is a danger sign.",
+    "source_section_id": "cough_duration"
+  },
+  {
+    "id": "q_fever_presence",
+    "display_name": "Does the child have fever now or in the last 3 days?",
+    "kind": "symptom",
+    "unit": null,
+    "data_type": "boolean",
+    "source_quote": "Does the child have fever now or in the last 3 days?",
+    "source_section_id": "fever_presence"
+  },
+  {
+    "id": "q_fever_onset_date",
+    "display_name": "When did the fever start?",
+    "kind": "symptom",
+    "unit": null,
+    "data_type": "date",
+    "source_quote": "If yes, when did it start?",
+    "source_section_id": "fever_onset"
+  },
+  {
+    "id": "q_fever_duration_days",
+    "display_name": "Duration of fever in days",
+    "kind": "symptom",
+    "unit": "days",
+    "data_type": "integer",
+    "source_quote": "Fever for 7 days or more is a danger sign.",
+    "source_section_id": "fever_duration"
+  },
+  {
+    "id": "q_diarrhoea_presence",
+    "display_name": "Does the child have diarrhoea (\u22653 loose/watery stools in 24 hrs)?",
+    "kind": "symptom",
+    "unit": null,
+    "data_type": "boolean",
+    "source_quote": "Diarrhoea is 3 or more loose or watery stools in 24 hours.",
+    "source_section_id": "diarrhoea_presence"
+  },
+  {
+    "id": "q_diarrhoea_duration_days",
+    "display_name": "Duration of diarrhoea in days",
+    "kind": "symptom",
+    "unit": "days",
+    "data_type": "integer",
+    "source_quote": "Ask: For how long? ... Diarrhoea for 14 days or more is a danger sign.",
+    "source_section_id": "diarrhoea_duration"
+  },
+  {
+    "id": "q_blood_in_stool",
+    "display_name": "Is there blood in the stool?",
+    "kind": "symptom",
+    "unit": null,
+    "data_type": "boolean",
+    "source_quote": "Is there blood in the stool? ... Blood in stool (dysentery) is a danger sign.",
+    "source_section_id": "blood_in_stool"
+  },
+  {
+    "id": "q_convulsions",
+    "display_name": "Has the child had a convulsion during this illness?",
+    "kind": "symptom",
+    "unit": null,
+    "data_type": "boolean",
+    "source_quote": "A convulsion during the current illness is a danger sign. The child needs urgent referral.",
+    "source_section_id": "convulsions"
+  },
+  {
+    "id": "q_not_able_to_drink_or_feed",
+    "display_name": "Is the child not able to drink or feed anything?",
+    "kind": "symptom",
+    "unit": null,
+    "data_type": "boolean",
+    "source_quote": "A child who cannot drink or feed anything at all has a danger sign. Ask the caregiver to offer the child a drink or breastfeed.",
+    "source_section_id": "not_able_to_drink_or_feed"
+  },
+  {
+    "id": "q_vomiting_everything",
+    "display_name": "Is the child vomiting everything?",
+    "kind": "symptom",
+    "unit": null,
+    "data_type": "boolean",
+    "source_quote": "A child who vomits everything and cannot hold anything down has a danger sign.",
+    "source_section_id": "vomiting_everything"
+  },
+  {
+    "id": "ex_unusually_sleepy_or_unconscious",
+    "display_name": "Is the child unusually sleepy, difficult to wake, or unconscious?",
+    "kind": "exam_finding",
+    "unit": null,
+    "data_type": "boolean",
+    "source_quote": "A child who is unusually sleepy, difficult to wake, or unconscious has a danger sign. Try to wake the child by clapping or speaking loudly.",
+    "source_section_id": "unusually_sleepy_or_unconscious"
+  },
+  {
+    "id": "ex_chest_indrawing",
+    "display_name": "Does the child have chest indrawing?",
+    "kind": "exam_finding",
+    "unit": null,
+    "data_type": "boolean",
+    "source_quote": "Look at the lower chest wall when the child breathes IN. Chest indrawing is when the lower chest wall goes in.",
+    "source_section_id": "chest_indrawing"
+  },
+  {
+    "id": "v_respiratory_rate",
+    "display_name": "Respiratory rate (breaths per minute)",
+    "kind": "measurement",
+    "unit": "breaths/min",
+    "data_type": "integer",
+    "source_quote": "Count the child's breaths for one full minute while the child is calm and quiet.",
+    "source_section_id": "respiratory_rate"
+  },
+  {
+    "id": "v_muac_colour",
+    "display_name": "MUAC strap colour result",
+    "kind": "measurement",
+    "unit": null,
+    "data_type": "categorical",
+    "source_quote": "Use the MUAC (Mid-Upper Arm Circumference) strap on children age 6 months up to 5 years. Wrap the strap around the child's left upper arm, midway between shoulder and elbow.",
+    "source_section_id": "muac_measurement"
+  },
+  {
+    "id": "ex_bilateral_foot_oedema",
+    "display_name": "Does the child have bilateral pitting oedema of both feet?",
+    "kind": "exam_finding",
+    "unit": null,
+    "data_type": "boolean",
+    "source_quote": "Also check for swelling of both feet (oedema). Press thumbs gently on the top of each foot for 3 seconds. If dents remain on BOTH feet, the child has severe malnutrition.",
+    "source_section_id": "bilateral_foot_oedema"
+  },
+  {
+    "id": "lab_rdt_result",
+    "display_name": "Malaria RDT result",
+    "kind": "lab_result",
+    "unit": null,
+    "data_type": "categorical",
+    "source_quote": "POSITIVE = red lines in both C and T windows. NEGATIVE = red line in C window only. INVALID = no line in C window; repeat with new test.",
+    "source_section_id": "rdt_positive_result"
+  },
+  {
+    "id": "ex_fever_by_touch",
+    "display_name": "Fever identified by feeling child's stomach or underarm",
+    "kind": "exam_finding",
+    "unit": null,
+    "data_type": "boolean",
+    "source_quote": "Identify fever by the caregiver's report or by feeling the child's stomach or underarm.",
+    "source_section_id": "fever_identification_method"
+  },
+  {
+    "id": "q_follow_up_diarrhoea_still_present",
+    "display_name": "At 3-day follow-up: Is the child still having diarrhoea?",
+    "kind": "symptom",
+    "unit": null,
+    "data_type": "boolean",
+    "source_quote": "After 3 days: Is the child still having diarrhoea? If yes and for less than 14 days, continue ORS and zinc. If 14 days or more, refer.",
+    "source_section_id": "follow_up_diarrhoea_status"
+  },
+  {
+    "id": "q_follow_up_fever_still_present",
+    "display_name": "At 3-day follow-up: Does the child still have fever?",
+    "kind": "symptom",
+    "unit": null,
+    "data_type": "boolean",
+    "source_quote": "After 3 days: Does the child still have fever? If RDT was positive and antimalarial was given and still has fever, refer.",
+    "source_section_id": "follow_up_fever_status"
+  },
+  {
+    "id": "q_follow_up_cough_still_present",
+    "display_name": "At 3-day follow-up: Is the child still coughing?",
+    "kind": "symptom",
+    "unit": null,
+    "data_type": "boolean",
+    "source_quote": "After 3 days: Is the child still coughing? Count breaths again. If still fast breathing, refer. If breathing normal, complete amoxicillin course.",
+    "source_section_id": "follow_up_cough_status"
+  },
+  {
+    "id": "v_follow_up_respiratory_rate",
+    "display_name": "Respiratory rate at 3-day follow-up (breaths per minute)",
+    "kind": "measurement",
+    "unit": "breaths/min",
+    "data_type": "integer",
+    "source_quote": "Count breaths again. If still fast breathing, refer.",
+    "source_section_id": "follow_up_cough_status"
+  },
+  {
+    "id": "ex_signs_of_illness",
+    "display_name": "General signs of illness observed on LOOK assessment",
+    "kind": "exam_finding",
+    "unit": null,
+    "data_type": "string",
+    "source_quote": "LOOK for signs of illness",
+    "source_section_id": "signs_of_illness"
+  }
+]

@@ -1,0 +1,24 @@
+{
+  "total_chunks": 2,
+  "distribution": {
+    "trivial": 0,
+    "easy": 2,
+    "medium": 0,
+    "hard": 0,
+    "extreme": 0
+  },
+  "chunks": [
+    {
+      "index": 0,
+      "section": "fast_breathing+fever+chest_indrawing",
+      "difficulty": "easy",
+      "score": 0.1965
+    },
+    {
+      "index": 1,
+      "section": "antimalarial_al_artemether_lumefantrine_dosage+caring_for_the_sick_child_in_the_community+7_3_follow_up_for_cough_with_fast_breathing",
+      "difficulty": "easy",
+      "score": 0.2107
+    }
+  ]
+}

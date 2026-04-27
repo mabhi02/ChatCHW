@@ -1,0 +1,1326 @@
+{
+  "raw_counts": {
+    "supply_list": 49,
+    "variables": 188,
+    "predicates": 91,
+    "modules": 78,
+    "phrase_bank": 50,
+    "router": 61,
+    "integrative": 13
+  },
+  "deduped_counts": {
+    "supply_list": 25,
+    "variables": 54,
+    "predicates": 51,
+    "modules": 43,
+    "phrase_bank": 39,
+    "router": 33,
+    "integrative": 13
+  },
+  "items": {
+    "supply_list": [
+      {
+        "id": "Sick Child Recording Form",
+        "quote": "Sick Child Recording Forms",
+        "source": "both"
+      },
+      {
+        "id": "ORS packets",
+        "quote": "ORS packets",
+        "source": "both"
+      },
+      {
+        "id": "Zinc tablets (20 mg dispersible)",
+        "quote": "Zinc tablets (20 mg dispersible)",
+        "source": "both"
+      },
+      {
+        "id": "Artemether-Lumefantrine (AL) tablets",
+        "quote": "Antimalarial AL (Artemether-Lumefantrine)",
+        "source": "both"
+      },
+      {
+        "id": "Amoxicillin tablets (250 mg)",
+        "quote": "Amoxicillin tablets (250 mg)",
+        "source": "both"
+      },
+      {
+        "id": "Gloves",
+        "quote": "Gloves (new pair for each RDT)",
+        "source": "both"
+      },
+      {
+        "id": "Lancets",
+        "quote": "Lancets",
+        "source": "both"
+      },
+      {
+        "id": "Spirit swabs (alcohol swabs)",
+        "quote": "Spirit swabs (alcohol swabs)",
+        "source": "both"
+      },
+      {
+        "id": "Referral note forms",
+        "quote": "Write a referral note including: child's name, age, date, reason for referral, danger signs found, t",
+        "source": "both"
+      },
+      {
+        "id": "Buffer solution (for RDTs)",
+        "quote": "Buffer solution (for RDTs)",
+        "source": "both"
+      },
+      {
+        "id": "Non-sharps waste container",
+        "quote": "Non-sharps waste container",
+        "source": "both"
+      },
+      {
+        "id": "Rapid Diagnostic Tests (RDT) for malaria",
+        "quote": "Do a Rapid Diagnostic Test (RDT) for malaria before treating.",
+        "source": "both"
+      },
+      {
+        "id": "MUAC (Mid-Upper Arm Circumference) strap",
+        "quote": "MUAC (Mid-Upper Arm Circumference) strap",
+        "source": "both"
+      },
+      {
+        "id": "Timer or watch with second hand",
+        "quote": "Timer or watch with second hand (for counting breaths)",
+        "source": "both"
+      },
+      {
+        "id": "Thermometer",
+        "quote": "Thermometer (optional)",
+        "source": "both"
+      },
+      {
+        "id": "RDT test strip",
+        "quote": "test strip",
+        "source": "both"
+      },
+      {
+        "id": "Spoon",
+        "quote": "spoon",
+        "source": "both"
+      },
+      {
+        "id": "Soap",
+        "quote": "soap",
+        "source": "both"
+      },
+      {
+        "id": "Clean container",
+        "quote": "clean container",
+        "source": "both"
+      },
+      {
+        "id": "Cup",
+        "quote": "cup",
+        "source": "both"
+      },
+      {
+        "id": "Covered container",
+        "quote": "covered container",
+        "source": "both"
+      },
+      {
+        "id": "Insecticide-treated bednet (ITN)",
+        "quote": "insecticide-treated bednet (ITN)",
+        "source": "both"
+      },
+      {
+        "id": "Appropriate medicine (first dose before referral)",
+        "quote": "Give the first dose of any appropriate medicine before referral.",
+        "source": "both"
+      },
+      {
+        "id": "ORS solution",
+        "quote": "ORS solution",
+        "source": "A"
+      },
+      {
+        "id": "RDT loop",
+        "quote": "loop",
+        "source": "B"
+      }
+    ],
+    "variables": [
+      {
+        "id": "child_age_range",
+        "quote": "sick children age 2 months up to 5 years",
+        "source": "both"
+      },
+      {
+        "id": "date",
+        "quote": "date",
+        "source": "both"
+      },
+      {
+        "id": "chw_name",
+        "quote": "CHW name",
+        "source": "both"
+      },
+      {
+        "id": "child_name",
+        "quote": "child's name",
+        "source": "both"
+      },
+      {
+        "id": "age_years_months",
+        "quote": "age (years and months)",
+        "source": "both"
+      },
+      {
+        "id": "sex",
+        "quote": "sex",
+        "source": "both"
+      },
+      {
+        "id": "caregiver_name",
+        "quote": "caregiver's name",
+        "source": "both"
+      },
+      {
+        "id": "caregiver_relationship",
+        "quote": "relationship (mother/father/other)",
+        "source": "both"
+      },
+      {
+        "id": "address",
+        "quote": "address",
+        "source": "both"
+      },
+      {
+        "id": "signs_of_illness",
+        "quote": "LOOK for signs of illness",
+        "source": "A"
+      },
+      {
+        "id": "child_problems",
+        "quote": "ASK the caregiver about the child's problems",
+        "source": "both"
+      },
+      {
+        "id": "cough_presence",
+        "quote": "Does the child have a cough?",
+        "source": "both"
+      },
+      {
+        "id": "cough_duration",
+        "quote": "If yes, for how long? A cough for 14 days or more is a danger sign.",
+        "source": "both"
+      },
+      {
+        "id": "fever_presence",
+        "quote": "Does the child have fever now or in the last 3 days?",
+        "source": "both"
+      },
+      {
+        "id": "fever_onset",
+        "quote": "If yes, when did it start?",
+        "source": "both"
+      },
+      {
+        "id": "fever_duration",
+        "quote": "Fever for 7 days or more is a danger sign.",
+        "source": "B"
+      },
+      {
+        "id": "fever_identification_method",
+        "quote": "Identify fever by the caregiver's report or by feeling the child's stomach or underarm.",
+        "source": "both"
+      },
+      {
+        "id": "diarrhoea_presence",
+        "quote": "Diarrhoea is 3 or more loose or watery stools in 24 hours.",
+        "source": "both"
+      },
+      {
+        "id": "diarrhoea_duration",
+        "quote": "Ask: For how long? ... Diarrhoea for 14 days or more is a danger sign.",
+        "source": "both"
+      },
+      {
+        "id": "blood_in_stool",
+        "quote": "Is there blood in the stool? ... Blood in stool (dysentery) is a danger sign.",
+        "source": "both"
+      },
+      {
+        "id": "convulsions",
+        "quote": "A convulsion during the current illness is a danger sign. The child needs urgent referral.",
+        "source": "both"
+      },
+      {
+        "id": "not_able_to_drink_or_feed",
+        "quote": "A child who cannot drink or feed anything at all has a danger sign. Ask the caregiver to offer the child a drink or breastfeed.",
+        "source": "both"
+      },
+      {
+        "id": "vomiting_everything",
+        "quote": "A child who vomits everything and cannot hold anything down has a danger sign. A child who vomits sometimes but can hold down some fluids does not have this danger sign.",
+        "source": "both"
+      },
+      {
+        "id": "unusually_sleepy_or_unconscious",
+        "quote": "A child who is unusually sleepy, difficult to wake, or unconscious has a danger sign. Try to wake the child by clapping or speaking loudly.",
+        "source": "both"
+      },
+      {
+        "id": "chest_indrawing",
+        "quote": "Look at the lower chest wall when the child breathes IN. Chest indrawing is when the lower chest wall goes in. The child must be calm; do not assess while crying or breastfeeding.",
+        "source": "both"
+      },
+      {
+        "id": "respiratory_rate",
+        "quote": "Count the child's breaths for one full minute while the child is calm and quiet.",
+        "source": "both"
+      },
+      {
+        "id": "fast_breathing_threshold_2_to_12_months",
+        "quote": "2 months up to 12 months: 50 breaths per minute or more",
+        "source": "both"
+      },
+      {
+        "id": "fast_breathing_threshold_12_months_to_5_years",
+        "quote": "12 months up to 5 years: 40 breaths per minute or more",
+        "source": "both"
+      },
+      {
+        "id": "muac_measurement",
+        "quote": "Use the MUAC (Mid-Upper Arm Circumference) strap on children age 6 months up to 5 years. Wrap the strap around the child's left upper arm, midway between shoulder and elbow.",
+        "source": "both"
+      },
+      {
+        "id": "muac_green",
+        "quote": "GREEN: not malnourished",
+        "source": "both"
+      },
+      {
+        "id": "muac_yellow",
+        "quote": "YELLOW: moderate malnutrition (refer to supplementary feeding if available)",
+        "source": "both"
+      },
+      {
+        "id": "muac_red",
+        "quote": "RED: severe malnutrition - DANGER SIGN - refer urgently",
+        "source": "both"
+      },
+      {
+        "id": "bilateral_foot_oedema",
+        "quote": "Also check for swelling of both feet (oedema). Press thumbs gently on the top of each foot for 3 seconds. If dents remain on BOTH feet, the child has severe malnutrition.",
+        "source": "both"
+      },
+      {
+        "id": "rdt_procedure",
+        "quote": "Check expiry date; do not use expired tests. Wear new gloves for each child. Clean the child's ring finger with a spirit swab; let dry. Prick the finger with a lancet; collect blood with the loop. Place blood in square hole A on the test strip. Add 6 drops of buffer into round hole B. Wait 15 minutes.",
+        "source": "both"
+      },
+      {
+        "id": "rdt_positive_result",
+        "quote": "POSITIVE = red lines in both C and T windows.",
+        "source": "both"
+      },
+      {
+        "id": "rdt_negative_result",
+        "quote": "NEGATIVE = red line in C window only.",
+        "source": "both"
+      },
+      {
+        "id": "rdt_invalid_result",
+        "quote": "INVALID = no line in C window; repeat with new test.",
+        "source": "both"
+      },
+      {
+        "id": "malaria_rdt_before_treatment",
+        "quote": "Do a Rapid Diagnostic Test (RDT) for malaria before treating. Do not give antimalarial medicine unless the RDT is positive.",
+        "source": "B"
+      },
+      {
+        "id": "zinc_dose_2_to_6_months",
+        "quote": "2 months up to 6 months: 1/2 tablet once daily for 10 days (5 tablets)",
+        "source": "both"
+      },
+      {
+        "id": "zinc_dose_6_months_to_5_years",
+        "quote": "6 months up to 5 years: 1 tablet once daily for 10 days (10 tablets)",
+        "source": "both"
+      },
+      {
+        "id": "ors_preparation_and_administration",
+        "quote": "Wash hands with soap and water. Pour entire ORS packet into a clean container. Add 1 litre of clean water. Stir until dissolved.",
+        "source": "B"
+      },
+      {
+        "id": "amoxicillin_dosing",
+        "quote": "2 months up to 12 months: 1 tablet twice daily for 5 days (10 tablets); 12 months up to 5 years: 2 tablets twice daily for 5 days (20 tablets)",
+        "source": "B"
+      },
+      {
+        "id": "al_dosing",
+        "quote": "Age Dose Frequency Duration/Supply: 2 months up to 3 years: 1 tablet AL, twice daily, 3 days/6 tablets; 3 years up to 5 years: 2 tablets AL, twice daily, 3 days/12 tablets",
+        "source": "B"
+      },
+      {
+        "id": "home_care_instructions",
+        "quote": "Give more fluids and continue feeding.",
+        "source": "B"
+      },
+      {
+        "id": "return_immediately_signs",
+        "quote": "Return immediately if the child: cannot drink or feed, becomes sicker, or has blood in stool.",
+        "source": "B"
+      },
+      {
+        "id": "follow_up_in_3_days",
+        "quote": "Follow up ALL children treated at home in 3 days. If the child is not better or is worse at follow-up, refer.",
+        "source": "B"
+      },
+      {
+        "id": "follow_up_diarrhoea_status",
+        "quote": "After 3 days: Is the child still having diarrhoea? If yes and for less than 14 days, continue ORS and zinc. If 14 days or more, refer.",
+        "source": "B"
+      },
+      {
+        "id": "follow_up_fever_status",
+        "quote": "After 3 days: Does the child still have fever? If RDT was positive and antimalarial was given and still has fever, refer.",
+        "source": "B"
+      },
+      {
+        "id": "follow_up_cough_status",
+        "quote": "After 3 days: Is the child still coughing? Count breaths again. If still fast breathing, refer. If breathing normal, complete amoxicillin course.",
+        "source": "B"
+      },
+      {
+        "id": "cough_with_fast_breathing",
+        "quote": "Cough with fast breathing (pneumonia, no chest indrawing)",
+        "source": "B"
+      },
+      {
+        "id": "referral_note",
+        "quote": "Write a referral note including: child's name, age, date, reason for referral, danger signs found, treatments given.",
+        "source": "B"
+      },
+      {
+        "id": "referral_travel_care",
+        "quote": "If fever, keep the child cool during travel. If diarrhoea, give ORS solution during travel.",
+        "source": "B"
+      },
+      {
+        "id": "follow_up_after_referral_return",
+        "quote": "Follow up the child after return, at least once a week until well.",
+        "source": "B"
+      },
+      {
+        "id": "equipment_supplies",
+        "quote": "Malaria RDT, MUAC straps, timer or watch with second hand (for counting breaths), thermometer (optional), medicines and supplies.",
+        "source": "B"
+      }
+    ],
+    "predicates": [
+      {
+        "id": "age_range_for_assessment",
+        "quote": "assess, classify, and treat sick children age 2 months up to 5 years in the community",
+        "source": "both"
+      },
+      {
+        "id": "cough_duration_danger_sign",
+        "quote": "A cough for 14 days or more is a danger sign.",
+        "source": "both"
+      },
+      {
+        "id": "fever_duration_danger_sign",
+        "quote": "Fever for 7 days or more is a danger sign.",
+        "source": "both"
+      },
+      {
+        "id": "diarrhoea_definition",
+        "quote": "Diarrhoea is 3 or more loose or watery stools in 24 hours.",
+        "source": "both"
+      },
+      {
+        "id": "diarrhoea_duration_danger_sign",
+        "quote": "Diarrhoea for 14 days or more is a danger sign.",
+        "source": "both"
+      },
+      {
+        "id": "blood_in_stool_danger_sign",
+        "quote": "Blood in stool (dysentery) is a danger sign.",
+        "source": "both"
+      },
+      {
+        "id": "convulsion_danger_sign",
+        "quote": "A convulsion during the current illness is a danger sign.",
+        "source": "both"
+      },
+      {
+        "id": "not_able_to_drink_or_feed_danger_sign",
+        "quote": "A child who cannot drink or feed anything at all has a danger sign.",
+        "source": "both"
+      },
+      {
+        "id": "vomiting_everything_danger_sign",
+        "quote": "A child who vomits everything and cannot hold anything down has a danger sign.",
+        "source": "both"
+      },
+      {
+        "id": "vomiting_sometimes_not_danger_sign",
+        "quote": "A child who vomits sometimes but can hold down some fluids does not have this sign.",
+        "source": "both"
+      },
+      {
+        "id": "unusually_sleepy_or_unconscious_danger_sign",
+        "quote": "A child who is unusually sleepy, difficult to wake, or unconscious has a danger sign.",
+        "source": "both"
+      },
+      {
+        "id": "fast_breathing_2_to_12_months",
+        "quote": "2 months up to 12 months: 50 breaths per minute or more",
+        "source": "both"
+      },
+      {
+        "id": "fast_breathing_12_months_to_5_years",
+        "quote": "12 months up to 5 years: 40 breaths per minute or more",
+        "source": "both"
+      },
+      {
+        "id": "chest_indrawing_danger_sign",
+        "quote": "Chest indrawing is when the lower chest wall goes IN when the child breathes in. This is a danger si",
+        "source": "both"
+      },
+      {
+        "id": "muac_age_range",
+        "quote": "Use the MUAC (Mid-Upper Arm Circumference) strap on children age 6 months up to 5 years.",
+        "source": "both"
+      },
+      {
+        "id": "muac_green_not_malnourished",
+        "quote": "GREEN: not malnourished",
+        "source": "both"
+      },
+      {
+        "id": "muac_yellow_moderate_malnutrition",
+        "quote": "YELLOW: moderate malnutrition (refer to supplementary feeding if available)",
+        "source": "both"
+      },
+      {
+        "id": "muac_red_severe_malnutrition_danger_sign",
+        "quote": "RED: severe malnutrition - DANGER SIGN - refer urgently",
+        "source": "both"
+      },
+      {
+        "id": "bilateral_foot_oedema_severe_malnutrition",
+        "quote": "Press thumbs gently on the top of each foot for 3 seconds. If dents remain on BOTH feet, the child h",
+        "source": "both"
+      },
+      {
+        "id": "rdt_positive_result",
+        "quote": "POSITIVE = red lines in both C and T windows.",
+        "source": "both"
+      },
+      {
+        "id": "rdt_negative_result",
+        "quote": "NEGATIVE = red line in C window only.",
+        "source": "both"
+      },
+      {
+        "id": "rdt_invalid_result",
+        "quote": "INVALID = no line in C window; repeat with new test.",
+        "source": "both"
+      },
+      {
+        "id": "rdt_wait_time",
+        "quote": "Wait 15 minutes.",
+        "source": "both"
+      },
+      {
+        "id": "rdt_buffer_drops",
+        "quote": "Add 6 drops of buffer into round hole B.",
+        "source": "both"
+      },
+      {
+        "id": "ors_discard_after_24_hours",
+        "quote": "Store mixed ORS in a covered container; discard after 24 hours.",
+        "source": "both"
+      },
+      {
+        "id": "ors_vomit_wait_10_minutes",
+        "quote": "If the child vomits, wait 10 minutes, then give more slowly.",
+        "source": "both"
+      },
+      {
+        "id": "ors_half_cup_after_loose_stool",
+        "quote": "Give at least half a cup after each loose stool.",
+        "source": "both"
+      },
+      {
+        "id": "zinc_dose_2_to_6_months",
+        "quote": "2 months up to 6 months 1/2 tablet Once daily 10 days / 5 tablets",
+        "source": "both"
+      },
+      {
+        "id": "zinc_dose_6_months_to_5_years",
+        "quote": "6 months up to 5 years 1 tablet Once daily 10 days / 10 tablets",
+        "source": "both"
+      },
+      {
+        "id": "amoxicillin_dose_2_to_12_months",
+        "quote": "2 months up to 12 months 1 tablet Twice daily 5 days / 10 tablets",
+        "source": "both"
+      },
+      {
+        "id": "amoxicillin_dose_12_months_to_5_years",
+        "quote": "12 months up to 5 years 2 tablets Twice daily 5 days / 20 tablets",
+        "source": "both"
+      },
+      {
+        "id": "follow_up_in_3_days",
+        "quote": "Follow up ALL children treated at home in 3 days. If the child is not better or is worse at follow-u",
+        "source": "both"
+      },
+      {
+        "id": "follow_up_diarrhoea_14_days_refer",
+        "quote": "If yes and for less than 14 days, continue ORS and zinc. If 14 days or more, refer.",
+        "source": "both"
+      },
+      {
+        "id": "follow_up_fever_rdt_positive_still_febrile_refer",
+        "quote": "If RDT was positive and antimalarial was given, the child should improve. If still febrile, refer.",
+        "source": "both"
+      },
+      {
+        "id": "follow_up_fever_rdt_negative_persists_refer",
+        "quote": "If RDT was negative and fever persists, refer.",
+        "source": "both"
+      },
+      {
+        "id": "fever_assessment_window",
+        "quote": "Does the child have fever now or in the last 3 days?",
+        "source": "both"
+      },
+      {
+        "id": "fever_duration_threshold_malaria_area",
+        "quote": "Fever (less than 7 days) in a malaria area",
+        "source": "both"
+      },
+      {
+        "id": "rdt_positive_required_for_antimalarial",
+        "quote": "Do not give antimalarial medicine unless the RDT is positive.",
+        "source": "both"
+      },
+      {
+        "id": "al_dosage_age_2months_to_3years",
+        "quote": "2 months up to 3 years 1 tablet AL Twice daily 3 days / 6 tablets",
+        "source": "both"
+      },
+      {
+        "id": "al_dosage_age_3years_to_5years",
+        "quote": "3 years up to 5 years 2 tablets AL Twice daily 3 days / 12 tablets",
+        "source": "both"
+      },
+      {
+        "id": "al_second_dose_timing",
+        "quote": "Give first dose immediately. Second dose 8 hours later.",
+        "source": "both"
+      },
+      {
+        "id": "al_duration",
+        "quote": "Then morning and evening for 2 more days.",
+        "source": "both"
+      },
+      {
+        "id": "child_spits_out_dose_give_another",
+        "quote": "If the child spits out the entire dose, give another.",
+        "source": "both"
+      },
+      {
+        "id": "unable_to_take_medicine_refer",
+        "quote": "If unable to take medicine, refer to health facility.",
+        "source": "both"
+      },
+      {
+        "id": "rdt_negative_follow_up_3_days",
+        "quote": "Follow up in 3 days. If fever persists at follow-up, refer to health facility.",
+        "source": "A"
+      },
+      {
+        "id": "follow_up_cough_fast_breathing_after_3_days",
+        "quote": "After 3 days: Is the child still coughing? Count breaths again. If still fast breathing, refer.",
+        "source": "both"
+      },
+      {
+        "id": "breathing_normal_complete_5_day_amoxicillin",
+        "quote": "If breathing is normal and child is improving, complete the full 5-day course of amoxicillin.",
+        "source": "both"
+      },
+      {
+        "id": "give_first_dose_before_referral",
+        "quote": "Give the first dose of any appropriate medicine before referral.",
+        "source": "both"
+      },
+      {
+        "id": "fever_keep_cool_during_travel",
+        "quote": "If fever, keep the child cool during travel.",
+        "source": "both"
+      },
+      {
+        "id": "diarrhoea_give_ors_during_travel",
+        "quote": "If diarrhoea, give ORS solution during travel.",
+        "source": "both"
+      },
+      {
+        "id": "follow_up_after_referral_once_a_week",
+        "quote": "Follow up the child after return, at least once a week until well.",
+        "source": "both"
+      }
+    ],
+    "modules": [
+      {
+        "id": "introduction-scope-and-target-population",
+        "quote": "This manual trains community health workers (CHWs) to assess, classify, and treat sick children age ",
+        "source": "both"
+      },
+      {
+        "id": "identify-problems-approach",
+        "quote": "ASK the caregiver about the child's problems, then LOOK for signs of illness. The findings determine",
+        "source": "both"
+      },
+      {
+        "id": "cough-assessment",
+        "quote": "Ask: Does the child have a cough? If yes, for how long? A cough for 14 days or more is a danger sign",
+        "source": "both"
+      },
+      {
+        "id": "fever-assessment",
+        "quote": "Ask: Does the child have fever now or in the last 3 days? If yes, when did it start? Fever for 7 day",
+        "source": "both"
+      },
+      {
+        "id": "diarrhoea-assessment",
+        "quote": "Diarrhoea is 3 or more loose or watery stools in 24 hours. Ask: For how long? Is there blood in the ",
+        "source": "both"
+      },
+      {
+        "id": "convulsions-danger-sign",
+        "quote": "A convulsion during the current illness is a danger sign. The child needs urgent referral.",
+        "source": "both"
+      },
+      {
+        "id": "not-able-to-drink-or-feed-danger-sign",
+        "quote": "A child who cannot drink or feed anything at all has a danger sign. Ask the caregiver to offer the c",
+        "source": "both"
+      },
+      {
+        "id": "vomiting-everything-danger-sign",
+        "quote": "A child who vomits everything and cannot hold anything down has a danger sign. A child who vomits so",
+        "source": "both"
+      },
+      {
+        "id": "unusually-sleepy-or-unconscious-danger-sign",
+        "quote": "A child who is unusually sleepy, difficult to wake, or unconscious has a danger sign. Try to wake th",
+        "source": "both"
+      },
+      {
+        "id": "fast-breathing-classification",
+        "quote": "Count the child's breaths for one full minute while the child is calm and quiet. Fast breathing thre",
+        "source": "both"
+      },
+      {
+        "id": "fast_breathing_assessment_2_to_12_months",
+        "quote": "2 months up to 12 months 50 breaths per minute or more",
+        "source": "B"
+      },
+      {
+        "id": "fast_breathing_assessment_12_months_to_5_years",
+        "quote": "12 months up to 5 years 40 breaths per minute or more",
+        "source": "B"
+      },
+      {
+        "id": "chest-indrawing-danger-sign",
+        "quote": "Look at the lower chest wall when the child breathes IN. Chest indrawing is when the lower chest wal",
+        "source": "both"
+      },
+      {
+        "id": "muac-malnutrition-classification",
+        "quote": "Use the MUAC (Mid-Upper Arm Circumference) strap on children age 6 months up to 5 years. Wrap the st",
+        "source": "both"
+      },
+      {
+        "id": "muac_assessment_green",
+        "quote": "- GREEN: not malnourished",
+        "source": "B"
+      },
+      {
+        "id": "muac_assessment_yellow",
+        "quote": "- YELLOW: moderate malnutrition (refer to supplementary feeding if available)",
+        "source": "B"
+      },
+      {
+        "id": "muac_assessment_red",
+        "quote": "- RED: severe malnutrition - DANGER SIGN - refer urgently",
+        "source": "B"
+      },
+      {
+        "id": "oedema-severe-malnutrition-check",
+        "quote": "Also check for swelling of both feet (oedema). Press thumbs gently on the top of each foot for 3 sec",
+        "source": "both"
+      },
+      {
+        "id": "fever-malaria-area-rdt-requirement",
+        "quote": "Do a Rapid Diagnostic Test (RDT) for malaria before treating. Do not give antimalarial medicine unle",
+        "source": "both"
+      },
+      {
+        "id": "rdt-malaria-procedure-and-interpretation",
+        "quote": "1. Check expiry date; do not use expired tests. 2. Wear new gloves for each child. 3. Clean the chil",
+        "source": "both"
+      },
+      {
+        "id": "rdt_procedure_result_interpretation",
+        "quote": "8. Read results: POSITIVE = red lines in both C and T windows. NEGATIVE = red line in C window only.",
+        "source": "B"
+      },
+      {
+        "id": "ors-preparation-and-administration",
+        "quote": "1. Wash hands with soap and water. 2. Pour entire ORS packet into a clean container. 3. Add 1 litre ",
+        "source": "both"
+      },
+      {
+        "id": "zinc-dosage-2-to-6-months",
+        "quote": "2 months up to 6 months 1/2 tablet Once daily 10 days / 5 tablets",
+        "source": "both"
+      },
+      {
+        "id": "zinc-dosage-6-months-to-5-years",
+        "quote": "6 months up to 5 years 1 tablet Once daily 10 days / 10 tablets",
+        "source": "both"
+      },
+      {
+        "id": "zinc-administration-instructions",
+        "quote": "Dissolve the zinc tablet (or half tablet) in breast milk or clean water on a spoon. Give the full 10",
+        "source": "both"
+      },
+      {
+        "id": "amoxicillin-dosage-2-to-12-months",
+        "quote": "2 months up to 12 months 1 tablet Twice daily 5 days / 10 tablets",
+        "source": "both"
+      },
+      {
+        "id": "amoxicillin-dosage-12-months-to-5-years",
+        "quote": "12 months up to 5 years 2 tablets Twice daily 5 days / 20 tablets",
+        "source": "both"
+      },
+      {
+        "id": "amoxicillin-administration-instructions",
+        "quote": "Check expiration date. Crush the tablet and mix with breast milk or water. Give the first dose in fr",
+        "source": "both"
+      },
+      {
+        "id": "antimalarial-al-dosage-2months-to-3years",
+        "quote": "Age Dose Frequency Duration / Supply 2 months up to 3 years 1 tablet AL Twice daily 3 days / 6 table",
+        "source": "both"
+      },
+      {
+        "id": "antimalarial-al-dosage-3years-to-5years",
+        "quote": "Age Dose Frequency Duration / Supply 3 years up to 5 years 2 tablets AL Twice daily 3 days / 12 tabl",
+        "source": "both"
+      },
+      {
+        "id": "antimalarial-al-administration-instructions",
+        "quote": "Give first dose immediately. Second dose 8 hours later. Then morning and evening for 2 more days. Cr",
+        "source": "both"
+      },
+      {
+        "id": "home-care-advice",
+        "quote": "- Give more fluids and continue feeding.\n- Return immediately if the child: cannot drink or feed, be",
+        "source": "both"
+      },
+      {
+        "id": "follow-up-visits-general",
+        "quote": "Follow up ALL children treated at home in 3 days. If the child is not better or is worse at follow-u",
+        "source": "both"
+      },
+      {
+        "id": "follow_up_cough_fast_breathing_day3",
+        "quote": "After 3 days: Is the child still coughing? Count breaths again. If still fast breathing, refer. If b",
+        "source": "both"
+      },
+      {
+        "id": "follow-up-diarrhoea",
+        "quote": "After 3 days: Is the child still having diarrhoea? If yes and for less than 14 days, continue ORS an",
+        "source": "both"
+      },
+      {
+        "id": "follow-up-fever-malaria",
+        "quote": "After 3 days: Does the child still have fever? If RDT was positive and antimalarial was given, the c",
+        "source": "both"
+      },
+      {
+        "id": "negative-rdt-follow-up-decision",
+        "quote": "If RDT is negative: do not give antimalarial. Follow up in 3 days. If fever persists at follow-up, r",
+        "source": "both"
+      },
+      {
+        "id": "referral-procedures",
+        "quote": "When referring a child: 1. Explain to the caregiver why the child must go to the health facility. 2.",
+        "source": "both"
+      },
+      {
+        "id": "referral_procedures_medicine_before_referral",
+        "quote": "3. Give the first dose of any appropriate medicine before referral.",
+        "source": "B"
+      },
+      {
+        "id": "referral_procedures_transportation",
+        "quote": "4. Help arrange transportation.",
+        "source": "B"
+      },
+      {
+        "id": "referral_procedures_fever_management_travel",
+        "quote": "5. If fever, keep the child cool during travel.",
+        "source": "B"
+      },
+      {
+        "id": "referral_procedures_diarrhoea_management_travel",
+        "quote": "6. If diarrhoea, give ORS solution during travel.",
+        "source": "B"
+      },
+      {
+        "id": "referral_procedures_follow_up_after_return",
+        "quote": "7. Follow up the child after return, at least once a week until well.",
+        "source": "B"
+      }
+    ],
+    "phrase_bank": [
+      {
+        "id": "ask_cough_duration",
+        "quote": "Ask: Does the child have a cough? If yes, for how long? A cough for 14 days or more is a danger sign",
+        "source": "both"
+      },
+      {
+        "id": "ask_fever_duration",
+        "quote": "Ask: Does the child have fever now or in the last 3 days? If yes, when did it start? Fever for 7 day",
+        "source": "both"
+      },
+      {
+        "id": "ask_diarrhoea_duration_and_blood",
+        "quote": "Ask: For how long? Is there blood in the stool? Diarrhoea for 14 days or more is a danger sign. Bloo",
+        "source": "both"
+      },
+      {
+        "id": "convulsion_urgent_referral",
+        "quote": "A convulsion during the current illness is a danger sign. The child needs urgent referral.",
+        "source": "both"
+      },
+      {
+        "id": "ask_child_problems",
+        "quote": "ASK the caregiver about the child's problems, then LOOK for signs of illness.",
+        "source": "both"
+      },
+      {
+        "id": "ask_what_are_childs_problems",
+        "quote": "3.1 ASK: What are the child's problems?",
+        "source": "A"
+      },
+      {
+        "id": "count_breaths_instruction",
+        "quote": "Count the child's breaths for one full minute while the child is calm and quiet.",
+        "source": "both"
+      },
+      {
+        "id": "look_chest_indrawing_instruction",
+        "quote": "Look at the lower chest wall when the child breathes IN. Chest indrawing is when the lower chest wal",
+        "source": "both"
+      },
+      {
+        "id": "ask_caregiver_offer_drink",
+        "quote": "Ask the caregiver to offer the child a drink or breastfeed.",
+        "source": "both"
+      },
+      {
+        "id": "try_wake_child_instruction",
+        "quote": "Try to wake the child by clapping or speaking loudly.",
+        "source": "both"
+      },
+      {
+        "id": "ors_preparation_instructions",
+        "quote": "1. Wash hands with soap and water. 2. Pour entire ORS packet into a clean container. 3. Add 1 litre ",
+        "source": "both"
+      },
+      {
+        "id": "zinc_administration_instruction",
+        "quote": "Dissolve the zinc tablet (or half tablet) in breast milk or clean water on a spoon. Give the full 10",
+        "source": "both"
+      },
+      {
+        "id": "rdt_procedure_instructions",
+        "quote": "1. Check expiry date; do not use expired tests. 2. Wear new gloves for each child. 3. Clean the chil",
+        "source": "both"
+      },
+      {
+        "id": "amoxicillin_administration_instruction",
+        "quote": "Check expiration date. Crush the tablet and mix with breast milk or water. Give the first dose in fr",
+        "source": "both"
+      },
+      {
+        "id": "home_care_advice_fluids_feeding",
+        "quote": "Give more fluids and continue feeding.",
+        "source": "both"
+      },
+      {
+        "id": "home_care_advice_return_immediately",
+        "quote": "Return immediately if the child: cannot drink or feed, becomes sicker, or has blood in stool.",
+        "source": "both"
+      },
+      {
+        "id": "home_care_advice_bednet",
+        "quote": "Sleep under an insecticide-treated bednet (ITN).",
+        "source": "both"
+      },
+      {
+        "id": "home_care_advice_medicine_storage",
+        "quote": "Keep all medicine out of reach of children. Store medicine in a clean, dry place.",
+        "source": "both"
+      },
+      {
+        "id": "follow_up_all_children_3_days",
+        "quote": "Follow up ALL children treated at home in 3 days. If the child is not better or is worse at follow-u",
+        "source": "both"
+      },
+      {
+        "id": "follow_up_diarrhoea_ask",
+        "quote": "After 3 days: Is the child still having diarrhoea? If yes and for less than 14 days, continue ORS an",
+        "source": "both"
+      },
+      {
+        "id": "follow_up_fever_malaria_ask",
+        "quote": "After 3 days: Does the child still have fever? If RDT was positive and antimalarial was given, the c",
+        "source": "both"
+      },
+      {
+        "id": "muac_measurement_instruction",
+        "quote": "Use the MUAC (Mid-Upper Arm Circumference) strap on children age 6 months up to 5 years. Wrap the st",
+        "source": "both"
+      },
+      {
+        "id": "muac_yellow_referral",
+        "quote": "YELLOW: moderate malnutrition (refer to supplementary feeding if available)",
+        "source": "both"
+      },
+      {
+        "id": "muac_red_urgent_referral",
+        "quote": "RED: severe malnutrition - DANGER SIGN - refer urgently",
+        "source": "both"
+      },
+      {
+        "id": "oedema_check_instruction",
+        "quote": "Also check for swelling of both feet (oedema). Press thumbs gently on the top of each foot for 3 sec",
+        "source": "both"
+      },
+      {
+        "id": "sick_child_recording_form_instruction",
+        "quote": "For every visit, the CHW completes the Sick Child Recording Form. Record: date, CHW name, child's na",
+        "source": "both"
+      },
+      {
+        "id": "follow_up_timing_after_3_days_cough",
+        "quote": "After 3 days: Is the child still coughing? Count breaths again. If still fast breathing, refer. If b",
+        "source": "both"
+      },
+      {
+        "id": "referral_explain_to_caregiver",
+        "quote": "Explain to the caregiver why the child must go to the health facility.",
+        "source": "both"
+      },
+      {
+        "id": "referral_write_referral_note",
+        "quote": "Write a referral note including: child's name, age, date, reason for referral, danger signs found, t",
+        "source": "both"
+      },
+      {
+        "id": "referral_give_first_dose_before_referral",
+        "quote": "Give the first dose of any appropriate medicine before referral.",
+        "source": "both"
+      },
+      {
+        "id": "referral_help_arrange_transportation",
+        "quote": "Help arrange transportation.",
+        "source": "both"
+      },
+      {
+        "id": "referral_keep_child_cool_if_fever",
+        "quote": "If fever, keep the child cool during travel.",
+        "source": "both"
+      },
+      {
+        "id": "referral_give_ors_if_diarrhoea",
+        "quote": "If diarrhoea, give ORS solution during travel.",
+        "source": "both"
+      },
+      {
+        "id": "referral_follow_up_after_return",
+        "quote": "Follow up the child after return, at least once a week until well.",
+        "source": "both"
+      },
+      {
+        "id": "malaria_do_rdt_before_treating",
+        "quote": "Do a Rapid Diagnostic Test (RDT) for malaria before treating. Do not give antimalarial medicine unle",
+        "source": "both"
+      },
+      {
+        "id": "al_dosing_instructions",
+        "quote": "Give first dose immediately. Second dose 8 hours later. Then morning and evening for 2 more days. Cr",
+        "source": "both"
+      },
+      {
+        "id": "al_if_child_spits_out_give_another",
+        "quote": "If the child spits out the entire dose, give another.",
+        "source": "A"
+      },
+      {
+        "id": "al_if_unable_to_take_refer",
+        "quote": "If unable to take medicine, refer to health facility.",
+        "source": "A"
+      },
+      {
+        "id": "rdt_negative_management",
+        "quote": "If RDT is negative: do not give antimalarial. Follow up in 3 days. If fever persists at follow-up, r",
+        "source": "both"
+      }
+    ],
+    "router": [
+      {
+        "id": "danger-sign-cough-14-days-refer",
+        "quote": "A cough for 14 days or more is a danger sign.",
+        "source": "both"
+      },
+      {
+        "id": "danger-sign-fever-7-days-refer",
+        "quote": "Fever for 7 days or more is a danger sign.",
+        "source": "both"
+      },
+      {
+        "id": "danger-sign-diarrhoea-14-days-refer",
+        "quote": "Diarrhoea for 14 days or more is a danger sign.",
+        "source": "both"
+      },
+      {
+        "id": "danger-sign-blood-in-stool-refer",
+        "quote": "Blood in stool (dysentery) is a danger sign.",
+        "source": "both"
+      },
+      {
+        "id": "danger-sign-convulsions-urgent-referral",
+        "quote": "A convulsion during the current illness is a danger sign. The child needs urgent referral.",
+        "source": "both"
+      },
+      {
+        "id": "danger-sign-vomiting-everything-refer",
+        "quote": "A child who vomits everything and cannot hold anything down has a danger sign.",
+        "source": "both"
+      },
+      {
+        "id": "danger-sign-not-able-to-drink-or-feed",
+        "quote": "A child who cannot drink or feed anything at all has a danger sign.",
+        "source": "both"
+      },
+      {
+        "id": "danger-sign-unusually-sleepy-or-unconscious",
+        "quote": "A child who is unusually sleepy, difficult to wake, or unconscious has a danger sign.",
+        "source": "both"
+      },
+      {
+        "id": "danger-sign-chest-indrawing-severe-pneumonia-refer",
+        "quote": "Chest indrawing is when the lower chest wall goes IN when the child breathes in. This is a danger si",
+        "source": "both"
+      },
+      {
+        "id": "route-fast-breathing-2-to-12-months-threshold",
+        "quote": "2 months up to 12 months 50 breaths per minute or more",
+        "source": "both"
+      },
+      {
+        "id": "route-fast-breathing-12-months-to-5-years-threshold",
+        "quote": "12 months up to 5 years 40 breaths per minute or more",
+        "source": "both"
+      },
+      {
+        "id": "route-muac-red-severe-malnutrition-refer",
+        "quote": "RED: severe malnutrition - DANGER SIGN - refer urgently",
+        "source": "both"
+      },
+      {
+        "id": "route-muac-yellow-moderate-malnutrition-supplementary-feeding",
+        "quote": "YELLOW: moderate malnutrition (refer to supplementary feeding if available)",
+        "source": "both"
+      },
+      {
+        "id": "route-muac-green-not-malnourished",
+        "quote": "GREEN: not malnourished",
+        "source": "both"
+      },
+      {
+        "id": "route-oedema-both-feet-severe-malnutrition-refer",
+        "quote": "If dents remain on BOTH feet, the child has severe malnutrition. Refer urgently.",
+        "source": "both"
+      },
+      {
+        "id": "treat_diarrhoea_confirmed_malaria_pneumonia_at_home",
+        "quote": "CHWs identify signs of illness, treat diarrhoea, confirmed malaria, and pneumonia (cough with fast breathing) at home",
+        "source": "both"
+      },
+      {
+        "id": "route-danger-signs-urgent-referral",
+        "quote": "urgently refer children with danger signs to a health facility.",
+        "source": "A"
+      },
+      {
+        "id": "route-findings-determine-refer-or-treat",
+        "quote": "The findings determine whether to refer or treat at home.",
+        "source": "both"
+      },
+      {
+        "id": "fever_malaria_area_do_rdt",
+        "quote": "Do a Rapid Diagnostic Test (RDT) for malaria before treating. Do not give antimalarial medicine unle",
+        "source": "B"
+      },
+      {
+        "id": "route-fever-rdt-positive-treat-malaria",
+        "quote": "POSITIVE = red lines in both C and T windows.",
+        "source": "A"
+      },
+      {
+        "id": "rdt_negative_no_antimalarial_followup",
+        "quote": "If RDT is negative: do not give antimalarial. Follow up in 3 days. If fever persists at follow-up, r",
+        "source": "both"
+      },
+      {
+        "id": "route-rdt-invalid-repeat-test",
+        "quote": "INVALID = no line in C window; repeat with new test.",
+        "source": "both"
+      },
+      {
+        "id": "rdt_positive_give_al",
+        "quote": "Give first dose immediately. Second dose 8 hours later. Then morning and evening for 2 more days.",
+        "source": "both"
+      },
+      {
+        "id": "route-followup-all-treated-children-3-days",
+        "quote": "Follow up ALL children treated at home in 3 days. If the child is not better or is worse at follow-u",
+        "source": "both"
+      },
+      {
+        "id": "follow_up_diarrhoea_less_than_14_days_continue_or_refer",
+        "quote": "After 3 days: Is the child still having diarrhoea? If yes and for less than 14 days, continue ORS and zinc. If 14 days or more, refer.",
+        "source": "both"
+      },
+      {
+        "id": "follow_up_fever_rdt_positive",
+        "quote": "After 3 days: Does the child still have fever? If RDT was positive and antimalarial was given, the child should improve. If still febrile, refer.",
+        "source": "both"
+      },
+      {
+        "id": "follow_up_fever_rdt_negative_persists_refer",
+        "quote": "If RDT was negative and fever persists, refer.",
+        "source": "both"
+      },
+      {
+        "id": "followup_cough_fast_breathing_still_fast_refer",
+        "quote": "After 3 days: Is the child still coughing? Count breaths again. If still fast breathing, refer.",
+        "source": "A"
+      },
+      {
+        "id": "followup_cough_fast_breathing_normal_complete_amoxicillin",
+        "quote": "If breathing is normal and child is improving, complete the full 5-day course of amoxicillin.",
+        "source": "A"
+      },
+      {
+        "id": "home_care_return_immediately_cannot_drink_or_blood_in_stool",
+        "quote": "Return immediately if the child: cannot drink or feed, becomes sicker, or has blood in stool.",
+        "source": "both"
+      },
+      {
+        "id": "referral_fever_keep_cool",
+        "quote": "If fever, keep the child cool during travel.",
+        "source": "both"
+      },
+      {
+        "id": "referral_diarrhoea_give_ors",
+        "quote": "If diarrhoea, give ORS solution during travel.",
+        "source": "both"
+      },
+      {
+        "id": "unable_to_take_medicine_refer",
+        "quote": "If unable to take medicine, refer to health facility.",
+        "source": "both"
+      }
+    ],
+    "integrative": [
+      {
+        "id": "danger_signs_require_urgent_referral",
+        "quote": "CHWs identify signs of illness, treat diarrhoea, confirmed malaria, and pneumonia (cough with fast b",
+        "source": "both"
+      },
+      {
+        "id": "findings_determine_refer_or_treat",
+        "quote": "The findings determine whether to refer or treat at home.",
+        "source": "both"
+      },
+      {
+        "id": "convulsion_urgent_referral",
+        "quote": "A convulsion during the current illness is a danger sign. The child needs urgent referral.",
+        "source": "both"
+      },
+      {
+        "id": "chest_indrawing_severe_pneumonia",
+        "quote": "This is a danger sign indicating severe pneumonia.",
+        "source": "both"
+      },
+      {
+        "id": "severe_malnutrition_red_muac_refer_urgently",
+        "quote": "- RED: severe malnutrition - DANGER SIGN - refer urgently",
+        "source": "both"
+      },
+      {
+        "id": "severe_malnutrition_oedema_refer_urgently",
+        "quote": "If dents remain on BOTH feet, the child has severe malnutrition. Refer urgently.",
+        "source": "both"
+      },
+      {
+        "id": "home_care_return_if_cannot_drink_or_feed_or_worse_or_blood_in_stool",
+        "quote": "- Return immediately if the child: cannot drink or feed, becomes sicker, or has blood in stool.",
+        "source": "both"
+      },
+      {
+        "id": "follow_up_not_better_or_worse_refer",
+        "quote": "Follow up ALL children treated at home in 3 days. If the child is not better or is worse at follow-u",
+        "source": "both"
+      },
+      {
+        "id": "follow_up_diarrhoea_14_days_or_more_refer",
+        "quote": "After 3 days: Is the child still having diarrhoea? If yes and for less than 14 days, continue ORS an",
+        "source": "both"
+      },
+      {
+        "id": "follow_up_fever_positive_rdt_still_febrile_refer",
+        "quote": "After 3 days: Does the child still have fever? If RDT was positive and antimalarial was given, the c",
+        "source": "A"
+      },
+      {
+        "id": "follow_up_fever_negative_rdt_persists_refer",
+        "quote": "If RDT was negative and fever persists, refer.",
+        "source": "A"
+      },
+      {
+        "id": "referral_travel_fever_keep_child_cool",
+        "quote": "If fever, keep the child cool during travel.",
+        "source": "both"
+      },
+      {
+        "id": "referral_travel_diarrhoea_give_ors",
+        "quote": "If diarrhoea, give ORS solution during travel.",
+        "source": "both"
+      }
+    ]
+  }
+}

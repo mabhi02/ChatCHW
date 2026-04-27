@@ -1,0 +1,51 @@
+[
+  {
+    "id": "equip_timer",
+    "display_name": "Timer or watch with seconds",
+    "kind": "equipment",
+    "source_quote": "Count the breaths in one minute using a timer",
+    "source_section_id": "fast_breathing"
+  },
+  {
+    "id": "equip_muac_tape",
+    "display_name": "MUAC measuring tape",
+    "kind": "equipment",
+    "source_quote": "Look for signs of severe malnutrition: measure MUAC",
+    "source_section_id": "3_3_look_for_signs_of_severe_malnutrition"
+  },
+  {
+    "id": "supply_rdt",
+    "display_name": "Rapid diagnostic test for malaria (RDT)",
+    "kind": "consumable",
+    "source_quote": "Do a rapid diagnostic test (RDT) for malaria",
+    "source_section_id": "5_2_fever_less_than_7_days_in_a_malaria_area"
+  },
+  {
+    "id": "supply_amoxicillin_250mg",
+    "display_name": "Oral amoxicillin 250 mg tablets",
+    "kind": "consumable",
+    "source_quote": "Give oral amoxicillin 250 mg tablets",
+    "source_section_id": "oral_amoxicillin_dosage_250_mg_tablets"
+  },
+  {
+    "id": "supply_ors",
+    "display_name": "ORS packets",
+    "kind": "consumable",
+    "source_quote": "Give ORS solution",
+    "source_section_id": "ors_preparation_and_administration"
+  },
+  {
+    "id": "supply_zinc",
+    "display_name": "Zinc supplements (20 mg tablets)",
+    "kind": "consumable",
+    "source_quote": "Give zinc supplement",
+    "source_section_id": "zinc_supplement_dosage"
+  },
+  {
+    "id": "supply_al",
+    "display_name": "AL (Artemether-Lumefantrine) tablets",
+    "kind": "consumable",
+    "source_quote": "Give antimalarial AL (Artemether-Lumefantrine)",
+    "source_section_id": "antimalarial_al_artemether_lumefantrine_dosage"
+  }
+]

@@ -1,0 +1,194 @@
+[
+  {
+    "id": "m_refer_urgently",
+    "category": "referral",
+    "text": "Refer URGENTLY to hospital. Give any pre-referral treatment.",
+    "module_context": "mod_danger_signs",
+    "source_quote": "Refer urgently to hospital",
+    "source_section_id": "convulsions"
+  },
+  {
+    "id": "m_danger_sign_convulsions",
+    "category": "diagnosis",
+    "text": "Danger sign: child has or has had convulsions.",
+    "module_context": "mod_danger_signs",
+    "source_quote": "Has the child had convulsions?",
+    "source_section_id": "convulsions"
+  },
+  {
+    "id": "m_danger_sign_not_able_to_drink",
+    "category": "diagnosis",
+    "text": "Danger sign: child is not able to drink or breastfeed.",
+    "module_context": "mod_danger_signs",
+    "source_quote": "Is the child not able to drink or breastfeed?",
+    "source_section_id": "not_able_to_drink_or_feed"
+  },
+  {
+    "id": "m_danger_sign_vomits_everything",
+    "category": "diagnosis",
+    "text": "Danger sign: child vomits everything.",
+    "module_context": "mod_danger_signs",
+    "source_quote": "Does the child vomit everything?",
+    "source_section_id": "vomiting_everything"
+  },
+  {
+    "id": "m_danger_sign_unusually_sleepy",
+    "category": "diagnosis",
+    "text": "Danger sign: child is unusually sleepy or unconscious.",
+    "module_context": "mod_danger_signs",
+    "source_quote": "Is the child unusually sleepy or unconscious?",
+    "source_section_id": "unusually_sleepy_or_unconscious"
+  },
+  {
+    "id": "m_dx_pneumonia",
+    "category": "diagnosis",
+    "text": "Classification: PNEUMONIA. Cough with fast breathing.",
+    "module_context": "mod_cough",
+    "source_quote": "If fast breathing: PNEUMONIA",
+    "source_section_id": "cough"
+  },
+  {
+    "id": "m_dx_severe_pneumonia",
+    "category": "diagnosis",
+    "text": "Classification: SEVERE PNEUMONIA. Cough with chest indrawing. Refer urgently.",
+    "module_context": "mod_cough",
+    "source_quote": "If chest indrawing: refer urgently",
+    "source_section_id": "chest_indrawing"
+  },
+  {
+    "id": "m_dx_cough_cold",
+    "category": "diagnosis",
+    "text": "Classification: COUGH OR COLD. No fast breathing, no chest indrawing.",
+    "module_context": "mod_cough",
+    "source_quote": "No pneumonia: cough or cold",
+    "source_section_id": "cough"
+  },
+  {
+    "id": "m_rx_amoxicillin",
+    "category": "treatment",
+    "text": "Give oral amoxicillin twice daily for 5 days.",
+    "module_context": "mod_cough",
+    "source_quote": "Give oral amoxicillin",
+    "source_section_id": "oral_amoxicillin_dosage_250_mg_tablets"
+  },
+  {
+    "id": "m_adv_cough_home_care",
+    "category": "advice",
+    "text": "Advise: soothe the throat with safe remedy. Continue feeding. Return if breathing becomes difficult or fast, or child becomes sicker.",
+    "module_context": "mod_cough",
+    "source_quote": "Advise the caretaker on home care",
+    "source_section_id": "cough"
+  },
+  {
+    "id": "m_fu_cough_3_days",
+    "category": "followup",
+    "text": "Follow up in 3 days. If still fast breathing, refer to hospital.",
+    "module_context": "mod_cough",
+    "source_quote": "Follow up in 3 days for cough with fast breathing",
+    "source_section_id": "7_3_follow_up_for_cough_with_fast_breathing"
+  },
+  {
+    "id": "m_dx_malaria",
+    "category": "diagnosis",
+    "text": "Classification: MALARIA. RDT positive.",
+    "module_context": "mod_fever",
+    "source_quote": "RDT positive: MALARIA",
+    "source_section_id": "5_2_fever_less_than_7_days_in_a_malaria_area"
+  },
+  {
+    "id": "m_dx_fever_no_malaria",
+    "category": "diagnosis",
+    "text": "Classification: FEVER, NO MALARIA. RDT negative.",
+    "module_context": "mod_fever",
+    "source_quote": "RDT negative: FEVER, NO MALARIA",
+    "source_section_id": "5_2_fever_less_than_7_days_in_a_malaria_area"
+  },
+  {
+    "id": "m_rx_al",
+    "category": "treatment",
+    "text": "Give AL (Artemether-Lumefantrine) twice daily for 3 days.",
+    "module_context": "mod_fever",
+    "source_quote": "Give antimalarial AL",
+    "source_section_id": "antimalarial_al_artemether_lumefantrine_dosage"
+  },
+  {
+    "id": "m_refer_fever_prolonged",
+    "category": "referral",
+    "text": "Fever for 7 days or more. Refer to hospital.",
+    "module_context": "mod_fever",
+    "source_quote": "If fever for 7 days or more, refer",
+    "source_section_id": "fever"
+  },
+  {
+    "id": "m_dx_diarrhoea",
+    "category": "diagnosis",
+    "text": "Classification: DIARRHOEA. Give ORS and zinc.",
+    "module_context": "mod_diarrhoea",
+    "source_quote": "If diarrhoea: give ORS and zinc",
+    "source_section_id": "diarrhoea"
+  },
+  {
+    "id": "m_dx_dysentery",
+    "category": "diagnosis",
+    "text": "Classification: DYSENTERY. Blood in stool. Refer.",
+    "module_context": "mod_diarrhoea",
+    "source_quote": "If blood in stool: refer",
+    "source_section_id": "diarrhoea"
+  },
+  {
+    "id": "m_rx_ors",
+    "category": "treatment",
+    "text": "Give ORS after each loose stool. Show caretaker how to prepare and give ORS.",
+    "module_context": "mod_diarrhoea",
+    "source_quote": "Give ORS solution",
+    "source_section_id": "ors_preparation_and_administration"
+  },
+  {
+    "id": "m_rx_zinc",
+    "category": "treatment",
+    "text": "Give zinc supplement once daily for 10 days. Under 6 months: half tablet; 6 months and older: 1 tablet.",
+    "module_context": "mod_diarrhoea",
+    "source_quote": "Give zinc supplement",
+    "source_section_id": "zinc_supplement_dosage"
+  },
+  {
+    "id": "m_fu_diarrhoea_5_days",
+    "category": "followup",
+    "text": "Follow up in 5 days. If diarrhoea not improved, refer.",
+    "module_context": "mod_diarrhoea",
+    "source_quote": "Follow up in 5 days for diarrhoea",
+    "source_section_id": "diarrhoea"
+  },
+  {
+    "id": "m_dx_sam",
+    "category": "diagnosis",
+    "text": "Classification: SEVERE ACUTE MALNUTRITION. MUAC red or oedema of both feet. Refer urgently.",
+    "module_context": "mod_malnutrition",
+    "source_quote": "Red on MUAC tape or oedema of both feet: refer urgently",
+    "source_section_id": "3_3_look_for_signs_of_severe_malnutrition"
+  },
+  {
+    "id": "m_dx_mam",
+    "category": "diagnosis",
+    "text": "Classification: MODERATE ACUTE MALNUTRITION. MUAC yellow. Refer for supplementary feeding.",
+    "module_context": "mod_malnutrition",
+    "source_quote": "Yellow on MUAC tape: refer",
+    "source_section_id": "3_3_look_for_signs_of_severe_malnutrition"
+  },
+  {
+    "id": "m_adv_fluids",
+    "category": "advice",
+    "text": "Advise caretaker to give more fluids and continue feeding.",
+    "module_context": "mod_diarrhoea",
+    "source_quote": "Give more fluids and continue feeding",
+    "source_section_id": "diarrhoea"
+  },
+  {
+    "id": "m_adv_when_to_return",
+    "category": "advice",
+    "text": "Return immediately if child: cannot drink or breastfeed, becomes sicker, has blood in stool, develops fever.",
+    "module_context": "mod_danger_signs",
+    "source_quote": "When to return immediately",
+    "source_section_id": "caring_for_the_sick_child_in_the_community"
+  }
+]

@@ -1,0 +1,352 @@
+[
+  {
+    "id": "demo_caregiver_name",
+    "display_name": "Caregiver's name",
+    "prefix": "demo",
+    "data_type": "string",
+    "unit": null,
+    "depends_on_supply": null,
+    "source_quote": "Caregiver's name:",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "demo_child_age_months",
+    "display_name": "Child's age in months",
+    "prefix": "demo",
+    "data_type": "integer",
+    "unit": "months",
+    "depends_on_supply": null,
+    "source_quote": "Age Years Months",
+    "source_section_id": "exercise_decide_to_refer_2+record_the_child_s_problems+discussion_severe_malnutrition"
+  },
+  {
+    "id": "demo_child_name",
+    "display_name": "Child's name",
+    "prefix": "demo",
+    "data_type": "string",
+    "unit": null,
+    "depends_on_supply": null,
+    "source_quote": "Child's name: First: Family:",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "demo_child_sex",
+    "display_name": "Child's sex",
+    "prefix": "demo",
+    "data_type": "string",
+    "unit": null,
+    "depends_on_supply": null,
+    "source_quote": "Boy/ Girl",
+    "source_section_id": "exercise_decide_to_refer_2+record_the_child_s_problems+discussion_severe_malnutrition"
+  },
+  {
+    "id": "ex_chest_indrawing",
+    "display_name": "Chest indrawing present",
+    "prefix": "ex",
+    "data_type": "boolean",
+    "unit": null,
+    "depends_on_supply": null,
+    "source_quote": "Chestindrawing? (FOR ALL CHILDREN)",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "ex_swelling_both_feet",
+    "display_name": "Swelling of both feet (bilateral oedema)",
+    "prefix": "ex",
+    "data_type": "boolean",
+    "unit": null,
+    "depends_on_supply": null,
+    "source_quote": "Swelling of both feet?",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "ex_unusually_sleepy_or_unconscious",
+    "display_name": "Unusually sleepy or unconscious",
+    "prefix": "ex",
+    "data_type": "boolean",
+    "unit": null,
+    "depends_on_supply": null,
+    "source_quote": "Unusually sleepy or unconscious?",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "hx_malaria_area",
+    "display_name": "Child lives in malaria area",
+    "prefix": "hx",
+    "data_type": "boolean",
+    "unit": null,
+    "depends_on_supply": null,
+    "source_quote": "in a malaria area",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "is_priority_exit",
+    "display_name": "Priority exit flag (danger sign found)",
+    "prefix": "p",
+    "data_type": "boolean",
+    "unit": null,
+    "depends_on_supply": null,
+    "source_quote": "If any danger sign, REFER URGENTLY",
+    "source_section_id": "assist_referral+invalid_result+begin_treatment"
+  },
+  {
+    "id": "lab_rdt_malaria_result",
+    "display_name": "RDT result for malaria",
+    "prefix": "lab",
+    "data_type": "string",
+    "unit": null,
+    "depends_on_supply": "supply_rdt_malaria",
+    "source_quote": "Do a rapid diagnostic test (RDT) for malaria Positive Negative",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "mod_assess_done",
+    "display_name": "Identify Problems - ASK and LOOK - completed flag",
+    "prefix": "mod",
+    "data_type": "boolean",
+    "unit": null,
+    "depends_on_supply": null,
+    "source_quote": "Module completion flag for mod_assess",
+    "source_section_id": "system_generated"
+  },
+  {
+    "id": "mod_check_vaccines_done",
+    "display_name": "Check Vaccines Received - completed flag",
+    "prefix": "mod",
+    "data_type": "boolean",
+    "unit": null,
+    "depends_on_supply": null,
+    "source_quote": "Module completion flag for mod_check_vaccines",
+    "source_section_id": "system_generated"
+  },
+  {
+    "id": "mod_danger_sign_check_done",
+    "display_name": "Danger Sign Check and Referral Decision - completed flag",
+    "prefix": "mod",
+    "data_type": "boolean",
+    "unit": null,
+    "depends_on_supply": null,
+    "source_quote": "Module completion flag for mod_danger_sign_check",
+    "source_section_id": "system_generated"
+  },
+  {
+    "id": "mod_diarrhoea_treatment_done",
+    "display_name": "Diarrhoea Treatment - ORS and Zinc - completed flag",
+    "prefix": "mod",
+    "data_type": "boolean",
+    "unit": null,
+    "depends_on_supply": null,
+    "source_quote": "Module completion flag for mod_diarrhoea_treatment",
+    "source_section_id": "system_generated"
+  },
+  {
+    "id": "mod_fast_breathing_treatment_done",
+    "display_name": "Fast Breathing Treatment - Amoxicillin - completed flag",
+    "prefix": "mod",
+    "data_type": "boolean",
+    "unit": null,
+    "depends_on_supply": null,
+    "source_quote": "Module completion flag for mod_fast_breathing_treatment",
+    "source_section_id": "system_generated"
+  },
+  {
+    "id": "mod_fever_malaria_treatment_done",
+    "display_name": "Fever/Malaria Treatment - RDT and AL - completed flag",
+    "prefix": "mod",
+    "data_type": "boolean",
+    "unit": null,
+    "depends_on_supply": null,
+    "source_quote": "Module completion flag for mod_fever_malaria_treatment",
+    "source_section_id": "system_generated"
+  },
+  {
+    "id": "mod_home_care_advice_done",
+    "display_name": "Home Care Advice and Follow-Up Scheduling - completed flag",
+    "prefix": "mod",
+    "data_type": "boolean",
+    "unit": null,
+    "depends_on_supply": null,
+    "source_quote": "Module completion flag for mod_home_care_advice",
+    "source_section_id": "system_generated"
+  },
+  {
+    "id": "mod_malnutrition_screening_done",
+    "display_name": "Malnutrition Screening - MUAC and Oedema - completed flag",
+    "prefix": "mod",
+    "data_type": "boolean",
+    "unit": null,
+    "depends_on_supply": null,
+    "source_quote": "Module completion flag for mod_malnutrition_screening",
+    "source_section_id": "system_generated"
+  },
+  {
+    "id": "p_any_danger_sign",
+    "display_name": "Any danger sign present",
+    "prefix": "p",
+    "data_type": "boolean",
+    "unit": null,
+    "depends_on_supply": null,
+    "source_quote": "If any danger sign, REFER URGENTLY to health facility",
+    "source_section_id": "assist_referral+invalid_result+begin_treatment"
+  },
+  {
+    "id": "p_fast_breathing",
+    "display_name": "Fast breathing for age",
+    "prefix": "p",
+    "data_type": "boolean",
+    "unit": null,
+    "depends_on_supply": null,
+    "source_quote": "Fast breathing: Age 2 months up to 12 months: 50bpm ormore Age 12 months up to 5 years: 40bpm ormore",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "q_blood_in_stool",
+    "display_name": "Blood in stool",
+    "prefix": "q",
+    "data_type": "boolean",
+    "unit": null,
+    "depends_on_supply": null,
+    "source_quote": "If DIARRHOEA, blood in stool?",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "q_convulsions",
+    "display_name": "Convulsions during this illness",
+    "prefix": "q",
+    "data_type": "boolean",
+    "unit": null,
+    "depends_on_supply": null,
+    "source_quote": "Convulsions?",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "q_cough_duration_days",
+    "display_name": "Cough duration in days",
+    "prefix": "q",
+    "data_type": "integer",
+    "unit": "days",
+    "depends_on_supply": null,
+    "source_quote": "Cough? If YES, for how long? _3_days",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "q_diarrhoea_duration_days",
+    "display_name": "Diarrhoea duration in days",
+    "prefix": "q",
+    "data_type": "integer",
+    "unit": "days",
+    "depends_on_supply": null,
+    "source_quote": "IF YES, for how long? days.",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "q_difficulty_drinking_or_feeding",
+    "display_name": "Difficulty drinking or feeding",
+    "prefix": "q",
+    "data_type": "boolean",
+    "unit": null,
+    "depends_on_supply": null,
+    "source_quote": "Difficulty drinking or feeding?",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "q_fever_duration_days",
+    "display_name": "Fever duration in days",
+    "prefix": "q",
+    "data_type": "integer",
+    "unit": "days",
+    "depends_on_supply": null,
+    "source_quote": "IF YES, started days ago.",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "q_has_cough",
+    "display_name": "Cough present",
+    "prefix": "q",
+    "data_type": "boolean",
+    "unit": null,
+    "depends_on_supply": null,
+    "source_quote": "Cough? If YES, for how long?",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "q_has_diarrhoea",
+    "display_name": "Diarrhoea present (3+ loose stools/24h)",
+    "prefix": "q",
+    "data_type": "boolean",
+    "unit": null,
+    "depends_on_supply": null,
+    "source_quote": "Diarrhoea (3 ormore loose stools in 24 hours)?",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "q_has_fever",
+    "display_name": "Fever (reported or now)",
+    "prefix": "q",
+    "data_type": "boolean",
+    "unit": null,
+    "depends_on_supply": null,
+    "source_quote": "Fever (reported or now)",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "q_not_able_to_drink_or_feed",
+    "display_name": "Not able to drink or feed anything",
+    "prefix": "q",
+    "data_type": "boolean",
+    "unit": null,
+    "depends_on_supply": null,
+    "source_quote": "not able to drink or feed anything?",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "q_vomiting",
+    "display_name": "Vomiting",
+    "prefix": "q",
+    "data_type": "boolean",
+    "unit": null,
+    "depends_on_supply": null,
+    "source_quote": "Vomiting?",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "q_vomits_everything",
+    "display_name": "Vomits everything",
+    "prefix": "q",
+    "data_type": "boolean",
+    "unit": null,
+    "depends_on_supply": null,
+    "source_quote": "vomits everything?",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "sys_encounter_start",
+    "display_name": "New encounter started",
+    "prefix": "sys",
+    "data_type": "boolean",
+    "unit": null,
+    "depends_on_supply": null,
+    "source_quote": "complete a recording form for every sick child",
+    "source_section_id": "look_for_signs_of_illness_continued+practise_your_skills_in_the_community+take_home_messages_for_this_section"
+  },
+  {
+    "id": "v_muac_strap_colour",
+    "display_name": "MUAC strap colour (red/yellow/green)",
+    "prefix": "v",
+    "data_type": "string",
+    "unit": null,
+    "depends_on_supply": "equip_muac_strap",
+    "source_quote": "MUAC strap colour: Red Yellow Green",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "v_respiratory_rate_per_min",
+    "display_name": "Respiratory rate (breaths per minute)",
+    "prefix": "v",
+    "data_type": "integer",
+    "unit": "bpm",
+    "depends_on_supply": "equip_timer",
+    "source_quote": "count breaths in 1 minute: breaths per minute (bpm)",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  }
+]

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "supply_intake_form",
+    "display_name": "standard intake form",
+    "kind": "consumable",
+    "source_quote": "Use the standard intake form and ensure all fields are completed.",
+    "source_section_id": "chunk_1"
+  },
+  {
+    "id": "supply_comfort_kit_items",
+    "display_name": "tissues, water cup, blanket, and pillow",
+    "kind": "consumable",
+    "source_quote": "Provide the patient with a comfort kit containing tissues, water cup, blanket, and pillow.",
+    "source_section_id": "chunk_1"
+  },
+  {
+    "id": "supply_discharge_packet_items",
+    "display_name": "aftercare instructions, prescription forms, follow-up appointment card, and patient satisfaction survey",
+    "kind": "consumable",
+    "source_quote": "Gather the discharge packet including aftercare instructions, prescription forms, follow-up appointment card, and patient satisfaction survey.",
+    "source_section_id": "chunk_2"
+  },
+  {
+    "id": "supply_discharge_packet",
+    "display_name": "discharge packet",
+    "kind": "consumable",
+    "source_quote": "Gather the discharge packet including aftercare instructions",
+    "source_section_id": "chunk_2"
+  }
+]

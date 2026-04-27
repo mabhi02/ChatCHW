@@ -1,0 +1,7 @@
+MISSINGNESS MODEL:
+- DMN tables use ONLY boolean inputs. Thresholds live in the predicates array.
+- Each predicate has a fail_safe value: what to assume when source data is missing.
+  - fail_safe: 1 (assume true / high risk) for measurements requiring equipment (any v_ or lab_ or img_ source variable). If the measurement cannot be taken because the equipment is unavailable, assume the worst case so the runtime does not silently downgrade a high-risk path.
+  - fail_safe: 0 (assume false / low risk) for self-reported / history variables (q_ and hx_ prefixes). If a symptom is not reported, assume absent.
+  - fail_safe: 1 for composite alert / red-flag predicates. If unsure about a high-priority alert condition, escalate.
+- The model determines which fail_safe value based on whether the source variable requires equipment (v_ / lab_ / img_ prefixes) or is self-reported (q_ / hx_ prefixes).

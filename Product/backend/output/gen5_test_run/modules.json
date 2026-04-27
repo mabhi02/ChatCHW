@@ -1,0 +1,1424 @@
+{
+  "mod_danger_sign_check": {
+    "module_id": "mod_danger_sign_check",
+    "display_name": "General Danger Sign Check",
+    "hit_policy": "FIRST",
+    "inputs": [
+      {
+        "id": "p_convulsions",
+        "label": "Convulsions during current illness"
+      },
+      {
+        "id": "p_not_able_to_drink_or_feed",
+        "label": "Not able to drink or feed"
+      },
+      {
+        "id": "p_vomiting_everything",
+        "label": "Vomiting everything"
+      },
+      {
+        "id": "p_unusually_sleepy_or_unconscious",
+        "label": "Unusually sleepy or unconscious"
+      },
+      {
+        "id": "p_chest_indrawing",
+        "label": "Chest indrawing"
+      },
+      {
+        "id": "p_severe_malnutrition",
+        "label": "Severe malnutrition (MUAC red or bilateral oedema)"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "p_any_general_danger_sign",
+        "label": "Any general danger sign present"
+      },
+      {
+        "id": "p_any_referral_danger_sign",
+        "label": "Any referral danger sign present"
+      },
+      {
+        "id": "need_urgent_referral",
+        "label": "Needs urgent referral"
+      }
+    ],
+    "rules": [
+      {
+        "rule_id": "dsc_r1",
+        "description": "Convulsions present \u2014 urgent referral",
+        "inputs": {
+          "p_convulsions": true
+        },
+        "outputs": {
+          "p_any_general_danger_sign": true,
+          "p_any_referral_danger_sign": true,
+          "need_urgent_referral": true
+        },
+        "provenance": "convulsions-danger-sign"
+      },
+      {
+        "rule_id": "dsc_r2",
+        "description": "Not able to drink or feed \u2014 urgent referral",
+        "inputs": {
+          "p_not_able_to_drink_or_feed": true
+        },
+        "outputs": {
+          "p_any_general_danger_sign": true,
+          "p_any_referral_danger_sign": true,
+          "need_urgent_referral": true
+        },
+        "provenance": "not-able-to-drink-or-feed-danger-sign"
+      },
+      {
+        "rule_id": "dsc_r3",
+        "description": "Vomiting everything \u2014 urgent referral",
+        "inputs": {
+          "p_vomiting_everything": true
+        },
+        "outputs": {
+          "p_any_general_danger_sign": true,
+          "p_any_referral_danger_sign": true,
+          "need_urgent_referral": true
+        },
+        "provenance": "vomiting-everything-danger-sign"
+      },
+      {
+        "rule_id": "dsc_r4",
+        "description": "Unusually sleepy or unconscious \u2014 urgent referral",
+        "inputs": {
+          "p_unusually_sleepy_or_unconscious": true
+        },
+        "outputs": {
+          "p_any_general_danger_sign": true,
+          "p_any_referral_danger_sign": true,
+          "need_urgent_referral": true
+        },
+        "provenance": "unusually-sleepy-or-unconscious-danger-sign"
+      },
+      {
+        "rule_id": "dsc_r5",
+        "description": "Chest indrawing \u2014 urgent referral",
+        "inputs": {
+          "p_chest_indrawing": true
+        },
+        "outputs": {
+          "p_any_general_danger_sign": true,
+          "p_any_referral_danger_sign": true,
+          "need_urgent_referral": true
+        },
+        "provenance": "chest-indrawing-danger-sign"
+      },
+      {
+        "rule_id": "dsc_r6",
+        "description": "Severe malnutrition \u2014 urgent referral",
+        "inputs": {
+          "p_severe_malnutrition": true
+        },
+        "outputs": {
+          "p_any_general_danger_sign": true,
+          "p_any_referral_danger_sign": true,
+          "need_urgent_referral": true
+        },
+        "provenance": "muac_assessment_red, oedema-severe-malnutrition-check"
+      },
+      {
+        "rule_id": "dsc_r7",
+        "description": "No general danger signs",
+        "inputs": {
+          "p_convulsions": false,
+          "p_not_able_to_drink_or_feed": false,
+          "p_vomiting_everything": false,
+          "p_unusually_sleepy_or_unconscious": false,
+          "p_chest_indrawing": false,
+          "p_severe_malnutrition": false
+        },
+        "outputs": {
+          "p_any_general_danger_sign": false,
+          "p_any_referral_danger_sign": false,
+          "need_urgent_referral": false
+        },
+        "provenance": "identify-problems-approach"
+      }
+    ]
+  },
+  "mod_duration_danger_check": {
+    "module_id": "mod_duration_danger_check",
+    "display_name": "Duration-Based Danger Sign Check",
+    "hit_policy": "FIRST",
+    "inputs": [
+      {
+        "id": "p_cough_duration_danger",
+        "label": "Cough \u226514 days"
+      },
+      {
+        "id": "p_fever_duration_danger",
+        "label": "Fever \u22657 days"
+      },
+      {
+        "id": "p_diarrhoea_duration_danger",
+        "label": "Diarrhoea \u226514 days"
+      },
+      {
+        "id": "p_blood_in_stool",
+        "label": "Blood in stool"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "need_referral_duration",
+        "label": "Referral needed due to prolonged symptom or blood in stool"
+      }
+    ],
+    "rules": [
+      {
+        "rule_id": "ddc_r1",
+        "description": "Cough for 14 days or more \u2014 refer",
+        "inputs": {
+          "p_cough_duration_danger": true
+        },
+        "outputs": {
+          "need_referral_duration": true
+        },
+        "provenance": "cough-assessment"
+      },
+      {
+        "rule_id": "ddc_r2",
+        "description": "Fever for 7 days or more \u2014 refer",
+        "inputs": {
+          "p_fever_duration_danger": true
+        },
+        "outputs": {
+          "need_referral_duration": true
+        },
+        "provenance": "fever-assessment"
+      },
+      {
+        "rule_id": "ddc_r3",
+        "description": "Diarrhoea for 14 days or more \u2014 refer",
+        "inputs": {
+          "p_diarrhoea_duration_danger": true
+        },
+        "outputs": {
+          "need_referral_duration": true
+        },
+        "provenance": "diarrhoea-assessment"
+      },
+      {
+        "rule_id": "ddc_r4",
+        "description": "Blood in stool \u2014 refer",
+        "inputs": {
+          "p_blood_in_stool": true
+        },
+        "outputs": {
+          "need_referral_duration": true
+        },
+        "provenance": "diarrhoea-assessment"
+      },
+      {
+        "rule_id": "ddc_r5",
+        "description": "No duration-based danger signs",
+        "inputs": {
+          "p_cough_duration_danger": false,
+          "p_fever_duration_danger": false,
+          "p_diarrhoea_duration_danger": false,
+          "p_blood_in_stool": false
+        },
+        "outputs": {
+          "need_referral_duration": false
+        },
+        "provenance": "cough-assessment, fever-assessment, diarrhoea-assessment"
+      }
+    ]
+  },
+  "mod_classify_cough": {
+    "module_id": "mod_classify_cough",
+    "display_name": "Cough / Breathing Classification",
+    "hit_policy": "FIRST",
+    "inputs": [
+      {
+        "id": "p_cough_present",
+        "label": "Cough present"
+      },
+      {
+        "id": "p_chest_indrawing",
+        "label": "Chest indrawing"
+      },
+      {
+        "id": "p_fast_breathing",
+        "label": "Fast breathing for age"
+      },
+      {
+        "id": "p_cough_duration_danger",
+        "label": "Cough \u226514 days"
+      },
+      {
+        "id": "p_any_general_danger_sign",
+        "label": "Any general danger sign"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "dx_cough",
+        "label": "Cough classification"
+      },
+      {
+        "id": "p_pneumonia_treatable",
+        "label": "Pneumonia treatable at community level"
+      },
+      {
+        "id": "need_referral_cough",
+        "label": "Referral needed for cough"
+      }
+    ],
+    "rules": [
+      {
+        "rule_id": "cc_r1",
+        "description": "No cough \u2014 skip classification",
+        "inputs": {
+          "p_cough_present": false
+        },
+        "outputs": {
+          "dx_cough": "NONE",
+          "p_pneumonia_treatable": false,
+          "need_referral_cough": false
+        },
+        "provenance": "cough-assessment"
+      },
+      {
+        "rule_id": "cc_r2",
+        "description": "Cough with chest indrawing \u2014 severe pneumonia, refer",
+        "inputs": {
+          "p_cough_present": true,
+          "p_chest_indrawing": true
+        },
+        "outputs": {
+          "dx_cough": "SEVERE_PNEUMONIA",
+          "p_pneumonia_treatable": false,
+          "need_referral_cough": true
+        },
+        "provenance": "chest-indrawing-danger-sign"
+      },
+      {
+        "rule_id": "cc_r3",
+        "description": "Cough with any general danger sign \u2014 refer",
+        "inputs": {
+          "p_cough_present": true,
+          "p_any_general_danger_sign": true
+        },
+        "outputs": {
+          "dx_cough": "SEVERE_PNEUMONIA",
+          "p_pneumonia_treatable": false,
+          "need_referral_cough": true
+        },
+        "provenance": "chest-indrawing-danger-sign, identify-problems-approach"
+      },
+      {
+        "rule_id": "cc_r4",
+        "description": "Cough \u226514 days \u2014 refer",
+        "inputs": {
+          "p_cough_present": true,
+          "p_cough_duration_danger": true
+        },
+        "outputs": {
+          "dx_cough": "CHRONIC_COUGH",
+          "p_pneumonia_treatable": false,
+          "need_referral_cough": true
+        },
+        "provenance": "cough-assessment"
+      },
+      {
+        "rule_id": "cc_r5",
+        "description": "Cough with fast breathing, no danger signs \u2014 pneumonia, treat with amoxicillin",
+        "inputs": {
+          "p_cough_present": true,
+          "p_fast_breathing": true,
+          "p_chest_indrawing": false,
+          "p_any_general_danger_sign": false,
+          "p_cough_duration_danger": false
+        },
+        "outputs": {
+          "dx_cough": "PNEUMONIA",
+          "p_pneumonia_treatable": true,
+          "need_referral_cough": false
+        },
+        "provenance": "fast-breathing-classification"
+      },
+      {
+        "rule_id": "cc_r6",
+        "description": "Cough without fast breathing or danger signs \u2014 cough/cold, home care",
+        "inputs": {
+          "p_cough_present": true,
+          "p_fast_breathing": false,
+          "p_chest_indrawing": false,
+          "p_any_general_danger_sign": false,
+          "p_cough_duration_danger": false
+        },
+        "outputs": {
+          "dx_cough": "COUGH_COLD",
+          "p_pneumonia_treatable": false,
+          "need_referral_cough": false
+        },
+        "provenance": "fast-breathing-classification"
+      }
+    ]
+  },
+  "mod_classify_fever": {
+    "module_id": "mod_classify_fever",
+    "display_name": "Fever / Malaria Classification",
+    "hit_policy": "FIRST",
+    "inputs": [
+      {
+        "id": "p_fever_present",
+        "label": "Fever present"
+      },
+      {
+        "id": "p_fever_duration_danger",
+        "label": "Fever \u22657 days"
+      },
+      {
+        "id": "p_rdt_positive",
+        "label": "RDT positive"
+      },
+      {
+        "id": "p_rdt_negative",
+        "label": "RDT negative"
+      },
+      {
+        "id": "p_rdt_invalid",
+        "label": "RDT invalid"
+      },
+      {
+        "id": "p_any_general_danger_sign",
+        "label": "Any general danger sign"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "dx_fever",
+        "label": "Fever classification"
+      },
+      {
+        "id": "p_malaria_treatable",
+        "label": "Malaria treatable at community level"
+      },
+      {
+        "id": "need_referral_fever",
+        "label": "Referral needed for fever"
+      }
+    ],
+    "rules": [
+      {
+        "rule_id": "cf_r1",
+        "description": "No fever \u2014 skip classification",
+        "inputs": {
+          "p_fever_present": false
+        },
+        "outputs": {
+          "dx_fever": "NONE",
+          "p_malaria_treatable": false,
+          "need_referral_fever": false
+        },
+        "provenance": "fever-assessment"
+      },
+      {
+        "rule_id": "cf_r2",
+        "description": "Fever with any general danger sign \u2014 refer urgently",
+        "inputs": {
+          "p_fever_present": true,
+          "p_any_general_danger_sign": true
+        },
+        "outputs": {
+          "dx_fever": "SEVERE_FEBRILE_ILLNESS",
+          "p_malaria_treatable": false,
+          "need_referral_fever": true
+        },
+        "provenance": "fever-assessment, fever-malaria-area-rdt-requirement"
+      },
+      {
+        "rule_id": "cf_r3",
+        "description": "Fever \u22657 days \u2014 refer",
+        "inputs": {
+          "p_fever_present": true,
+          "p_fever_duration_danger": true
+        },
+        "outputs": {
+          "dx_fever": "PROLONGED_FEVER",
+          "p_malaria_treatable": false,
+          "need_referral_fever": true
+        },
+        "provenance": "fever-assessment"
+      },
+      {
+        "rule_id": "cf_r4",
+        "description": "Fever with RDT positive, no danger signs \u2014 malaria, treat with AL",
+        "inputs": {
+          "p_fever_present": true,
+          "p_rdt_positive": true,
+          "p_any_general_danger_sign": false,
+          "p_fever_duration_danger": false
+        },
+        "outputs": {
+          "dx_fever": "MALARIA",
+          "p_malaria_treatable": true,
+          "need_referral_fever": false
+        },
+        "provenance": "fever-malaria-area-rdt-requirement, rdt_procedure_result_interpretation"
+      },
+      {
+        "rule_id": "cf_r5",
+        "description": "Fever with RDT negative, no danger signs \u2014 fever, no antimalarial, follow up",
+        "inputs": {
+          "p_fever_present": true,
+          "p_rdt_negative": true,
+          "p_any_general_danger_sign": false,
+          "p_fever_duration_danger": false
+        },
+        "outputs": {
+          "dx_fever": "FEVER_NO_MALARIA",
+          "p_malaria_treatable": false,
+          "need_referral_fever": false
+        },
+        "provenance": "negative-rdt-follow-up-decision"
+      },
+      {
+        "rule_id": "cf_r6",
+        "description": "Fever with RDT invalid \u2014 repeat or refer",
+        "inputs": {
+          "p_fever_present": true,
+          "p_rdt_invalid": true
+        },
+        "outputs": {
+          "dx_fever": "RDT_INVALID",
+          "p_malaria_treatable": false,
+          "need_referral_fever": true
+        },
+        "provenance": "rdt_procedure_result_interpretation"
+      }
+    ]
+  },
+  "mod_classify_diarrhoea": {
+    "module_id": "mod_classify_diarrhoea",
+    "display_name": "Diarrhoea Classification",
+    "hit_policy": "FIRST",
+    "inputs": [
+      {
+        "id": "p_diarrhoea_present",
+        "label": "Diarrhoea present"
+      },
+      {
+        "id": "p_diarrhoea_duration_danger",
+        "label": "Diarrhoea \u226514 days"
+      },
+      {
+        "id": "p_blood_in_stool",
+        "label": "Blood in stool"
+      },
+      {
+        "id": "p_any_general_danger_sign",
+        "label": "Any general danger sign"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "dx_diarrhoea",
+        "label": "Diarrhoea classification"
+      },
+      {
+        "id": "p_diarrhoea_treatable",
+        "label": "Diarrhoea treatable at community level"
+      },
+      {
+        "id": "need_referral_diarrhoea",
+        "label": "Referral needed for diarrhoea"
+      }
+    ],
+    "rules": [
+      {
+        "rule_id": "cd_r1",
+        "description": "No diarrhoea \u2014 skip classification",
+        "inputs": {
+          "p_diarrhoea_present": false
+        },
+        "outputs": {
+          "dx_diarrhoea": "NONE",
+          "p_diarrhoea_treatable": false,
+          "need_referral_diarrhoea": false
+        },
+        "provenance": "diarrhoea-assessment"
+      },
+      {
+        "rule_id": "cd_r2",
+        "description": "Diarrhoea with any general danger sign \u2014 refer urgently",
+        "inputs": {
+          "p_diarrhoea_present": true,
+          "p_any_general_danger_sign": true
+        },
+        "outputs": {
+          "dx_diarrhoea": "SEVERE_DIARRHOEA",
+          "p_diarrhoea_treatable": false,
+          "need_referral_diarrhoea": true
+        },
+        "provenance": "diarrhoea-assessment"
+      },
+      {
+        "rule_id": "cd_r3",
+        "description": "Diarrhoea \u226514 days \u2014 refer",
+        "inputs": {
+          "p_diarrhoea_present": true,
+          "p_diarrhoea_duration_danger": true
+        },
+        "outputs": {
+          "dx_diarrhoea": "PERSISTENT_DIARRHOEA",
+          "p_diarrhoea_treatable": false,
+          "need_referral_diarrhoea": true
+        },
+        "provenance": "diarrhoea-assessment"
+      },
+      {
+        "rule_id": "cd_r4",
+        "description": "Diarrhoea with blood in stool \u2014 refer",
+        "inputs": {
+          "p_diarrhoea_present": true,
+          "p_blood_in_stool": true
+        },
+        "outputs": {
+          "dx_diarrhoea": "BLOODY_DIARRHOEA",
+          "p_diarrhoea_treatable": false,
+          "need_referral_diarrhoea": true
+        },
+        "provenance": "diarrhoea-assessment"
+      },
+      {
+        "rule_id": "cd_r5",
+        "description": "Diarrhoea <14 days, no blood, no danger signs \u2014 treat with ORS and zinc",
+        "inputs": {
+          "p_diarrhoea_present": true,
+          "p_diarrhoea_duration_danger": false,
+          "p_blood_in_stool": false,
+          "p_any_general_danger_sign": false
+        },
+        "outputs": {
+          "dx_diarrhoea": "DIARRHOEA",
+          "p_diarrhoea_treatable": true,
+          "need_referral_diarrhoea": false
+        },
+        "provenance": "diarrhoea-assessment, ors-preparation-and-administration, zinc-dosage-2-to-6-months, zinc-dosage-6-months-to-5-years"
+      }
+    ]
+  },
+  "mod_classify_malnutrition": {
+    "module_id": "mod_classify_malnutrition",
+    "display_name": "Malnutrition Classification (MUAC + Oedema)",
+    "hit_policy": "FIRST",
+    "inputs": [
+      {
+        "id": "p_muac_eligible",
+        "label": "Child \u22656 months (MUAC eligible)"
+      },
+      {
+        "id": "p_muac_red",
+        "label": "MUAC red"
+      },
+      {
+        "id": "p_muac_yellow",
+        "label": "MUAC yellow"
+      },
+      {
+        "id": "p_muac_green",
+        "label": "MUAC green"
+      },
+      {
+        "id": "p_bilateral_foot_oedema",
+        "label": "Bilateral foot oedema"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "dx_malnutrition",
+        "label": "Malnutrition classification"
+      },
+      {
+        "id": "p_severe_malnutrition",
+        "label": "Severe malnutrition"
+      },
+      {
+        "id": "need_referral_malnutrition",
+        "label": "Referral needed for malnutrition"
+      }
+    ],
+    "rules": [
+      {
+        "rule_id": "cm_r1",
+        "description": "Child <6 months \u2014 MUAC not applicable",
+        "inputs": {
+          "p_muac_eligible": false
+        },
+        "outputs": {
+          "dx_malnutrition": "NOT_ASSESSED",
+          "p_severe_malnutrition": false,
+          "need_referral_malnutrition": false
+        },
+        "provenance": "muac-malnutrition-classification"
+      },
+      {
+        "rule_id": "cm_r2",
+        "description": "MUAC red \u2014 severe malnutrition, refer urgently",
+        "inputs": {
+          "p_muac_eligible": true,
+          "p_muac_red": true
+        },
+        "outputs": {
+          "dx_malnutrition": "SEVERE_MALNUTRITION",
+          "p_severe_malnutrition": true,
+          "need_referral_malnutrition": true
+        },
+        "provenance": "muac_assessment_red"
+      },
+      {
+        "rule_id": "cm_r3",
+        "description": "Bilateral foot oedema \u2014 severe malnutrition, refer urgently",
+        "inputs": {
+          "p_muac_eligible": true,
+          "p_bilateral_foot_oedema": true
+        },
+        "outputs": {
+          "dx_malnutrition": "SEVERE_MALNUTRITION",
+          "p_severe_malnutrition": true,
+          "need_referral_malnutrition": true
+        },
+        "provenance": "oedema-severe-malnutrition-check"
+      },
+      {
+        "rule_id": "cm_r4",
+        "description": "MUAC yellow \u2014 moderate malnutrition, refer to supplementary feeding",
+        "inputs": {
+          "p_muac_eligible": true,
+          "p_muac_yellow": true,
+          "p_bilateral_foot_oedema": false
+        },
+        "outputs": {
+          "dx_malnutrition": "MODERATE_MALNUTRITION",
+          "p_severe_malnutrition": false,
+          "need_referral_malnutrition": true
+        },
+        "provenance": "muac_assessment_yellow"
+      },
+      {
+        "rule_id": "cm_r5",
+        "description": "MUAC green, no oedema \u2014 not malnourished",
+        "inputs": {
+          "p_muac_eligible": true,
+          "p_muac_green": true,
+          "p_bilateral_foot_oedema": false
+        },
+        "outputs": {
+          "dx_malnutrition": "NOT_MALNOURISHED",
+          "p_severe_malnutrition": false,
+          "need_referral_malnutrition": false
+        },
+        "provenance": "muac_assessment_green"
+      }
+    ]
+  },
+  "mod_tx_diarrhoea": {
+    "module_id": "mod_tx_diarrhoea",
+    "display_name": "Diarrhoea Treatment \u2014 ORS and Zinc",
+    "hit_policy": "FIRST",
+    "inputs": [
+      {
+        "id": "p_diarrhoea_treatable",
+        "label": "Diarrhoea treatable at community level"
+      },
+      {
+        "id": "demo_age_months",
+        "label": "Age in months"
+      },
+      {
+        "id": "p_zinc_half_tablet",
+        "label": "Age 2\u2013<6 months (half zinc tablet)"
+      },
+      {
+        "id": "supply_ors_packet",
+        "label": "ORS packets in stock"
+      },
+      {
+        "id": "supply_zinc_20mg",
+        "label": "Zinc 20mg tablets in stock"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "tx_ors",
+        "label": "ORS treatment plan"
+      },
+      {
+        "id": "rx_zinc_dose",
+        "label": "Zinc dose"
+      },
+      {
+        "id": "rx_zinc_freq",
+        "label": "Zinc frequency"
+      },
+      {
+        "id": "rx_zinc_duration_days",
+        "label": "Zinc duration (days)"
+      },
+      {
+        "id": "rx_zinc_total_tablets",
+        "label": "Zinc total tablets to dispense"
+      }
+    ],
+    "rules": [
+      {
+        "rule_id": "txd_r1",
+        "description": "Diarrhoea not treatable \u2014 no treatment",
+        "inputs": {
+          "p_diarrhoea_treatable": false
+        },
+        "outputs": {
+          "tx_ors": "NONE",
+          "rx_zinc_dose": "NONE",
+          "rx_zinc_freq": "NONE",
+          "rx_zinc_duration_days": 0,
+          "rx_zinc_total_tablets": 0
+        },
+        "provenance": "diarrhoea-assessment"
+      },
+      {
+        "rule_id": "txd_r2",
+        "description": "Treatable diarrhoea, age 2\u2013<6 months \u2014 ORS + half zinc tablet daily x10 days",
+        "inputs": {
+          "p_diarrhoea_treatable": true,
+          "p_zinc_half_tablet": true
+        },
+        "outputs": {
+          "tx_ors": "GIVE_ORS",
+          "rx_zinc_dose": "0.5 tablet (10mg)",
+          "rx_zinc_freq": "once daily",
+          "rx_zinc_duration_days": 10,
+          "rx_zinc_total_tablets": 5
+        },
+        "provenance": "zinc-dosage-2-to-6-months, ors-preparation-and-administration, zinc-administration-instructions"
+      },
+      {
+        "rule_id": "txd_r3",
+        "description": "Treatable diarrhoea, age 6 months\u2013<5 years \u2014 ORS + 1 zinc tablet daily x10 days",
+        "inputs": {
+          "p_diarrhoea_treatable": true,
+          "p_zinc_half_tablet": false
+        },
+        "outputs": {
+          "tx_ors": "GIVE_ORS",
+          "rx_zinc_dose": "1 tablet (20mg)",
+          "rx_zinc_freq": "once daily",
+          "rx_zinc_duration_days": 10,
+          "rx_zinc_total_tablets": 10
+        },
+        "provenance": "zinc-dosage-6-months-to-5-years, ors-preparation-and-administration, zinc-administration-instructions"
+      }
+    ]
+  },
+  "mod_tx_pneumonia": {
+    "module_id": "mod_tx_pneumonia",
+    "display_name": "Pneumonia Treatment \u2014 Amoxicillin",
+    "hit_policy": "FIRST",
+    "inputs": [
+      {
+        "id": "p_pneumonia_treatable",
+        "label": "Pneumonia treatable at community level"
+      },
+      {
+        "id": "demo_age_months",
+        "label": "Age in months"
+      },
+      {
+        "id": "supply_amoxicillin_250mg",
+        "label": "Amoxicillin 250mg tablets in stock"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "rx_amoxicillin_dose",
+        "label": "Amoxicillin dose"
+      },
+      {
+        "id": "rx_amoxicillin_freq",
+        "label": "Amoxicillin frequency"
+      },
+      {
+        "id": "rx_amoxicillin_duration_days",
+        "label": "Amoxicillin duration (days)"
+      },
+      {
+        "id": "rx_amoxicillin_total_tablets",
+        "label": "Amoxicillin total tablets to dispense"
+      }
+    ],
+    "rules": [
+      {
+        "rule_id": "txp_r1",
+        "description": "Pneumonia not treatable \u2014 no amoxicillin",
+        "inputs": {
+          "p_pneumonia_treatable": false
+        },
+        "outputs": {
+          "rx_amoxicillin_dose": "NONE",
+          "rx_amoxicillin_freq": "NONE",
+          "rx_amoxicillin_duration_days": 0,
+          "rx_amoxicillin_total_tablets": 0
+        },
+        "provenance": "fast-breathing-classification"
+      },
+      {
+        "rule_id": "txp_r2",
+        "description": "Treatable pneumonia, age 2\u2013<12 months \u2014 1 tablet twice daily x5 days (10 tablets)",
+        "inputs": {
+          "p_pneumonia_treatable": true,
+          "demo_age_months": ">=2 AND <12"
+        },
+        "outputs": {
+          "rx_amoxicillin_dose": "1 tablet (250mg)",
+          "rx_amoxicillin_freq": "twice daily",
+          "rx_amoxicillin_duration_days": 5,
+          "rx_amoxicillin_total_tablets": 10
+        },
+        "provenance": "amoxicillin-dosage-2-to-12-months, amoxicillin-administration-instructions"
+      },
+      {
+        "rule_id": "txp_r3",
+        "description": "Treatable pneumonia, age 12\u2013<60 months \u2014 2 tablets twice daily x5 days (20 tablets)",
+        "inputs": {
+          "p_pneumonia_treatable": true,
+          "demo_age_months": ">=12 AND <60"
+        },
+        "outputs": {
+          "rx_amoxicillin_dose": "2 tablets (500mg)",
+          "rx_amoxicillin_freq": "twice daily",
+          "rx_amoxicillin_duration_days": 5,
+          "rx_amoxicillin_total_tablets": 20
+        },
+        "provenance": "amoxicillin-dosage-12-months-to-5-years, amoxicillin-administration-instructions"
+      }
+    ]
+  },
+  "mod_tx_malaria": {
+    "module_id": "mod_tx_malaria",
+    "display_name": "Malaria Treatment \u2014 Artemether-Lumefantrine (AL)",
+    "hit_policy": "FIRST",
+    "inputs": [
+      {
+        "id": "p_malaria_treatable",
+        "label": "Malaria treatable at community level"
+      },
+      {
+        "id": "demo_age_months",
+        "label": "Age in months"
+      },
+      {
+        "id": "supply_al_tablets",
+        "label": "AL tablets in stock"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "rx_al_dose",
+        "label": "AL dose per administration"
+      },
+      {
+        "id": "rx_al_freq",
+        "label": "AL frequency"
+      },
+      {
+        "id": "rx_al_duration_days",
+        "label": "AL duration (days)"
+      },
+      {
+        "id": "rx_al_total_tablets",
+        "label": "AL total tablets to dispense"
+      }
+    ],
+    "rules": [
+      {
+        "rule_id": "txm_r1",
+        "description": "Malaria not treatable \u2014 no AL",
+        "inputs": {
+          "p_malaria_treatable": false
+        },
+        "outputs": {
+          "rx_al_dose": "NONE",
+          "rx_al_freq": "NONE",
+          "rx_al_duration_days": 0,
+          "rx_al_total_tablets": 0
+        },
+        "provenance": "fever-malaria-area-rdt-requirement"
+      },
+      {
+        "rule_id": "txm_r2",
+        "description": "Treatable malaria, age 2 months\u2013<3 years \u2014 1 tablet twice daily x3 days (6 tablets)",
+        "inputs": {
+          "p_malaria_treatable": true,
+          "demo_age_months": ">=2 AND <36"
+        },
+        "outputs": {
+          "rx_al_dose": "1 tablet",
+          "rx_al_freq": "twice daily",
+          "rx_al_duration_days": 3,
+          "rx_al_total_tablets": 6
+        },
+        "provenance": "antimalarial-al-dosage-2months-to-3years, antimalarial-al-administration-instructions"
+      },
+      {
+        "rule_id": "txm_r3",
+        "description": "Treatable malaria, age 3\u2013<5 years \u2014 2 tablets twice daily x3 days (12 tablets)",
+        "inputs": {
+          "p_malaria_treatable": true,
+          "demo_age_months": ">=36 AND <60"
+        },
+        "outputs": {
+          "rx_al_dose": "2 tablets",
+          "rx_al_freq": "twice daily",
+          "rx_al_duration_days": 3,
+          "rx_al_total_tablets": 12
+        },
+        "provenance": "antimalarial-al-dosage-3years-to-5years, antimalarial-al-administration-instructions"
+      }
+    ]
+  },
+  "mod_referral": {
+    "module_id": "mod_referral",
+    "display_name": "Referral Decision and Procedures",
+    "hit_policy": "FIRST",
+    "inputs": [
+      {
+        "id": "need_urgent_referral",
+        "label": "Urgent referral from danger signs"
+      },
+      {
+        "id": "need_referral_duration",
+        "label": "Referral from prolonged symptoms"
+      },
+      {
+        "id": "need_referral_cough",
+        "label": "Referral from cough classification"
+      },
+      {
+        "id": "need_referral_fever",
+        "label": "Referral from fever classification"
+      },
+      {
+        "id": "need_referral_diarrhoea",
+        "label": "Referral from diarrhoea classification"
+      },
+      {
+        "id": "need_referral_malnutrition",
+        "label": "Referral from malnutrition classification"
+      },
+      {
+        "id": "p_fever_present",
+        "label": "Fever present"
+      },
+      {
+        "id": "p_diarrhoea_present",
+        "label": "Diarrhoea present"
+      },
+      {
+        "id": "p_pneumonia_treatable",
+        "label": "Pneumonia treatable (give first dose before referral)"
+      },
+      {
+        "id": "p_malaria_treatable",
+        "label": "Malaria treatable (give first dose before referral)"
+      },
+      {
+        "id": "p_diarrhoea_treatable",
+        "label": "Diarrhoea treatable (give ORS before/during referral)"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "ref_required",
+        "label": "Referral required"
+      },
+      {
+        "id": "ref_urgency",
+        "label": "Referral urgency"
+      },
+      {
+        "id": "proc_first_dose_before_referral",
+        "label": "Give first dose of medicine before referral"
+      },
+      {
+        "id": "proc_ors_during_travel",
+        "label": "Give ORS during travel"
+      },
+      {
+        "id": "proc_keep_cool_during_travel",
+        "label": "Keep child cool during travel"
+      },
+      {
+        "id": "proc_referral_form",
+        "label": "Complete referral form"
+      },
+      {
+        "id": "proc_arrange_transport",
+        "label": "Help arrange transportation"
+      }
+    ],
+    "rules": [
+      {
+        "rule_id": "ref_r1",
+        "description": "Any referral trigger present \u2014 refer, apply pre-referral procedures",
+        "inputs": {
+          "need_urgent_referral": true
+        },
+        "outputs": {
+          "ref_required": true,
+          "ref_urgency": "URGENT",
+          "proc_first_dose_before_referral": true,
+          "proc_ors_during_travel": "IF_DIARRHOEA",
+          "proc_keep_cool_during_travel": "IF_FEVER",
+          "proc_referral_form": true,
+          "proc_arrange_transport": true
+        },
+        "provenance": "referral-procedures, referral_procedures_medicine_before_referral, referral_procedures_transportation, referral_procedures_fever_management_travel, referral_procedures_diarrhoea_management_travel"
+      },
+      {
+        "rule_id": "ref_r2",
+        "description": "Duration or classification-based referral \u2014 refer",
+        "inputs": {
+          "need_urgent_referral": false,
+          "need_referral_duration": true
+        },
+        "outputs": {
+          "ref_required": true,
+          "ref_urgency": "ROUTINE",
+          "proc_first_dose_before_referral": true,
+          "proc_ors_during_travel": "IF_DIARRHOEA",
+          "proc_keep_cool_during_travel": "IF_FEVER",
+          "proc_referral_form": true,
+          "proc_arrange_transport": true
+        },
+        "provenance": "referral-procedures"
+      },
+      {
+        "rule_id": "ref_r3",
+        "description": "Cough classification referral",
+        "inputs": {
+          "need_urgent_referral": false,
+          "need_referral_duration": false,
+          "need_referral_cough": true
+        },
+        "outputs": {
+          "ref_required": true,
+          "ref_urgency": "ROUTINE",
+          "proc_first_dose_before_referral": true,
+          "proc_ors_during_travel": "IF_DIARRHOEA",
+          "proc_keep_cool_during_travel": "IF_FEVER",
+          "proc_referral_form": true,
+          "proc_arrange_transport": true
+        },
+        "provenance": "referral-procedures"
+      },
+      {
+        "rule_id": "ref_r4",
+        "description": "Fever classification referral",
+        "inputs": {
+          "need_urgent_referral": false,
+          "need_referral_duration": false,
+          "need_referral_cough": false,
+          "need_referral_fever": true
+        },
+        "outputs": {
+          "ref_required": true,
+          "ref_urgency": "ROUTINE",
+          "proc_first_dose_before_referral": true,
+          "proc_ors_during_travel": "IF_DIARRHOEA",
+          "proc_keep_cool_during_travel": "IF_FEVER",
+          "proc_referral_form": true,
+          "proc_arrange_transport": true
+        },
+        "provenance": "referral-procedures"
+      },
+      {
+        "rule_id": "ref_r5",
+        "description": "Diarrhoea classification referral",
+        "inputs": {
+          "need_urgent_referral": false,
+          "need_referral_duration": false,
+          "need_referral_cough": false,
+          "need_referral_fever": false,
+          "need_referral_diarrhoea": true
+        },
+        "outputs": {
+          "ref_required": true,
+          "ref_urgency": "ROUTINE",
+          "proc_first_dose_before_referral": true,
+          "proc_ors_during_travel": true,
+          "proc_keep_cool_during_travel": "IF_FEVER",
+          "proc_referral_form": true,
+          "proc_arrange_transport": true
+        },
+        "provenance": "referral-procedures, referral_procedures_diarrhoea_management_travel"
+      },
+      {
+        "rule_id": "ref_r6",
+        "description": "Malnutrition classification referral",
+        "inputs": {
+          "need_urgent_referral": false,
+          "need_referral_duration": false,
+          "need_referral_cough": false,
+          "need_referral_fever": false,
+          "need_referral_diarrhoea": false,
+          "need_referral_malnutrition": true
+        },
+        "outputs": {
+          "ref_required": true,
+          "ref_urgency": "ROUTINE",
+          "proc_first_dose_before_referral": false,
+          "proc_ors_during_travel": false,
+          "proc_keep_cool_during_travel": false,
+          "proc_referral_form": true,
+          "proc_arrange_transport": true
+        },
+        "provenance": "referral-procedures"
+      },
+      {
+        "rule_id": "ref_r7",
+        "description": "No referral needed \u2014 treat at home",
+        "inputs": {
+          "need_urgent_referral": false,
+          "need_referral_duration": false,
+          "need_referral_cough": false,
+          "need_referral_fever": false,
+          "need_referral_diarrhoea": false,
+          "need_referral_malnutrition": false
+        },
+        "outputs": {
+          "ref_required": false,
+          "ref_urgency": "NONE",
+          "proc_first_dose_before_referral": false,
+          "proc_ors_during_travel": false,
+          "proc_keep_cool_during_travel": false,
+          "proc_referral_form": false,
+          "proc_arrange_transport": false
+        },
+        "provenance": "referral-procedures"
+      }
+    ]
+  },
+  "mod_follow_up": {
+    "module_id": "mod_follow_up",
+    "display_name": "Follow-Up Visit at Day 3",
+    "hit_policy": "FIRST",
+    "inputs": [
+      {
+        "id": "q_follow_up_cough_still_present",
+        "label": "Cough still present at follow-up"
+      },
+      {
+        "id": "p_fast_breathing",
+        "label": "Fast breathing at follow-up recount"
+      },
+      {
+        "id": "q_follow_up_diarrhoea_still_present",
+        "label": "Diarrhoea still present at follow-up"
+      },
+      {
+        "id": "q_follow_up_fever_still_present",
+        "label": "Fever still present at follow-up"
+      },
+      {
+        "id": "p_rdt_positive",
+        "label": "Original RDT was positive"
+      },
+      {
+        "id": "p_rdt_negative",
+        "label": "Original RDT was negative"
+      },
+      {
+        "id": "p_any_general_danger_sign",
+        "label": "Any general danger sign at follow-up"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "ref_follow_up_referral",
+        "label": "Refer at follow-up"
+      },
+      {
+        "id": "adv_follow_up_action",
+        "label": "Follow-up action advice"
+      }
+    ],
+    "rules": [
+      {
+        "rule_id": "fu_r1",
+        "description": "Any danger sign at follow-up \u2014 refer immediately",
+        "inputs": {
+          "p_any_general_danger_sign": true
+        },
+        "outputs": {
+          "ref_follow_up_referral": true,
+          "adv_follow_up_action": "Refer urgently \u2014 danger sign present at follow-up"
+        },
+        "provenance": "follow-up-visits-general"
+      },
+      {
+        "rule_id": "fu_r2",
+        "description": "Cough still present with fast breathing at follow-up \u2014 refer",
+        "inputs": {
+          "q_follow_up_cough_still_present": true,
+          "p_fast_breathing": true,
+          "p_any_general_danger_sign": false
+        },
+        "outputs": {
+          "ref_follow_up_referral": true,
+          "adv_follow_up_action": "Still fast breathing after 3 days of amoxicillin \u2014 refer"
+        },
+        "provenance": "follow_up_cough_fast_breathing_day3"
+      },
+      {
+        "rule_id": "fu_r3",
+        "description": "Cough improving, no fast breathing \u2014 advise to complete amoxicillin course",
+        "inputs": {
+          "q_follow_up_cough_still_present": true,
+          "p_fast_breathing": false,
+          "p_any_general_danger_sign": false
+        },
+        "outputs": {
+          "ref_follow_up_referral": false,
+          "adv_follow_up_action": "Breathing improved \u2014 complete full 5-day amoxicillin course"
+        },
+        "provenance": "follow_up_cough_fast_breathing_day3"
+      },
+      {
+        "rule_id": "fu_r4",
+        "description": "Diarrhoea still present at follow-up \u2014 continue ORS and zinc",
+        "inputs": {
+          "q_follow_up_diarrhoea_still_present": true,
+          "p_any_general_danger_sign": false
+        },
+        "outputs": {
+          "ref_follow_up_referral": false,
+          "adv_follow_up_action": "Continue ORS and zinc; complete 10-day zinc course"
+        },
+        "provenance": "follow-up-diarrhoea"
+      },
+      {
+        "rule_id": "fu_r5",
+        "description": "Fever persists at follow-up, original RDT positive \u2014 refer (completed AL but still febrile)",
+        "inputs": {
+          "q_follow_up_fever_still_present": true,
+          "p_rdt_positive": true,
+          "p_any_general_danger_sign": false
+        },
+        "outputs": {
+          "ref_follow_up_referral": true,
+          "adv_follow_up_action": "Fever persists after AL treatment \u2014 refer"
+        },
+        "provenance": "follow-up-fever-malaria"
+      },
+      {
+        "rule_id": "fu_r6",
+        "description": "Fever persists at follow-up, original RDT negative \u2014 refer",
+        "inputs": {
+          "q_follow_up_fever_still_present": true,
+          "p_rdt_negative": true,
+          "p_any_general_danger_sign": false
+        },
+        "outputs": {
+          "ref_follow_up_referral": true,
+          "adv_follow_up_action": "Fever persists with negative RDT \u2014 refer"
+        },
+        "provenance": "negative-rdt-follow-up-decision"
+      },
+      {
+        "rule_id": "fu_r7",
+        "description": "All symptoms resolved at follow-up \u2014 advise to complete any remaining treatment courses",
+        "inputs": {
+          "q_follow_up_cough_still_present": false,
+          "q_follow_up_diarrhoea_still_present": false,
+          "q_follow_up_fever_still_present": false,
+          "p_any_general_danger_sign": false
+        },
+        "outputs": {
+          "ref_follow_up_referral": false,
+          "adv_follow_up_action": "Child improving \u2014 complete all treatment courses and continue home care"
+        },
+        "provenance": "follow-up-visits-general, home-care-advice"
+      }
+    ]
+  },
+  "mod_home_care_advice": {
+    "module_id": "mod_home_care_advice",
+    "display_name": "Home Care Advice",
+    "hit_policy": "FIRST",
+    "inputs": [
+      {
+        "id": "ref_required",
+        "label": "Referral required"
+      },
+      {
+        "id": "p_pneumonia_treatable",
+        "label": "Pneumonia treated"
+      },
+      {
+        "id": "p_malaria_treatable",
+        "label": "Malaria treated"
+      },
+      {
+        "id": "p_diarrhoea_treatable",
+        "label": "Diarrhoea treated"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "adv_fluids_feeding",
+        "label": "Fluids and feeding advice"
+      },
+      {
+        "id": "adv_return_immediately",
+        "label": "Return immediately if danger signs"
+      },
+      {
+        "id": "adv_follow_up_day",
+        "label": "Follow-up day"
+      },
+      {
+        "id": "adv_itn",
+        "label": "Sleep under ITN advice"
+      }
+    ],
+    "rules": [
+      {
+        "rule_id": "hca_r1",
+        "description": "Child referred \u2014 give pre-referral advice only",
+        "inputs": {
+          "ref_required": true
+        },
+        "outputs": {
+          "adv_fluids_feeding": "Give fluids during travel",
+          "adv_return_immediately": "Go to health facility now",
+          "adv_follow_up_day": "Follow up after return from facility, at least once a week until well",
+          "adv_itn": "Use ITN"
+        },
+        "provenance": "referral_procedures_follow_up_after_return, referral_procedures_diarrhoea_management_travel"
+      },
+      {
+        "rule_id": "hca_r2",
+        "description": "Child treated at home \u2014 standard home care advice",
+        "inputs": {
+          "ref_required": false
+        },
+        "outputs": {
+          "adv_fluids_feeding": "Give more fluids and continue feeding",
+          "adv_return_immediately": "Return immediately if: cannot drink or feed, becomes sicker, has fever (if not already present), has fast breathing, has blood in stool",
+          "adv_follow_up_day": "Follow up in 3 days",
+          "adv_itn": "Sleep under insecticide-treated net"
+        },
+        "provenance": "home-care-advice, follow-up-visits-general"
+      }
+    ]
+  }
+}

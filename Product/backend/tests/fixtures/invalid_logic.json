@@ -1,0 +1,50 @@
+{
+  "modules": [
+    {
+      "module_id": "ModCough",
+      "display_name": "Cough",
+      "hit_policy": "FIRST",
+      "input_columns": ["p_cough_gte_14d", "temperature"],
+      "output_columns": ["dx_classification"],
+      "rules": [
+        {
+          "inputs": ["true", ">= 38"],
+          "outputs": ["severe", "extra_output"],
+          "provenance": {"page": "p.1", "quote": "test"}
+        },
+        {
+          "inputs": ["false"],
+          "outputs": ["mild"]
+        }
+      ]
+    }
+  ],
+  "activator": {
+    "input_columns": [],
+    "rules": []
+  },
+  "router": {
+    "rules": [
+      {"condition": "some_random_condition", "next_module": "mod_cough", "priority": 0}
+    ]
+  },
+  "predicates": [
+    {
+      "predicate_id": "BadPredName",
+      "source_vars": ["noprefix_var"],
+      "threshold_expression": "",
+      "human_label": "Bad",
+      "fail_safe": 2,
+      "page_ref": ""
+    }
+  ],
+  "phrase_bank": [
+    {
+      "message_id": "BadMessage",
+      "category": "diagnosis",
+      "english_text": "",
+      "placeholder_vars": [],
+      "page_ref": ""
+    }
+  ]
+}

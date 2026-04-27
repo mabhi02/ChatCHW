@@ -1,0 +1,2100 @@
+<?xml version="1.0" ?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" id="chw_navigator_definitions" name="CHW Navigator Clinical Logic" namespace="https://www.omg.org/spec/DMN/20191111/MODEL/">
+  <inputData id="p_age_12mo_to_5yr" name="Child age 12 months up to 5 years">
+    <variable id="var_p_age_12mo_to_5yr" name="p_age_12mo_to_5yr" typeRef="boolean"/>
+  </inputData>
+  <inputData id="p_age_2mo_to_12mo" name="Child age 2 months up to 12 months">
+    <variable id="var_p_age_2mo_to_12mo" name="p_age_2mo_to_12mo" typeRef="boolean"/>
+  </inputData>
+  <inputData id="p_age_2mo_to_3yr" name="Child age 2 months up to 3 years">
+    <variable id="var_p_age_2mo_to_3yr" name="p_age_2mo_to_3yr" typeRef="boolean"/>
+  </inputData>
+  <inputData id="p_age_2mo_to_6mo" name="Child age 2 months up to 6 months">
+    <variable id="var_p_age_2mo_to_6mo" name="p_age_2mo_to_6mo" typeRef="boolean"/>
+  </inputData>
+  <inputData id="p_age_3yr_to_5yr" name="Child age 3 years up to 5 years">
+    <variable id="var_p_age_3yr_to_5yr" name="p_age_3yr_to_5yr" typeRef="boolean"/>
+  </inputData>
+  <inputData id="p_age_6mo_to_5yr" name="Child age 6 months up to 5 years">
+    <variable id="var_p_age_6mo_to_5yr" name="p_age_6mo_to_5yr" typeRef="boolean"/>
+  </inputData>
+  <inputData id="p_any_danger_sign" name="Any danger sign present">
+    <variable id="var_p_any_danger_sign" name="p_any_danger_sign" typeRef="boolean"/>
+  </inputData>
+  <inputData id="p_child_can_drink" name="Child can drink">
+    <variable id="var_p_child_can_drink" name="p_child_can_drink" typeRef="boolean"/>
+  </inputData>
+  <inputData id="p_cough_14_days_or_more" name="Cough for 14 days or more (danger sign)">
+    <variable id="var_p_cough_14_days_or_more" name="p_cough_14_days_or_more" typeRef="boolean"/>
+  </inputData>
+  <inputData id="p_diarrhoea_14_days_or_more" name="Diarrhoea for 14 days or more (danger sign)">
+    <variable id="var_p_diarrhoea_14_days_or_more" name="p_diarrhoea_14_days_or_more" typeRef="boolean"/>
+  </inputData>
+  <inputData id="p_diarrhoea_treatable" name="Diarrhoea treatable at home (&lt;14 days, no blood, no danger sign)">
+    <variable id="var_p_diarrhoea_treatable" name="p_diarrhoea_treatable" typeRef="boolean"/>
+  </inputData>
+  <inputData id="p_fast_breathing" name="Fast breathing treatable at home (cough + fast breathing, no chest indrawing, no danger sign)">
+    <variable id="var_p_fast_breathing" name="p_fast_breathing" typeRef="boolean"/>
+  </inputData>
+  <inputData id="p_fast_breathing_threshold" name="Fast breathing for age">
+    <variable id="var_p_fast_breathing_threshold" name="p_fast_breathing_threshold" typeRef="boolean"/>
+  </inputData>
+  <inputData id="p_fever_7_days_or_more" name="Fever for 7 days or more (danger sign)">
+    <variable id="var_p_fever_7_days_or_more" name="p_fever_7_days_or_more" typeRef="boolean"/>
+  </inputData>
+  <inputData id="p_fever_treatable_malaria_area" name="Fever treatable at home (&lt;7 days, malaria area, no danger sign)">
+    <variable id="var_p_fever_treatable_malaria_area" name="p_fever_treatable_malaria_area" typeRef="boolean"/>
+  </inputData>
+  <inputData id="p_fever_with_severe_danger_signs" name="Fever with convulsions/unconscious/unable to drink/vomits everything">
+    <variable id="var_p_fever_with_severe_danger_signs" name="p_fever_with_severe_danger_signs" typeRef="boolean"/>
+  </inputData>
+  <inputData id="p_muac_red" name="MUAC strap red - severe malnutrition">
+    <variable id="var_p_muac_red" name="p_muac_red" typeRef="boolean"/>
+  </inputData>
+  <inputData id="p_muac_yellow" name="MUAC strap yellow - moderate malnutrition">
+    <variable id="var_p_muac_yellow" name="p_muac_yellow" typeRef="boolean"/>
+  </inputData>
+  <inputData id="p_rdt_negative" name="RDT negative for malaria">
+    <variable id="var_p_rdt_negative" name="p_rdt_negative" typeRef="boolean"/>
+  </inputData>
+  <inputData id="p_rdt_positive" name="RDT positive for malaria">
+    <variable id="var_p_rdt_positive" name="p_rdt_positive" typeRef="boolean"/>
+  </inputData>
+  <decision id="decision_mod_assess" name="Identify Problems - ASK and LOOK">
+    <variable id="var_decision_mod_assess" name="mod_assess_output" typeRef="string"/>
+    <informationRequirement id="ir_mod_assess_demo_age_months">
+      <requiredInput href="#demo_age_months"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_demo_sex">
+      <requiredInput href="#demo_sex"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_demo_weight_kg">
+      <requiredInput href="#demo_weight_kg"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_demo_village">
+      <requiredInput href="#demo_village"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_demo_caregiver_name">
+      <requiredInput href="#demo_caregiver_name"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_demo_child_name">
+      <requiredInput href="#demo_child_name"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_q_cough_present">
+      <requiredInput href="#q_cough_present"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_q_cough_duration_days">
+      <requiredInput href="#q_cough_duration_days"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_q_diarrhoea_present">
+      <requiredInput href="#q_diarrhoea_present"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_q_diarrhoea_duration_days">
+      <requiredInput href="#q_diarrhoea_duration_days"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_q_blood_in_stool">
+      <requiredInput href="#q_blood_in_stool"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_q_fever_present">
+      <requiredInput href="#q_fever_present"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_q_fever_duration_days">
+      <requiredInput href="#q_fever_duration_days"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_q_convulsions_present">
+      <requiredInput href="#q_convulsions_present"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_q_able_to_drink_feed">
+      <requiredInput href="#q_able_to_drink_feed"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_q_vomits_everything">
+      <requiredInput href="#q_vomits_everything"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_hx_vaccine_bcg">
+      <requiredInput href="#hx_vaccine_bcg"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_hx_vaccine_hepb_birth">
+      <requiredInput href="#hx_vaccine_hepb_birth"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_hx_vaccine_opv0">
+      <requiredInput href="#hx_vaccine_opv0"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_hx_vaccine_dtp_hib1">
+      <requiredInput href="#hx_vaccine_dtp_hib1"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_hx_vaccine_hepb1">
+      <requiredInput href="#hx_vaccine_hepb1"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_hx_vaccine_opv1">
+      <requiredInput href="#hx_vaccine_opv1"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_hx_vaccine_rtv1">
+      <requiredInput href="#hx_vaccine_rtv1"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_hx_vaccine_pcv1">
+      <requiredInput href="#hx_vaccine_pcv1"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_hx_vaccine_dtp_hib2">
+      <requiredInput href="#hx_vaccine_dtp_hib2"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_hx_vaccine_hepb2">
+      <requiredInput href="#hx_vaccine_hepb2"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_hx_vaccine_opv2">
+      <requiredInput href="#hx_vaccine_opv2"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_hx_vaccine_rtv2">
+      <requiredInput href="#hx_vaccine_rtv2"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_hx_vaccine_pcv2">
+      <requiredInput href="#hx_vaccine_pcv2"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_hx_vaccine_dtp_hib3">
+      <requiredInput href="#hx_vaccine_dtp_hib3"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_hx_vaccine_hepb3">
+      <requiredInput href="#hx_vaccine_hepb3"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_hx_vaccine_opv3">
+      <requiredInput href="#hx_vaccine_opv3"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_hx_vaccine_rtv3">
+      <requiredInput href="#hx_vaccine_rtv3"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_hx_vaccine_pcv3">
+      <requiredInput href="#hx_vaccine_pcv3"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_hx_vaccine_mcv1">
+      <requiredInput href="#hx_vaccine_mcv1"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_hx_vaccine_dtp_booster">
+      <requiredInput href="#hx_vaccine_dtp_booster"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_hx_vaccine_mcv2">
+      <requiredInput href="#hx_vaccine_mcv2"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_ex_chest_indrawing">
+      <requiredInput href="#ex_chest_indrawing"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_ex_unusually_sleepy_unconscious">
+      <requiredInput href="#ex_unusually_sleepy_unconscious"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_ex_bilateral_foot_oedema">
+      <requiredInput href="#ex_bilateral_foot_oedema"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_ex_respiratory_rate_bpm">
+      <requiredInput href="#ex_respiratory_rate_bpm"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_v_muac_mm">
+      <requiredInput href="#v_muac_mm"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_p_malaria_endemic_area">
+      <requiredInput href="#p_malaria_endemic_area"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_p_danger_sign_present">
+      <requiredInput href="#p_danger_sign_present"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_p_fast_breathing">
+      <requiredInput href="#p_fast_breathing"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_p_severe_malnutrition">
+      <requiredInput href="#p_severe_malnutrition"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_p_moderate_malnutrition">
+      <requiredInput href="#p_moderate_malnutrition"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_p_diarrhoea_uncomplicated">
+      <requiredInput href="#p_diarrhoea_uncomplicated"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_p_fever_uncomplicated">
+      <requiredInput href="#p_fever_uncomplicated"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_p_pneumonia">
+      <requiredInput href="#p_pneumonia"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_assess_p_vaccine_due">
+      <requiredInput href="#p_vaccine_due"/>
+    </informationRequirement>
+    <decisionTable id="dt_mod_assess" hitPolicy="UNIQUE">
+      <input id="input_mod_assess_0" label="demo_age_months">
+        <inputExpression id="ie_mod_assess_0" typeRef="boolean">
+          <text>demo_age_months</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_1" label="demo_sex">
+        <inputExpression id="ie_mod_assess_1" typeRef="boolean">
+          <text>demo_sex</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_2" label="demo_weight_kg">
+        <inputExpression id="ie_mod_assess_2" typeRef="boolean">
+          <text>demo_weight_kg</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_3" label="demo_village">
+        <inputExpression id="ie_mod_assess_3" typeRef="boolean">
+          <text>demo_village</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_4" label="demo_caregiver_name">
+        <inputExpression id="ie_mod_assess_4" typeRef="boolean">
+          <text>demo_caregiver_name</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_5" label="demo_child_name">
+        <inputExpression id="ie_mod_assess_5" typeRef="boolean">
+          <text>demo_child_name</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_6" label="q_cough_present">
+        <inputExpression id="ie_mod_assess_6" typeRef="boolean">
+          <text>q_cough_present</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_7" label="q_cough_duration_days">
+        <inputExpression id="ie_mod_assess_7" typeRef="boolean">
+          <text>q_cough_duration_days</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_8" label="q_diarrhoea_present">
+        <inputExpression id="ie_mod_assess_8" typeRef="boolean">
+          <text>q_diarrhoea_present</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_9" label="q_diarrhoea_duration_days">
+        <inputExpression id="ie_mod_assess_9" typeRef="boolean">
+          <text>q_diarrhoea_duration_days</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_10" label="q_blood_in_stool">
+        <inputExpression id="ie_mod_assess_10" typeRef="boolean">
+          <text>q_blood_in_stool</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_11" label="q_fever_present">
+        <inputExpression id="ie_mod_assess_11" typeRef="boolean">
+          <text>q_fever_present</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_12" label="q_fever_duration_days">
+        <inputExpression id="ie_mod_assess_12" typeRef="boolean">
+          <text>q_fever_duration_days</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_13" label="q_convulsions_present">
+        <inputExpression id="ie_mod_assess_13" typeRef="boolean">
+          <text>q_convulsions_present</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_14" label="q_able_to_drink_feed">
+        <inputExpression id="ie_mod_assess_14" typeRef="boolean">
+          <text>q_able_to_drink_feed</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_15" label="q_vomits_everything">
+        <inputExpression id="ie_mod_assess_15" typeRef="boolean">
+          <text>q_vomits_everything</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_16" label="hx_vaccine_bcg">
+        <inputExpression id="ie_mod_assess_16" typeRef="boolean">
+          <text>hx_vaccine_bcg</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_17" label="hx_vaccine_hepb_birth">
+        <inputExpression id="ie_mod_assess_17" typeRef="boolean">
+          <text>hx_vaccine_hepb_birth</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_18" label="hx_vaccine_opv0">
+        <inputExpression id="ie_mod_assess_18" typeRef="boolean">
+          <text>hx_vaccine_opv0</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_19" label="hx_vaccine_dtp_hib1">
+        <inputExpression id="ie_mod_assess_19" typeRef="boolean">
+          <text>hx_vaccine_dtp_hib1</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_20" label="hx_vaccine_hepb1">
+        <inputExpression id="ie_mod_assess_20" typeRef="boolean">
+          <text>hx_vaccine_hepb1</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_21" label="hx_vaccine_opv1">
+        <inputExpression id="ie_mod_assess_21" typeRef="boolean">
+          <text>hx_vaccine_opv1</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_22" label="hx_vaccine_rtv1">
+        <inputExpression id="ie_mod_assess_22" typeRef="boolean">
+          <text>hx_vaccine_rtv1</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_23" label="hx_vaccine_pcv1">
+        <inputExpression id="ie_mod_assess_23" typeRef="boolean">
+          <text>hx_vaccine_pcv1</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_24" label="hx_vaccine_dtp_hib2">
+        <inputExpression id="ie_mod_assess_24" typeRef="boolean">
+          <text>hx_vaccine_dtp_hib2</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_25" label="hx_vaccine_hepb2">
+        <inputExpression id="ie_mod_assess_25" typeRef="boolean">
+          <text>hx_vaccine_hepb2</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_26" label="hx_vaccine_opv2">
+        <inputExpression id="ie_mod_assess_26" typeRef="boolean">
+          <text>hx_vaccine_opv2</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_27" label="hx_vaccine_rtv2">
+        <inputExpression id="ie_mod_assess_27" typeRef="boolean">
+          <text>hx_vaccine_rtv2</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_28" label="hx_vaccine_pcv2">
+        <inputExpression id="ie_mod_assess_28" typeRef="boolean">
+          <text>hx_vaccine_pcv2</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_29" label="hx_vaccine_dtp_hib3">
+        <inputExpression id="ie_mod_assess_29" typeRef="boolean">
+          <text>hx_vaccine_dtp_hib3</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_30" label="hx_vaccine_hepb3">
+        <inputExpression id="ie_mod_assess_30" typeRef="boolean">
+          <text>hx_vaccine_hepb3</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_31" label="hx_vaccine_opv3">
+        <inputExpression id="ie_mod_assess_31" typeRef="boolean">
+          <text>hx_vaccine_opv3</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_32" label="hx_vaccine_rtv3">
+        <inputExpression id="ie_mod_assess_32" typeRef="boolean">
+          <text>hx_vaccine_rtv3</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_33" label="hx_vaccine_pcv3">
+        <inputExpression id="ie_mod_assess_33" typeRef="boolean">
+          <text>hx_vaccine_pcv3</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_34" label="hx_vaccine_mcv1">
+        <inputExpression id="ie_mod_assess_34" typeRef="boolean">
+          <text>hx_vaccine_mcv1</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_35" label="hx_vaccine_dtp_booster">
+        <inputExpression id="ie_mod_assess_35" typeRef="boolean">
+          <text>hx_vaccine_dtp_booster</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_36" label="hx_vaccine_mcv2">
+        <inputExpression id="ie_mod_assess_36" typeRef="boolean">
+          <text>hx_vaccine_mcv2</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_37" label="ex_chest_indrawing">
+        <inputExpression id="ie_mod_assess_37" typeRef="boolean">
+          <text>ex_chest_indrawing</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_38" label="ex_unusually_sleepy_unconscious">
+        <inputExpression id="ie_mod_assess_38" typeRef="boolean">
+          <text>ex_unusually_sleepy_unconscious</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_39" label="ex_bilateral_foot_oedema">
+        <inputExpression id="ie_mod_assess_39" typeRef="boolean">
+          <text>ex_bilateral_foot_oedema</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_40" label="ex_respiratory_rate_bpm">
+        <inputExpression id="ie_mod_assess_40" typeRef="boolean">
+          <text>ex_respiratory_rate_bpm</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_41" label="v_muac_mm">
+        <inputExpression id="ie_mod_assess_41" typeRef="boolean">
+          <text>v_muac_mm</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_42" label="p_malaria_endemic_area">
+        <inputExpression id="ie_mod_assess_42" typeRef="boolean">
+          <text>p_malaria_endemic_area</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_43" label="p_danger_sign_present">
+        <inputExpression id="ie_mod_assess_43" typeRef="boolean">
+          <text>p_danger_sign_present</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_44" label="p_fast_breathing">
+        <inputExpression id="ie_mod_assess_44" typeRef="boolean">
+          <text>p_fast_breathing</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_45" label="p_severe_malnutrition">
+        <inputExpression id="ie_mod_assess_45" typeRef="boolean">
+          <text>p_severe_malnutrition</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_46" label="p_moderate_malnutrition">
+        <inputExpression id="ie_mod_assess_46" typeRef="boolean">
+          <text>p_moderate_malnutrition</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_47" label="p_diarrhoea_uncomplicated">
+        <inputExpression id="ie_mod_assess_47" typeRef="boolean">
+          <text>p_diarrhoea_uncomplicated</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_48" label="p_fever_uncomplicated">
+        <inputExpression id="ie_mod_assess_48" typeRef="boolean">
+          <text>p_fever_uncomplicated</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_49" label="p_pneumonia">
+        <inputExpression id="ie_mod_assess_49" typeRef="boolean">
+          <text>p_pneumonia</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_assess_50" label="p_vaccine_due">
+        <inputExpression id="ie_mod_assess_50" typeRef="boolean">
+          <text>p_vaccine_due</text>
+        </inputExpression>
+      </input>
+      <output id="output_mod_assess_0" label="mod_assess_done" name="mod_assess_done" typeRef="string"/>
+      <output id="output_mod_assess_1" label="p_danger_sign_present" name="p_danger_sign_present" typeRef="string"/>
+      <output id="output_mod_assess_2" label="p_fast_breathing" name="p_fast_breathing" typeRef="string"/>
+      <output id="output_mod_assess_3" label="p_severe_malnutrition" name="p_severe_malnutrition" typeRef="string"/>
+      <output id="output_mod_assess_4" label="p_moderate_malnutrition" name="p_moderate_malnutrition" typeRef="string"/>
+      <output id="output_mod_assess_5" label="p_diarrhoea_uncomplicated" name="p_diarrhoea_uncomplicated" typeRef="string"/>
+      <output id="output_mod_assess_6" label="p_fever_uncomplicated" name="p_fever_uncomplicated" typeRef="string"/>
+      <output id="output_mod_assess_7" label="p_pneumonia" name="p_pneumonia" typeRef="string"/>
+      <output id="output_mod_assess_8" label="p_vaccine_due" name="p_vaccine_due" typeRef="string"/>
+      <output id="output_mod_assess_9" label="p_refer_urgently" name="p_refer_urgently" typeRef="string"/>
+      <output id="output_mod_assess_10" label="p_pre_referral_ors" name="p_pre_referral_ors" typeRef="string"/>
+      <output id="output_mod_assess_11" label="p_pre_referral_rectal_artesunate" name="p_pre_referral_rectal_artesunate" typeRef="string"/>
+      <output id="output_mod_assess_12" label="p_pre_referral_first_dose_al" name="p_pre_referral_first_dose_al" typeRef="string"/>
+      <output id="output_mod_assess_13" label="p_pre_referral_first_dose_amoxicillin" name="p_pre_referral_first_dose_amoxicillin" typeRef="string"/>
+      <output id="output_mod_assess_14" label="ref_destination" name="ref_destination" typeRef="string"/>
+      <output id="output_mod_assess_15" label="ref_urgency" name="ref_urgency" typeRef="string"/>
+      <output id="output_mod_assess_16" label="ref_reason" name="ref_reason" typeRef="string"/>
+      <output id="output_mod_assess_17" label="is_priority_exit" name="is_priority_exit" typeRef="string"/>
+      <output id="output_mod_assess_18" label="priority_exit_destination" name="priority_exit_destination" typeRef="string"/>
+      <output id="output_mod_assess_19" label="flag_mod_treat_diarrhoea" name="flag_mod_treat_diarrhoea" typeRef="string"/>
+      <output id="output_mod_assess_20" label="flag_mod_treat_fever" name="flag_mod_treat_fever" typeRef="string"/>
+      <output id="output_mod_assess_21" label="flag_mod_treat_pneumonia" name="flag_mod_treat_pneumonia" typeRef="string"/>
+      <output id="output_mod_assess_22" label="flag_mod_treat_malnutrition" name="flag_mod_treat_malnutrition" typeRef="string"/>
+      <output id="output_mod_assess_23" label="flag_mod_treat_severe_malnutrition" name="flag_mod_treat_severe_malnutrition" typeRef="string"/>
+      <output id="output_mod_assess_24" label="flag_mod_counsel_feeding" name="flag_mod_counsel_feeding" typeRef="string"/>
+      <output id="output_mod_assess_25" label="flag_mod_vaccines" name="flag_mod_vaccines" typeRef="string"/>
+      <output id="output_mod_assess_26" label="flag_mod_home_care" name="flag_mod_home_care" typeRef="string"/>
+      <output id="output_mod_assess_27" label="flag_mod_pre_referral" name="flag_mod_pre_referral" typeRef="string"/>
+      <rule id="rule_1">
+        <description>ANY danger sign present (cough &gt;=14 days, diarrhoea &gt;=14 days, blood in stool, fever &gt;=7 days, convulsions, unable to drink/feed, vomits everything, chest indrawing, unusually sleepy/unconscious, red MUAC &lt;115mm, bilateral foot oedema): refer urgently to hospital. Set pre-referral treatment flags based on specific combination of danger signs.</description>
+        <inputEntry id="ie_mod_assess_0_0">
+          <text>(q_cough_present == true &amp;&amp; q_cough_duration_days &gt;= 14) || (q_diarrhoea_present == true &amp;&amp; q_diarrhoea_duration_days &gt;= 14) || (q_blood_in_stool == true) || (q_fever_present == true &amp;&amp; q_fever_duration_days &gt;= 7) || (q_convulsions_present == true) || (q_able_to_drink_feed == false) || (q_vomits_everything == true) || (ex_chest_indrawing == true) || (ex_unusually_sleepy_unconscious == true) || (v_muac_mm &lt; 115) || (ex_bilateral_foot_oedema == true)</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_2">
+        <description>No danger signs. Cough present (&lt;14 days), no chest indrawing, fast breathing present (&gt;=50 bpm for 2-12 months OR &gt;=40 bpm for 12-60 months): classify as pneumonia. Also assess and flag co-existing uncomplicated diarrhoea and uncomplicated fever for treatment modules. Flag home care and vaccine check.</description>
+        <inputEntry id="ie_mod_assess_1_0">
+          <text>p_danger_sign_present == false &amp;&amp; q_cough_present == true &amp;&amp; q_cough_duration_days &lt; 14 &amp;&amp; ex_chest_indrawing == false &amp;&amp; ((demo_age_months &gt;= 2 &amp;&amp; demo_age_months &lt; 12 &amp;&amp; ex_respiratory_rate_bpm &gt;= 50) || (demo_age_months &gt;= 12 &amp;&amp; demo_age_months &lt; 60 &amp;&amp; ex_respiratory_rate_bpm &gt;= 40))</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_3">
+        <description>No danger signs. Cough present (&lt;14 days), no chest indrawing, no fast breathing. Uncomplicated diarrhoea present (&lt;14 days, no blood). Also check for co-existing uncomplicated fever. Flag diarrhoea treatment module, conditionally fever module, home care, and vaccine check.</description>
+        <inputEntry id="ie_mod_assess_2_0">
+          <text>p_danger_sign_present == false &amp;&amp; q_cough_present == true &amp;&amp; q_cough_duration_days &lt; 14 &amp;&amp; ex_chest_indrawing == false &amp;&amp; !((demo_age_months &gt;= 2 &amp;&amp; demo_age_months &lt; 12 &amp;&amp; ex_respiratory_rate_bpm &gt;= 50) || (demo_age_months &gt;= 12 &amp;&amp; demo_age_months &lt; 60 &amp;&amp; ex_respiratory_rate_bpm &gt;= 40)) &amp;&amp; (q_diarrhoea_present == true &amp;&amp; q_diarrhoea_duration_days &lt; 14 &amp;&amp; q_blood_in_stool == false)</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_4">
+        <description>No danger signs. Cough present (&lt;14 days), no chest indrawing, no fast breathing, no uncomplicated diarrhoea. Uncomplicated fever present (&lt;7 days) in malaria endemic area. Flag fever treatment (RDT) module, home care, and vaccine check.</description>
+        <inputEntry id="ie_mod_assess_3_0">
+          <text>p_danger_sign_present == false &amp;&amp; q_cough_present == true &amp;&amp; q_cough_duration_days &lt; 14 &amp;&amp; ex_chest_indrawing == false &amp;&amp; !((demo_age_months &gt;= 2 &amp;&amp; demo_age_months &lt; 12 &amp;&amp; ex_respiratory_rate_bpm &gt;= 50) || (demo_age_months &gt;= 12 &amp;&amp; demo_age_months &lt; 60 &amp;&amp; ex_respiratory_rate_bpm &gt;= 40)) &amp;&amp; (q_diarrhoea_present == false || (q_diarrhoea_present == true &amp;&amp; q_diarrhoea_duration_days &lt; 14 &amp;&amp; q_blood_in_stool == false) == false) &amp;&amp; (q_fever_present == true &amp;&amp; q_fever_duration_days &lt; 7 &amp;&amp; p_malaria_endemic_area == true)</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_5">
+        <description>No danger signs. No pneumonia. Uncomplicated diarrhoea (&lt;14 days, no blood). Optionally co-existing uncomplicated fever in malaria area. Flag diarrhoea and conditionally fever treatment modules, home care, and vaccine check.</description>
+        <inputEntry id="ie_mod_assess_4_0">
+          <text>p_danger_sign_present == false &amp;&amp; (q_cough_present == false || (q_cough_present == true &amp;&amp; q_cough_duration_days &lt; 14 &amp;&amp; ex_chest_indrawing == false &amp;&amp; !((demo_age_months &gt;= 2 &amp;&amp; demo_age_months &lt; 12 &amp;&amp; ex_respiratory_rate_bpm &gt;= 50) || (demo_age_months &gt;= 12 &amp;&amp; demo_age_months &lt; 60 &amp;&amp; ex_respiratory_rate_bpm &gt;= 40)))) &amp;&amp; (q_diarrhoea_present == true &amp;&amp; q_diarrhoea_duration_days &lt; 14 &amp;&amp; q_blood_in_stool == false) &amp;&amp; (q_fever_present == false || (q_fever_present == true &amp;&amp; q_fever_duration_days &lt; 7 &amp;&amp; p_malaria_endemic_area == true))</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_6">
+        <description>No danger signs. No cough or cough without fast breathing or chest indrawing. No diarrhoea. Uncomplicated fever (&lt;7 days) in malaria endemic area. Flag fever treatment (RDT) module, home care, and vaccine check.</description>
+        <inputEntry id="ie_mod_assess_5_0">
+          <text>p_danger_sign_present == false &amp;&amp; (q_cough_present == false || (q_cough_present == true &amp;&amp; q_cough_duration_days &lt; 14 &amp;&amp; ex_chest_indrawing == false &amp;&amp; !((demo_age_months &gt;= 2 &amp;&amp; demo_age_months &lt; 12 &amp;&amp; ex_respiratory_rate_bpm &gt;= 50) || (demo_age_months &gt;= 12 &amp;&amp; demo_age_months &lt; 60 &amp;&amp; ex_respiratory_rate_bpm &gt;= 40)))) &amp;&amp; (q_diarrhoea_present == false) &amp;&amp; (q_fever_present == true &amp;&amp; q_fever_duration_days &lt; 7 &amp;&amp; p_malaria_endemic_area == true)</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_7">
+        <description>No danger signs from main list, but MUAC red (&lt;115mm) or bilateral foot oedema without any other treatable condition: severe acute malnutrition. Refer urgently to health facility. Note: v_muac_mm &lt; 115 and bilateral foot oedema are also independently listed as danger signs in rule_1; this rule covers isolated SAM presentation.</description>
+        <inputEntry id="ie_mod_assess_6_0">
+          <text>p_danger_sign_present == false &amp;&amp; (q_cough_present == false || (q_cough_present == true &amp;&amp; q_cough_duration_days &lt; 14 &amp;&amp; ex_chest_indrawing == false &amp;&amp; !((demo_age_months &gt;= 2 &amp;&amp; demo_age_months &lt; 12 &amp;&amp; ex_respiratory_rate_bpm &gt;= 50) || (demo_age_months &gt;= 12 &amp;&amp; demo_age_months &lt; 60 &amp;&amp; ex_respiratory_rate_bpm &gt;= 40)))) &amp;&amp; q_diarrhoea_present == false &amp;&amp; (q_fever_present == false || (q_fever_present == true &amp;&amp; (q_fever_duration_days &gt;= 7 || p_malaria_endemic_area == false))) &amp;&amp; (v_muac_mm &lt; 115 || ex_bilateral_foot_oedema == true)</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_8">
+        <description>No danger signs, no acute illness requiring treatment. MUAC yellow (115-124mm), no oedema: moderate malnutrition. Counsel on feeding. Flag vaccine check and home care advice.</description>
+        <inputEntry id="ie_mod_assess_7_0">
+          <text>p_danger_sign_present == false &amp;&amp; (q_cough_present == false || (q_cough_present == true &amp;&amp; q_cough_duration_days &lt; 14 &amp;&amp; ex_chest_indrawing == false &amp;&amp; !((demo_age_months &gt;= 2 &amp;&amp; demo_age_months &lt; 12 &amp;&amp; ex_respiratory_rate_bpm &gt;= 50) || (demo_age_months &gt;= 12 &amp;&amp; demo_age_months &lt; 60 &amp;&amp; ex_respiratory_rate_bpm &gt;= 40)))) &amp;&amp; q_diarrhoea_present == false &amp;&amp; (q_fever_present == false || (q_fever_present == true &amp;&amp; (q_fever_duration_days &gt;= 7 || p_malaria_endemic_area == false))) &amp;&amp; v_muac_mm &gt;= 115 &amp;&amp; v_muac_mm &lt; 125 &amp;&amp; ex_bilateral_foot_oedema == false</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_9">
+        <description>No danger signs, no acute illness, MUAC green (&gt;=125mm), no oedema: well child. Check vaccination status and provide general home care/prevention advice.</description>
+        <inputEntry id="ie_mod_assess_8_0">
+          <text>p_danger_sign_present == false &amp;&amp; (q_cough_present == false || (q_cough_present == true &amp;&amp; q_cough_duration_days &lt; 14 &amp;&amp; ex_chest_indrawing == false &amp;&amp; !((demo_age_months &gt;= 2 &amp;&amp; demo_age_months &lt; 12 &amp;&amp; ex_respiratory_rate_bpm &gt;= 50) || (demo_age_months &gt;= 12 &amp;&amp; demo_age_months &lt; 60 &amp;&amp; ex_respiratory_rate_bpm &gt;= 40)))) &amp;&amp; q_diarrhoea_present == false &amp;&amp; (q_fever_present == false || (q_fever_present == true &amp;&amp; (q_fever_duration_days &gt;= 7 || p_malaria_endemic_area == false))) &amp;&amp; v_muac_mm &gt;= 125 &amp;&amp; ex_bilateral_foot_oedema == false</text>
+        </inputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="decision_mod_check_vaccines" name="Check Vaccines Received">
+    <variable id="var_decision_mod_check_vaccines" name="mod_check_vaccines_output" typeRef="string"/>
+    <informationRequirement id="ir_mod_check_vaccines_demo_age_in_weeks">
+      <requiredInput href="#demo_age_in_weeks"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_check_vaccines_demo_age_in_months">
+      <requiredInput href="#demo_age_in_months"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_check_vaccines_hx_vaccine_card_present">
+      <requiredInput href="#hx_vaccine_card_present"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_check_vaccines_hx_bcg_given">
+      <requiredInput href="#hx_bcg_given"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_check_vaccines_hx_hepb_birth_given">
+      <requiredInput href="#hx_hepb_birth_given"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_check_vaccines_hx_opv0_given">
+      <requiredInput href="#hx_opv0_given"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_check_vaccines_hx_dtp_hib1_given">
+      <requiredInput href="#hx_dtp_hib1_given"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_check_vaccines_hx_hepb1_given">
+      <requiredInput href="#hx_hepb1_given"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_check_vaccines_hx_opv1_given">
+      <requiredInput href="#hx_opv1_given"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_check_vaccines_hx_rtv1_given">
+      <requiredInput href="#hx_rtv1_given"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_check_vaccines_hx_pcv1_given">
+      <requiredInput href="#hx_pcv1_given"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_check_vaccines_hx_dtp_hib2_given">
+      <requiredInput href="#hx_dtp_hib2_given"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_check_vaccines_hx_hepb2_given">
+      <requiredInput href="#hx_hepb2_given"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_check_vaccines_hx_opv2_given">
+      <requiredInput href="#hx_opv2_given"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_check_vaccines_hx_rtv2_given">
+      <requiredInput href="#hx_rtv2_given"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_check_vaccines_hx_pcv2_given">
+      <requiredInput href="#hx_pcv2_given"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_check_vaccines_hx_dtp_hib3_given">
+      <requiredInput href="#hx_dtp_hib3_given"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_check_vaccines_hx_hepb3_given">
+      <requiredInput href="#hx_hepb3_given"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_check_vaccines_hx_opv3_given">
+      <requiredInput href="#hx_opv3_given"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_check_vaccines_hx_rtv3_given">
+      <requiredInput href="#hx_rtv3_given"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_check_vaccines_hx_pcv3_given">
+      <requiredInput href="#hx_pcv3_given"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_check_vaccines_hx_mcv1_given">
+      <requiredInput href="#hx_mcv1_given"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_check_vaccines_hx_dtp_booster_given">
+      <requiredInput href="#hx_dtp_booster_given"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_check_vaccines_hx_mcv2_given">
+      <requiredInput href="#hx_mcv2_given"/>
+    </informationRequirement>
+    <decisionTable id="dt_mod_check_vaccines" hitPolicy="UNIQUE">
+      <input id="input_mod_check_vaccines_0" label="demo_age_in_weeks">
+        <inputExpression id="ie_mod_check_vaccines_0" typeRef="boolean">
+          <text>demo_age_in_weeks</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_check_vaccines_1" label="demo_age_in_months">
+        <inputExpression id="ie_mod_check_vaccines_1" typeRef="boolean">
+          <text>demo_age_in_months</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_check_vaccines_2" label="hx_vaccine_card_present">
+        <inputExpression id="ie_mod_check_vaccines_2" typeRef="boolean">
+          <text>hx_vaccine_card_present</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_check_vaccines_3" label="hx_bcg_given">
+        <inputExpression id="ie_mod_check_vaccines_3" typeRef="boolean">
+          <text>hx_bcg_given</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_check_vaccines_4" label="hx_hepb_birth_given">
+        <inputExpression id="ie_mod_check_vaccines_4" typeRef="boolean">
+          <text>hx_hepb_birth_given</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_check_vaccines_5" label="hx_opv0_given">
+        <inputExpression id="ie_mod_check_vaccines_5" typeRef="boolean">
+          <text>hx_opv0_given</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_check_vaccines_6" label="hx_dtp_hib1_given">
+        <inputExpression id="ie_mod_check_vaccines_6" typeRef="boolean">
+          <text>hx_dtp_hib1_given</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_check_vaccines_7" label="hx_hepb1_given">
+        <inputExpression id="ie_mod_check_vaccines_7" typeRef="boolean">
+          <text>hx_hepb1_given</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_check_vaccines_8" label="hx_opv1_given">
+        <inputExpression id="ie_mod_check_vaccines_8" typeRef="boolean">
+          <text>hx_opv1_given</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_check_vaccines_9" label="hx_rtv1_given">
+        <inputExpression id="ie_mod_check_vaccines_9" typeRef="boolean">
+          <text>hx_rtv1_given</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_check_vaccines_10" label="hx_pcv1_given">
+        <inputExpression id="ie_mod_check_vaccines_10" typeRef="boolean">
+          <text>hx_pcv1_given</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_check_vaccines_11" label="hx_dtp_hib2_given">
+        <inputExpression id="ie_mod_check_vaccines_11" typeRef="boolean">
+          <text>hx_dtp_hib2_given</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_check_vaccines_12" label="hx_hepb2_given">
+        <inputExpression id="ie_mod_check_vaccines_12" typeRef="boolean">
+          <text>hx_hepb2_given</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_check_vaccines_13" label="hx_opv2_given">
+        <inputExpression id="ie_mod_check_vaccines_13" typeRef="boolean">
+          <text>hx_opv2_given</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_check_vaccines_14" label="hx_rtv2_given">
+        <inputExpression id="ie_mod_check_vaccines_14" typeRef="boolean">
+          <text>hx_rtv2_given</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_check_vaccines_15" label="hx_pcv2_given">
+        <inputExpression id="ie_mod_check_vaccines_15" typeRef="boolean">
+          <text>hx_pcv2_given</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_check_vaccines_16" label="hx_dtp_hib3_given">
+        <inputExpression id="ie_mod_check_vaccines_16" typeRef="boolean">
+          <text>hx_dtp_hib3_given</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_check_vaccines_17" label="hx_hepb3_given">
+        <inputExpression id="ie_mod_check_vaccines_17" typeRef="boolean">
+          <text>hx_hepb3_given</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_check_vaccines_18" label="hx_opv3_given">
+        <inputExpression id="ie_mod_check_vaccines_18" typeRef="boolean">
+          <text>hx_opv3_given</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_check_vaccines_19" label="hx_rtv3_given">
+        <inputExpression id="ie_mod_check_vaccines_19" typeRef="boolean">
+          <text>hx_rtv3_given</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_check_vaccines_20" label="hx_pcv3_given">
+        <inputExpression id="ie_mod_check_vaccines_20" typeRef="boolean">
+          <text>hx_pcv3_given</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_check_vaccines_21" label="hx_mcv1_given">
+        <inputExpression id="ie_mod_check_vaccines_21" typeRef="boolean">
+          <text>hx_mcv1_given</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_check_vaccines_22" label="hx_dtp_booster_given">
+        <inputExpression id="ie_mod_check_vaccines_22" typeRef="boolean">
+          <text>hx_dtp_booster_given</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_check_vaccines_23" label="hx_mcv2_given">
+        <inputExpression id="ie_mod_check_vaccines_23" typeRef="boolean">
+          <text>hx_mcv2_given</text>
+        </inputExpression>
+      </input>
+      <output id="output_mod_check_vaccines_0" label="adv_vaccines_up_to_date" name="adv_vaccines_up_to_date" typeRef="string"/>
+      <output id="output_mod_check_vaccines_1" label="adv_vaccine_card_missing" name="adv_vaccine_card_missing" typeRef="string"/>
+      <output id="output_mod_check_vaccines_2" label="adv_vaccines_due" name="adv_vaccines_due" typeRef="string"/>
+      <output id="output_mod_check_vaccines_3" label="adv_vaccines_due_list" name="adv_vaccines_due_list" typeRef="string"/>
+      <output id="output_mod_check_vaccines_4" label="adv_refer_for_vaccines" name="adv_refer_for_vaccines" typeRef="string"/>
+      <output id="output_mod_check_vaccines_5" label="fu_vaccine_referral_advised" name="fu_vaccine_referral_advised" typeRef="string"/>
+      <output id="output_mod_check_vaccines_6" label="mod_check_vaccines_done" name="mod_check_vaccines_done" typeRef="string"/>
+      <rule id="rule_vcx_no_card">
+        <description>No vaccine card present; advise caregiver to bring card to health facility to verify vaccination status and catch up on any missed vaccines.</description>
+        <inputEntry id="ie_mod_check_vaccines_0_0">
+          <text>hx_vaccine_card_present == false</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_vcx_birth_due">
+        <description>Child is under 6 weeks and is missing one or more birth-dose vaccines (BCG, HepB birth, OPV0); refer to health facility for vaccination.</description>
+        <inputEntry id="ie_mod_check_vaccines_1_0">
+          <text>hx_vaccine_card_present == true AND demo_age_in_weeks &gt;= 0 AND demo_age_in_weeks &lt; 6 AND (hx_bcg_given == false OR hx_hepb_birth_given == false OR hx_opv0_given == false)</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_vcx_birth_uptodate_under6wk">
+        <description>Child is under 6 weeks and has received all birth-dose vaccines (BCG, HepB birth, OPV0); vaccines are up to date for age. Advise caregiver to return at 6 weeks for next scheduled vaccines.</description>
+        <inputEntry id="ie_mod_check_vaccines_2_0">
+          <text>hx_vaccine_card_present == true AND demo_age_in_weeks &gt;= 0 AND demo_age_in_weeks &lt; 6 AND hx_bcg_given == true AND hx_hepb_birth_given == true AND hx_opv0_given == true</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_vcx_6wk_due">
+        <description>Child is 6 to 9 weeks and is missing one or more 6-week vaccines (DTP-Hib1, HepB1, OPV1, RTV1, PCV1); refer to health facility for vaccination.</description>
+        <inputEntry id="ie_mod_check_vaccines_3_0">
+          <text>hx_vaccine_card_present == true AND demo_age_in_weeks &gt;= 6 AND demo_age_in_weeks &lt; 10 AND (hx_dtp_hib1_given == false OR hx_hepb1_given == false OR hx_opv1_given == false OR hx_rtv1_given == false OR hx_pcv1_given == false)</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_vcx_6wk_uptodate">
+        <description>Child is 6 to 9 weeks and has received all vaccines due at 6 weeks; vaccines are up to date for age. Advise caregiver to return at 10 weeks for next scheduled vaccines.</description>
+        <inputEntry id="ie_mod_check_vaccines_4_0">
+          <text>hx_vaccine_card_present == true AND demo_age_in_weeks &gt;= 6 AND demo_age_in_weeks &lt; 10 AND hx_dtp_hib1_given == true AND hx_hepb1_given == true AND hx_opv1_given == true AND hx_rtv1_given == true AND hx_pcv1_given == true</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_vcx_10wk_due">
+        <description>Child is 10 to 13 weeks and is missing one or more 10-week vaccines (DTP-Hib2, HepB2, OPV2, RTV2, PCV2); refer to health facility for vaccination.</description>
+        <inputEntry id="ie_mod_check_vaccines_5_0">
+          <text>hx_vaccine_card_present == true AND demo_age_in_weeks &gt;= 10 AND demo_age_in_weeks &lt; 14 AND (hx_dtp_hib2_given == false OR hx_hepb2_given == false OR hx_opv2_given == false OR hx_rtv2_given == false OR hx_pcv2_given == false)</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_vcx_10wk_uptodate">
+        <description>Child is 10 to 13 weeks and has received all vaccines due at 10 weeks; vaccines are up to date for age. Advise caregiver to return at 14 weeks for next scheduled vaccines.</description>
+        <inputEntry id="ie_mod_check_vaccines_6_0">
+          <text>hx_vaccine_card_present == true AND demo_age_in_weeks &gt;= 10 AND demo_age_in_weeks &lt; 14 AND hx_dtp_hib2_given == true AND hx_hepb2_given == true AND hx_opv2_given == true AND hx_rtv2_given == true AND hx_pcv2_given == true</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_vcx_14wk_due">
+        <description>Child is 14 weeks to under 9 months and is missing one or more 14-week vaccines (DTP-Hib3, HepB3, OPV3, RTV3, PCV3); refer to health facility for vaccination.</description>
+        <inputEntry id="ie_mod_check_vaccines_7_0">
+          <text>hx_vaccine_card_present == true AND demo_age_in_weeks &gt;= 14 AND demo_age_in_months &lt; 9 AND (hx_dtp_hib3_given == false OR hx_hepb3_given == false OR hx_opv3_given == false OR hx_rtv3_given == false OR hx_pcv3_given == false)</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_vcx_14wk_uptodate">
+        <description>Child is 14 weeks to under 9 months and has received all vaccines due at 14 weeks; vaccines are up to date for age. Advise caregiver to return at 9 months for MCV1.</description>
+        <inputEntry id="ie_mod_check_vaccines_8_0">
+          <text>hx_vaccine_card_present == true AND demo_age_in_weeks &gt;= 14 AND demo_age_in_months &lt; 9 AND hx_dtp_hib3_given == true AND hx_hepb3_given == true AND hx_opv3_given == true AND hx_rtv3_given == true AND hx_pcv3_given == true</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_vcx_9mo_due">
+        <description>Child is 9 to 17 months and has not received MCV1; refer to health facility for vaccination.</description>
+        <inputEntry id="ie_mod_check_vaccines_9_0">
+          <text>hx_vaccine_card_present == true AND demo_age_in_months &gt;= 9 AND demo_age_in_months &lt; 18 AND hx_mcv1_given == false</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_vcx_9mo_uptodate">
+        <description>Child is 9 to 17 months and has received MCV1; vaccines are up to date for age. Advise caregiver to return at 18 months for DTP booster and MCV2.</description>
+        <inputEntry id="ie_mod_check_vaccines_10_0">
+          <text>hx_vaccine_card_present == true AND demo_age_in_months &gt;= 9 AND demo_age_in_months &lt; 18 AND hx_mcv1_given == true</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_vcx_18mo_due">
+        <description>Child is 18 months to under 5 years and is missing one or more 18-month vaccines (DTP booster, MCV2); refer to health facility for vaccination.</description>
+        <inputEntry id="ie_mod_check_vaccines_11_0">
+          <text>hx_vaccine_card_present == true AND demo_age_in_months &gt;= 18 AND demo_age_in_months &lt; 60 AND (hx_dtp_booster_given == false OR hx_mcv2_given == false)</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_vcx_18mo_uptodate">
+        <description>Child is 18 months to under 5 years and has received all vaccines in the schedule including DTP booster and MCV2; vaccines are fully up to date. Praise caregiver and confirm no further scheduled vaccines in this programme.</description>
+        <inputEntry id="ie_mod_check_vaccines_12_0">
+          <text>hx_vaccine_card_present == true AND demo_age_in_months &gt;= 18 AND demo_age_in_months &lt; 60 AND hx_dtp_booster_given == true AND hx_mcv2_given == true</text>
+        </inputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="decision_mod_danger_sign_check" name="Danger Sign Check and Referral Decision">
+    <variable id="var_decision_mod_danger_sign_check" name="mod_danger_sign_check_output" typeRef="string"/>
+    <informationRequirement id="ir_mod_danger_sign_check_demo_age_months">
+      <requiredInput href="#demo_age_months"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_danger_sign_check_q_cough_days">
+      <requiredInput href="#q_cough_days"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_danger_sign_check_q_diarrhoea_days">
+      <requiredInput href="#q_diarrhoea_days"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_danger_sign_check_q_blood_in_stool">
+      <requiredInput href="#q_blood_in_stool"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_danger_sign_check_q_fever_days">
+      <requiredInput href="#q_fever_days"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_danger_sign_check_hx_convulsions">
+      <requiredInput href="#hx_convulsions"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_danger_sign_check_ex_not_able_to_drink_or_feed">
+      <requiredInput href="#ex_not_able_to_drink_or_feed"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_danger_sign_check_ex_vomits_everything">
+      <requiredInput href="#ex_vomits_everything"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_danger_sign_check_ex_chest_indrawing">
+      <requiredInput href="#ex_chest_indrawing"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_danger_sign_check_ex_unusually_sleepy_or_unconscious">
+      <requiredInput href="#ex_unusually_sleepy_or_unconscious"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_danger_sign_check_v_muac_category">
+      <requiredInput href="#v_muac_category"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_danger_sign_check_ex_swelling_both_feet">
+      <requiredInput href="#ex_swelling_both_feet"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_danger_sign_check_ex_fast_breathing">
+      <requiredInput href="#ex_fast_breathing"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_danger_sign_check_lab_rdt_result">
+      <requiredInput href="#lab_rdt_result"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_danger_sign_check_p_malaria_area">
+      <requiredInput href="#p_malaria_area"/>
+    </informationRequirement>
+    <decisionTable id="dt_mod_danger_sign_check" hitPolicy="UNIQUE">
+      <input id="input_mod_danger_sign_check_0" label="demo_age_months">
+        <inputExpression id="ie_mod_danger_sign_check_0" typeRef="boolean">
+          <text>demo_age_months</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_danger_sign_check_1" label="q_cough_days">
+        <inputExpression id="ie_mod_danger_sign_check_1" typeRef="boolean">
+          <text>q_cough_days</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_danger_sign_check_2" label="q_diarrhoea_days">
+        <inputExpression id="ie_mod_danger_sign_check_2" typeRef="boolean">
+          <text>q_diarrhoea_days</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_danger_sign_check_3" label="q_blood_in_stool">
+        <inputExpression id="ie_mod_danger_sign_check_3" typeRef="boolean">
+          <text>q_blood_in_stool</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_danger_sign_check_4" label="q_fever_days">
+        <inputExpression id="ie_mod_danger_sign_check_4" typeRef="boolean">
+          <text>q_fever_days</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_danger_sign_check_5" label="hx_convulsions">
+        <inputExpression id="ie_mod_danger_sign_check_5" typeRef="boolean">
+          <text>hx_convulsions</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_danger_sign_check_6" label="ex_not_able_to_drink_or_feed">
+        <inputExpression id="ie_mod_danger_sign_check_6" typeRef="boolean">
+          <text>ex_not_able_to_drink_or_feed</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_danger_sign_check_7" label="ex_vomits_everything">
+        <inputExpression id="ie_mod_danger_sign_check_7" typeRef="boolean">
+          <text>ex_vomits_everything</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_danger_sign_check_8" label="ex_chest_indrawing">
+        <inputExpression id="ie_mod_danger_sign_check_8" typeRef="boolean">
+          <text>ex_chest_indrawing</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_danger_sign_check_9" label="ex_unusually_sleepy_or_unconscious">
+        <inputExpression id="ie_mod_danger_sign_check_9" typeRef="boolean">
+          <text>ex_unusually_sleepy_or_unconscious</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_danger_sign_check_10" label="v_muac_category">
+        <inputExpression id="ie_mod_danger_sign_check_10" typeRef="boolean">
+          <text>v_muac_category</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_danger_sign_check_11" label="ex_swelling_both_feet">
+        <inputExpression id="ie_mod_danger_sign_check_11" typeRef="boolean">
+          <text>ex_swelling_both_feet</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_danger_sign_check_12" label="ex_fast_breathing">
+        <inputExpression id="ie_mod_danger_sign_check_12" typeRef="boolean">
+          <text>ex_fast_breathing</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_danger_sign_check_13" label="lab_rdt_result">
+        <inputExpression id="ie_mod_danger_sign_check_13" typeRef="boolean">
+          <text>lab_rdt_result</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_danger_sign_check_14" label="p_malaria_area">
+        <inputExpression id="ie_mod_danger_sign_check_14" typeRef="boolean">
+          <text>p_malaria_area</text>
+        </inputExpression>
+      </input>
+      <output id="output_mod_danger_sign_check_0" label="p_danger_sign_present" name="p_danger_sign_present" typeRef="string"/>
+      <output id="output_mod_danger_sign_check_1" label="p_danger_sign_cough_long" name="p_danger_sign_cough_long" typeRef="string"/>
+      <output id="output_mod_danger_sign_check_2" label="p_danger_sign_diarrhoea_long" name="p_danger_sign_diarrhoea_long" typeRef="string"/>
+      <output id="output_mod_danger_sign_check_3" label="p_danger_sign_blood_in_stool" name="p_danger_sign_blood_in_stool" typeRef="string"/>
+      <output id="output_mod_danger_sign_check_4" label="p_danger_sign_fever_long" name="p_danger_sign_fever_long" typeRef="string"/>
+      <output id="output_mod_danger_sign_check_5" label="p_danger_sign_convulsions" name="p_danger_sign_convulsions" typeRef="string"/>
+      <output id="output_mod_danger_sign_check_6" label="p_danger_sign_not_able_to_drink_or_feed" name="p_danger_sign_not_able_to_drink_or_feed" typeRef="string"/>
+      <output id="output_mod_danger_sign_check_7" label="p_danger_sign_vomits_everything" name="p_danger_sign_vomits_everything" typeRef="string"/>
+      <output id="output_mod_danger_sign_check_8" label="p_danger_sign_chest_indrawing" name="p_danger_sign_chest_indrawing" typeRef="string"/>
+      <output id="output_mod_danger_sign_check_9" label="p_danger_sign_sleepy_unconscious" name="p_danger_sign_sleepy_unconscious" typeRef="string"/>
+      <output id="output_mod_danger_sign_check_10" label="p_danger_sign_red_muac" name="p_danger_sign_red_muac" typeRef="string"/>
+      <output id="output_mod_danger_sign_check_11" label="p_danger_sign_swelling_both_feet" name="p_danger_sign_swelling_both_feet" typeRef="string"/>
+      <output id="output_mod_danger_sign_check_12" label="p_severely_ill_cannot_drink" name="p_severely_ill_cannot_drink" typeRef="string"/>
+      <output id="output_mod_danger_sign_check_13" label="rx_pre_referral_ors" name="rx_pre_referral_ors" typeRef="string"/>
+      <output id="output_mod_danger_sign_check_14" label="rx_pre_referral_rectal_artesunate_suppositories" name="rx_pre_referral_rectal_artesunate_suppositories" typeRef="string"/>
+      <output id="output_mod_danger_sign_check_15" label="rx_pre_referral_al_first_dose_tabs" name="rx_pre_referral_al_first_dose_tabs" typeRef="string"/>
+      <output id="output_mod_danger_sign_check_16" label="rx_pre_referral_amoxicillin_first_dose_tabs" name="rx_pre_referral_amoxicillin_first_dose_tabs" typeRef="string"/>
+      <output id="output_mod_danger_sign_check_17" label="ref_urgent_referral" name="ref_urgent_referral" typeRef="string"/>
+      <output id="output_mod_danger_sign_check_18" label="ref_referral_destination" name="ref_referral_destination" typeRef="string"/>
+      <output id="output_mod_danger_sign_check_19" label="ref_referral_reason" name="ref_referral_reason" typeRef="string"/>
+      <output id="output_mod_danger_sign_check_20" label="adv_home_care_more_fluids" name="adv_home_care_more_fluids" typeRef="string"/>
+      <output id="output_mod_danger_sign_check_21" label="adv_home_care_continue_feeding" name="adv_home_care_continue_feeding" typeRef="string"/>
+      <output id="output_mod_danger_sign_check_22" label="adv_home_care_when_to_return" name="adv_home_care_when_to_return" typeRef="string"/>
+      <output id="output_mod_danger_sign_check_23" label="adv_home_care_bednet" name="adv_home_care_bednet" typeRef="string"/>
+      <output id="output_mod_danger_sign_check_24" label="fu_follow_up_days" name="fu_follow_up_days" typeRef="string"/>
+      <output id="output_mod_danger_sign_check_25" label="mod_danger_sign_check_done" name="mod_danger_sign_check_done" typeRef="string"/>
+      <rule id="rule_1">
+        <description>Child has a severe danger sign: convulsions, unusually sleepy or unconscious, not able to drink or feed, or vomits everything. Child cannot drink. Give pre-referral ORS and rectal artesunate if fever present (1 suppository for 2mo-3yr, 2 suppositories for 3yr-5yr). Refer urgently to hospital.</description>
+        <inputEntry id="ie_mod_danger_sign_check_0_0">
+          <text>hx_convulsions == true OR ex_unusually_sleepy_or_unconscious == true OR ex_not_able_to_drink_or_feed == true OR ex_vomits_everything == true</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_2">
+        <description>Child has chest indrawing but can drink (no severe danger signs). Give first dose amoxicillin 250mg (1 tab for 2mo-12mo, 2 tabs for 12mo-5yr). If fever and in malaria area, also give first dose AL (1 tab for 2mo-3yr, 2 tabs for 3yr-5yr). Refer urgently to health facility.</description>
+        <inputEntry id="ie_mod_danger_sign_check_1_0">
+          <text>hx_convulsions == false AND ex_unusually_sleepy_or_unconscious == false AND ex_not_able_to_drink_or_feed == false AND ex_vomits_everything == false AND ex_chest_indrawing == true</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_3">
+        <description>Child has one or more non-severe danger signs (cough &gt;=14 days, diarrhoea &gt;=14 days, blood in stool, fever &gt;=7 days, red MUAC, or bilateral foot swelling) but can drink and has no chest indrawing. Give ORS if diarrhoea is present. If fever &gt;=7 days and in malaria area give first dose AL. Refer urgently to health facility.</description>
+        <inputEntry id="ie_mod_danger_sign_check_2_0">
+          <text>hx_convulsions == false AND ex_unusually_sleepy_or_unconscious == false AND ex_not_able_to_drink_or_feed == false AND ex_vomits_everything == false AND ex_chest_indrawing == false AND (q_cough_days &gt;= 14 OR q_diarrhoea_days &gt;= 14 OR q_blood_in_stool == true OR q_fever_days &gt;= 7 OR v_muac_category == 'red' OR ex_swelling_both_feet == true)</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_4">
+        <description>No danger signs detected. Child does not require urgent referral from this module. Proceed to condition-specific assessment modules (diarrhoea, fever, cough/fast breathing, malnutrition). Provide standard home care advice: more fluids, continue feeding, when to return (cannot drink or feed, becomes sicker, develops blood in stool), use bednet. Follow up in 3 days.</description>
+        <inputEntry id="ie_mod_danger_sign_check_3_0">
+          <text>hx_convulsions == false AND ex_unusually_sleepy_or_unconscious == false AND ex_not_able_to_drink_or_feed == false AND ex_vomits_everything == false AND ex_chest_indrawing == false AND q_cough_days &lt; 14 AND (q_diarrhoea_days == null OR q_diarrhoea_days &lt; 14) AND q_blood_in_stool == false AND (q_fever_days == null OR q_fever_days &lt; 7) AND v_muac_category != 'red' AND ex_swelling_both_feet == false</text>
+        </inputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="decision_mod_diarrhoea_treatment" name="Diarrhoea Treatment - ORS and Zinc">
+    <variable id="var_decision_mod_diarrhoea_treatment" name="mod_diarrhoea_treatment_output" typeRef="string"/>
+    <informationRequirement id="ir_mod_diarrhoea_treatment_q_has_diarrhoea">
+      <requiredInput href="#q_has_diarrhoea"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_diarrhoea_treatment_q_diarrhoea_days">
+      <requiredInput href="#q_diarrhoea_days"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_diarrhoea_treatment_q_blood_in_stool">
+      <requiredInput href="#q_blood_in_stool"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_diarrhoea_treatment_ex_not_able_to_drink_or_feed">
+      <requiredInput href="#ex_not_able_to_drink_or_feed"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_diarrhoea_treatment_ex_vomits_everything">
+      <requiredInput href="#ex_vomits_everything"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_diarrhoea_treatment_ex_chest_indrawing">
+      <requiredInput href="#ex_chest_indrawing"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_diarrhoea_treatment_ex_unusually_sleepy_or_unconscious">
+      <requiredInput href="#ex_unusually_sleepy_or_unconscious"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_diarrhoea_treatment_ex_convulsions">
+      <requiredInput href="#ex_convulsions"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_diarrhoea_treatment_v_muac_category">
+      <requiredInput href="#v_muac_category"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_diarrhoea_treatment_ex_swelling_both_feet">
+      <requiredInput href="#ex_swelling_both_feet"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_diarrhoea_treatment_q_cough_days">
+      <requiredInput href="#q_cough_days"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_diarrhoea_treatment_q_fever_days">
+      <requiredInput href="#q_fever_days"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_diarrhoea_treatment_demo_age_months">
+      <requiredInput href="#demo_age_months"/>
+    </informationRequirement>
+    <decisionTable id="dt_mod_diarrhoea_treatment" hitPolicy="UNIQUE">
+      <input id="input_mod_diarrhoea_treatment_0" label="q_has_diarrhoea">
+        <inputExpression id="ie_mod_diarrhoea_treatment_0" typeRef="boolean">
+          <text>q_has_diarrhoea</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_diarrhoea_treatment_1" label="q_diarrhoea_days">
+        <inputExpression id="ie_mod_diarrhoea_treatment_1" typeRef="boolean">
+          <text>q_diarrhoea_days</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_diarrhoea_treatment_2" label="q_blood_in_stool">
+        <inputExpression id="ie_mod_diarrhoea_treatment_2" typeRef="boolean">
+          <text>q_blood_in_stool</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_diarrhoea_treatment_3" label="ex_not_able_to_drink_or_feed">
+        <inputExpression id="ie_mod_diarrhoea_treatment_3" typeRef="boolean">
+          <text>ex_not_able_to_drink_or_feed</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_diarrhoea_treatment_4" label="ex_vomits_everything">
+        <inputExpression id="ie_mod_diarrhoea_treatment_4" typeRef="boolean">
+          <text>ex_vomits_everything</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_diarrhoea_treatment_5" label="ex_chest_indrawing">
+        <inputExpression id="ie_mod_diarrhoea_treatment_5" typeRef="boolean">
+          <text>ex_chest_indrawing</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_diarrhoea_treatment_6" label="ex_unusually_sleepy_or_unconscious">
+        <inputExpression id="ie_mod_diarrhoea_treatment_6" typeRef="boolean">
+          <text>ex_unusually_sleepy_or_unconscious</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_diarrhoea_treatment_7" label="ex_convulsions">
+        <inputExpression id="ie_mod_diarrhoea_treatment_7" typeRef="boolean">
+          <text>ex_convulsions</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_diarrhoea_treatment_8" label="v_muac_category">
+        <inputExpression id="ie_mod_diarrhoea_treatment_8" typeRef="boolean">
+          <text>v_muac_category</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_diarrhoea_treatment_9" label="ex_swelling_both_feet">
+        <inputExpression id="ie_mod_diarrhoea_treatment_9" typeRef="boolean">
+          <text>ex_swelling_both_feet</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_diarrhoea_treatment_10" label="q_cough_days">
+        <inputExpression id="ie_mod_diarrhoea_treatment_10" typeRef="boolean">
+          <text>q_cough_days</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_diarrhoea_treatment_11" label="q_fever_days">
+        <inputExpression id="ie_mod_diarrhoea_treatment_11" typeRef="boolean">
+          <text>q_fever_days</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_diarrhoea_treatment_12" label="demo_age_months">
+        <inputExpression id="ie_mod_diarrhoea_treatment_12" typeRef="boolean">
+          <text>demo_age_months</text>
+        </inputExpression>
+      </input>
+      <output id="output_mod_diarrhoea_treatment_0" label="rx_ors" name="rx_ors" typeRef="string"/>
+      <output id="output_mod_diarrhoea_treatment_1" label="rx_zinc_dose_label" name="rx_zinc_dose_label" typeRef="string"/>
+      <output id="output_mod_diarrhoea_treatment_2" label="rx_zinc_tablets_per_dose" name="rx_zinc_tablets_per_dose" typeRef="string"/>
+      <output id="output_mod_diarrhoea_treatment_3" label="rx_zinc_doses_per_day" name="rx_zinc_doses_per_day" typeRef="string"/>
+      <output id="output_mod_diarrhoea_treatment_4" label="rx_zinc_duration_days" name="rx_zinc_duration_days" typeRef="string"/>
+      <output id="output_mod_diarrhoea_treatment_5" label="rx_zinc_total_tablets" name="rx_zinc_total_tablets" typeRef="string"/>
+      <output id="output_mod_diarrhoea_treatment_6" label="rx_pre_referral_ors" name="rx_pre_referral_ors" typeRef="string"/>
+      <output id="output_mod_diarrhoea_treatment_7" label="ref_urgently" name="ref_urgently" typeRef="string"/>
+      <output id="output_mod_diarrhoea_treatment_8" label="ref_destination" name="ref_destination" typeRef="string"/>
+      <output id="output_mod_diarrhoea_treatment_9" label="ref_reason" name="ref_reason" typeRef="string"/>
+      <output id="output_mod_diarrhoea_treatment_10" label="adv_more_fluids" name="adv_more_fluids" typeRef="string"/>
+      <output id="output_mod_diarrhoea_treatment_11" label="adv_continue_feeding" name="adv_continue_feeding" typeRef="string"/>
+      <output id="output_mod_diarrhoea_treatment_12" label="adv_when_to_return" name="adv_when_to_return" typeRef="string"/>
+      <output id="output_mod_diarrhoea_treatment_13" label="adv_bednet" name="adv_bednet" typeRef="string"/>
+      <output id="output_mod_diarrhoea_treatment_14" label="fu_follow_up_days" name="fu_follow_up_days" typeRef="string"/>
+      <output id="output_mod_diarrhoea_treatment_15" label="mod_diarrhoea_treatment_done" name="mod_diarrhoea_treatment_done" typeRef="string"/>
+      <rule id="rule_1">
+        <description>Diarrhoea lasting 14 or more days is a danger sign. Give ORS as pre-referral treatment and refer urgently to health facility.</description>
+        <inputEntry id="ie_mod_diarrhoea_treatment_0_0">
+          <text>q_has_diarrhoea == true &amp;&amp; q_diarrhoea_days &gt;= 14</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_2">
+        <description>Blood in stool is a danger sign. Give ORS as pre-referral treatment and refer urgently to health facility.</description>
+        <inputEntry id="ie_mod_diarrhoea_treatment_1_0">
+          <text>q_has_diarrhoea == true &amp;&amp; q_blood_in_stool == true</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_3">
+        <description>General danger sign present alongside diarrhoea (not able to drink/feed, vomits everything, unusually sleepy or unconscious, convulsions). Give ORS as pre-referral and refer urgently.</description>
+        <inputEntry id="ie_mod_diarrhoea_treatment_2_0">
+          <text>q_has_diarrhoea == true &amp;&amp; (ex_not_able_to_drink_or_feed == true || ex_vomits_everything == true || ex_unusually_sleepy_or_unconscious == true || ex_convulsions == true)</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_4">
+        <description>Other danger sign present alongside diarrhoea (chest indrawing, red MUAC, bilateral foot oedema, cough &gt;= 14 days, fever &gt;= 7 days). Give ORS as pre-referral and refer urgently.</description>
+        <inputEntry id="ie_mod_diarrhoea_treatment_3_0">
+          <text>q_has_diarrhoea == true &amp;&amp; (ex_chest_indrawing == true || v_muac_category == 'red' || ex_swelling_both_feet == true || q_cough_days &gt;= 14 || q_fever_days &gt;= 7)</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_5">
+        <description>Uncomplicated diarrhoea (&lt; 14 days, no blood in stool, no danger signs) in child aged 2 to &lt; 6 months. Give ORS and zinc half tablet (10mg) once daily for 10 days (5 tablets total). Provide home care advice and follow up in 3 days.</description>
+        <inputEntry id="ie_mod_diarrhoea_treatment_4_0">
+          <text>q_has_diarrhoea == true &amp;&amp; q_diarrhoea_days &lt; 14 &amp;&amp; q_blood_in_stool == false &amp;&amp; ex_not_able_to_drink_or_feed == false &amp;&amp; ex_vomits_everything == false &amp;&amp; ex_unusually_sleepy_or_unconscious == false &amp;&amp; ex_convulsions == false &amp;&amp; ex_chest_indrawing == false &amp;&amp; v_muac_category != 'red' &amp;&amp; ex_swelling_both_feet == false &amp;&amp; q_cough_days &lt; 14 &amp;&amp; q_fever_days &lt; 7 &amp;&amp; demo_age_months &gt;= 2 &amp;&amp; demo_age_months &lt; 6</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_6">
+        <description>Uncomplicated diarrhoea (&lt; 14 days, no blood in stool, no danger signs) in child aged 6 months to &lt; 5 years. Give ORS and zinc 1 tablet (20mg) once daily for 10 days (10 tablets total). Provide home care advice and follow up in 3 days.</description>
+        <inputEntry id="ie_mod_diarrhoea_treatment_5_0">
+          <text>q_has_diarrhoea == true &amp;&amp; q_diarrhoea_days &lt; 14 &amp;&amp; q_blood_in_stool == false &amp;&amp; ex_not_able_to_drink_or_feed == false &amp;&amp; ex_vomits_everything == false &amp;&amp; ex_unusually_sleepy_or_unconscious == false &amp;&amp; ex_convulsions == false &amp;&amp; ex_chest_indrawing == false &amp;&amp; v_muac_category != 'red' &amp;&amp; ex_swelling_both_feet == false &amp;&amp; q_cough_days &lt; 14 &amp;&amp; q_fever_days &lt; 7 &amp;&amp; demo_age_months &gt;= 6 &amp;&amp; demo_age_months &lt; 60</text>
+        </inputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="decision_mod_fast_breathing_treatment" name="Fast Breathing Treatment - Amoxicillin">
+    <variable id="var_decision_mod_fast_breathing_treatment" name="mod_fast_breathing_treatment_output" typeRef="string"/>
+    <informationRequirement id="ir_mod_fast_breathing_treatment_p_fast_breathing">
+      <requiredInput href="#p_fast_breathing"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_fast_breathing_treatment_ex_chest_indrawing">
+      <requiredInput href="#ex_chest_indrawing"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_fast_breathing_treatment_demo_age_in_months">
+      <requiredInput href="#demo_age_in_months"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_fast_breathing_treatment_q_cough_duration_days">
+      <requiredInput href="#q_cough_duration_days"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_fast_breathing_treatment_ex_unable_to_drink_or_feed">
+      <requiredInput href="#ex_unable_to_drink_or_feed"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_fast_breathing_treatment_ex_vomits_everything">
+      <requiredInput href="#ex_vomits_everything"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_fast_breathing_treatment_ex_convulsions">
+      <requiredInput href="#ex_convulsions"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_fast_breathing_treatment_ex_unusually_sleepy_or_unconscious">
+      <requiredInput href="#ex_unusually_sleepy_or_unconscious"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_fast_breathing_treatment_v_muac_color">
+      <requiredInput href="#v_muac_color"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_fast_breathing_treatment_ex_bilateral_foot_oedema">
+      <requiredInput href="#ex_bilateral_foot_oedema"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_fast_breathing_treatment_q_fever_duration_days">
+      <requiredInput href="#q_fever_duration_days"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_fast_breathing_treatment_q_diarrhoea_duration_days">
+      <requiredInput href="#q_diarrhoea_duration_days"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_fast_breathing_treatment_q_blood_in_stool">
+      <requiredInput href="#q_blood_in_stool"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_fast_breathing_treatment_v_respiratory_rate_bpm">
+      <requiredInput href="#v_respiratory_rate_bpm"/>
+    </informationRequirement>
+    <decisionTable id="dt_mod_fast_breathing_treatment" hitPolicy="UNIQUE">
+      <input id="input_mod_fast_breathing_treatment_0" label="p_fast_breathing">
+        <inputExpression id="ie_mod_fast_breathing_treatment_0" typeRef="boolean">
+          <text>p_fast_breathing</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_fast_breathing_treatment_1" label="ex_chest_indrawing">
+        <inputExpression id="ie_mod_fast_breathing_treatment_1" typeRef="boolean">
+          <text>ex_chest_indrawing</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_fast_breathing_treatment_2" label="demo_age_in_months">
+        <inputExpression id="ie_mod_fast_breathing_treatment_2" typeRef="boolean">
+          <text>demo_age_in_months</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_fast_breathing_treatment_3" label="q_cough_duration_days">
+        <inputExpression id="ie_mod_fast_breathing_treatment_3" typeRef="boolean">
+          <text>q_cough_duration_days</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_fast_breathing_treatment_4" label="ex_unable_to_drink_or_feed">
+        <inputExpression id="ie_mod_fast_breathing_treatment_4" typeRef="boolean">
+          <text>ex_unable_to_drink_or_feed</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_fast_breathing_treatment_5" label="ex_vomits_everything">
+        <inputExpression id="ie_mod_fast_breathing_treatment_5" typeRef="boolean">
+          <text>ex_vomits_everything</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_fast_breathing_treatment_6" label="ex_convulsions">
+        <inputExpression id="ie_mod_fast_breathing_treatment_6" typeRef="boolean">
+          <text>ex_convulsions</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_fast_breathing_treatment_7" label="ex_unusually_sleepy_or_unconscious">
+        <inputExpression id="ie_mod_fast_breathing_treatment_7" typeRef="boolean">
+          <text>ex_unusually_sleepy_or_unconscious</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_fast_breathing_treatment_8" label="v_muac_color">
+        <inputExpression id="ie_mod_fast_breathing_treatment_8" typeRef="boolean">
+          <text>v_muac_color</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_fast_breathing_treatment_9" label="ex_bilateral_foot_oedema">
+        <inputExpression id="ie_mod_fast_breathing_treatment_9" typeRef="boolean">
+          <text>ex_bilateral_foot_oedema</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_fast_breathing_treatment_10" label="q_fever_duration_days">
+        <inputExpression id="ie_mod_fast_breathing_treatment_10" typeRef="boolean">
+          <text>q_fever_duration_days</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_fast_breathing_treatment_11" label="q_diarrhoea_duration_days">
+        <inputExpression id="ie_mod_fast_breathing_treatment_11" typeRef="boolean">
+          <text>q_diarrhoea_duration_days</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_fast_breathing_treatment_12" label="q_blood_in_stool">
+        <inputExpression id="ie_mod_fast_breathing_treatment_12" typeRef="boolean">
+          <text>q_blood_in_stool</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_fast_breathing_treatment_13" label="v_respiratory_rate_bpm">
+        <inputExpression id="ie_mod_fast_breathing_treatment_13" typeRef="boolean">
+          <text>v_respiratory_rate_bpm</text>
+        </inputExpression>
+      </input>
+      <output id="output_mod_fast_breathing_treatment_0" label="mod_fast_breathing_treatment_done" name="mod_fast_breathing_treatment_done" typeRef="string"/>
+      <output id="output_mod_fast_breathing_treatment_1" label="rx_amoxicillin_250mg_tabs_total" name="rx_amoxicillin_250mg_tabs_total" typeRef="string"/>
+      <output id="output_mod_fast_breathing_treatment_2" label="rx_amoxicillin_dose_description" name="rx_amoxicillin_dose_description" typeRef="string"/>
+      <output id="output_mod_fast_breathing_treatment_3" label="rx_amoxicillin_pre_referral_dose" name="rx_amoxicillin_pre_referral_dose" typeRef="string"/>
+      <output id="output_mod_fast_breathing_treatment_4" label="ref_destination" name="ref_destination" typeRef="string"/>
+      <output id="output_mod_fast_breathing_treatment_5" label="ref_urgency" name="ref_urgency" typeRef="string"/>
+      <output id="output_mod_fast_breathing_treatment_6" label="ref_reason" name="ref_reason" typeRef="string"/>
+      <output id="output_mod_fast_breathing_treatment_7" label="adv_home_care" name="adv_home_care" typeRef="string"/>
+      <output id="output_mod_fast_breathing_treatment_8" label="adv_more_fluids" name="adv_more_fluids" typeRef="string"/>
+      <output id="output_mod_fast_breathing_treatment_9" label="adv_continue_feeding" name="adv_continue_feeding" typeRef="string"/>
+      <output id="output_mod_fast_breathing_treatment_10" label="adv_when_to_return" name="adv_when_to_return" typeRef="string"/>
+      <output id="output_mod_fast_breathing_treatment_11" label="adv_bednet" name="adv_bednet" typeRef="string"/>
+      <output id="output_mod_fast_breathing_treatment_12" label="fu_follow_up_days" name="fu_follow_up_days" typeRef="string"/>
+      <output id="output_mod_fast_breathing_treatment_13" label="is_priority_exit" name="is_priority_exit" typeRef="string"/>
+      <output id="output_mod_fast_breathing_treatment_14" label="priority_exit_destination" name="priority_exit_destination" typeRef="string"/>
+      <output id="output_mod_fast_breathing_treatment_15" label="p_refer_urgently" name="p_refer_urgently" typeRef="string"/>
+      <rule id="rule_1">
+        <description>Fast breathing WITH chest indrawing AND a danger sign meaning child cannot drink/feed or vomits everything or has convulsions or is unusually sleepy/unconscious: give pre-referral first dose amoxicillin and refer urgently to hospital</description>
+        <inputEntry id="ie_mod_fast_breathing_treatment_0_0">
+          <text>p_fast_breathing == true AND ex_chest_indrawing == true AND (ex_unable_to_drink_or_feed == true OR ex_vomits_everything == true OR ex_convulsions == true OR ex_unusually_sleepy_or_unconscious == true)</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_2">
+        <description>Fast breathing WITH chest indrawing but NO critical danger signs and child can drink: give pre-referral first dose amoxicillin and refer urgently to health facility</description>
+        <inputEntry id="ie_mod_fast_breathing_treatment_1_0">
+          <text>p_fast_breathing == true AND ex_chest_indrawing == true AND ex_unable_to_drink_or_feed == false AND ex_vomits_everything == false AND ex_convulsions == false AND ex_unusually_sleepy_or_unconscious == false</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_3">
+        <description>Fast breathing WITHOUT chest indrawing BUT with a general danger sign (unable to drink/feed, vomits everything, convulsions, unusually sleepy/unconscious) OR cough &gt;=14 days OR red MUAC OR bilateral foot oedema: refer urgently to hospital without amoxicillin treatment (danger sign takes priority)</description>
+        <inputEntry id="ie_mod_fast_breathing_treatment_2_0">
+          <text>p_fast_breathing == true AND ex_chest_indrawing == false AND (ex_unable_to_drink_or_feed == true OR ex_vomits_everything == true OR ex_convulsions == true OR ex_unusually_sleepy_or_unconscious == true OR v_muac_color == 'red' OR ex_bilateral_foot_oedema == true OR q_cough_duration_days &gt;= 14)</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_4">
+        <description>Fast breathing, no chest indrawing, no danger signs, age 2-12 months: treat at home with amoxicillin 250mg 1 tablet twice daily x5 days (10 tablets total), home care advice, follow up in 3 days</description>
+        <inputEntry id="ie_mod_fast_breathing_treatment_3_0">
+          <text>p_fast_breathing == true AND ex_chest_indrawing == false AND ex_unable_to_drink_or_feed == false AND ex_vomits_everything == false AND ex_convulsions == false AND ex_unusually_sleepy_or_unconscious == false AND v_muac_color != 'red' AND ex_bilateral_foot_oedema == false AND q_cough_duration_days &lt; 14 AND demo_age_in_months &gt;= 2 AND demo_age_in_months &lt; 12</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_5">
+        <description>Fast breathing, no chest indrawing, no danger signs, age 12 months to 5 years: treat at home with amoxicillin 250mg 2 tablets twice daily x5 days (20 tablets total), home care advice, follow up in 3 days</description>
+        <inputEntry id="ie_mod_fast_breathing_treatment_4_0">
+          <text>p_fast_breathing == true AND ex_chest_indrawing == false AND ex_unable_to_drink_or_feed == false AND ex_vomits_everything == false AND ex_convulsions == false AND ex_unusually_sleepy_or_unconscious == false AND v_muac_color != 'red' AND ex_bilateral_foot_oedema == false AND q_cough_duration_days &lt; 14 AND demo_age_in_months &gt;= 12 AND demo_age_in_months &lt; 60</text>
+        </inputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="decision_mod_fever_malaria_treatment" name="Fever/Malaria Treatment - RDT and AL">
+    <variable id="var_decision_mod_fever_malaria_treatment" name="mod_fever_malaria_treatment_output" typeRef="string"/>
+    <informationRequirement id="ir_mod_fever_malaria_treatment_q_has_fever">
+      <requiredInput href="#q_has_fever"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_fever_malaria_treatment_q_fever_days">
+      <requiredInput href="#q_fever_days"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_fever_malaria_treatment_q_convulsions">
+      <requiredInput href="#q_convulsions"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_fever_malaria_treatment_q_able_to_drink">
+      <requiredInput href="#q_able_to_drink"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_fever_malaria_treatment_q_vomits_everything">
+      <requiredInput href="#q_vomits_everything"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_fever_malaria_treatment_ex_unusually_sleepy">
+      <requiredInput href="#ex_unusually_sleepy"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_fever_malaria_treatment_ex_unconscious">
+      <requiredInput href="#ex_unconscious"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_fever_malaria_treatment_ex_chest_indrawing">
+      <requiredInput href="#ex_chest_indrawing"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_fever_malaria_treatment_ex_bilateral_foot_oedema">
+      <requiredInput href="#ex_bilateral_foot_oedema"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_fever_malaria_treatment_v_muac_category">
+      <requiredInput href="#v_muac_category"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_fever_malaria_treatment_lab_rdt_result">
+      <requiredInput href="#lab_rdt_result"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_fever_malaria_treatment_demo_age_months">
+      <requiredInput href="#demo_age_months"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_fever_malaria_treatment_p_malaria_area">
+      <requiredInput href="#p_malaria_area"/>
+    </informationRequirement>
+    <decisionTable id="dt_mod_fever_malaria_treatment" hitPolicy="UNIQUE">
+      <input id="input_mod_fever_malaria_treatment_0" label="q_has_fever">
+        <inputExpression id="ie_mod_fever_malaria_treatment_0" typeRef="boolean">
+          <text>q_has_fever</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_fever_malaria_treatment_1" label="q_fever_days">
+        <inputExpression id="ie_mod_fever_malaria_treatment_1" typeRef="boolean">
+          <text>q_fever_days</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_fever_malaria_treatment_2" label="q_convulsions">
+        <inputExpression id="ie_mod_fever_malaria_treatment_2" typeRef="boolean">
+          <text>q_convulsions</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_fever_malaria_treatment_3" label="q_able_to_drink">
+        <inputExpression id="ie_mod_fever_malaria_treatment_3" typeRef="boolean">
+          <text>q_able_to_drink</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_fever_malaria_treatment_4" label="q_vomits_everything">
+        <inputExpression id="ie_mod_fever_malaria_treatment_4" typeRef="boolean">
+          <text>q_vomits_everything</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_fever_malaria_treatment_5" label="ex_unusually_sleepy">
+        <inputExpression id="ie_mod_fever_malaria_treatment_5" typeRef="boolean">
+          <text>ex_unusually_sleepy</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_fever_malaria_treatment_6" label="ex_unconscious">
+        <inputExpression id="ie_mod_fever_malaria_treatment_6" typeRef="boolean">
+          <text>ex_unconscious</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_fever_malaria_treatment_7" label="ex_chest_indrawing">
+        <inputExpression id="ie_mod_fever_malaria_treatment_7" typeRef="boolean">
+          <text>ex_chest_indrawing</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_fever_malaria_treatment_8" label="ex_bilateral_foot_oedema">
+        <inputExpression id="ie_mod_fever_malaria_treatment_8" typeRef="boolean">
+          <text>ex_bilateral_foot_oedema</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_fever_malaria_treatment_9" label="v_muac_category">
+        <inputExpression id="ie_mod_fever_malaria_treatment_9" typeRef="boolean">
+          <text>v_muac_category</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_fever_malaria_treatment_10" label="lab_rdt_result">
+        <inputExpression id="ie_mod_fever_malaria_treatment_10" typeRef="boolean">
+          <text>lab_rdt_result</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_fever_malaria_treatment_11" label="demo_age_months">
+        <inputExpression id="ie_mod_fever_malaria_treatment_11" typeRef="boolean">
+          <text>demo_age_months</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_fever_malaria_treatment_12" label="p_malaria_area">
+        <inputExpression id="ie_mod_fever_malaria_treatment_12" typeRef="boolean">
+          <text>p_malaria_area</text>
+        </inputExpression>
+      </input>
+      <output id="output_mod_fever_malaria_treatment_0" label="lab_rdt_performed" name="lab_rdt_performed" typeRef="string"/>
+      <output id="output_mod_fever_malaria_treatment_1" label="rx_al_tabs_per_dose" name="rx_al_tabs_per_dose" typeRef="string"/>
+      <output id="output_mod_fever_malaria_treatment_2" label="rx_al_doses_per_day" name="rx_al_doses_per_day" typeRef="string"/>
+      <output id="output_mod_fever_malaria_treatment_3" label="rx_al_duration_days" name="rx_al_duration_days" typeRef="string"/>
+      <output id="output_mod_fever_malaria_treatment_4" label="rx_al_total_tabs" name="rx_al_total_tabs" typeRef="string"/>
+      <output id="output_mod_fever_malaria_treatment_5" label="rx_al_indication" name="rx_al_indication" typeRef="string"/>
+      <output id="output_mod_fever_malaria_treatment_6" label="rx_rectal_artesunate_suppositories" name="rx_rectal_artesunate_suppositories" typeRef="string"/>
+      <output id="output_mod_fever_malaria_treatment_7" label="rx_first_dose_al_prereferral" name="rx_first_dose_al_prereferral" typeRef="string"/>
+      <output id="output_mod_fever_malaria_treatment_8" label="ref_urgently" name="ref_urgently" typeRef="string"/>
+      <output id="output_mod_fever_malaria_treatment_9" label="ref_destination" name="ref_destination" typeRef="string"/>
+      <output id="output_mod_fever_malaria_treatment_10" label="ref_reason" name="ref_reason" typeRef="string"/>
+      <output id="output_mod_fever_malaria_treatment_11" label="adv_home_care" name="adv_home_care" typeRef="string"/>
+      <output id="output_mod_fever_malaria_treatment_12" label="adv_bednet" name="adv_bednet" typeRef="string"/>
+      <output id="output_mod_fever_malaria_treatment_13" label="adv_when_to_return" name="adv_when_to_return" typeRef="string"/>
+      <output id="output_mod_fever_malaria_treatment_14" label="fu_days" name="fu_days" typeRef="string"/>
+      <output id="output_mod_fever_malaria_treatment_15" label="is_priority_exit" name="is_priority_exit" typeRef="string"/>
+      <output id="output_mod_fever_malaria_treatment_16" label="priority_exit_destination" name="priority_exit_destination" typeRef="string"/>
+      <output id="output_mod_fever_malaria_treatment_17" label="mod_fever_malaria_treatment_done" name="mod_fever_malaria_treatment_done" typeRef="string"/>
+      <rule id="rule_1">
+        <description>Fever lasting 7 or more days is a danger sign requiring urgent referral to health facility regardless of other findings.</description>
+        <inputEntry id="ie_mod_fever_malaria_treatment_0_0">
+          <text>q_has_fever == true AND q_fever_days &gt;= 7</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_2">
+        <description>Fever &lt;7 days with convulsions or unconsciousness in child 2-35 months in malaria area: give 1 rectal artesunate suppository as pre-referral treatment and refer urgently.</description>
+        <inputEntry id="ie_mod_fever_malaria_treatment_1_0">
+          <text>q_has_fever == true AND q_fever_days &lt; 7 AND p_malaria_area == true AND (q_convulsions == true OR ex_unconscious == true) AND demo_age_months &gt;= 2 AND demo_age_months &lt; 36</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_3">
+        <description>Fever &lt;7 days with convulsions or unconsciousness in child 36-59 months in malaria area: give 2 rectal artesunate suppositories as pre-referral treatment and refer urgently.</description>
+        <inputEntry id="ie_mod_fever_malaria_treatment_2_0">
+          <text>q_has_fever == true AND q_fever_days &lt; 7 AND p_malaria_area == true AND (q_convulsions == true OR ex_unconscious == true) AND demo_age_months &gt;= 36 AND demo_age_months &lt; 60</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_4">
+        <description>Fever &lt;7 days with unusually sleepy, vomits everything, or unable to drink (cannot take oral treatment) in child 2-35 months in malaria area: give 1 rectal artesunate suppository as pre-referral treatment and refer urgently.</description>
+        <inputEntry id="ie_mod_fever_malaria_treatment_3_0">
+          <text>q_has_fever == true AND q_fever_days &lt; 7 AND p_malaria_area == true AND q_convulsions == false AND ex_unconscious == false AND (ex_unusually_sleepy == true OR q_vomits_everything == true OR q_able_to_drink == false) AND demo_age_months &gt;= 2 AND demo_age_months &lt; 36</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_5">
+        <description>Fever &lt;7 days with unusually sleepy, vomits everything, or unable to drink (cannot take oral treatment) in child 36-59 months in malaria area: give 2 rectal artesunate suppositories as pre-referral treatment and refer urgently.</description>
+        <inputEntry id="ie_mod_fever_malaria_treatment_4_0">
+          <text>q_has_fever == true AND q_fever_days &lt; 7 AND p_malaria_area == true AND q_convulsions == false AND ex_unconscious == false AND (ex_unusually_sleepy == true OR q_vomits_everything == true OR q_able_to_drink == false) AND demo_age_months &gt;= 36 AND demo_age_months &lt; 60</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_6">
+        <description>Fever &lt;7 days, RDT positive, child can drink but has another danger sign (chest indrawing, bilateral foot oedema, or red MUAC) in 2-35 months: give first dose AL (1 tab) as pre-referral and refer urgently to health facility.</description>
+        <inputEntry id="ie_mod_fever_malaria_treatment_5_0">
+          <text>q_has_fever == true AND q_fever_days &lt; 7 AND p_malaria_area == true AND q_convulsions == false AND ex_unconscious == false AND ex_unusually_sleepy == false AND q_vomits_everything == false AND q_able_to_drink == true AND (ex_chest_indrawing == true OR ex_bilateral_foot_oedema == true OR v_muac_category == 'red') AND lab_rdt_result == 'positive' AND demo_age_months &gt;= 2 AND demo_age_months &lt; 36</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_7">
+        <description>Fever &lt;7 days, RDT positive, child can drink but has another danger sign (chest indrawing, bilateral foot oedema, or red MUAC) in 36-59 months: give first dose AL (2 tabs) as pre-referral and refer urgently to health facility.</description>
+        <inputEntry id="ie_mod_fever_malaria_treatment_6_0">
+          <text>q_has_fever == true AND q_fever_days &lt; 7 AND p_malaria_area == true AND q_convulsions == false AND ex_unconscious == false AND ex_unusually_sleepy == false AND q_vomits_everything == false AND q_able_to_drink == true AND (ex_chest_indrawing == true OR ex_bilateral_foot_oedema == true OR v_muac_category == 'red') AND lab_rdt_result == 'positive' AND demo_age_months &gt;= 36 AND demo_age_months &lt; 60</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_8">
+        <description>Fever &lt;7 days, RDT negative, child can drink but has another danger sign (chest indrawing, bilateral foot oedema, or red MUAC): refer urgently to health facility without AL.</description>
+        <inputEntry id="ie_mod_fever_malaria_treatment_7_0">
+          <text>q_has_fever == true AND q_fever_days &lt; 7 AND p_malaria_area == true AND q_convulsions == false AND ex_unconscious == false AND ex_unusually_sleepy == false AND q_vomits_everything == false AND q_able_to_drink == true AND (ex_chest_indrawing == true OR ex_bilateral_foot_oedema == true OR v_muac_category == 'red') AND lab_rdt_result == 'negative' AND demo_age_months &gt;= 2 AND demo_age_months &lt; 60</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_9">
+        <description>Fever &lt;7 days, RDT positive, no danger signs, no other referral criteria, child 2-35 months: treat with AL 1 tab twice daily for 3 days (6 tabs total), give home care advice, and follow up in 3 days.</description>
+        <inputEntry id="ie_mod_fever_malaria_treatment_8_0">
+          <text>q_has_fever == true AND q_fever_days &lt; 7 AND p_malaria_area == true AND q_convulsions == false AND ex_unconscious == false AND ex_unusually_sleepy == false AND q_vomits_everything == false AND q_able_to_drink == true AND ex_chest_indrawing == false AND ex_bilateral_foot_oedema == false AND v_muac_category != 'red' AND lab_rdt_result == 'positive' AND demo_age_months &gt;= 2 AND demo_age_months &lt; 36</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_10">
+        <description>Fever &lt;7 days, RDT positive, no danger signs, no other referral criteria, child 36-59 months: treat with AL 2 tabs twice daily for 3 days (12 tabs total), give home care advice, and follow up in 3 days.</description>
+        <inputEntry id="ie_mod_fever_malaria_treatment_9_0">
+          <text>q_has_fever == true AND q_fever_days &lt; 7 AND p_malaria_area == true AND q_convulsions == false AND ex_unconscious == false AND ex_unusually_sleepy == false AND q_vomits_everything == false AND q_able_to_drink == true AND ex_chest_indrawing == false AND ex_bilateral_foot_oedema == false AND v_muac_category != 'red' AND lab_rdt_result == 'positive' AND demo_age_months &gt;= 36 AND demo_age_months &lt; 60</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_11">
+        <description>Fever &lt;7 days, RDT negative, no danger signs, no other referral criteria: malaria not confirmed, do not give AL, give home care advice, and follow up in 3 days to reassess cause of fever.</description>
+        <inputEntry id="ie_mod_fever_malaria_treatment_10_0">
+          <text>q_has_fever == true AND q_fever_days &lt; 7 AND p_malaria_area == true AND q_convulsions == false AND ex_unconscious == false AND ex_unusually_sleepy == false AND q_vomits_everything == false AND q_able_to_drink == true AND ex_chest_indrawing == false AND ex_bilateral_foot_oedema == false AND v_muac_category != 'red' AND lab_rdt_result == 'negative' AND demo_age_months &gt;= 2 AND demo_age_months &lt; 60</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_12">
+        <description>Fever &lt;7 days but child is NOT in a malaria area: RDT and AL are not indicated. Provide home care advice and follow up in 3 days. Other modules will assess other causes of fever.</description>
+        <inputEntry id="ie_mod_fever_malaria_treatment_11_0">
+          <text>q_has_fever == true AND q_fever_days &lt; 7 AND p_malaria_area == false AND demo_age_months &gt;= 2 AND demo_age_months &lt; 60</text>
+        </inputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="decision_mod_home_care_advice" name="Home Care Advice and Follow-Up Scheduling">
+    <variable id="var_decision_mod_home_care_advice" name="mod_home_care_advice_output" typeRef="string"/>
+    <informationRequirement id="ir_mod_home_care_advice_p_danger_sign_present">
+      <requiredInput href="#p_danger_sign_present"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_p_refer_urgently">
+      <requiredInput href="#p_refer_urgently"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_p_diarrhoea_treated">
+      <requiredInput href="#p_diarrhoea_treated"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_p_fever_treated">
+      <requiredInput href="#p_fever_treated"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_p_fast_breathing_treated">
+      <requiredInput href="#p_fast_breathing_treated"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_p_malnutrition_severe">
+      <requiredInput href="#p_malnutrition_severe"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_p_malnutrition_moderate">
+      <requiredInput href="#p_malnutrition_moderate"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_p_rdt_negative">
+      <requiredInput href="#p_rdt_negative"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_p_any_illness_treated">
+      <requiredInput href="#p_any_illness_treated"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_p_pre_referral_given">
+      <requiredInput href="#p_pre_referral_given"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_hx_cough_days">
+      <requiredInput href="#hx_cough_days"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_hx_diarrhoea_days">
+      <requiredInput href="#hx_diarrhoea_days"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_hx_fever_days">
+      <requiredInput href="#hx_fever_days"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_q_blood_in_stool">
+      <requiredInput href="#q_blood_in_stool"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_q_convulsions">
+      <requiredInput href="#q_convulsions"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_q_not_able_to_drink">
+      <requiredInput href="#q_not_able_to_drink"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_q_vomits_everything">
+      <requiredInput href="#q_vomits_everything"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_ex_chest_indrawing">
+      <requiredInput href="#ex_chest_indrawing"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_ex_unusually_sleepy">
+      <requiredInput href="#ex_unusually_sleepy"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_v_muac_category">
+      <requiredInput href="#v_muac_category"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_ex_bilateral_foot_oedema">
+      <requiredInput href="#ex_bilateral_foot_oedema"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_demo_age_months">
+      <requiredInput href="#demo_age_months"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_lab_rdt_result">
+      <requiredInput href="#lab_rdt_result"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_rx_ors_given">
+      <requiredInput href="#rx_ors_given"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_rx_zinc_given">
+      <requiredInput href="#rx_zinc_given"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_rx_al_given">
+      <requiredInput href="#rx_al_given"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_rx_amoxicillin_given">
+      <requiredInput href="#rx_amoxicillin_given"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_rx_rectal_artesunate_given">
+      <requiredInput href="#rx_rectal_artesunate_given"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_ref_hospital_urgent">
+      <requiredInput href="#ref_hospital_urgent"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_ref_health_facility">
+      <requiredInput href="#ref_health_facility"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_adv_fluids_given">
+      <requiredInput href="#adv_fluids_given"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_adv_feeding_given">
+      <requiredInput href="#adv_feeding_given"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_adv_when_to_return_given">
+      <requiredInput href="#adv_when_to_return_given"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_adv_bednet_given">
+      <requiredInput href="#adv_bednet_given"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_fu_3day_scheduled">
+      <requiredInput href="#fu_3day_scheduled"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_home_care_advice_p_vaccine_check_needed">
+      <requiredInput href="#p_vaccine_check_needed"/>
+    </informationRequirement>
+    <decisionTable id="dt_mod_home_care_advice" hitPolicy="UNIQUE">
+      <input id="input_mod_home_care_advice_0" label="p_danger_sign_present">
+        <inputExpression id="ie_mod_home_care_advice_0" typeRef="boolean">
+          <text>p_danger_sign_present</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_1" label="p_refer_urgently">
+        <inputExpression id="ie_mod_home_care_advice_1" typeRef="boolean">
+          <text>p_refer_urgently</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_2" label="p_diarrhoea_treated">
+        <inputExpression id="ie_mod_home_care_advice_2" typeRef="boolean">
+          <text>p_diarrhoea_treated</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_3" label="p_fever_treated">
+        <inputExpression id="ie_mod_home_care_advice_3" typeRef="boolean">
+          <text>p_fever_treated</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_4" label="p_fast_breathing_treated">
+        <inputExpression id="ie_mod_home_care_advice_4" typeRef="boolean">
+          <text>p_fast_breathing_treated</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_5" label="p_malnutrition_severe">
+        <inputExpression id="ie_mod_home_care_advice_5" typeRef="boolean">
+          <text>p_malnutrition_severe</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_6" label="p_malnutrition_moderate">
+        <inputExpression id="ie_mod_home_care_advice_6" typeRef="boolean">
+          <text>p_malnutrition_moderate</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_7" label="p_rdt_negative">
+        <inputExpression id="ie_mod_home_care_advice_7" typeRef="boolean">
+          <text>p_rdt_negative</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_8" label="p_any_illness_treated">
+        <inputExpression id="ie_mod_home_care_advice_8" typeRef="boolean">
+          <text>p_any_illness_treated</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_9" label="p_pre_referral_given">
+        <inputExpression id="ie_mod_home_care_advice_9" typeRef="boolean">
+          <text>p_pre_referral_given</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_10" label="hx_cough_days">
+        <inputExpression id="ie_mod_home_care_advice_10" typeRef="boolean">
+          <text>hx_cough_days</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_11" label="hx_diarrhoea_days">
+        <inputExpression id="ie_mod_home_care_advice_11" typeRef="boolean">
+          <text>hx_diarrhoea_days</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_12" label="hx_fever_days">
+        <inputExpression id="ie_mod_home_care_advice_12" typeRef="boolean">
+          <text>hx_fever_days</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_13" label="q_blood_in_stool">
+        <inputExpression id="ie_mod_home_care_advice_13" typeRef="boolean">
+          <text>q_blood_in_stool</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_14" label="q_convulsions">
+        <inputExpression id="ie_mod_home_care_advice_14" typeRef="boolean">
+          <text>q_convulsions</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_15" label="q_not_able_to_drink">
+        <inputExpression id="ie_mod_home_care_advice_15" typeRef="boolean">
+          <text>q_not_able_to_drink</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_16" label="q_vomits_everything">
+        <inputExpression id="ie_mod_home_care_advice_16" typeRef="boolean">
+          <text>q_vomits_everything</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_17" label="ex_chest_indrawing">
+        <inputExpression id="ie_mod_home_care_advice_17" typeRef="boolean">
+          <text>ex_chest_indrawing</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_18" label="ex_unusually_sleepy">
+        <inputExpression id="ie_mod_home_care_advice_18" typeRef="boolean">
+          <text>ex_unusually_sleepy</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_19" label="v_muac_category">
+        <inputExpression id="ie_mod_home_care_advice_19" typeRef="boolean">
+          <text>v_muac_category</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_20" label="ex_bilateral_foot_oedema">
+        <inputExpression id="ie_mod_home_care_advice_20" typeRef="boolean">
+          <text>ex_bilateral_foot_oedema</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_21" label="demo_age_months">
+        <inputExpression id="ie_mod_home_care_advice_21" typeRef="boolean">
+          <text>demo_age_months</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_22" label="lab_rdt_result">
+        <inputExpression id="ie_mod_home_care_advice_22" typeRef="boolean">
+          <text>lab_rdt_result</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_23" label="rx_ors_given">
+        <inputExpression id="ie_mod_home_care_advice_23" typeRef="boolean">
+          <text>rx_ors_given</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_24" label="rx_zinc_given">
+        <inputExpression id="ie_mod_home_care_advice_24" typeRef="boolean">
+          <text>rx_zinc_given</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_25" label="rx_al_given">
+        <inputExpression id="ie_mod_home_care_advice_25" typeRef="boolean">
+          <text>rx_al_given</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_26" label="rx_amoxicillin_given">
+        <inputExpression id="ie_mod_home_care_advice_26" typeRef="boolean">
+          <text>rx_amoxicillin_given</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_27" label="rx_rectal_artesunate_given">
+        <inputExpression id="ie_mod_home_care_advice_27" typeRef="boolean">
+          <text>rx_rectal_artesunate_given</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_28" label="ref_hospital_urgent">
+        <inputExpression id="ie_mod_home_care_advice_28" typeRef="boolean">
+          <text>ref_hospital_urgent</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_29" label="ref_health_facility">
+        <inputExpression id="ie_mod_home_care_advice_29" typeRef="boolean">
+          <text>ref_health_facility</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_30" label="adv_fluids_given">
+        <inputExpression id="ie_mod_home_care_advice_30" typeRef="boolean">
+          <text>adv_fluids_given</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_31" label="adv_feeding_given">
+        <inputExpression id="ie_mod_home_care_advice_31" typeRef="boolean">
+          <text>adv_feeding_given</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_32" label="adv_when_to_return_given">
+        <inputExpression id="ie_mod_home_care_advice_32" typeRef="boolean">
+          <text>adv_when_to_return_given</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_33" label="adv_bednet_given">
+        <inputExpression id="ie_mod_home_care_advice_33" typeRef="boolean">
+          <text>adv_bednet_given</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_34" label="fu_3day_scheduled">
+        <inputExpression id="ie_mod_home_care_advice_34" typeRef="boolean">
+          <text>fu_3day_scheduled</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_home_care_advice_35" label="p_vaccine_check_needed">
+        <inputExpression id="ie_mod_home_care_advice_35" typeRef="boolean">
+          <text>p_vaccine_check_needed</text>
+        </inputExpression>
+      </input>
+      <output id="output_mod_home_care_advice_0" label="adv_fluids_given" name="adv_fluids_given" typeRef="string"/>
+      <output id="output_mod_home_care_advice_1" label="adv_feeding_given" name="adv_feeding_given" typeRef="string"/>
+      <output id="output_mod_home_care_advice_2" label="adv_when_to_return_signs" name="adv_when_to_return_signs" typeRef="string"/>
+      <output id="output_mod_home_care_advice_3" label="adv_when_to_return_given" name="adv_when_to_return_given" typeRef="string"/>
+      <output id="output_mod_home_care_advice_4" label="adv_bednet_given" name="adv_bednet_given" typeRef="string"/>
+      <output id="output_mod_home_care_advice_5" label="adv_counsel_feeding_muac_yellow" name="adv_counsel_feeding_muac_yellow" typeRef="string"/>
+      <output id="output_mod_home_care_advice_6" label="fu_3day_scheduled" name="fu_3day_scheduled" typeRef="string"/>
+      <output id="output_mod_home_care_advice_7" label="fu_reason" name="fu_reason" typeRef="string"/>
+      <output id="output_mod_home_care_advice_8" label="adv_return_immediately_signs" name="adv_return_immediately_signs" typeRef="string"/>
+      <output id="output_mod_home_care_advice_9" label="adv_home_care_summary" name="adv_home_care_summary" typeRef="string"/>
+      <output id="output_mod_home_care_advice_10" label="mod_home_care_advice_done" name="mod_home_care_advice_done" typeRef="string"/>
+      <rule id="rule_1">
+        <description>Child has danger sign(s) and urgent referral is indicated with pre-referral treatment already given. Skip home care advice; focus on immediate transfer to hospital.</description>
+        <inputEntry id="ie_mod_home_care_advice_0_0">
+          <text>p_refer_urgently == true AND p_pre_referral_given == true</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_2">
+        <description>Child has danger sign(s) and urgent referral is indicated but pre-referral treatment not yet recorded as given. Flag for pre-referral treatment and immediate hospital transfer.</description>
+        <inputEntry id="ie_mod_home_care_advice_1_0">
+          <text>p_refer_urgently == true AND p_pre_referral_given == false</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_3">
+        <description>Child has severe acute malnutrition (MUAC red or bilateral oedema) without other urgent danger signs already triggering referral. Refer to health facility; home care advice is not appropriate primary action.</description>
+        <inputEntry id="ie_mod_home_care_advice_2_0">
+          <text>p_refer_urgently == false AND p_malnutrition_severe == true</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_4">
+        <description>Child treated for diarrhoea only (ORS + zinc). Provide home care advice on fluids, feeding, when to return, bednet use. Schedule 3-day follow-up.</description>
+        <inputEntry id="ie_mod_home_care_advice_3_0">
+          <text>p_refer_urgently == false AND p_malnutrition_severe == false AND p_diarrhoea_treated == true AND p_fever_treated == false AND p_fast_breathing_treated == false AND p_malnutrition_moderate == false AND p_rdt_negative == false</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_5">
+        <description>Child treated for fever with confirmed malaria (RDT positive, AL prescribed). Provide home care advice on fluids, feeding, completing AL course, when to return, bednet. Schedule 3-day follow-up.</description>
+        <inputEntry id="ie_mod_home_care_advice_4_0">
+          <text>p_refer_urgently == false AND p_malnutrition_severe == false AND p_fever_treated == true AND lab_rdt_result == 'positive' AND p_diarrhoea_treated == false AND p_fast_breathing_treated == false AND p_malnutrition_moderate == false</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_6">
+        <description>Child has fever but RDT negative. No antimalarial given. Provide home care advice and mandatory 3-day follow-up to reassess fever cause.</description>
+        <inputEntry id="ie_mod_home_care_advice_5_0">
+          <text>p_refer_urgently == false AND p_malnutrition_severe == false AND p_fever_treated == true AND lab_rdt_result == 'negative' AND p_diarrhoea_treated == false AND p_fast_breathing_treated == false AND p_malnutrition_moderate == false</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_7">
+        <description>Child treated for fast breathing (non-severe pneumonia) with amoxicillin. Provide home care advice on fluids, feeding, completing antibiotic course, when to return, bednet. Schedule 3-day follow-up.</description>
+        <inputEntry id="ie_mod_home_care_advice_6_0">
+          <text>p_refer_urgently == false AND p_malnutrition_severe == false AND p_fast_breathing_treated == true AND p_diarrhoea_treated == false AND p_fever_treated == false AND p_malnutrition_moderate == false</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_8">
+        <description>Child treated for both diarrhoea and confirmed malaria fever. Provide combined home care advice covering ORS, zinc completion, AL completion, when to return, bednet. Schedule 3-day follow-up.</description>
+        <inputEntry id="ie_mod_home_care_advice_7_0">
+          <text>p_refer_urgently == false AND p_malnutrition_severe == false AND p_diarrhoea_treated == true AND p_fever_treated == true AND lab_rdt_result == 'positive' AND p_fast_breathing_treated == false AND p_malnutrition_moderate == false</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_9">
+        <description>Child treated for both diarrhoea and fast breathing. Provide combined home care advice. Schedule 3-day follow-up.</description>
+        <inputEntry id="ie_mod_home_care_advice_8_0">
+          <text>p_refer_urgently == false AND p_malnutrition_severe == false AND p_diarrhoea_treated == true AND p_fast_breathing_treated == true AND p_fever_treated == false AND p_malnutrition_moderate == false</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_10">
+        <description>Child treated for both fast breathing and confirmed malaria. Provide combined home care advice. Schedule 3-day follow-up.</description>
+        <inputEntry id="ie_mod_home_care_advice_9_0">
+          <text>p_refer_urgently == false AND p_malnutrition_severe == false AND p_fast_breathing_treated == true AND p_fever_treated == true AND lab_rdt_result == 'positive' AND p_diarrhoea_treated == false AND p_malnutrition_moderate == false</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_11">
+        <description>Child treated for diarrhoea, fast breathing, and confirmed malaria. Provide comprehensive home care advice. Schedule 3-day follow-up.</description>
+        <inputEntry id="ie_mod_home_care_advice_10_0">
+          <text>p_refer_urgently == false AND p_malnutrition_severe == false AND p_diarrhoea_treated == true AND p_fast_breathing_treated == true AND p_fever_treated == true AND lab_rdt_result == 'positive' AND p_malnutrition_moderate == false</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_12">
+        <description>Child has yellow MUAC (moderate malnutrition) without acute treatable illness. Provide feeding counselling, fluid advice, when to return, bednet advice. Schedule 3-day follow-up for nutrition reassessment.</description>
+        <inputEntry id="ie_mod_home_care_advice_11_0">
+          <text>p_refer_urgently == false AND p_malnutrition_severe == false AND p_malnutrition_moderate == true AND p_any_illness_treated == false AND p_diarrhoea_treated == false AND p_fever_treated == false AND p_fast_breathing_treated == false</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_13">
+        <description>Child treated for acute illness and also has yellow MUAC. Provide home care advice including illness-specific guidance plus feeding counselling. Schedule 3-day follow-up.</description>
+        <inputEntry id="ie_mod_home_care_advice_12_0">
+          <text>p_refer_urgently == false AND p_malnutrition_severe == false AND p_malnutrition_moderate == true AND p_any_illness_treated == true</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_14">
+        <description>Child has no acute illness but has missing vaccinations identified. Provide general home care advice and refer for vaccination. No 3-day follow-up required for illness but vaccination referral made.</description>
+        <inputEntry id="ie_mod_home_care_advice_13_0">
+          <text>p_refer_urgently == false AND p_malnutrition_severe == false AND p_malnutrition_moderate == false AND p_any_illness_treated == false AND p_diarrhoea_treated == false AND p_fever_treated == false AND p_fast_breathing_treated == false AND p_vaccine_check_needed == true</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_15">
+        <description>Child assessed with no illness, no malnutrition, vaccinations current. Provide general preventive home care advice. No follow-up scheduled.</description>
+        <inputEntry id="ie_mod_home_care_advice_14_0">
+          <text>p_refer_urgently == false AND p_malnutrition_severe == false AND p_malnutrition_moderate == false AND p_any_illness_treated == false AND p_diarrhoea_treated == false AND p_fever_treated == false AND p_fast_breathing_treated == false AND p_vaccine_check_needed == false</text>
+        </inputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="decision_mod_malnutrition_screening" name="Malnutrition Screening - MUAC and Oedema">
+    <variable id="var_decision_mod_malnutrition_screening" name="mod_malnutrition_screening_output" typeRef="string"/>
+    <informationRequirement id="ir_mod_malnutrition_screening_demo_age_months">
+      <requiredInput href="#demo_age_months"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_malnutrition_screening_v_muac_colour">
+      <requiredInput href="#v_muac_colour"/>
+    </informationRequirement>
+    <informationRequirement id="ir_mod_malnutrition_screening_ex_bilateral_foot_oedema">
+      <requiredInput href="#ex_bilateral_foot_oedema"/>
+    </informationRequirement>
+    <decisionTable id="dt_mod_malnutrition_screening" hitPolicy="UNIQUE">
+      <input id="input_mod_malnutrition_screening_0" label="demo_age_months">
+        <inputExpression id="ie_mod_malnutrition_screening_0" typeRef="boolean">
+          <text>demo_age_months</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_malnutrition_screening_1" label="v_muac_colour">
+        <inputExpression id="ie_mod_malnutrition_screening_1" typeRef="boolean">
+          <text>v_muac_colour</text>
+        </inputExpression>
+      </input>
+      <input id="input_mod_malnutrition_screening_2" label="ex_bilateral_foot_oedema">
+        <inputExpression id="ie_mod_malnutrition_screening_2" typeRef="boolean">
+          <text>ex_bilateral_foot_oedema</text>
+        </inputExpression>
+      </input>
+      <output id="output_mod_malnutrition_screening_0" label="p_severe_acute_malnutrition" name="p_severe_acute_malnutrition" typeRef="string"/>
+      <output id="output_mod_malnutrition_screening_1" label="p_moderate_acute_malnutrition" name="p_moderate_acute_malnutrition" typeRef="string"/>
+      <output id="output_mod_malnutrition_screening_2" label="p_malnutrition_normal" name="p_malnutrition_normal" typeRef="string"/>
+      <output id="output_mod_malnutrition_screening_3" label="p_malnutrition_not_assessed" name="p_malnutrition_not_assessed" typeRef="string"/>
+      <output id="output_mod_malnutrition_screening_4" label="ref_urgent_referral_hospital" name="ref_urgent_referral_hospital" typeRef="string"/>
+      <output id="output_mod_malnutrition_screening_5" label="ref_reason_severe_malnutrition" name="ref_reason_severe_malnutrition" typeRef="string"/>
+      <output id="output_mod_malnutrition_screening_6" label="ref_reason_bilateral_oedema" name="ref_reason_bilateral_oedema" typeRef="string"/>
+      <output id="output_mod_malnutrition_screening_7" label="adv_counsel_feeding" name="adv_counsel_feeding" typeRef="string"/>
+      <output id="output_mod_malnutrition_screening_8" label="adv_muac_yellow_followup" name="adv_muac_yellow_followup" typeRef="string"/>
+      <output id="output_mod_malnutrition_screening_9" label="is_priority_exit" name="is_priority_exit" typeRef="string"/>
+      <output id="output_mod_malnutrition_screening_10" label="priority_exit_destination" name="priority_exit_destination" typeRef="string"/>
+      <output id="output_mod_malnutrition_screening_11" label="mod_malnutrition_screening_done" name="mod_malnutrition_screening_done" typeRef="string"/>
+      <rule id="rule_1">
+        <description>Child 6mo-5yr with red MUAC (&lt;115mm) and no bilateral foot oedema: severe acute malnutrition. Refer urgently to hospital.</description>
+        <inputEntry id="ie_mod_malnutrition_screening_0_0">
+          <text>demo_age_months &gt;= 6 AND demo_age_months &lt; 60 AND v_muac_colour == 'red' AND ex_bilateral_foot_oedema == false</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_2">
+        <description>Child 6mo-5yr with red MUAC (&lt;115mm) AND bilateral foot oedema: severe acute malnutrition with oedema. Refer urgently to hospital.</description>
+        <inputEntry id="ie_mod_malnutrition_screening_1_0">
+          <text>demo_age_months &gt;= 6 AND demo_age_months &lt; 60 AND v_muac_colour == 'red' AND ex_bilateral_foot_oedema == true</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_3">
+        <description>Child 6mo-5yr with bilateral foot oedema (regardless of MUAC colour): severe malnutrition due to oedema. Refer urgently to hospital.</description>
+        <inputEntry id="ie_mod_malnutrition_screening_2_0">
+          <text>demo_age_months &gt;= 6 AND demo_age_months &lt; 60 AND v_muac_colour != 'red' AND ex_bilateral_foot_oedema == true</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_4">
+        <description>Child 6mo-5yr with yellow MUAC (115-124mm) and no bilateral foot oedema: moderate acute malnutrition. Counsel on feeding and schedule follow-up.</description>
+        <inputEntry id="ie_mod_malnutrition_screening_3_0">
+          <text>demo_age_months &gt;= 6 AND demo_age_months &lt; 60 AND v_muac_colour == 'yellow' AND ex_bilateral_foot_oedema == false</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_5">
+        <description>Child 6mo-5yr with green MUAC (&gt;=125mm) and no bilateral foot oedema: no acute malnutrition detected. No additional malnutrition action required.</description>
+        <inputEntry id="ie_mod_malnutrition_screening_4_0">
+          <text>demo_age_months &gt;= 6 AND demo_age_months &lt; 60 AND v_muac_colour == 'green' AND ex_bilateral_foot_oedema == false</text>
+        </inputEntry>
+      </rule>
+      <rule id="rule_6">
+        <description>Child is outside the 6mo-5yr age range for MUAC-based malnutrition screening. Module marked done without malnutrition classification.</description>
+        <inputEntry id="ie_mod_malnutrition_screening_5_0">
+          <text>demo_age_months &lt; 6 OR demo_age_months &gt;= 60</text>
+        </inputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="decision_router" name="Router">
+    <decisionTable id="dt_router" hitPolicy="PRIORITY">
+      <input id="input_router_condition" label="condition">
+        <inputExpression typeRef="string">
+          <text>condition</text>
+        </inputExpression>
+      </input>
+      <output id="output_router_module" label="output_module" typeRef="string"/>
+      <rule id="rule_router_0">
+        <inputEntry id="ie_router_0_0">
+          <text>is_priority_exit == true</text>
+        </inputEntry>
+        <outputEntry id="oe_router_0">
+          <text>&quot;PRIORITY_EXIT&quot;</text>
+        </outputEntry>
+        <description>Short-circuit: if any module has flagged priority exit (danger sign found), go to urgent referral pathway</description>
+      </rule>
+      <rule id="rule_router_1">
+        <inputEntry id="ie_router_1_0">
+          <text>mod_assess_done == false</text>
+        </inputEntry>
+        <outputEntry id="oe_router_1">
+          <text>&quot;mod_assess&quot;</text>
+        </outputEntry>
+        <description>Startup: run Identify Problems - ASK and LOOK first</description>
+      </rule>
+      <rule id="rule_router_2">
+        <inputEntry id="ie_router_2_0">
+          <text>mod_assess_done == true AND mod_danger_sign_check_done == false</text>
+        </inputEntry>
+        <outputEntry id="oe_router_2">
+          <text>&quot;mod_danger_sign_check&quot;</text>
+        </outputEntry>
+        <description>Danger sign module: Danger Sign Check and Referral Decision</description>
+      </rule>
+      <rule id="rule_router_3">
+        <inputEntry id="ie_router_3_0">
+          <text>mod_assess_done == true AND mod_check_vaccines_done == false</text>
+        </inputEntry>
+        <outputEntry id="oe_router_3">
+          <text>&quot;mod_check_vaccines&quot;</text>
+        </outputEntry>
+        <description>Clinical module: Check Vaccines Received</description>
+      </rule>
+      <rule id="rule_router_4">
+        <inputEntry id="ie_router_4_0">
+          <text>q_has_diarrhoea == true AND mod_diarrhoea_treatment_done == false</text>
+        </inputEntry>
+        <outputEntry id="oe_router_4">
+          <text>&quot;mod_diarrhoea_treatment&quot;</text>
+        </outputEntry>
+        <description>Clinical module: Diarrhoea Treatment - ORS and Zinc</description>
+      </rule>
+      <rule id="rule_router_5">
+        <inputEntry id="ie_router_5_0">
+          <text>p_fast_breathing == true AND mod_fast_breathing_treatment_done == false</text>
+        </inputEntry>
+        <outputEntry id="oe_router_5">
+          <text>&quot;mod_fast_breathing_treatment&quot;</text>
+        </outputEntry>
+        <description>Clinical module: Fast Breathing Treatment - Amoxicillin</description>
+      </rule>
+      <rule id="rule_router_6">
+        <inputEntry id="ie_router_6_0">
+          <text>q_has_fever == true AND mod_fever_malaria_treatment_done == false</text>
+        </inputEntry>
+        <outputEntry id="oe_router_6">
+          <text>&quot;mod_fever_malaria_treatment&quot;</text>
+        </outputEntry>
+        <description>Clinical module: Fever/Malaria Treatment - RDT and AL</description>
+      </rule>
+      <rule id="rule_router_7">
+        <inputEntry id="ie_router_7_0">
+          <text>mod_assess_done == true AND mod_malnutrition_screening_done == false</text>
+        </inputEntry>
+        <outputEntry id="oe_router_7">
+          <text>&quot;mod_malnutrition_screening&quot;</text>
+        </outputEntry>
+        <description>Clinical module: Malnutrition Screening - MUAC and Oedema</description>
+      </rule>
+      <rule id="rule_router_8">
+        <inputEntry id="ie_router_8_0">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="oe_router_8">
+          <text>&quot;mod_home_care_advice&quot;</text>
+        </outputEntry>
+        <description>Closing: Home Care Advice and Follow-Up Scheduling</description>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

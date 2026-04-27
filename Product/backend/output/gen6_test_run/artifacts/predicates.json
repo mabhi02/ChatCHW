@@ -1,0 +1,98 @@
+[
+  {
+    "id": "p_chest_pain_check",
+    "threshold_expression": "If the patient reports chest pain, immediately escalate to emergency protocol.",
+    "fail_safe": true,
+    "source_vars": [],
+    "human_label": "the patient reports chest pain",
+    "source_quote": "If the patient reports chest pain, immediately escalate to emergency protocol.",
+    "source_section_id": "chunk_1"
+  },
+  {
+    "id": "p_mild_headache_check",
+    "threshold_expression": "If the patient reports mild headache, proceed to standard assessment.",
+    "fail_safe": true,
+    "source_vars": [],
+    "human_label": "the patient reports mild headache",
+    "source_quote": "If the patient reports mild headache, proceed to standard assessment.",
+    "source_section_id": "chunk_1"
+  },
+  {
+    "id": "p_penicillin_allergy_check",
+    "threshold_expression": "If the patient has a known allergy to penicillin, flag the chart accordingly.",
+    "fail_safe": true,
+    "source_vars": [],
+    "human_label": "the patient has a known allergy to penicillin",
+    "source_quote": "If the patient has a known allergy to penicillin, flag the chart accordingly.",
+    "source_section_id": "chunk_1"
+  },
+  {
+    "id": "p_high_pain_check",
+    "threshold_expression": "If pain level is greater than 7, administer analgesic per standing order.",
+    "fail_safe": true,
+    "source_vars": [
+      "q_pain_level"
+    ],
+    "human_label": "pain level is greater than 7",
+    "source_quote": "If pain level is greater than 7, administer analgesic per standing order.",
+    "source_section_id": "chunk_1"
+  },
+  {
+    "id": "p_moderate_pain_check",
+    "threshold_expression": "If pain level is between 4 and 6, offer over-the-counter options.",
+    "fail_safe": true,
+    "source_vars": [
+      "q_pain_level"
+    ],
+    "human_label": "pain level is between 4 and 6",
+    "source_quote": "If pain level is between 4 and 6, offer over-the-counter options.",
+    "source_section_id": "chunk_1"
+  },
+  {
+    "id": "p_low_pain_check",
+    "threshold_expression": "If pain level is less than 4, continue monitoring.",
+    "fail_safe": true,
+    "source_vars": [
+      "q_pain_level"
+    ],
+    "human_label": "pain level is less than 4",
+    "source_quote": "If pain level is less than 4, continue monitoring.",
+    "source_section_id": "chunk_1"
+  },
+  {
+    "id": "p_surgical_intervention_check",
+    "threshold_expression": "If the patient requires surgical intervention, refer to the surgical consent module.",
+    "fail_safe": true,
+    "source_vars": [],
+    "human_label": "the patient requires surgical intervention",
+    "source_quote": "If the patient requires surgical intervention, refer to the surgical consent module.",
+    "source_section_id": "chunk_2"
+  },
+  {
+    "id": "p_medication_management_check",
+    "threshold_expression": "If the patient requires only medication management, proceed to the pharmacy coordination module.",
+    "fail_safe": true,
+    "source_vars": [],
+    "human_label": "the patient requires only medication management",
+    "source_quote": "If the patient requires only medication management, proceed to the pharmacy coordination module.",
+    "source_section_id": "chunk_2"
+  },
+  {
+    "id": "p_geriatric_check",
+    "threshold_expression": "If the patient is over 65 years old and has multiple comorbidities, initiate the geriatric care coordination pathway.",
+    "fail_safe": true,
+    "source_vars": [],
+    "human_label": "the patient is over 65 years old and has multiple comorbidities",
+    "source_quote": "If the patient is over 65 years old and has multiple comorbidities, initiate the geriatric care coordination pathway.",
+    "source_section_id": "chunk_2"
+  },
+  {
+    "id": "p_minor_check",
+    "threshold_expression": "If the patient is under 18, ensure guardian consent is obtained.",
+    "fail_safe": true,
+    "source_vars": [],
+    "human_label": "the patient is under 18",
+    "source_quote": "If the patient is under 18, ensure guardian consent is obtained.",
+    "source_section_id": "chunk_2"
+  }
+]

@@ -1,0 +1,11 @@
+predicate_id,human_label,source_vars,threshold_expression,fail_safe,page_ref
+,the patient reports chest pain,,"If the patient reports chest pain, immediately escalate to emergency protocol.",True,
+,the patient reports mild headache,,"If the patient reports mild headache, proceed to standard assessment.",True,
+,the patient has a known allergy to penicillin,,"If the patient has a known allergy to penicillin, flag the chart accordingly.",True,
+,pain level is greater than 7,q_pain_level,"If pain level is greater than 7, administer analgesic per standing order.",True,
+,pain level is between 4 and 6,q_pain_level,"If pain level is between 4 and 6, offer over-the-counter options.",True,
+,pain level is less than 4,q_pain_level,"If pain level is less than 4, continue monitoring.",True,
+,the patient requires surgical intervention,,"If the patient requires surgical intervention, refer to the surgical consent module.",True,
+,the patient requires only medication management,,"If the patient requires only medication management, proceed to the pharmacy coordination module.",True,
+,the patient is over 65 years old and has multiple comorbidities,,"If the patient is over 65 years old and has multiple comorbidities, initiate the geriatric care coordination pathway.",True,
+,the patient is under 18,,"If the patient is under 18, ensure guardian consent is obtained.",True,

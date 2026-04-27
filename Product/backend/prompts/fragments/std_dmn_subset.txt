@@ -1,0 +1,7 @@
+DMN SUBSET USED:
+- Only these hit policies: FIRST, COLLECT, UNIQUE
+- Input cells: "true", "false", "-" (don't care). No other values.
+- Output cells: string values (enum-like). Never booleans in outputs; use descriptive strings.
+- Provenance: every rule has {"page": "p.XX", "quote": "5-15 words"}.
+- Tables are flat (no nested decision tables).
+- No FEEL expressions. All logic is in the boolean pattern of rule inputs.

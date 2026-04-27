@@ -1,0 +1,6 @@
+LOGIC INTEGRITY STANDARDS:
+- Every decision path must terminate in a clear action (Treat, Refer/Escalate, or Discharge — whatever the manual's dispositions are).
+- No patient can trigger two conflicting treatments simultaneously within a single module.
+- Decision tables with hit_policy UNIQUE must be mutually exclusive AND collectively exhaustive.
+- Decision tables with hit_policy FIRST must have no shadowed rules and must be exhaustive under ordering.
+- The alert / red-flag composite predicate (emitted as `p_danger_sign_present` by pipeline convention, regardless of what the manual calls its high-priority criteria) is ALWAYS evaluated FIRST, before any module routing.

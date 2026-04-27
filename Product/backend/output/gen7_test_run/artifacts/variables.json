@@ -1,0 +1,178 @@
+[
+  {
+    "id": "demo_age_months",
+    "display_name": "Age in months",
+    "prefix": "demo_",
+    "data_type": "integer",
+    "unit": "months",
+    "depends_on_supply": [],
+    "source_quote": "Ask: How old is the child?",
+    "source_section_id": "1_introduction"
+  },
+  {
+    "id": "q_cough",
+    "display_name": "Child has cough",
+    "prefix": "q_",
+    "data_type": "boolean",
+    "unit": "",
+    "depends_on_supply": [],
+    "source_quote": "Ask: Does the child have a cough?",
+    "source_section_id": "cough"
+  },
+  {
+    "id": "q_cough_duration_days",
+    "display_name": "Duration of cough in days",
+    "prefix": "q_",
+    "data_type": "integer",
+    "unit": "days",
+    "depends_on_supply": [],
+    "source_quote": "If yes, for how long?",
+    "source_section_id": "cough"
+  },
+  {
+    "id": "v_respiratory_rate_per_min",
+    "display_name": "Respiratory rate (breaths per minute)",
+    "prefix": "v_",
+    "data_type": "integer",
+    "unit": "/min",
+    "depends_on_supply": [
+      "equip_timer"
+    ],
+    "source_quote": "Count the number of breaths in one minute",
+    "source_section_id": "fast_breathing"
+  },
+  {
+    "id": "ex_chest_indrawing",
+    "display_name": "Chest indrawing observed",
+    "prefix": "ex_",
+    "data_type": "boolean",
+    "unit": "",
+    "depends_on_supply": [],
+    "source_quote": "Look for chest indrawing",
+    "source_section_id": "chest_indrawing"
+  },
+  {
+    "id": "ex_convulsions",
+    "display_name": "Child has or had convulsions",
+    "prefix": "ex_",
+    "data_type": "boolean",
+    "unit": "",
+    "depends_on_supply": [],
+    "source_quote": "Ask: Has the child had convulsions?",
+    "source_section_id": "convulsions"
+  },
+  {
+    "id": "ex_not_able_to_drink_or_feed",
+    "display_name": "Child is not able to drink or breastfeed",
+    "prefix": "ex_",
+    "data_type": "boolean",
+    "unit": "",
+    "depends_on_supply": [],
+    "source_quote": "Is the child not able to drink or breastfeed?",
+    "source_section_id": "not_able_to_drink_or_feed"
+  },
+  {
+    "id": "ex_vomits_everything",
+    "display_name": "Child vomits everything",
+    "prefix": "ex_",
+    "data_type": "boolean",
+    "unit": "",
+    "depends_on_supply": [],
+    "source_quote": "Does the child vomit everything?",
+    "source_section_id": "vomiting_everything"
+  },
+  {
+    "id": "ex_unusually_sleepy_or_unconscious",
+    "display_name": "Child is unusually sleepy or unconscious",
+    "prefix": "ex_",
+    "data_type": "boolean",
+    "unit": "",
+    "depends_on_supply": [],
+    "source_quote": "Is the child unusually sleepy or unconscious?",
+    "source_section_id": "unusually_sleepy_or_unconscious"
+  },
+  {
+    "id": "q_fever",
+    "display_name": "Child has fever (reported or measured)",
+    "prefix": "q_",
+    "data_type": "boolean",
+    "unit": "",
+    "depends_on_supply": [],
+    "source_quote": "Ask: Does the child have fever?",
+    "source_section_id": "fever"
+  },
+  {
+    "id": "q_fever_duration_days",
+    "display_name": "Duration of fever in days",
+    "prefix": "q_",
+    "data_type": "integer",
+    "unit": "days",
+    "depends_on_supply": [],
+    "source_quote": "If yes, for how long?",
+    "source_section_id": "fever"
+  },
+  {
+    "id": "lab_rdt_result",
+    "display_name": "RDT result for malaria",
+    "prefix": "lab_",
+    "data_type": "enum",
+    "unit": "",
+    "depends_on_supply": [
+      "supply_rdt"
+    ],
+    "source_quote": "Do a rapid diagnostic test (RDT)",
+    "source_section_id": "rdt_procedure_summary"
+  },
+  {
+    "id": "q_diarrhoea",
+    "display_name": "Child has diarrhoea",
+    "prefix": "q_",
+    "data_type": "boolean",
+    "unit": "",
+    "depends_on_supply": [],
+    "source_quote": "Ask: Does the child have diarrhoea?",
+    "source_section_id": "diarrhoea"
+  },
+  {
+    "id": "q_diarrhoea_duration_days",
+    "display_name": "Duration of diarrhoea in days",
+    "prefix": "q_",
+    "data_type": "integer",
+    "unit": "days",
+    "depends_on_supply": [],
+    "source_quote": "If yes, for how long?",
+    "source_section_id": "diarrhoea"
+  },
+  {
+    "id": "q_blood_in_stool",
+    "display_name": "Blood in stool",
+    "prefix": "q_",
+    "data_type": "boolean",
+    "unit": "",
+    "depends_on_supply": [],
+    "source_quote": "Is there blood in the stool?",
+    "source_section_id": "diarrhoea"
+  },
+  {
+    "id": "v_muac_mm",
+    "display_name": "Mid-upper arm circumference",
+    "prefix": "v_",
+    "data_type": "integer",
+    "unit": "mm",
+    "depends_on_supply": [
+      "equip_muac_tape"
+    ],
+    "source_quote": "Measure MUAC",
+    "source_section_id": "3_3_look_for_signs_of_severe_malnutrition"
+  },
+  {
+    "id": "ex_oedema_both_feet",
+    "display_name": "Oedema of both feet",
+    "prefix": "ex_",
+    "data_type": "boolean",
+    "unit": "",
+    "depends_on_supply": [],
+    "source_quote": "Look for oedema of both feet",
+    "source_section_id": "3_3_look_for_signs_of_severe_malnutrition"
+  }
+]

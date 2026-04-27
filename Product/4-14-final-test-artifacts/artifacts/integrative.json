@@ -1,0 +1,14 @@
+{
+  "rules": [
+    {
+      "rule_id": "integ_comorbid_diarrhoea_malaria",
+      "condition": "q_has_diarrhoea == true AND q_has_fever == true AND hx_malaria_area == true AND p_rdt_positive == true AND p_any_danger_sign == false",
+      "outputs": {
+        "tx_plan": "ORS + zinc + AL",
+        "description": "If a child has diarrhoea and malaria, give the child: ORS, zinc supplement, and an oral antimalarial for treatment at home"
+      },
+      "source_quote": "if a child has diarrhoea and malaria, give the child: ORS, zinc supplement, and an oral antimalarial for treatment at home.",
+      "source_section_id": "give_oral_medicine_and_advise_the_caregiver+any_danger_sign_refer_the_child_continued+discussion_select_a_pre_referral_treatment"
+    }
+  ]
+}

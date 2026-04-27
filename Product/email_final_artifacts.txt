@@ -1,0 +1,50 @@
+Subject: CHW Navigator - final artifacts from WHO 2012 run (attached)
+
+David,
+
+Attached is CHW_Navigator_final_artifacts.zip, the full artifact bundle from the most recent end-to-end run against the WHO 2012 CHW manual (run timestamp 2026-04-14 07:36 UTC, wall clock ~23 minutes, 21 chunks, 1,692 labeled spans). This is the version I would like you to review before Friday.
+
+Quick map of what is inside:
+
+1. Top-level DMN + form
+   - clinical_logic.dmn                  deployable DMN 1.3 XML
+   - clinical_logic.json                 same logic in review-friendly JSON
+   - form.xlsx                           CHT-deployable XLSForm
+   - flowchart.png / flowchart.mmd       one-page overview of the router -> 8 clinical modules -> integrative merge (Mermaid source included so you can re-render)
+
+2. Per-phase intermediate artifacts (the emit_artifact checkpoints from the April 7 red-team)
+   - artifacts/supply_list.json
+   - artifacts/variables.json
+   - artifacts/predicates.json
+   - artifacts/modules.json
+   - artifacts/router.json
+   - artifacts/integrative.json
+   - artifacts/phrase_bank.json
+
+3. Validation + traceability
+   - final_dmn.validator.json            seven-catcher report on the final DMN (passed: true, no critical issues; warnings are boundary-condition recommendations, not failures)
+   - predicates.csv, phrases.csv         flat views for spot-checking
+   - test_suite.json                     generated boundary + scenario test cases
+   - labeled_chunks.json                 every span labeled with its source chunk
+   - deduped_labels.json                 consolidated label set after dedup
+   - chunk_difficulty.json               per-chunk difficulty score used for scheduling
+   - reconstructed_guide.txt             full text the model saw, independent of the PDF
+   - scratchpad.md                       step-by-step execution journal
+   - system_prompt.md                    the one system prompt that produced all of this
+
+Headline numbers from this run:
+- 9 DMN decisions (router + 8 clinical modules), 70 total rules, hit policies set per module
+- Final DMN validator: passed = true across all seven catchers
+- Emergency pathway (PRIORITY_EXIT) wired as P0 short-circuit; any module setting is_priority_exit = true routes to urgent referral
+- Every predicate carries a source_section_id back to the reconstructed_guide; spot-check any rule by grepping the section id
+
+On the identification side, this run is the first one where the pipeline meets every condition from the March memo: one system prompt, PDF content-hashed, no human mediator, every intermediate artifact emitted and validated in order, seven catchers run automatically per phase. Remaining variance is attributable solely to model stochasticity.
+
+Open items I still want your eyes on Friday:
+- Boundary-condition warnings in final_dmn.validator.json. These are recommendations, not failures, but several touch age thresholds (6mo, 12mo, 36mo) and vaccine age bands where clinical judgment matters more than the validator's heuristics.
+- Whether any intermediate artifact you expect to see is missing. Adding one is a system-prompt edit, not a pipeline change.
+- home_care_advice has 15 rules and no explicit catch-all; worth checking whether that is intentional or a gap.
+
+Happy to walk through any of this live.
+
+-- Atharva

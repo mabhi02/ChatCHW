@@ -1,0 +1,869 @@
+{
+  "integrative": {
+    "rules": [
+      {
+        "id": "integ_referral_priority",
+        "modules_involved": [
+          "mod_danger_signs",
+          "mod_cough",
+          "mod_fever",
+          "mod_diarrhoea",
+          "mod_malnutrition"
+        ],
+        "combine_rule": "highest_referral_wins",
+        "referral_priority": "highest",
+        "treatment_combination": "If any module outputs ref_urgent_hospital=true, the child must be referred urgently. Pre-referral treatments from all modules are still given."
+      },
+      {
+        "id": "integ_treatment_additive",
+        "modules_involved": [
+          "mod_cough",
+          "mod_fever",
+          "mod_diarrhoea"
+        ],
+        "combine_rule": "treatments_additive",
+        "referral_priority": "N/A",
+        "treatment_combination": "Treatments from all applicable modules are given together unless contraindicated. A child with pneumonia AND malaria AND diarrhoea receives amoxicillin + AL + ORS + zinc."
+      },
+      {
+        "id": "integ_followup_shortest",
+        "modules_involved": [
+          "mod_cough",
+          "mod_fever",
+          "mod_diarrhoea"
+        ],
+        "combine_rule": "shortest_followup_wins",
+        "referral_priority": "N/A",
+        "treatment_combination": "The shortest follow-up interval across all active modules determines the return date."
+      },
+      {
+        "id": "integ_danger_overrides_all",
+        "modules_involved": [
+          "mod_danger_signs"
+        ],
+        "combine_rule": "danger_sign_short_circuit",
+        "referral_priority": "immediate",
+        "treatment_combination": "If any danger sign present, refer urgently regardless of other classifications. Give first dose of all applicable treatments before referral."
+      }
+    ]
+  },
+  "modules": {
+    "mod_danger_signs": {
+      "module_id": "mod_danger_signs",
+      "display_name": "General Danger Signs Assessment",
+      "hit_policy": "first",
+      "inputs": [
+        "ex_convulsions",
+        "ex_not_able_to_drink_or_feed",
+        "ex_vomits_everything",
+        "ex_unusually_sleepy_or_unconscious"
+      ],
+      "outputs": [
+        "ref_urgent_hospital",
+        "dx_danger_sign"
+      ],
+      "rules": [
+        {
+          "rule_id": "r_danger_any",
+          "condition": "p_danger_sign_present == true",
+          "action": "ref_urgent_hospital = true; dx_danger_sign = true",
+          "priority": 1
+        },
+        {
+          "rule_id": "r_danger_none",
+          "condition": "p_danger_sign_present == false",
+          "action": "ref_urgent_hospital = false; dx_danger_sign = false",
+          "priority": 2
+        }
+      ]
+    },
+    "mod_cough": {
+      "module_id": "mod_cough",
+      "display_name": "Cough and Breathing Assessment",
+      "hit_policy": "first",
+      "inputs": [
+        "q_cough",
+        "q_cough_duration_days",
+        "v_respiratory_rate_per_min",
+        "ex_chest_indrawing",
+        "demo_age_months"
+      ],
+      "outputs": [
+        "dx_cough_classification",
+        "ref_urgent_hospital",
+        "rx_amoxicillin",
+        "adv_cough_home_care",
+        "fu_cough_days"
+      ],
+      "rules": [
+        {
+          "rule_id": "r_cough_chest_indrawing",
+          "condition": "p_chest_indrawing_present == true",
+          "action": "dx_cough_classification = 'severe_pneumonia'; ref_urgent_hospital = true; rx_amoxicillin = true",
+          "priority": 1
+        },
+        {
+          "rule_id": "r_cough_fast_breathing",
+          "condition": "p_cough_pneumonia == true",
+          "action": "dx_cough_classification = 'pneumonia'; rx_amoxicillin = true; fu_cough_days = 3",
+          "priority": 2
+        },
+        {
+          "rule_id": "r_cough_no_pneumonia",
+          "condition": "p_cough_no_pneumonia == true",
+          "action": "dx_cough_classification = 'cough_or_cold'; adv_cough_home_care = true; fu_cough_days = 5",
+          "priority": 3
+        },
+        {
+          "rule_id": "r_cough_prolonged",
+          "condition": "q_cough == true AND q_cough_duration_days >= 21",
+          "action": "dx_cough_classification = 'chronic_cough'; ref_urgent_hospital = true",
+          "priority": 0
+        }
+      ]
+    },
+    "mod_fever": {
+      "module_id": "mod_fever",
+      "display_name": "Fever and Malaria Assessment",
+      "hit_policy": "first",
+      "inputs": [
+        "q_fever",
+        "q_fever_duration_days",
+        "lab_rdt_result"
+      ],
+      "outputs": [
+        "dx_fever_classification",
+        "ref_urgent_hospital",
+        "rx_al",
+        "fu_fever_days"
+      ],
+      "rules": [
+        {
+          "rule_id": "r_fever_prolonged",
+          "condition": "p_fever_prolonged == true",
+          "action": "dx_fever_classification = 'fever_7_days_or_more'; ref_urgent_hospital = true",
+          "priority": 1
+        },
+        {
+          "rule_id": "r_fever_malaria_pos",
+          "condition": "p_fever_malaria_positive == true",
+          "action": "dx_fever_classification = 'malaria'; rx_al = true; fu_fever_days = 3",
+          "priority": 2
+        },
+        {
+          "rule_id": "r_fever_malaria_neg",
+          "condition": "p_fever_malaria_negative == true",
+          "action": "dx_fever_classification = 'fever_no_malaria'; fu_fever_days = 2",
+          "priority": 3
+        },
+        {
+          "rule_id": "r_no_fever",
+          "condition": "q_fever == false",
+          "action": "dx_fever_classification = 'no_fever'",
+          "priority": 4
+        }
+      ]
+    },
+    "mod_diarrhoea": {
+      "module_id": "mod_diarrhoea",
+      "display_name": "Diarrhoea Assessment",
+      "hit_policy": "first",
+      "inputs": [
+        "q_diarrhoea",
+        "q_diarrhoea_duration_days",
+        "q_blood_in_stool"
+      ],
+      "outputs": [
+        "dx_diarrhoea_classification",
+        "ref_urgent_hospital",
+        "rx_ors",
+        "rx_zinc",
+        "fu_diarrhoea_days"
+      ],
+      "rules": [
+        {
+          "rule_id": "r_bloody_diarrhoea",
+          "condition": "p_bloody_diarrhoea == true",
+          "action": "dx_diarrhoea_classification = 'dysentery'; ref_urgent_hospital = true",
+          "priority": 1
+        },
+        {
+          "rule_id": "r_prolonged_diarrhoea",
+          "condition": "p_diarrhoea_prolonged == true",
+          "action": "dx_diarrhoea_classification = 'persistent_diarrhoea'; ref_urgent_hospital = true",
+          "priority": 2
+        },
+        {
+          "rule_id": "r_diarrhoea_simple",
+          "condition": "p_diarrhoea_present == true AND p_bloody_diarrhoea == false AND p_diarrhoea_prolonged == false",
+          "action": "dx_diarrhoea_classification = 'diarrhoea'; rx_ors = true; rx_zinc = true; fu_diarrhoea_days = 5",
+          "priority": 3
+        },
+        {
+          "rule_id": "r_no_diarrhoea",
+          "condition": "q_diarrhoea == false",
+          "action": "dx_diarrhoea_classification = 'no_diarrhoea'",
+          "priority": 4
+        }
+      ]
+    },
+    "mod_malnutrition": {
+      "module_id": "mod_malnutrition",
+      "display_name": "Malnutrition Assessment",
+      "hit_policy": "first",
+      "inputs": [
+        "v_muac_mm",
+        "ex_oedema_both_feet"
+      ],
+      "outputs": [
+        "dx_nutrition_classification",
+        "ref_urgent_hospital"
+      ],
+      "rules": [
+        {
+          "rule_id": "r_severe_malnutrition",
+          "condition": "p_severe_malnutrition == true",
+          "action": "dx_nutrition_classification = 'severe_acute_malnutrition'; ref_urgent_hospital = true",
+          "priority": 1
+        },
+        {
+          "rule_id": "r_moderate_malnutrition",
+          "condition": "p_moderate_malnutrition == true",
+          "action": "dx_nutrition_classification = 'moderate_acute_malnutrition'; ref_urgent_hospital = true",
+          "priority": 2
+        },
+        {
+          "rule_id": "r_nutrition_ok",
+          "condition": "p_severe_malnutrition == false AND p_moderate_malnutrition == false",
+          "action": "dx_nutrition_classification = 'no_acute_malnutrition'",
+          "priority": 3
+        }
+      ]
+    }
+  },
+  "phrase_bank": [
+    {
+      "id": "m_refer_urgently",
+      "category": "referral",
+      "text": "Refer URGENTLY to hospital. Give any pre-referral treatment.",
+      "module_context": "mod_danger_signs",
+      "source_quote": "Refer urgently to hospital",
+      "source_section_id": "convulsions"
+    },
+    {
+      "id": "m_danger_sign_convulsions",
+      "category": "diagnosis",
+      "text": "Danger sign: child has or has had convulsions.",
+      "module_context": "mod_danger_signs",
+      "source_quote": "Has the child had convulsions?",
+      "source_section_id": "convulsions"
+    },
+    {
+      "id": "m_danger_sign_not_able_to_drink",
+      "category": "diagnosis",
+      "text": "Danger sign: child is not able to drink or breastfeed.",
+      "module_context": "mod_danger_signs",
+      "source_quote": "Is the child not able to drink or breastfeed?",
+      "source_section_id": "not_able_to_drink_or_feed"
+    },
+    {
+      "id": "m_danger_sign_vomits_everything",
+      "category": "diagnosis",
+      "text": "Danger sign: child vomits everything.",
+      "module_context": "mod_danger_signs",
+      "source_quote": "Does the child vomit everything?",
+      "source_section_id": "vomiting_everything"
+    },
+    {
+      "id": "m_danger_sign_unusually_sleepy",
+      "category": "diagnosis",
+      "text": "Danger sign: child is unusually sleepy or unconscious.",
+      "module_context": "mod_danger_signs",
+      "source_quote": "Is the child unusually sleepy or unconscious?",
+      "source_section_id": "unusually_sleepy_or_unconscious"
+    },
+    {
+      "id": "m_dx_pneumonia",
+      "category": "diagnosis",
+      "text": "Classification: PNEUMONIA. Cough with fast breathing.",
+      "module_context": "mod_cough",
+      "source_quote": "If fast breathing: PNEUMONIA",
+      "source_section_id": "cough"
+    },
+    {
+      "id": "m_dx_severe_pneumonia",
+      "category": "diagnosis",
+      "text": "Classification: SEVERE PNEUMONIA. Cough with chest indrawing. Refer urgently.",
+      "module_context": "mod_cough",
+      "source_quote": "If chest indrawing: refer urgently",
+      "source_section_id": "chest_indrawing"
+    },
+    {
+      "id": "m_dx_cough_cold",
+      "category": "diagnosis",
+      "text": "Classification: COUGH OR COLD. No fast breathing, no chest indrawing.",
+      "module_context": "mod_cough",
+      "source_quote": "No pneumonia: cough or cold",
+      "source_section_id": "cough"
+    },
+    {
+      "id": "m_rx_amoxicillin",
+      "category": "treatment",
+      "text": "Give oral amoxicillin twice daily for 5 days.",
+      "module_context": "mod_cough",
+      "source_quote": "Give oral amoxicillin",
+      "source_section_id": "oral_amoxicillin_dosage_250_mg_tablets"
+    },
+    {
+      "id": "m_adv_cough_home_care",
+      "category": "advice",
+      "text": "Advise: soothe the throat with safe remedy. Continue feeding. Return if breathing becomes difficult or fast, or child becomes sicker.",
+      "module_context": "mod_cough",
+      "source_quote": "Advise the caretaker on home care",
+      "source_section_id": "cough"
+    },
+    {
+      "id": "m_fu_cough_3_days",
+      "category": "followup",
+      "text": "Follow up in 3 days. If still fast breathing, refer to hospital.",
+      "module_context": "mod_cough",
+      "source_quote": "Follow up in 3 days for cough with fast breathing",
+      "source_section_id": "7_3_follow_up_for_cough_with_fast_breathing"
+    },
+    {
+      "id": "m_dx_malaria",
+      "category": "diagnosis",
+      "text": "Classification: MALARIA. RDT positive.",
+      "module_context": "mod_fever",
+      "source_quote": "RDT positive: MALARIA",
+      "source_section_id": "5_2_fever_less_than_7_days_in_a_malaria_area"
+    },
+    {
+      "id": "m_dx_fever_no_malaria",
+      "category": "diagnosis",
+      "text": "Classification: FEVER, NO MALARIA. RDT negative.",
+      "module_context": "mod_fever",
+      "source_quote": "RDT negative: FEVER, NO MALARIA",
+      "source_section_id": "5_2_fever_less_than_7_days_in_a_malaria_area"
+    },
+    {
+      "id": "m_rx_al",
+      "category": "treatment",
+      "text": "Give AL (Artemether-Lumefantrine) twice daily for 3 days.",
+      "module_context": "mod_fever",
+      "source_quote": "Give antimalarial AL",
+      "source_section_id": "antimalarial_al_artemether_lumefantrine_dosage"
+    },
+    {
+      "id": "m_refer_fever_prolonged",
+      "category": "referral",
+      "text": "Fever for 7 days or more. Refer to hospital.",
+      "module_context": "mod_fever",
+      "source_quote": "If fever for 7 days or more, refer",
+      "source_section_id": "fever"
+    },
+    {
+      "id": "m_dx_diarrhoea",
+      "category": "diagnosis",
+      "text": "Classification: DIARRHOEA. Give ORS and zinc.",
+      "module_context": "mod_diarrhoea",
+      "source_quote": "If diarrhoea: give ORS and zinc",
+      "source_section_id": "diarrhoea"
+    },
+    {
+      "id": "m_dx_dysentery",
+      "category": "diagnosis",
+      "text": "Classification: DYSENTERY. Blood in stool. Refer.",
+      "module_context": "mod_diarrhoea",
+      "source_quote": "If blood in stool: refer",
+      "source_section_id": "diarrhoea"
+    },
+    {
+      "id": "m_rx_ors",
+      "category": "treatment",
+      "text": "Give ORS after each loose stool. Show caretaker how to prepare and give ORS.",
+      "module_context": "mod_diarrhoea",
+      "source_quote": "Give ORS solution",
+      "source_section_id": "ors_preparation_and_administration"
+    },
+    {
+      "id": "m_rx_zinc",
+      "category": "treatment",
+      "text": "Give zinc supplement once daily for 10 days. Under 6 months: half tablet; 6 months and older: 1 tablet.",
+      "module_context": "mod_diarrhoea",
+      "source_quote": "Give zinc supplement",
+      "source_section_id": "zinc_supplement_dosage"
+    },
+    {
+      "id": "m_fu_diarrhoea_5_days",
+      "category": "followup",
+      "text": "Follow up in 5 days. If diarrhoea not improved, refer.",
+      "module_context": "mod_diarrhoea",
+      "source_quote": "Follow up in 5 days for diarrhoea",
+      "source_section_id": "diarrhoea"
+    },
+    {
+      "id": "m_dx_sam",
+      "category": "diagnosis",
+      "text": "Classification: SEVERE ACUTE MALNUTRITION. MUAC red or oedema of both feet. Refer urgently.",
+      "module_context": "mod_malnutrition",
+      "source_quote": "Red on MUAC tape or oedema of both feet: refer urgently",
+      "source_section_id": "3_3_look_for_signs_of_severe_malnutrition"
+    },
+    {
+      "id": "m_dx_mam",
+      "category": "diagnosis",
+      "text": "Classification: MODERATE ACUTE MALNUTRITION. MUAC yellow. Refer for supplementary feeding.",
+      "module_context": "mod_malnutrition",
+      "source_quote": "Yellow on MUAC tape: refer",
+      "source_section_id": "3_3_look_for_signs_of_severe_malnutrition"
+    },
+    {
+      "id": "m_adv_fluids",
+      "category": "advice",
+      "text": "Advise caretaker to give more fluids and continue feeding.",
+      "module_context": "mod_diarrhoea",
+      "source_quote": "Give more fluids and continue feeding",
+      "source_section_id": "diarrhoea"
+    },
+    {
+      "id": "m_adv_when_to_return",
+      "category": "advice",
+      "text": "Return immediately if child: cannot drink or breastfeed, becomes sicker, has blood in stool, develops fever.",
+      "module_context": "mod_danger_signs",
+      "source_quote": "When to return immediately",
+      "source_section_id": "caring_for_the_sick_child_in_the_community"
+    }
+  ],
+  "predicates": [
+    {
+      "id": "p_danger_sign_present",
+      "threshold_expression": "ex_convulsions == true OR ex_not_able_to_drink_or_feed == true OR ex_vomits_everything == true OR ex_unusually_sleepy_or_unconscious == true",
+      "fail_safe": 0,
+      "source_vars": [
+        "ex_convulsions",
+        "ex_not_able_to_drink_or_feed",
+        "ex_vomits_everything",
+        "ex_unusually_sleepy_or_unconscious"
+      ],
+      "human_label": "Any general danger sign is present",
+      "source_quote": "Check for general danger signs: convulsions, not able to drink or feed, vomits everything, unusually sleepy or unconscious",
+      "source_section_id": "convulsions"
+    },
+    {
+      "id": "p_fast_breathing",
+      "threshold_expression": "(demo_age_months >= 2 AND demo_age_months < 12 AND v_respiratory_rate_per_min >= 50) OR (demo_age_months >= 12 AND demo_age_months <= 59 AND v_respiratory_rate_per_min >= 40)",
+      "fail_safe": 1,
+      "source_vars": [
+        "demo_age_months",
+        "v_respiratory_rate_per_min"
+      ],
+      "human_label": "Child has fast breathing for age",
+      "source_quote": "Fast breathing: 50 or more breaths per minute for child 2 months up to 12 months; 40 or more breaths per minute for child 12 months up to 5 years",
+      "source_section_id": "fast_breathing"
+    },
+    {
+      "id": "p_cough_pneumonia",
+      "threshold_expression": "q_cough == true AND p_fast_breathing == true AND ex_chest_indrawing == false",
+      "fail_safe": 0,
+      "source_vars": [
+        "q_cough",
+        "p_fast_breathing",
+        "ex_chest_indrawing"
+      ],
+      "human_label": "Cough with fast breathing (pneumonia) without chest indrawing",
+      "source_quote": "If the child has cough with fast breathing, classify as PNEUMONIA",
+      "source_section_id": "cough"
+    },
+    {
+      "id": "p_chest_indrawing_present",
+      "threshold_expression": "q_cough == true AND ex_chest_indrawing == true",
+      "fail_safe": 0,
+      "source_vars": [
+        "q_cough",
+        "ex_chest_indrawing"
+      ],
+      "human_label": "Cough with chest indrawing (severe pneumonia)",
+      "source_quote": "If chest indrawing: refer urgently to hospital",
+      "source_section_id": "chest_indrawing"
+    },
+    {
+      "id": "p_cough_no_pneumonia",
+      "threshold_expression": "q_cough == true AND p_fast_breathing == false AND ex_chest_indrawing == false",
+      "fail_safe": 0,
+      "source_vars": [
+        "q_cough",
+        "p_fast_breathing",
+        "ex_chest_indrawing"
+      ],
+      "human_label": "Cough or cold with no fast breathing (no pneumonia)",
+      "source_quote": "If no fast breathing and no chest indrawing: cough or cold, no pneumonia",
+      "source_section_id": "cough"
+    },
+    {
+      "id": "p_fever_malaria_positive",
+      "threshold_expression": "q_fever == true AND lab_rdt_result == 'positive'",
+      "fail_safe": 0,
+      "source_vars": [
+        "q_fever",
+        "lab_rdt_result"
+      ],
+      "human_label": "Fever with positive RDT (malaria)",
+      "source_quote": "If RDT is positive, classify as MALARIA",
+      "source_section_id": "5_2_fever_less_than_7_days_in_a_malaria_area"
+    },
+    {
+      "id": "p_fever_malaria_negative",
+      "threshold_expression": "q_fever == true AND lab_rdt_result == 'negative'",
+      "fail_safe": 0,
+      "source_vars": [
+        "q_fever",
+        "lab_rdt_result"
+      ],
+      "human_label": "Fever with negative RDT (fever, no malaria)",
+      "source_quote": "If RDT is negative, classify as FEVER, NO MALARIA",
+      "source_section_id": "5_2_fever_less_than_7_days_in_a_malaria_area"
+    },
+    {
+      "id": "p_fever_prolonged",
+      "threshold_expression": "q_fever == true AND q_fever_duration_days >= 7",
+      "fail_safe": 0,
+      "source_vars": [
+        "q_fever",
+        "q_fever_duration_days"
+      ],
+      "human_label": "Fever lasting 7 days or more",
+      "source_quote": "If fever for 7 days or more, refer to hospital",
+      "source_section_id": "fever"
+    },
+    {
+      "id": "p_diarrhoea_present",
+      "threshold_expression": "q_diarrhoea == true",
+      "fail_safe": 0,
+      "source_vars": [
+        "q_diarrhoea"
+      ],
+      "human_label": "Child has diarrhoea",
+      "source_quote": "Does the child have diarrhoea?",
+      "source_section_id": "diarrhoea"
+    },
+    {
+      "id": "p_diarrhoea_prolonged",
+      "threshold_expression": "q_diarrhoea == true AND q_diarrhoea_duration_days >= 14",
+      "fail_safe": 0,
+      "source_vars": [
+        "q_diarrhoea",
+        "q_diarrhoea_duration_days"
+      ],
+      "human_label": "Diarrhoea lasting 14 days or more",
+      "source_quote": "If diarrhoea for 14 days or more, refer",
+      "source_section_id": "diarrhoea"
+    },
+    {
+      "id": "p_bloody_diarrhoea",
+      "threshold_expression": "q_diarrhoea == true AND q_blood_in_stool == true",
+      "fail_safe": 0,
+      "source_vars": [
+        "q_diarrhoea",
+        "q_blood_in_stool"
+      ],
+      "human_label": "Diarrhoea with blood in stool (dysentery)",
+      "source_quote": "If blood in stool, refer",
+      "source_section_id": "diarrhoea"
+    },
+    {
+      "id": "p_severe_malnutrition",
+      "threshold_expression": "v_muac_mm < 115 OR ex_oedema_both_feet == true",
+      "fail_safe": 1,
+      "source_vars": [
+        "v_muac_mm",
+        "ex_oedema_both_feet"
+      ],
+      "human_label": "Severe acute malnutrition (MUAC < 115 mm or oedema of both feet)",
+      "source_quote": "Red on MUAC tape or oedema of both feet: severe acute malnutrition, refer urgently",
+      "source_section_id": "3_3_look_for_signs_of_severe_malnutrition"
+    },
+    {
+      "id": "p_moderate_malnutrition",
+      "threshold_expression": "v_muac_mm >= 115 AND v_muac_mm < 125 AND ex_oedema_both_feet == false",
+      "fail_safe": 1,
+      "source_vars": [
+        "v_muac_mm",
+        "ex_oedema_both_feet"
+      ],
+      "human_label": "Moderate acute malnutrition (MUAC 115-124 mm)",
+      "source_quote": "Yellow on MUAC tape: moderate acute malnutrition",
+      "source_section_id": "3_3_look_for_signs_of_severe_malnutrition"
+    }
+  ],
+  "router": {
+    "hit_policy": "first",
+    "rows": [
+      {
+        "priority": 0,
+        "condition": "p_danger_sign_present == true",
+        "output_module": "mod_danger_signs",
+        "description": "DANGER SIGN short-circuit: any general danger sign triggers immediate urgent referral"
+      },
+      {
+        "priority": 1,
+        "condition": "q_cough == true",
+        "output_module": "mod_cough",
+        "description": "Child has cough: assess for pneumonia"
+      },
+      {
+        "priority": 2,
+        "condition": "q_fever == true",
+        "output_module": "mod_fever",
+        "description": "Child has fever: assess for malaria"
+      },
+      {
+        "priority": 3,
+        "condition": "q_diarrhoea == true",
+        "output_module": "mod_diarrhoea",
+        "description": "Child has diarrhoea: assess and treat"
+      },
+      {
+        "priority": 4,
+        "condition": "demo_age_months >= 2 AND demo_age_months <= 59",
+        "output_module": "mod_malnutrition",
+        "description": "All children 2-59 months: check nutrition status"
+      },
+      {
+        "priority": 999,
+        "condition": "true",
+        "output_module": "mod_danger_signs",
+        "description": "Fallback: always check for danger signs"
+      }
+    ]
+  },
+  "supply_list": [
+    {
+      "id": "equip_timer",
+      "display_name": "Timer or watch with seconds",
+      "kind": "equipment",
+      "source_quote": "Count the breaths in one minute using a timer",
+      "source_section_id": "fast_breathing"
+    },
+    {
+      "id": "equip_muac_tape",
+      "display_name": "MUAC measuring tape",
+      "kind": "equipment",
+      "source_quote": "Look for signs of severe malnutrition: measure MUAC",
+      "source_section_id": "3_3_look_for_signs_of_severe_malnutrition"
+    },
+    {
+      "id": "supply_rdt",
+      "display_name": "Rapid diagnostic test for malaria (RDT)",
+      "kind": "consumable",
+      "source_quote": "Do a rapid diagnostic test (RDT) for malaria",
+      "source_section_id": "5_2_fever_less_than_7_days_in_a_malaria_area"
+    },
+    {
+      "id": "supply_amoxicillin_250mg",
+      "display_name": "Oral amoxicillin 250 mg tablets",
+      "kind": "consumable",
+      "source_quote": "Give oral amoxicillin 250 mg tablets",
+      "source_section_id": "oral_amoxicillin_dosage_250_mg_tablets"
+    },
+    {
+      "id": "supply_ors",
+      "display_name": "ORS packets",
+      "kind": "consumable",
+      "source_quote": "Give ORS solution",
+      "source_section_id": "ors_preparation_and_administration"
+    },
+    {
+      "id": "supply_zinc",
+      "display_name": "Zinc supplements (20 mg tablets)",
+      "kind": "consumable",
+      "source_quote": "Give zinc supplement",
+      "source_section_id": "zinc_supplement_dosage"
+    },
+    {
+      "id": "supply_al",
+      "display_name": "AL (Artemether-Lumefantrine) tablets",
+      "kind": "consumable",
+      "source_quote": "Give antimalarial AL (Artemether-Lumefantrine)",
+      "source_section_id": "antimalarial_al_artemether_lumefantrine_dosage"
+    }
+  ],
+  "variables": [
+    {
+      "id": "demo_age_months",
+      "display_name": "Age in months",
+      "prefix": "demo_",
+      "data_type": "integer",
+      "unit": "months",
+      "depends_on_supply": [],
+      "source_quote": "Ask: How old is the child?",
+      "source_section_id": "1_introduction"
+    },
+    {
+      "id": "q_cough",
+      "display_name": "Child has cough",
+      "prefix": "q_",
+      "data_type": "boolean",
+      "unit": "",
+      "depends_on_supply": [],
+      "source_quote": "Ask: Does the child have a cough?",
+      "source_section_id": "cough"
+    },
+    {
+      "id": "q_cough_duration_days",
+      "display_name": "Duration of cough in days",
+      "prefix": "q_",
+      "data_type": "integer",
+      "unit": "days",
+      "depends_on_supply": [],
+      "source_quote": "If yes, for how long?",
+      "source_section_id": "cough"
+    },
+    {
+      "id": "v_respiratory_rate_per_min",
+      "display_name": "Respiratory rate (breaths per minute)",
+      "prefix": "v_",
+      "data_type": "integer",
+      "unit": "/min",
+      "depends_on_supply": [
+        "equip_timer"
+      ],
+      "source_quote": "Count the number of breaths in one minute",
+      "source_section_id": "fast_breathing"
+    },
+    {
+      "id": "ex_chest_indrawing",
+      "display_name": "Chest indrawing observed",
+      "prefix": "ex_",
+      "data_type": "boolean",
+      "unit": "",
+      "depends_on_supply": [],
+      "source_quote": "Look for chest indrawing",
+      "source_section_id": "chest_indrawing"
+    },
+    {
+      "id": "ex_convulsions",
+      "display_name": "Child has or had convulsions",
+      "prefix": "ex_",
+      "data_type": "boolean",
+      "unit": "",
+      "depends_on_supply": [],
+      "source_quote": "Ask: Has the child had convulsions?",
+      "source_section_id": "convulsions"
+    },
+    {
+      "id": "ex_not_able_to_drink_or_feed",
+      "display_name": "Child is not able to drink or breastfeed",
+      "prefix": "ex_",
+      "data_type": "boolean",
+      "unit": "",
+      "depends_on_supply": [],
+      "source_quote": "Is the child not able to drink or breastfeed?",
+      "source_section_id": "not_able_to_drink_or_feed"
+    },
+    {
+      "id": "ex_vomits_everything",
+      "display_name": "Child vomits everything",
+      "prefix": "ex_",
+      "data_type": "boolean",
+      "unit": "",
+      "depends_on_supply": [],
+      "source_quote": "Does the child vomit everything?",
+      "source_section_id": "vomiting_everything"
+    },
+    {
+      "id": "ex_unusually_sleepy_or_unconscious",
+      "display_name": "Child is unusually sleepy or unconscious",
+      "prefix": "ex_",
+      "data_type": "boolean",
+      "unit": "",
+      "depends_on_supply": [],
+      "source_quote": "Is the child unusually sleepy or unconscious?",
+      "source_section_id": "unusually_sleepy_or_unconscious"
+    },
+    {
+      "id": "q_fever",
+      "display_name": "Child has fever (reported or measured)",
+      "prefix": "q_",
+      "data_type": "boolean",
+      "unit": "",
+      "depends_on_supply": [],
+      "source_quote": "Ask: Does the child have fever?",
+      "source_section_id": "fever"
+    },
+    {
+      "id": "q_fever_duration_days",
+      "display_name": "Duration of fever in days",
+      "prefix": "q_",
+      "data_type": "integer",
+      "unit": "days",
+      "depends_on_supply": [],
+      "source_quote": "If yes, for how long?",
+      "source_section_id": "fever"
+    },
+    {
+      "id": "lab_rdt_result",
+      "display_name": "RDT result for malaria",
+      "prefix": "lab_",
+      "data_type": "enum",
+      "unit": "",
+      "depends_on_supply": [
+        "supply_rdt"
+      ],
+      "source_quote": "Do a rapid diagnostic test (RDT)",
+      "source_section_id": "rdt_procedure_summary"
+    },
+    {
+      "id": "q_diarrhoea",
+      "display_name": "Child has diarrhoea",
+      "prefix": "q_",
+      "data_type": "boolean",
+      "unit": "",
+      "depends_on_supply": [],
+      "source_quote": "Ask: Does the child have diarrhoea?",
+      "source_section_id": "diarrhoea"
+    },
+    {
+      "id": "q_diarrhoea_duration_days",
+      "display_name": "Duration of diarrhoea in days",
+      "prefix": "q_",
+      "data_type": "integer",
+      "unit": "days",
+      "depends_on_supply": [],
+      "source_quote": "If yes, for how long?",
+      "source_section_id": "diarrhoea"
+    },
+    {
+      "id": "q_blood_in_stool",
+      "display_name": "Blood in stool",
+      "prefix": "q_",
+      "data_type": "boolean",
+      "unit": "",
+      "depends_on_supply": [],
+      "source_quote": "Is there blood in the stool?",
+      "source_section_id": "diarrhoea"
+    },
+    {
+      "id": "v_muac_mm",
+      "display_name": "Mid-upper arm circumference",
+      "prefix": "v_",
+      "data_type": "integer",
+      "unit": "mm",
+      "depends_on_supply": [
+        "equip_muac_tape"
+      ],
+      "source_quote": "Measure MUAC",
+      "source_section_id": "3_3_look_for_signs_of_severe_malnutrition"
+    },
+    {
+      "id": "ex_oedema_both_feet",
+      "display_name": "Oedema of both feet",
+      "prefix": "ex_",
+      "data_type": "boolean",
+      "unit": "",
+      "depends_on_supply": [],
+      "source_quote": "Look for oedema of both feet",
+      "source_section_id": "3_3_look_for_signs_of_severe_malnutrition"
+    }
+  ]
+}

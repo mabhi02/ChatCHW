@@ -1,0 +1,123 @@
+{
+  "modules": [
+    {
+      "module_id": "mod_cough",
+      "display_name": "Cough / Pneumonia Assessment",
+      "hit_policy": "FIRST",
+      "input_columns": ["p_cough_gte_14d", "p_chest_indrawing", "p_fast_breathing"],
+      "output_columns": ["dx_classification", "tx_treatment", "ref_hospital_urgent", "m_message_ids"],
+      "rules": [
+        {
+          "inputs": ["true", "-", "-"],
+          "outputs": ["chronic_cough", "tx_refer_tb", "false", "m_dx_chronic_cough,m_ref_tb"],
+          "provenance": {"page": "p.38", "quote": "cough for 14 days or more"}
+        },
+        {
+          "inputs": ["-", "true", "-"],
+          "outputs": ["severe_pneumonia", "tx_pre_referral_amox", "true", "m_dx_severe_pneumonia"],
+          "provenance": {"page": "p.22", "quote": "chest indrawing"}
+        },
+        {
+          "inputs": ["false", "false", "true"],
+          "outputs": ["pneumonia", "tx_oral_amoxicillin", "false", "m_dx_pneumonia"],
+          "provenance": {"page": "p.45", "quote": "fast breathing without chest indrawing"}
+        },
+        {
+          "inputs": ["-", "-", "-"],
+          "outputs": ["common_cold", "tx_fluids_rest", "false", "m_dx_common_cold"],
+          "provenance": {"page": "p.46", "quote": "no pneumonia simple cough or cold"}
+        }
+      ]
+    }
+  ],
+  "activator": {
+    "input_columns": ["q_cough", "q_diarrhea", "q_fever"],
+    "rules": [
+      {"inputs": ["true", "-", "-"], "module_id": "mod_cough"},
+      {"inputs": ["-", "true", "-"], "module_id": "mod_diarrhea"},
+      {"inputs": ["-", "-", "true"], "module_id": "mod_fever"}
+    ]
+  },
+  "router": {
+    "rules": [
+      {"condition": "p_danger_sign_present == true", "next_module": "mod_emergency_referral", "priority": 0},
+      {"condition": "mod_cough in required AND mod_cough not in completed", "next_module": "mod_cough", "priority": 1},
+      {"condition": "always", "next_module": "mod_integrative", "priority": 99}
+    ]
+  },
+  "integrative": {
+    "description": "Combine module outputs",
+    "rules": []
+  },
+  "predicates": [
+    {
+      "predicate_id": "p_danger_sign_present",
+      "source_vars": ["q_convulsions", "q_not_able_to_drink", "ex_chest_indrawing"],
+      "threshold_expression": "q_convulsions OR q_not_able_to_drink OR ex_chest_indrawing",
+      "human_label": "Any general danger sign present",
+      "fail_safe": 1,
+      "page_ref": "p.2"
+    },
+    {
+      "predicate_id": "p_cough_gte_14d",
+      "source_vars": ["q_cough_duration_days"],
+      "threshold_expression": "q_cough_duration_days >= 14",
+      "human_label": "Cough for 14 days or more",
+      "fail_safe": 0,
+      "page_ref": "p.38"
+    },
+    {
+      "predicate_id": "p_chest_indrawing",
+      "source_vars": ["ex_chest_indrawing"],
+      "threshold_expression": "ex_chest_indrawing == true",
+      "human_label": "Lower chest wall indrawing",
+      "fail_safe": 0,
+      "page_ref": "p.22"
+    },
+    {
+      "predicate_id": "p_fast_breathing",
+      "source_vars": ["v_resp_rate_per_min", "demo_age_months"],
+      "threshold_expression": "(demo_age_months < 12 AND v_resp_rate_per_min >= 50) OR (demo_age_months >= 12 AND v_resp_rate_per_min >= 40)",
+      "human_label": "Fast breathing for age",
+      "fail_safe": 1,
+      "page_ref": "p.26"
+    }
+  ],
+  "phrase_bank": [
+    {
+      "message_id": "m_dx_chronic_cough",
+      "category": "diagnosis",
+      "english_text": "This child has had a cough for {duration} days. This is a chronic cough.",
+      "placeholder_vars": ["duration"],
+      "page_ref": "p.38"
+    },
+    {
+      "message_id": "m_dx_severe_pneumonia",
+      "category": "diagnosis",
+      "english_text": "This child has severe pneumonia. Give first dose of amoxicillin and refer urgently.",
+      "placeholder_vars": [],
+      "page_ref": "p.22"
+    },
+    {
+      "message_id": "m_dx_pneumonia",
+      "category": "diagnosis",
+      "english_text": "This child has pneumonia. Give oral amoxicillin for {days} days.",
+      "placeholder_vars": ["days"],
+      "page_ref": "p.45"
+    },
+    {
+      "message_id": "m_dx_common_cold",
+      "category": "diagnosis",
+      "english_text": "This child has a cough or cold. No antibiotics needed.",
+      "placeholder_vars": [],
+      "page_ref": "p.46"
+    },
+    {
+      "message_id": "m_ref_tb",
+      "category": "referral",
+      "english_text": "Refer child to health facility for TB assessment.",
+      "placeholder_vars": [],
+      "page_ref": "p.38"
+    }
+  ]
+}

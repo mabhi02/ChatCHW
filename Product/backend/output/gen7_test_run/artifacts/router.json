@@ -1,0 +1,41 @@
+{
+  "hit_policy": "first",
+  "rows": [
+    {
+      "priority": 0,
+      "condition": "p_danger_sign_present == true",
+      "output_module": "mod_danger_signs",
+      "description": "DANGER SIGN short-circuit: any general danger sign triggers immediate urgent referral"
+    },
+    {
+      "priority": 1,
+      "condition": "q_cough == true",
+      "output_module": "mod_cough",
+      "description": "Child has cough: assess for pneumonia"
+    },
+    {
+      "priority": 2,
+      "condition": "q_fever == true",
+      "output_module": "mod_fever",
+      "description": "Child has fever: assess for malaria"
+    },
+    {
+      "priority": 3,
+      "condition": "q_diarrhoea == true",
+      "output_module": "mod_diarrhoea",
+      "description": "Child has diarrhoea: assess and treat"
+    },
+    {
+      "priority": 4,
+      "condition": "demo_age_months >= 2 AND demo_age_months <= 59",
+      "output_module": "mod_malnutrition",
+      "description": "All children 2-59 months: check nutrition status"
+    },
+    {
+      "priority": 999,
+      "condition": "true",
+      "output_module": "mod_danger_signs",
+      "description": "Fallback: always check for danger signs"
+    }
+  ]
+}

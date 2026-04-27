@@ -1,0 +1,164 @@
+[
+  {
+    "id": "q_chief_complaint",
+    "display_name": "chief complaint",
+    "kind": "input",
+    "unit": "",
+    "data_type": "boolean",
+    "source_quote": "Check the patient's chief complaint and current symptoms.",
+    "source_section_id": "chunk_1"
+  },
+  {
+    "id": "q_current_symptoms",
+    "display_name": "current symptoms",
+    "kind": "input",
+    "unit": "",
+    "data_type": "boolean",
+    "source_quote": "Check the patient's chief complaint and current symptoms.",
+    "source_section_id": "chunk_1"
+  },
+  {
+    "id": "v_blood_pressure",
+    "display_name": "blood pressure",
+    "kind": "input",
+    "unit": "",
+    "data_type": "numeric",
+    "source_quote": "Document the patient's vital signs including blood pressure, heart rate, temperature, and oxygen saturation.",
+    "source_section_id": "chunk_1"
+  },
+  {
+    "id": "v_heart_rate",
+    "display_name": "heart rate",
+    "kind": "input",
+    "unit": "",
+    "data_type": "numeric",
+    "source_quote": "Document the patient's vital signs including blood pressure, heart rate, temperature, and oxygen saturation.",
+    "source_section_id": "chunk_1"
+  },
+  {
+    "id": "v_temperature",
+    "display_name": "temperature",
+    "kind": "input",
+    "unit": "",
+    "data_type": "numeric",
+    "source_quote": "Document the patient's vital signs including blood pressure, heart rate, temperature, and oxygen saturation.",
+    "source_section_id": "chunk_1"
+  },
+  {
+    "id": "v_oxygen_saturation",
+    "display_name": "oxygen saturation",
+    "kind": "input",
+    "unit": "",
+    "data_type": "numeric",
+    "source_quote": "Document the patient's vital signs including blood pressure, heart rate, temperature, and oxygen saturation.",
+    "source_section_id": "chunk_1"
+  },
+  {
+    "id": "hx_medication_history",
+    "display_name": "medication history",
+    "kind": "input",
+    "unit": "",
+    "data_type": "boolean",
+    "source_quote": "Ask the patient about their medication history, allergies, and previous hospitalizations.",
+    "source_section_id": "chunk_1"
+  },
+  {
+    "id": "q_allergies",
+    "display_name": "allergies",
+    "kind": "input",
+    "unit": "",
+    "data_type": "boolean",
+    "source_quote": "Ask the patient about their medication history, allergies, and previous hospitalizations.",
+    "source_section_id": "chunk_1"
+  },
+  {
+    "id": "hx_previous_hospitalizations",
+    "display_name": "previous hospitalizations",
+    "kind": "input",
+    "unit": "",
+    "data_type": "boolean",
+    "source_quote": "Ask the patient about their medication history, allergies, and previous hospitalizations.",
+    "source_section_id": "chunk_1"
+  },
+  {
+    "id": "q_pain_level",
+    "display_name": "pain level",
+    "kind": "input",
+    "unit": "",
+    "data_type": "boolean",
+    "source_quote": "Rate the pain level on a scale of 1 to 10.",
+    "source_section_id": "chunk_1"
+  },
+  {
+    "id": "q_diagnosis",
+    "display_name": "diagnosis",
+    "kind": "input",
+    "unit": "",
+    "data_type": "boolean",
+    "source_quote": "The treatment plan should include diagnosis, proposed interventions, expected outcomes, and follow-up schedule.",
+    "source_section_id": "chunk_2"
+  },
+  {
+    "id": "q_proposed_interventions",
+    "display_name": "proposed interventions",
+    "kind": "input",
+    "unit": "",
+    "data_type": "boolean",
+    "source_quote": "The treatment plan should include diagnosis, proposed interventions, expected outcomes, and follow-up schedule.",
+    "source_section_id": "chunk_2"
+  },
+  {
+    "id": "q_expected_outcomes",
+    "display_name": "expected outcomes",
+    "kind": "input",
+    "unit": "",
+    "data_type": "boolean",
+    "source_quote": "The treatment plan should include diagnosis, proposed interventions, expected outcomes, and follow-up schedule.",
+    "source_section_id": "chunk_2"
+  },
+  {
+    "id": "q_followup_schedule",
+    "display_name": "follow-up schedule",
+    "kind": "input",
+    "unit": "",
+    "data_type": "boolean",
+    "source_quote": "The treatment plan should include diagnosis, proposed interventions, expected outcomes, and follow-up schedule.",
+    "source_section_id": "chunk_2"
+  },
+  {
+    "id": "q_preferred_pharmacy",
+    "display_name": "preferred pharmacy",
+    "kind": "input",
+    "unit": "",
+    "data_type": "boolean",
+    "source_quote": "Confirm the patient's preferred pharmacy and emergency contact number.",
+    "source_section_id": "chunk_2"
+  },
+  {
+    "id": "q_emergency_contact",
+    "display_name": "emergency contact number",
+    "kind": "input",
+    "unit": "",
+    "data_type": "boolean",
+    "source_quote": "Confirm the patient's preferred pharmacy and emergency contact number.",
+    "source_section_id": "chunk_2"
+  },
+  {
+    "id": "q_insurance_info",
+    "display_name": "insurance information",
+    "kind": "input",
+    "unit": "",
+    "data_type": "boolean",
+    "source_quote": "Verify insurance information and prior authorization status before finalizing the plan.",
+    "source_section_id": "chunk_2"
+  },
+  {
+    "id": "q_prior_auth_status",
+    "display_name": "prior authorization status",
+    "kind": "input",
+    "unit": "",
+    "data_type": "boolean",
+    "source_quote": "Verify insurance information and prior authorization status before finalizing the plan.",
+    "source_section_id": "chunk_2"
+  }
+]

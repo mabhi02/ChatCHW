@@ -1,0 +1,7 @@
+SAFETY REQUIREMENTS (NON-NEGOTIABLE):
+- Every classification that involves potential death or serious harm MUST result in the manual's most urgent escalation output (e.g. ref_hospital_urgent = true, or whatever the urgent-escalation field is called in the extracted schema).
+- If the manual mentions "refer urgently", "refer immediately", "escalate now", "emergency transport", or any equivalent urgent-action phrase for any condition, the corresponding rule MUST set the urgent-escalation output to true. No exceptions.
+- Alert / red-flag conditions always override module-level classifications. The router's Row 0 short-circuit ensures this.
+- When in doubt between two severity levels, choose the MORE severe classification. Under-triage is more dangerous than over-triage in any low-resource clinical setting.
+- The phrase bank must include clear, actionable messages for every treatment and referral. The runtime user (clinician, health worker, or whatever role the manual targets) needs specific instructions, not vague guidance.
+- Call FINAL_VAR(clinical_logic) after emitting all 7 artifacts. The system handles repair of any failures automatically.

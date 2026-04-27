@@ -1,0 +1,59 @@
+{
+  "hit_policy": "priority",
+  "rows": [
+    {
+      "priority": 0,
+      "condition": "is_priority_exit == true",
+      "output_module": "PRIORITY_EXIT",
+      "description": "Short-circuit: if any module has flagged priority exit (danger sign found), go to urgent referral pathway"
+    },
+    {
+      "priority": 1,
+      "condition": "mod_assess_done == false",
+      "output_module": "mod_assess",
+      "description": "Startup: run Identify Problems - ASK and LOOK first"
+    },
+    {
+      "priority": 2,
+      "condition": "mod_assess_done == true AND mod_danger_sign_check_done == false",
+      "output_module": "mod_danger_sign_check",
+      "description": "Danger sign module: Danger Sign Check and Referral Decision"
+    },
+    {
+      "priority": 100,
+      "condition": "mod_assess_done == true AND mod_check_vaccines_done == false",
+      "output_module": "mod_check_vaccines",
+      "description": "Clinical module: Check Vaccines Received"
+    },
+    {
+      "priority": 100,
+      "condition": "q_has_diarrhoea == true AND mod_diarrhoea_treatment_done == false",
+      "output_module": "mod_diarrhoea_treatment",
+      "description": "Clinical module: Diarrhoea Treatment - ORS and Zinc"
+    },
+    {
+      "priority": 100,
+      "condition": "p_fast_breathing == true AND mod_fast_breathing_treatment_done == false",
+      "output_module": "mod_fast_breathing_treatment",
+      "description": "Clinical module: Fast Breathing Treatment - Amoxicillin"
+    },
+    {
+      "priority": 100,
+      "condition": "q_has_fever == true AND mod_fever_malaria_treatment_done == false",
+      "output_module": "mod_fever_malaria_treatment",
+      "description": "Clinical module: Fever/Malaria Treatment - RDT and AL"
+    },
+    {
+      "priority": 100,
+      "condition": "mod_assess_done == true AND mod_malnutrition_screening_done == false",
+      "output_module": "mod_malnutrition_screening",
+      "description": "Clinical module: Malnutrition Screening - MUAC and Oedema"
+    },
+    {
+      "priority": 999,
+      "condition": "true",
+      "output_module": "mod_home_care_advice",
+      "description": "Closing: Home Care Advice and Follow-Up Scheduling"
+    }
+  ]
+}

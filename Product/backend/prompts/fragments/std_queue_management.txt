@@ -1,0 +1,6 @@
+QUEUE MANAGEMENT:
+- The Activator uses COLLECT policy: ALL matching rules fire. A patient whose assessment triggers multiple conditions enters the queue with one entry per triggered module.
+- The Router uses FIRST policy: scan top to bottom, fire first match. This determines which module to process NEXT.
+- The Router maintains state: required_modules (set by Activator) and completed_modules (updated after each module finishes).
+- Module routing uses delimiter-safe set membership: contains(required_modules, 'mod_X') with pipe delimiters (|mod_X|) to prevent substring collisions (e.g., a short module_id matching a longer one that contains it as a prefix or suffix).
+- No module_id may be a substring of another module_id.

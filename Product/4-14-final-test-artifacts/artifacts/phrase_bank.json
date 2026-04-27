@@ -1,0 +1,170 @@
+[
+  {
+    "id": "adv_al_second_dose_8hr",
+    "category": "treatment",
+    "text": "Advise to give 2nd dose after 8 hours and to give dose twice daily for 2 more days.",
+    "module_context": "mod_fever_malaria_treatment",
+    "source_quote": "Advise to give 2nd dose after 8 hours and to give dose twice daily for 2 more days.",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "adv_check_expiration_date",
+    "category": "safety",
+    "text": "All medicines have an expiration date, after which they may not be effective or could be harmful.",
+    "module_context": "all",
+    "source_quote": "All medicines have an expiration date, after which they may not be effective or could be harmful",
+    "source_section_id": "follow_up_the_sick_child_treated_at_home+take_home_messages_for_this_section_p39+take_home_messages_for_this_section_p64"
+  },
+  {
+    "id": "adv_complete_amoxicillin_5_days",
+    "category": "treatment",
+    "text": "Emphasize that it is important to give the amoxicillin for the full 5 days, even if the child feels better.",
+    "module_context": "mod_fast_breathing_treatment",
+    "source_quote": "Emphasize that it is important to give the amoxicillin for the full 5 days, even if the child feels better.",
+    "source_section_id": "exercise_decide_on_the_dose_of_amoxicillin_to_give_a_child+demonstration_and_practice_decide_on_treatment_for_the_child+how_much_zinc_do_you_give_a_child_age_6_months_up_to_5_years"
+  },
+  {
+    "id": "adv_counsel_feeding_yellow_muac",
+    "category": "nutrition",
+    "text": "Counsel caregiver on feeding or refer the child to a supplementary feeding programme, if available.",
+    "module_context": "mod_malnutrition_screening",
+    "source_quote": "Counsel caregiver on feeding or refer the child to a supplementary feeding programme, if available",
+    "source_section_id": "exercise_2_optional+child_juanita_vald_z+child_1_jackie_marks"
+  },
+  {
+    "id": "adv_first_dose_in_presence",
+    "category": "treatment",
+    "text": "The caregiver should give the first dose of treatment in your presence.",
+    "module_context": "mod_diarrhoea_treatment",
+    "source_quote": "the caregiver should give the first dose of treatment in your presence",
+    "source_section_id": "follow_up_the_sick_child_treated_at_home+take_home_messages_for_this_section_p39+take_home_messages_for_this_section_p64"
+  },
+  {
+    "id": "adv_give_fluids_continue_feeding",
+    "category": "home_care",
+    "text": "Advise caregiver to give more fluids and continue feeding.",
+    "module_context": "mod_home_care_advice",
+    "source_quote": "Advise caregiver to give more fluids and continue feeding",
+    "source_section_id": "contents+give_ors"
+  },
+  {
+    "id": "adv_next_vaccine_when_where",
+    "category": "vaccination",
+    "text": "Advise caregiver, if needed: WHEN and WHERE is the next vaccine to be given?",
+    "module_context": "mod_check_vaccines",
+    "source_quote": "Advise caregiver, if needed: WHEN and WHERE is the next vaccine to be given?",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "adv_sleep_under_itn",
+    "category": "malaria_prevention",
+    "text": "Advise caregiver on sleeping under a bednet (ITN).",
+    "module_context": "mod_home_care_advice",
+    "source_quote": "Advise caregiver on sleeping under a bednet (ITN)",
+    "source_section_id": "contents+give_ors"
+  },
+  {
+    "id": "adv_when_to_return",
+    "category": "home_care",
+    "text": "Advise on when to return: go to nearest health facility immediately if child cannot drink or feed, becomes sicker, or has blood in the stool.",
+    "module_context": "mod_home_care_advice",
+    "source_quote": "Advise on when to return",
+    "source_section_id": "contents+give_ors"
+  },
+  {
+    "id": "adv_zinc_full_10_days",
+    "category": "treatment",
+    "text": "Give zinc for the full 10 days, even if the diarrhoea stops.",
+    "module_context": "mod_diarrhoea_treatment",
+    "source_quote": "it is important to give the zinc for the full ten days, even if the diarrhoea stops",
+    "source_section_id": "give_oral_medicine_and_advise_the_caregiver+any_danger_sign_refer_the_child_continued+discussion_select_a_pre_referral_treatment"
+  },
+  {
+    "id": "fu_follow_up_3_days",
+    "category": "follow_up",
+    "text": "Follow up child in 3 days.",
+    "module_context": "mod_home_care_advice",
+    "source_quote": "Follow up child in 3 days",
+    "source_section_id": "contents+give_ors"
+  },
+  {
+    "id": "fu_weekly_until_well",
+    "category": "follow_up",
+    "text": "Follow up child on return at least once a week until child is well.",
+    "module_context": "mod_danger_sign_check",
+    "source_quote": "FOLLOW UP child on return at least once a week until child is well",
+    "source_section_id": "contents+give_ors"
+  },
+  {
+    "id": "m_explain_referral_reason",
+    "category": "referral_counseling",
+    "text": "Explain why the child needs to go to the health facility.",
+    "module_context": "mod_danger_sign_check",
+    "source_quote": "Explain why the child needs to go to the health facility",
+    "source_section_id": "contents+give_ors"
+  },
+  {
+    "id": "ref_arrange_transportation",
+    "category": "referral",
+    "text": "Arrange transportation, and help solve other difficulties in referral.",
+    "module_context": "mod_danger_sign_check",
+    "source_quote": "Arrange transportation, and help solve other difficulties in referral",
+    "source_section_id": "contents+give_ors"
+  },
+  {
+    "id": "ref_urgent_danger_sign",
+    "category": "referral",
+    "text": "If any danger sign, REFER URGENTLY to health facility.",
+    "module_context": "mod_danger_sign_check",
+    "source_quote": "If any danger sign, REFER URGENTLY to health facility",
+    "source_section_id": "assist_referral+invalid_result+begin_treatment"
+  },
+  {
+    "id": "ref_write_referral_note",
+    "category": "referral",
+    "text": "Write a referral note.",
+    "module_context": "mod_danger_sign_check",
+    "source_quote": "Write a referral note",
+    "source_section_id": "contents+give_ors"
+  },
+  {
+    "id": "tx_give_al_if_rdt_positive",
+    "category": "treatment",
+    "text": "If RDT is positive, give oral antimalarial AL (Artemether-Lumefantrine). Give twice daily for 3 days.",
+    "module_context": "mod_fever_malaria_treatment",
+    "source_quote": "If RDT is positive, give oral antimalarial AL (Artemether-Lumefantrine)",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "tx_give_amoxicillin",
+    "category": "treatment",
+    "text": "Give oral antibiotic (amoxicillin tablet - 250mg). Give twice daily for 5 days.",
+    "module_context": "mod_fast_breathing_treatment",
+    "source_quote": "Give oral antibiotic (amoxicillin tablet - 250mg) Give twice daily for 5 days",
+    "source_section_id": "give_oral_amoxicillin+yellow_on_muac_strap+part_1_demonstration"
+  },
+  {
+    "id": "tx_give_ors",
+    "category": "treatment",
+    "text": "Give ORS. Help caregiver give child ORS solution in front of you until child is no longer thirsty.",
+    "module_context": "mod_diarrhoea_treatment",
+    "source_quote": "Give ORS. Help caregiver give child ORS solution in front of you until child is no longer thirsty.",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "tx_give_zinc",
+    "category": "treatment",
+    "text": "Give zinc supplement. Give 1 dose daily for 10 days.",
+    "module_context": "mod_diarrhoea_treatment",
+    "source_quote": "Give zinc supplement. Give 1 dose daily for 10 days",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "tx_rectal_artesunate_prereferral",
+    "category": "pre_referral",
+    "text": "Give rectal artesunate suppository (100 mg) for pre-referral treatment of fever with severe danger signs.",
+    "module_context": "mod_danger_sign_check",
+    "source_quote": "Give rectal artesunate suppository (100 mg)",
+    "source_section_id": "course_objectives+child_1_siew_chin+give_ors_solution"
+  }
+]

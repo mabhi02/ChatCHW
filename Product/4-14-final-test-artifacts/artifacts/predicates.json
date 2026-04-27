@@ -1,0 +1,249 @@
+[
+  {
+    "id": "p_age_12mo_to_5yr",
+    "threshold_expression": "demo_child_age_months >= 12 AND demo_child_age_months < 60",
+    "fail_safe": 0,
+    "source_vars": [
+      "demo_child_age_months"
+    ],
+    "human_label": "Child age 12 months up to 5 years",
+    "source_quote": "Age 12 months up to 5 years: 40bpm ormore",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "p_age_2mo_to_12mo",
+    "threshold_expression": "demo_child_age_months >= 2 AND demo_child_age_months < 12",
+    "fail_safe": 0,
+    "source_vars": [
+      "demo_child_age_months"
+    ],
+    "human_label": "Child age 2 months up to 12 months",
+    "source_quote": "Age 2 months up to 12 months: 50bpm ormore",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "p_age_2mo_to_3yr",
+    "threshold_expression": "demo_child_age_months >= 2 AND demo_child_age_months < 36",
+    "fail_safe": 0,
+    "source_vars": [
+      "demo_child_age_months"
+    ],
+    "human_label": "Child age 2 months up to 3 years",
+    "source_quote": "Age 2 months up to 3 years - 1 tablet",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "p_age_2mo_to_6mo",
+    "threshold_expression": "demo_child_age_months >= 2 AND demo_child_age_months < 6",
+    "fail_safe": 0,
+    "source_vars": [
+      "demo_child_age_months"
+    ],
+    "human_label": "Child age 2 months up to 6 months",
+    "source_quote": "Age 2 months up to 6 months - half tablet",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "p_age_3yr_to_5yr",
+    "threshold_expression": "demo_child_age_months >= 36 AND demo_child_age_months < 60",
+    "fail_safe": 0,
+    "source_vars": [
+      "demo_child_age_months"
+    ],
+    "human_label": "Child age 3 years up to 5 years",
+    "source_quote": "Age 3 years up to 5 years - 2 tablet",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "p_age_6mo_to_5yr",
+    "threshold_expression": "demo_child_age_months >= 6 AND demo_child_age_months < 60",
+    "fail_safe": 0,
+    "source_vars": [
+      "demo_child_age_months"
+    ],
+    "human_label": "Child age 6 months up to 5 years",
+    "source_quote": "Age 6 months up to 5 years - 1 tablet",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "p_any_danger_sign",
+    "threshold_expression": "p_cough_14_days_or_more == true OR p_diarrhoea_14_days_or_more == true OR q_blood_in_stool == true OR p_fever_7_days_or_more == true OR q_convulsions == true OR q_not_able_to_drink_or_feed == true OR q_vomits_everything == true OR ex_chest_indrawing == true OR ex_unusually_sleepy_or_unconscious == true OR v_muac_strap_colour == 'red' OR ex_swelling_both_feet == true",
+    "fail_safe": 0,
+    "source_vars": [
+      "p_cough_14_days_or_more",
+      "p_diarrhoea_14_days_or_more",
+      "q_blood_in_stool",
+      "p_fever_7_days_or_more",
+      "q_convulsions",
+      "q_not_able_to_drink_or_feed",
+      "q_vomits_everything",
+      "ex_chest_indrawing",
+      "ex_unusually_sleepy_or_unconscious",
+      "v_muac_strap_colour",
+      "ex_swelling_both_feet"
+    ],
+    "human_label": "Any danger sign present",
+    "source_quote": "If any danger sign, REFER URGENTLY to health facility",
+    "source_section_id": "assist_referral+invalid_result+begin_treatment"
+  },
+  {
+    "id": "p_child_can_drink",
+    "threshold_expression": "q_not_able_to_drink_or_feed == false",
+    "fail_safe": 0,
+    "source_vars": [
+      "q_not_able_to_drink_or_feed"
+    ],
+    "human_label": "Child can drink",
+    "source_quote": "If child can drink",
+    "source_section_id": "assist_referral+invalid_result+begin_treatment"
+  },
+  {
+    "id": "p_cough_14_days_or_more",
+    "threshold_expression": "q_has_cough == true AND q_cough_duration_days >= 14",
+    "fail_safe": 0,
+    "source_vars": [
+      "q_has_cough",
+      "q_cough_duration_days"
+    ],
+    "human_label": "Cough for 14 days or more (danger sign)",
+    "source_quote": "Cough for 14 days ormore",
+    "source_section_id": "unusually_sleepy_or_unconscious+child_2_wilson_man_age_5_months+any_danger_sign_refer_the_child"
+  },
+  {
+    "id": "p_diarrhoea_14_days_or_more",
+    "threshold_expression": "q_has_diarrhoea == true AND q_diarrhoea_duration_days >= 14",
+    "fail_safe": 0,
+    "source_vars": [
+      "q_has_diarrhoea",
+      "q_diarrhoea_duration_days"
+    ],
+    "human_label": "Diarrhoea for 14 days or more (danger sign)",
+    "source_quote": "Diarrhoea for 14 days or more",
+    "source_section_id": "unusually_sleepy_or_unconscious+child_2_wilson_man_age_5_months+any_danger_sign_refer_the_child"
+  },
+  {
+    "id": "p_diarrhoea_treatable",
+    "threshold_expression": "q_has_diarrhoea == true AND q_diarrhoea_duration_days < 14 AND q_blood_in_stool == false AND p_any_danger_sign == false",
+    "fail_safe": 0,
+    "source_vars": [
+      "q_has_diarrhoea",
+      "q_diarrhoea_duration_days",
+      "q_blood_in_stool",
+      "p_any_danger_sign"
+    ],
+    "human_label": "Diarrhoea treatable at home (<14 days, no blood, no danger sign)",
+    "source_quote": "If Diarrhoea (less than 14 days AND no blood in stool)",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "p_fast_breathing",
+    "threshold_expression": "q_has_cough == true AND p_fast_breathing_threshold == true AND ex_chest_indrawing == false AND p_any_danger_sign == false",
+    "fail_safe": 1,
+    "source_vars": [
+      "q_has_cough",
+      "p_fast_breathing_threshold",
+      "ex_chest_indrawing",
+      "p_any_danger_sign"
+    ],
+    "human_label": "Fast breathing treatable at home (cough + fast breathing, no chest indrawing, no danger sign)",
+    "source_quote": "If fast breathing",
+    "source_section_id": "contents+give_ors"
+  },
+  {
+    "id": "p_fast_breathing_threshold",
+    "threshold_expression": "(p_age_2mo_to_12mo == true AND v_respiratory_rate_per_min >= 50) OR (p_age_12mo_to_5yr == true AND v_respiratory_rate_per_min >= 40)",
+    "fail_safe": 1,
+    "source_vars": [
+      "v_respiratory_rate_per_min",
+      "demo_child_age_months"
+    ],
+    "human_label": "Fast breathing for age",
+    "source_quote": "Age 2 months up to 12 months: 50bpm ormore Age 12 months up to 5 years: 40bpm ormore",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "p_fever_7_days_or_more",
+    "threshold_expression": "q_has_fever == true AND q_fever_duration_days >= 7",
+    "fail_safe": 0,
+    "source_vars": [
+      "q_has_fever",
+      "q_fever_duration_days"
+    ],
+    "human_label": "Fever for 7 days or more (danger sign)",
+    "source_quote": "Fever for last 7 days or more",
+    "source_section_id": "unusually_sleepy_or_unconscious+child_2_wilson_man_age_5_months+any_danger_sign_refer_the_child"
+  },
+  {
+    "id": "p_fever_treatable_malaria_area",
+    "threshold_expression": "q_has_fever == true AND q_fever_duration_days < 7 AND hx_malaria_area == true AND p_any_danger_sign == false",
+    "fail_safe": 0,
+    "source_vars": [
+      "q_has_fever",
+      "q_fever_duration_days",
+      "hx_malaria_area",
+      "p_any_danger_sign"
+    ],
+    "human_label": "Fever treatable at home (<7 days, malaria area, no danger sign)",
+    "source_quote": "Fever (less than 7 days) in a malaria area",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "p_fever_with_severe_danger_signs",
+    "threshold_expression": "q_has_fever == true AND (q_convulsions == true OR ex_unusually_sleepy_or_unconscious == true OR q_not_able_to_drink_or_feed == true OR q_vomits_everything == true)",
+    "fail_safe": 0,
+    "source_vars": [
+      "q_has_fever",
+      "q_convulsions",
+      "ex_unusually_sleepy_or_unconscious",
+      "q_not_able_to_drink_or_feed",
+      "q_vomits_everything"
+    ],
+    "human_label": "Fever with convulsions/unconscious/unable to drink/vomits everything",
+    "source_quote": "If Fever AND Convulsions or Unusually sleepy or unconscious or Not able to drink or feed anything or Vomits everything",
+    "source_section_id": "assist_referral+invalid_result+begin_treatment"
+  },
+  {
+    "id": "p_muac_red",
+    "threshold_expression": "v_muac_strap_colour == 'red'",
+    "fail_safe": 1,
+    "source_vars": [
+      "v_muac_strap_colour"
+    ],
+    "human_label": "MUAC strap red - severe malnutrition",
+    "source_quote": "RED reading on the MUAC strap indicates severe malnutrition",
+    "source_section_id": "course_objectives+child_1_siew_chin+give_ors_solution"
+  },
+  {
+    "id": "p_muac_yellow",
+    "threshold_expression": "v_muac_strap_colour == 'yellow'",
+    "fail_safe": 0,
+    "source_vars": [
+      "v_muac_strap_colour"
+    ],
+    "human_label": "MUAC strap yellow - moderate malnutrition",
+    "source_quote": "Yellow on MUAC strap: Counsel caregiver on feeding",
+    "source_section_id": "give_oral_amoxicillin+yellow_on_muac_strap+part_1_demonstration"
+  },
+  {
+    "id": "p_rdt_negative",
+    "threshold_expression": "lab_rdt_malaria_result == 'negative'",
+    "fail_safe": 0,
+    "source_vars": [
+      "lab_rdt_malaria_result"
+    ],
+    "human_label": "RDT negative for malaria",
+    "source_quote": "Negative",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "p_rdt_positive",
+    "threshold_expression": "lab_rdt_malaria_result == 'positive'",
+    "fail_safe": 0,
+    "source_vars": [
+      "lab_rdt_malaria_result"
+    ],
+    "human_label": "RDT positive for malaria",
+    "source_quote": "If RDT is positive, give oral antimalarial AL",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  }
+]

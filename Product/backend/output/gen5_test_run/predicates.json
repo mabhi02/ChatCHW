@@ -1,0 +1,493 @@
+[
+  {
+    "id": "p_age_eligible",
+    "threshold_expression": "demo_age_months >= 2 AND demo_age_months < 60",
+    "fail_safe": 0,
+    "source_vars": [
+      "demo_age_months"
+    ],
+    "human_label": "Child is age 2 months up to 5 years (eligible for iCCM assessment)",
+    "source_quote": "assess, classify, and treat sick children age 2 months up to 5 years in the community",
+    "source_section_id": "age_range_for_assessment"
+  },
+  {
+    "id": "p_cough_present",
+    "threshold_expression": "q_cough_presence == true",
+    "fail_safe": 0,
+    "source_vars": [
+      "q_cough_presence"
+    ],
+    "human_label": "Child has cough",
+    "source_quote": "Does the child have a cough?",
+    "source_section_id": "cough_duration_danger_sign"
+  },
+  {
+    "id": "p_cough_duration_danger",
+    "threshold_expression": "q_cough_duration_days >= 14",
+    "fail_safe": 0,
+    "source_vars": [
+      "q_cough_duration_days"
+    ],
+    "human_label": "Cough for 14 days or more (danger sign)",
+    "source_quote": "A cough for 14 days or more is a danger sign.",
+    "source_section_id": "cough_duration_danger_sign"
+  },
+  {
+    "id": "p_fever_present",
+    "threshold_expression": "q_fever_presence == true",
+    "fail_safe": 0,
+    "source_vars": [
+      "q_fever_presence"
+    ],
+    "human_label": "Child has fever (reported or in last 3 days)",
+    "source_quote": "Does the child have fever now or in the last 3 days?",
+    "source_section_id": "fever_assessment_window"
+  },
+  {
+    "id": "p_fever_duration_danger",
+    "threshold_expression": "q_fever_duration_days >= 7",
+    "fail_safe": 0,
+    "source_vars": [
+      "q_fever_duration_days"
+    ],
+    "human_label": "Fever for 7 days or more (danger sign)",
+    "source_quote": "Fever for 7 days or more is a danger sign.",
+    "source_section_id": "fever_duration_danger_sign"
+  },
+  {
+    "id": "p_fever_under_7_days",
+    "threshold_expression": "q_fever_presence == true AND q_fever_duration_days < 7",
+    "fail_safe": 0,
+    "source_vars": [
+      "q_fever_presence",
+      "q_fever_duration_days"
+    ],
+    "human_label": "Fever less than 7 days (eligible for RDT in malaria area)",
+    "source_quote": "Fever (less than 7 days) in a malaria area",
+    "source_section_id": "fever_duration_threshold_malaria_area"
+  },
+  {
+    "id": "p_diarrhoea_present",
+    "threshold_expression": "q_diarrhoea_presence == true",
+    "fail_safe": 0,
+    "source_vars": [
+      "q_diarrhoea_presence"
+    ],
+    "human_label": "Child has diarrhoea (3+ loose/watery stools in 24 hours)",
+    "source_quote": "Diarrhoea is 3 or more loose or watery stools in 24 hours.",
+    "source_section_id": "diarrhoea_definition"
+  },
+  {
+    "id": "p_diarrhoea_duration_danger",
+    "threshold_expression": "q_diarrhoea_duration_days >= 14",
+    "fail_safe": 0,
+    "source_vars": [
+      "q_diarrhoea_duration_days"
+    ],
+    "human_label": "Diarrhoea for 14 days or more (danger sign)",
+    "source_quote": "Diarrhoea for 14 days or more is a danger sign.",
+    "source_section_id": "diarrhoea_duration_danger_sign"
+  },
+  {
+    "id": "p_blood_in_stool",
+    "threshold_expression": "q_blood_in_stool == true",
+    "fail_safe": 0,
+    "source_vars": [
+      "q_blood_in_stool"
+    ],
+    "human_label": "Blood in stool / dysentery (danger sign)",
+    "source_quote": "Blood in stool (dysentery) is a danger sign.",
+    "source_section_id": "blood_in_stool_danger_sign"
+  },
+  {
+    "id": "p_convulsions",
+    "threshold_expression": "q_convulsions == true",
+    "fail_safe": 0,
+    "source_vars": [
+      "q_convulsions"
+    ],
+    "human_label": "Convulsion during current illness (danger sign)",
+    "source_quote": "A convulsion during the current illness is a danger sign.",
+    "source_section_id": "convulsion_danger_sign"
+  },
+  {
+    "id": "p_not_able_to_drink_or_feed",
+    "threshold_expression": "q_not_able_to_drink_or_feed == true",
+    "fail_safe": 0,
+    "source_vars": [
+      "q_not_able_to_drink_or_feed"
+    ],
+    "human_label": "Child not able to drink or feed anything (danger sign)",
+    "source_quote": "A child who cannot drink or feed anything at all has a danger sign.",
+    "source_section_id": "not_able_to_drink_or_feed_danger_sign"
+  },
+  {
+    "id": "p_vomiting_everything",
+    "threshold_expression": "q_vomiting_everything == true",
+    "fail_safe": 0,
+    "source_vars": [
+      "q_vomiting_everything"
+    ],
+    "human_label": "Child vomits everything (danger sign)",
+    "source_quote": "A child who vomits everything and cannot hold anything down has a danger sign.",
+    "source_section_id": "vomiting_everything_danger_sign"
+  },
+  {
+    "id": "p_unusually_sleepy_or_unconscious",
+    "threshold_expression": "ex_unusually_sleepy_or_unconscious == true",
+    "fail_safe": 0,
+    "source_vars": [
+      "ex_unusually_sleepy_or_unconscious"
+    ],
+    "human_label": "Child is unusually sleepy or unconscious (danger sign)",
+    "source_quote": "A child who is unusually sleepy, difficult to wake, or unconscious has a danger sign.",
+    "source_section_id": "unusually_sleepy_or_unconscious_danger_sign"
+  },
+  {
+    "id": "p_chest_indrawing",
+    "threshold_expression": "ex_chest_indrawing == true",
+    "fail_safe": 0,
+    "source_vars": [
+      "ex_chest_indrawing"
+    ],
+    "human_label": "Chest indrawing present (danger sign)",
+    "source_quote": "Chest indrawing is when the lower chest wall goes IN when the child breathes in. This is a danger sign.",
+    "source_section_id": "chest_indrawing_danger_sign"
+  },
+  {
+    "id": "p_fast_breathing",
+    "threshold_expression": "(demo_age_months >= 2 AND demo_age_months < 12 AND v_respiratory_rate >= 50) OR (demo_age_months >= 12 AND demo_age_months < 60 AND v_respiratory_rate >= 40)",
+    "fail_safe": 1,
+    "source_vars": [
+      "demo_age_months",
+      "v_respiratory_rate"
+    ],
+    "human_label": "Fast breathing for age (\u226550 if 2\u201311 months; \u226540 if 12\u201359 months)",
+    "source_quote": "2 months up to 12 months: 50 breaths per minute or more; 12 months up to 5 years: 40 breaths per minute or more",
+    "source_section_id": "fast_breathing_2_to_12_months"
+  },
+  {
+    "id": "p_muac_eligible",
+    "threshold_expression": "demo_age_months >= 6 AND demo_age_months < 60",
+    "fail_safe": 0,
+    "source_vars": [
+      "demo_age_months"
+    ],
+    "human_label": "Child is age 6 months up to 5 years (eligible for MUAC)",
+    "source_quote": "Use the MUAC (Mid-Upper Arm Circumference) strap on children age 6 months up to 5 years.",
+    "source_section_id": "muac_age_range"
+  },
+  {
+    "id": "p_muac_green",
+    "threshold_expression": "v_muac_colour == 'green'",
+    "fail_safe": 1,
+    "source_vars": [
+      "v_muac_colour"
+    ],
+    "human_label": "MUAC green \u2014 not malnourished",
+    "source_quote": "GREEN: not malnourished",
+    "source_section_id": "muac_green_not_malnourished"
+  },
+  {
+    "id": "p_muac_yellow",
+    "threshold_expression": "v_muac_colour == 'yellow'",
+    "fail_safe": 1,
+    "source_vars": [
+      "v_muac_colour"
+    ],
+    "human_label": "MUAC yellow \u2014 moderate malnutrition",
+    "source_quote": "YELLOW: moderate malnutrition (refer to supplementary feeding if available)",
+    "source_section_id": "muac_yellow_moderate_malnutrition"
+  },
+  {
+    "id": "p_muac_red",
+    "threshold_expression": "v_muac_colour == 'red'",
+    "fail_safe": 1,
+    "source_vars": [
+      "v_muac_colour"
+    ],
+    "human_label": "MUAC red \u2014 severe malnutrition (danger sign)",
+    "source_quote": "RED: severe malnutrition - DANGER SIGN - refer urgently",
+    "source_section_id": "muac_red_severe_malnutrition_danger_sign"
+  },
+  {
+    "id": "p_bilateral_foot_oedema",
+    "threshold_expression": "ex_bilateral_foot_oedema == true",
+    "fail_safe": 0,
+    "source_vars": [
+      "ex_bilateral_foot_oedema"
+    ],
+    "human_label": "Bilateral pitting oedema of both feet (severe malnutrition danger sign)",
+    "source_quote": "Press thumbs gently on the top of each foot for 3 seconds. If dents remain on BOTH feet, the child has oedema.",
+    "source_section_id": "bilateral_foot_oedema_severe_malnutrition"
+  },
+  {
+    "id": "p_rdt_positive",
+    "threshold_expression": "lab_rdt_result == 'positive'",
+    "fail_safe": 1,
+    "source_vars": [
+      "lab_rdt_result"
+    ],
+    "human_label": "Malaria RDT result is positive",
+    "source_quote": "POSITIVE = red lines in both C and T windows.",
+    "source_section_id": "rdt_positive_result"
+  },
+  {
+    "id": "p_rdt_negative",
+    "threshold_expression": "lab_rdt_result == 'negative'",
+    "fail_safe": 1,
+    "source_vars": [
+      "lab_rdt_result"
+    ],
+    "human_label": "Malaria RDT result is negative",
+    "source_quote": "NEGATIVE = red line in C window only.",
+    "source_section_id": "rdt_negative_result"
+  },
+  {
+    "id": "p_rdt_invalid",
+    "threshold_expression": "lab_rdt_result == 'invalid'",
+    "fail_safe": 1,
+    "source_vars": [
+      "lab_rdt_result"
+    ],
+    "human_label": "Malaria RDT result is invalid (repeat test)",
+    "source_quote": "INVALID = no line in C window; repeat with new test.",
+    "source_section_id": "rdt_invalid_result"
+  },
+  {
+    "id": "p_any_general_danger_sign",
+    "threshold_expression": "p_convulsions == true OR p_not_able_to_drink_or_feed == true OR p_vomiting_everything == true OR p_unusually_sleepy_or_unconscious == true",
+    "fail_safe": 0,
+    "source_vars": [
+      "q_convulsions",
+      "q_not_able_to_drink_or_feed",
+      "q_vomiting_everything",
+      "ex_unusually_sleepy_or_unconscious"
+    ],
+    "human_label": "Any general danger sign present (convulsions, unable to drink/feed, vomits everything, unusually sleepy/unconscious)",
+    "source_quote": "A convulsion during the current illness is a danger sign. A child who cannot drink or feed anything at all has a danger sign. A child who vomits everything has a danger sign. A child who is unusually sleepy or unconscious has a danger sign.",
+    "source_section_id": "convulsion_danger_sign"
+  },
+  {
+    "id": "p_any_referral_danger_sign",
+    "threshold_expression": "p_any_general_danger_sign == true OR p_chest_indrawing == true OR p_cough_duration_danger == true OR p_fever_duration_danger == true OR p_diarrhoea_duration_danger == true OR p_blood_in_stool == true OR p_muac_red == true OR p_bilateral_foot_oedema == true",
+    "fail_safe": 0,
+    "source_vars": [
+      "q_convulsions",
+      "q_not_able_to_drink_or_feed",
+      "q_vomiting_everything",
+      "ex_unusually_sleepy_or_unconscious",
+      "ex_chest_indrawing",
+      "q_cough_duration_days",
+      "q_fever_duration_days",
+      "q_diarrhoea_duration_days",
+      "q_blood_in_stool",
+      "v_muac_colour",
+      "ex_bilateral_foot_oedema"
+    ],
+    "human_label": "Any danger sign requiring urgent referral",
+    "source_quote": "Give the first dose of any appropriate medicine before referral.",
+    "source_section_id": "give_first_dose_before_referral"
+  },
+  {
+    "id": "p_severe_malnutrition",
+    "threshold_expression": "p_muac_red == true OR p_bilateral_foot_oedema == true",
+    "fail_safe": 1,
+    "source_vars": [
+      "v_muac_colour",
+      "ex_bilateral_foot_oedema"
+    ],
+    "human_label": "Severe acute malnutrition (MUAC red or bilateral oedema)",
+    "source_quote": "RED: severe malnutrition - DANGER SIGN - refer urgently; If dents remain on BOTH feet, the child has oedema.",
+    "source_section_id": "muac_red_severe_malnutrition_danger_sign"
+  },
+  {
+    "id": "p_pneumonia_treatable",
+    "threshold_expression": "p_cough_present == true AND p_fast_breathing == true AND p_chest_indrawing == false AND p_any_general_danger_sign == false AND p_cough_duration_danger == false",
+    "fail_safe": 1,
+    "source_vars": [
+      "q_cough_presence",
+      "v_respiratory_rate",
+      "demo_age_months",
+      "ex_chest_indrawing",
+      "q_convulsions",
+      "q_not_able_to_drink_or_feed",
+      "q_vomiting_everything",
+      "ex_unusually_sleepy_or_unconscious",
+      "q_cough_duration_days"
+    ],
+    "human_label": "Pneumonia \u2014 fast breathing without danger signs, treatable at community level with amoxicillin",
+    "source_quote": "If breathing is normal and child is improving, complete the full 5-day course of amoxicillin.",
+    "source_section_id": "breathing_normal_complete_5_day_amoxicillin"
+  },
+  {
+    "id": "p_malaria_treatable",
+    "threshold_expression": "p_fever_present == true AND p_fever_under_7_days == true AND p_rdt_positive == true AND p_any_general_danger_sign == false",
+    "fail_safe": 1,
+    "source_vars": [
+      "q_fever_presence",
+      "q_fever_duration_days",
+      "lab_rdt_result",
+      "q_convulsions",
+      "q_not_able_to_drink_or_feed",
+      "q_vomiting_everything",
+      "ex_unusually_sleepy_or_unconscious"
+    ],
+    "human_label": "Malaria \u2014 RDT positive, fever <7 days, no danger signs, treatable with AL",
+    "source_quote": "Do not give antimalarial medicine unless the RDT is positive.",
+    "source_section_id": "rdt_positive_required_for_antimalarial"
+  },
+  {
+    "id": "p_diarrhoea_treatable",
+    "threshold_expression": "p_diarrhoea_present == true AND p_diarrhoea_duration_danger == false AND p_blood_in_stool == false AND p_any_general_danger_sign == false",
+    "fail_safe": 0,
+    "source_vars": [
+      "q_diarrhoea_presence",
+      "q_diarrhoea_duration_days",
+      "q_blood_in_stool",
+      "q_convulsions",
+      "q_not_able_to_drink_or_feed",
+      "q_vomiting_everything",
+      "ex_unusually_sleepy_or_unconscious"
+    ],
+    "human_label": "Diarrhoea without danger signs \u2014 treatable with ORS and zinc",
+    "source_quote": "Diarrhoea for 14 days or more is a danger sign. Blood in stool (dysentery) is a danger sign.",
+    "source_section_id": "diarrhoea_duration_danger_sign"
+  },
+  {
+    "id": "p_zinc_half_tablet",
+    "threshold_expression": "demo_age_months >= 2 AND demo_age_months < 6",
+    "fail_safe": 0,
+    "source_vars": [
+      "demo_age_months"
+    ],
+    "human_label": "Zinc dosing: half tablet (age 2 up to 6 months)",
+    "source_quote": "2 months up to 6 months 1/2 tablet Once daily 10 days / 5 tablets",
+    "source_section_id": "zinc_dose_2_to_6_months"
+  },
+  {
+    "id": "p_zinc_full_tablet",
+    "threshold_expression": "demo_age_months >= 6 AND demo_age_months < 60",
+    "fail_safe": 0,
+    "source_vars": [
+      "demo_age_months"
+    ],
+    "human_label": "Zinc dosing: full tablet (age 6 months up to 5 years)",
+    "source_quote": "6 months up to 5 years 1 tablet Once daily 10 days / 10 tablets",
+    "source_section_id": "zinc_dose_6_months_to_5_years"
+  },
+  {
+    "id": "p_amox_1_tablet",
+    "threshold_expression": "demo_age_months >= 2 AND demo_age_months < 12",
+    "fail_safe": 0,
+    "source_vars": [
+      "demo_age_months"
+    ],
+    "human_label": "Amoxicillin dosing: 1 tablet twice daily (age 2 up to 12 months)",
+    "source_quote": "2 months up to 12 months 1 tablet Twice daily 5 days / 10 tablets",
+    "source_section_id": "amoxicillin_dose_2_to_12_months"
+  },
+  {
+    "id": "p_amox_2_tablets",
+    "threshold_expression": "demo_age_months >= 12 AND demo_age_months < 60",
+    "fail_safe": 0,
+    "source_vars": [
+      "demo_age_months"
+    ],
+    "human_label": "Amoxicillin dosing: 2 tablets twice daily (age 12 months up to 5 years)",
+    "source_quote": "12 months up to 5 years 2 tablets Twice daily 5 days / 20 tablets",
+    "source_section_id": "amoxicillin_dose_12_months_to_5_years"
+  },
+  {
+    "id": "p_al_1_tablet",
+    "threshold_expression": "demo_age_months >= 2 AND demo_age_months < 36",
+    "fail_safe": 0,
+    "source_vars": [
+      "demo_age_months"
+    ],
+    "human_label": "AL dosing: 1 tablet twice daily (age 2 months up to 3 years)",
+    "source_quote": "2 months up to 3 years 1 tablet AL Twice daily 3 days / 6 tablets",
+    "source_section_id": "al_dosage_age_2months_to_3years"
+  },
+  {
+    "id": "p_al_2_tablets",
+    "threshold_expression": "demo_age_months >= 36 AND demo_age_months < 60",
+    "fail_safe": 0,
+    "source_vars": [
+      "demo_age_months"
+    ],
+    "human_label": "AL dosing: 2 tablets twice daily (age 3 years up to 5 years)",
+    "source_quote": "3 years up to 5 years 2 tablets AL Twice daily 3 days / 12 tablets",
+    "source_section_id": "al_dosage_age_3years_to_5years"
+  },
+  {
+    "id": "p_follow_up_diarrhoea_still_present",
+    "threshold_expression": "q_follow_up_diarrhoea_still_present == true",
+    "fail_safe": 0,
+    "source_vars": [
+      "q_follow_up_diarrhoea_still_present"
+    ],
+    "human_label": "At follow-up: diarrhoea still present",
+    "source_quote": "If yes and for less than 14 days, continue ORS and zinc. If 14 days or more, refer.",
+    "source_section_id": "follow_up_diarrhoea_14_days_refer"
+  },
+  {
+    "id": "p_follow_up_fever_still_present",
+    "threshold_expression": "q_follow_up_fever_still_present == true",
+    "fail_safe": 0,
+    "source_vars": [
+      "q_follow_up_fever_still_present"
+    ],
+    "human_label": "At follow-up: fever still present",
+    "source_quote": "If RDT was positive and antimalarial was given, the child should improve. If still febrile, refer.",
+    "source_section_id": "follow_up_fever_rdt_positive_still_febrile_refer"
+  },
+  {
+    "id": "p_follow_up_cough_still_present",
+    "threshold_expression": "q_follow_up_cough_still_present == true",
+    "fail_safe": 0,
+    "source_vars": [
+      "q_follow_up_cough_still_present"
+    ],
+    "human_label": "At follow-up: cough still present",
+    "source_quote": "After 3 days: Is the child still coughing? Count breaths again. If still fast breathing, refer.",
+    "source_section_id": "follow_up_cough_fast_breathing_after_3_days"
+  },
+  {
+    "id": "p_follow_up_cough_still_fast_breathing",
+    "threshold_expression": "q_follow_up_cough_still_present == true AND p_fast_breathing == true",
+    "fail_safe": 1,
+    "source_vars": [
+      "q_follow_up_cough_still_present",
+      "v_respiratory_rate",
+      "demo_age_months"
+    ],
+    "human_label": "At follow-up: cough persists with fast breathing \u2014 refer",
+    "source_quote": "After 3 days: Is the child still coughing? Count breaths again. If still fast breathing, refer.",
+    "source_section_id": "follow_up_cough_fast_breathing_after_3_days"
+  },
+  {
+    "id": "p_follow_up_cough_improving",
+    "threshold_expression": "q_follow_up_cough_still_present == true AND p_fast_breathing == false",
+    "fail_safe": 1,
+    "source_vars": [
+      "q_follow_up_cough_still_present",
+      "v_respiratory_rate",
+      "demo_age_months"
+    ],
+    "human_label": "At follow-up: cough persists but breathing normal \u2014 complete amoxicillin course",
+    "source_quote": "If breathing is normal and child is improving, complete the full 5-day course of amoxicillin.",
+    "source_section_id": "breathing_normal_complete_5_day_amoxicillin"
+  },
+  {
+    "id": "p_fever_by_touch",
+    "threshold_expression": "ex_fever_by_touch == true",
+    "fail_safe": 0,
+    "source_vars": [
+      "ex_fever_by_touch"
+    ],
+    "human_label": "Child feels hot by touch (fever on examination)",
+    "source_quote": "Does the child have fever now or in the last 3 days?",
+    "source_section_id": "fever_assessment_window"
+  }
+]

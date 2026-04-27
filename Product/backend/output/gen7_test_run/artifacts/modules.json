@@ -1,0 +1,194 @@
+{
+  "mod_danger_signs": {
+    "module_id": "mod_danger_signs",
+    "display_name": "General Danger Signs Assessment",
+    "hit_policy": "first",
+    "inputs": [
+      "ex_convulsions",
+      "ex_not_able_to_drink_or_feed",
+      "ex_vomits_everything",
+      "ex_unusually_sleepy_or_unconscious"
+    ],
+    "outputs": [
+      "ref_urgent_hospital",
+      "dx_danger_sign"
+    ],
+    "rules": [
+      {
+        "rule_id": "r_danger_any",
+        "condition": "p_danger_sign_present == true",
+        "action": "ref_urgent_hospital = true; dx_danger_sign = true",
+        "priority": 1
+      },
+      {
+        "rule_id": "r_danger_none",
+        "condition": "p_danger_sign_present == false",
+        "action": "ref_urgent_hospital = false; dx_danger_sign = false",
+        "priority": 2
+      }
+    ]
+  },
+  "mod_cough": {
+    "module_id": "mod_cough",
+    "display_name": "Cough and Breathing Assessment",
+    "hit_policy": "first",
+    "inputs": [
+      "q_cough",
+      "q_cough_duration_days",
+      "v_respiratory_rate_per_min",
+      "ex_chest_indrawing",
+      "demo_age_months"
+    ],
+    "outputs": [
+      "dx_cough_classification",
+      "ref_urgent_hospital",
+      "rx_amoxicillin",
+      "adv_cough_home_care",
+      "fu_cough_days"
+    ],
+    "rules": [
+      {
+        "rule_id": "r_cough_chest_indrawing",
+        "condition": "p_chest_indrawing_present == true",
+        "action": "dx_cough_classification = 'severe_pneumonia'; ref_urgent_hospital = true; rx_amoxicillin = true",
+        "priority": 1
+      },
+      {
+        "rule_id": "r_cough_fast_breathing",
+        "condition": "p_cough_pneumonia == true",
+        "action": "dx_cough_classification = 'pneumonia'; rx_amoxicillin = true; fu_cough_days = 3",
+        "priority": 2
+      },
+      {
+        "rule_id": "r_cough_no_pneumonia",
+        "condition": "p_cough_no_pneumonia == true",
+        "action": "dx_cough_classification = 'cough_or_cold'; adv_cough_home_care = true; fu_cough_days = 5",
+        "priority": 3
+      },
+      {
+        "rule_id": "r_cough_prolonged",
+        "condition": "q_cough == true AND q_cough_duration_days >= 21",
+        "action": "dx_cough_classification = 'chronic_cough'; ref_urgent_hospital = true",
+        "priority": 0
+      }
+    ]
+  },
+  "mod_fever": {
+    "module_id": "mod_fever",
+    "display_name": "Fever and Malaria Assessment",
+    "hit_policy": "first",
+    "inputs": [
+      "q_fever",
+      "q_fever_duration_days",
+      "lab_rdt_result"
+    ],
+    "outputs": [
+      "dx_fever_classification",
+      "ref_urgent_hospital",
+      "rx_al",
+      "fu_fever_days"
+    ],
+    "rules": [
+      {
+        "rule_id": "r_fever_prolonged",
+        "condition": "p_fever_prolonged == true",
+        "action": "dx_fever_classification = 'fever_7_days_or_more'; ref_urgent_hospital = true",
+        "priority": 1
+      },
+      {
+        "rule_id": "r_fever_malaria_pos",
+        "condition": "p_fever_malaria_positive == true",
+        "action": "dx_fever_classification = 'malaria'; rx_al = true; fu_fever_days = 3",
+        "priority": 2
+      },
+      {
+        "rule_id": "r_fever_malaria_neg",
+        "condition": "p_fever_malaria_negative == true",
+        "action": "dx_fever_classification = 'fever_no_malaria'; fu_fever_days = 2",
+        "priority": 3
+      },
+      {
+        "rule_id": "r_no_fever",
+        "condition": "q_fever == false",
+        "action": "dx_fever_classification = 'no_fever'",
+        "priority": 4
+      }
+    ]
+  },
+  "mod_diarrhoea": {
+    "module_id": "mod_diarrhoea",
+    "display_name": "Diarrhoea Assessment",
+    "hit_policy": "first",
+    "inputs": [
+      "q_diarrhoea",
+      "q_diarrhoea_duration_days",
+      "q_blood_in_stool"
+    ],
+    "outputs": [
+      "dx_diarrhoea_classification",
+      "ref_urgent_hospital",
+      "rx_ors",
+      "rx_zinc",
+      "fu_diarrhoea_days"
+    ],
+    "rules": [
+      {
+        "rule_id": "r_bloody_diarrhoea",
+        "condition": "p_bloody_diarrhoea == true",
+        "action": "dx_diarrhoea_classification = 'dysentery'; ref_urgent_hospital = true",
+        "priority": 1
+      },
+      {
+        "rule_id": "r_prolonged_diarrhoea",
+        "condition": "p_diarrhoea_prolonged == true",
+        "action": "dx_diarrhoea_classification = 'persistent_diarrhoea'; ref_urgent_hospital = true",
+        "priority": 2
+      },
+      {
+        "rule_id": "r_diarrhoea_simple",
+        "condition": "p_diarrhoea_present == true AND p_bloody_diarrhoea == false AND p_diarrhoea_prolonged == false",
+        "action": "dx_diarrhoea_classification = 'diarrhoea'; rx_ors = true; rx_zinc = true; fu_diarrhoea_days = 5",
+        "priority": 3
+      },
+      {
+        "rule_id": "r_no_diarrhoea",
+        "condition": "q_diarrhoea == false",
+        "action": "dx_diarrhoea_classification = 'no_diarrhoea'",
+        "priority": 4
+      }
+    ]
+  },
+  "mod_malnutrition": {
+    "module_id": "mod_malnutrition",
+    "display_name": "Malnutrition Assessment",
+    "hit_policy": "first",
+    "inputs": [
+      "v_muac_mm",
+      "ex_oedema_both_feet"
+    ],
+    "outputs": [
+      "dx_nutrition_classification",
+      "ref_urgent_hospital"
+    ],
+    "rules": [
+      {
+        "rule_id": "r_severe_malnutrition",
+        "condition": "p_severe_malnutrition == true",
+        "action": "dx_nutrition_classification = 'severe_acute_malnutrition'; ref_urgent_hospital = true",
+        "priority": 1
+      },
+      {
+        "rule_id": "r_moderate_malnutrition",
+        "condition": "p_moderate_malnutrition == true",
+        "action": "dx_nutrition_classification = 'moderate_acute_malnutrition'; ref_urgent_hospital = true",
+        "priority": 2
+      },
+      {
+        "rule_id": "r_nutrition_ok",
+        "condition": "p_severe_malnutrition == false AND p_moderate_malnutrition == false",
+        "action": "dx_nutrition_classification = 'no_acute_malnutrition'",
+        "priority": 3
+      }
+    ]
+  }
+}

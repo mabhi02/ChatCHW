@@ -1,0 +1,49 @@
+# Core
+fastapi>=0.115.0
+uvicorn[standard]>=0.34.0
+rlms>=0.1.1
+anthropic>=0.75.0
+python-dotenv>=1.2.1
+
+# Database (Prisma)
+prisma>=0.15.0
+
+# HTTP client (Upstash Redis REST + QStash)
+httpx>=0.28.0
+
+# PDF -> structured JSON via Unstructured.io hosted API
+# Slim client only (NOT the full `unstructured` library, which needs poppler/tesseract/libreoffice).
+# All parsing happens server-side on api.unstructuredapp.io.
+unstructured-client>=0.30.0,<1.0.0
+
+# Vision enrichment via OpenAI gpt-5.4 family (table refinement, image description, flowchart parsing)
+openai>=2.30.0
+
+# PDF region rendering for vision passes (cropping tables/images by bounding box)
+# pdf2image requires Poppler binaries (installed via Dockerfile apt-get).
+# pypdfium2 is a pure-Python fallback — no system deps, works on Windows dev
+# without Poppler, already a transitive dep of unstructured-client. The rendering
+# module tries pdf2image first, falls back to pypdfium2 if Poppler is missing.
+pdf2image>=1.17.0
+pypdfium2>=4.30.0
+Pillow>=10.0.0
+
+# FastAPI multipart/form-data handling for PDF uploads on POST /api/ingest
+python-multipart>=0.0.20
+
+# Z3 Verification
+z3-solver>=4.13.0
+
+# Converters
+openpyxl>=3.1.0
+
+# SSE
+sse-starlette>=2.2.0
+
+# Logging
+rich>=13.0.0
+
+# Testing
+pytest>=9.0.0
+pytest-asyncio>=0.24.0
+pytest-cov>=6.0.0

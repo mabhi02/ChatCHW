@@ -1,0 +1,256 @@
+generator client {
+  provider             = "prisma-client-py"
+  interface            = "asyncio"
+  recursive_type_depth = 5
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("NEON_DB")
+}
+
+// ---------------------------------------------------------------------------
+// Source guides (cached PDF -> JSON conversions)
+// ---------------------------------------------------------------------------
+
+model SourceGuide {
+  id            String   @id @default(uuid())
+  sha256        String
+  filename      String
+  manualName    String?  @map("manual_name")
+  pageCount     Int      @map("page_count")
+  pdfBytes      Int      @map("pdf_bytes")
+  guideJson     Json     @map("guide_json")
+  ingestionMeta Json?    @map("ingestion_meta")
+  ingestedAt    DateTime @default(now()) @map("ingested_at")
+
+  runs      ExtractionRun[]
+  arenaRuns ArenaRun[]
+
+  @@index([sha256])
+  @@index([sha256, ingestedAt(sort: Desc)])
+  @@map("source_guides")
+}
+
+// ---------------------------------------------------------------------------
+// Arena: groups N REPL + N Sequential runs on the same guide
+// ---------------------------------------------------------------------------
+
+model ArenaRun {
+  id              String      @id @default(uuid())
+  arenaId         String      @unique @map("arena_id")
+  sourceGuideId   String      @map("source_guide_id")
+  manualName      String?     @map("manual_name")
+  nRuns           Int         @map("n_runs")               // 1 or 3
+  status          ArenaStatus @default(PENDING)
+  // Model config snapshot
+  replModel       String      @default("claude-sonnet-4-20250514") @map("repl_model")
+  sequentialModel String      @default("claude-sonnet-4-20250514") @map("sequential_model")
+  workhouseModel  String      @default("gpt-5.4-mini") @map("workhouse_model")
+  // Timing
+  startedAt       DateTime?   @map("started_at")
+  completedAt     DateTime?   @map("completed_at")
+  wallClockMs     Int?        @map("wall_clock_ms")
+  // Cost
+  totalCostUsd    Float       @default(0) @map("total_cost_usd")
+  replCostUsd     Float       @default(0) @map("repl_cost_usd")
+  seqCostUsd      Float       @default(0) @map("seq_cost_usd")
+  // Results
+  reportJson      Json?       @map("report_json")
+  createdAt       DateTime    @default(now()) @map("created_at")
+
+  sourceGuide     SourceGuide    @relation(fields: [sourceGuideId], references: [id])
+  extractionRuns  ExtractionRun[]
+
+  @@index([arenaId])
+  @@index([sourceGuideId])
+  @@index([status])
+  @@map("arena_runs")
+}
+
+enum ArenaStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+}
+
+// ---------------------------------------------------------------------------
+// Extraction runs (both REPL and Sequential)
+// ---------------------------------------------------------------------------
+
+model ExtractionRun {
+  id               String       @id @default(uuid())
+  runId            String       @unique @map("run_id")
+  sourceGuideId    String?      @map("source_guide_id")
+  arenaRunId       String?      @map("arena_run_id")
+  manualName       String?      @map("manual_name")
+  pipelineType     PipelineType @default(REPL) @map("pipeline_type")
+  runNumber        Int          @default(1) @map("run_number")  // 1, 2, or 3 within arena
+  model            String       @default("claude-sonnet-4-20250514")
+  startedAt        DateTime     @default(now()) @map("started_at")
+  completedAt      DateTime?    @map("completed_at")
+  status           RunStatus    @default(RUNNING)
+  totalIterations  Int          @default(0) @map("total_iterations")
+  totalSubcalls    Int          @default(0) @map("total_subcalls")
+  totalApiCalls    Int          @default(0) @map("total_api_calls")
+  validationErrors Int          @default(0) @map("validation_errors")
+  finalJson        Json?        @map("final_json")
+  costEstimateUsd  Float        @default(0) @map("cost_estimate_usd")
+  inputTokensTotal Int          @default(0) @map("input_tokens_total")
+  outputTokensTotal Int         @default(0) @map("output_tokens_total")
+  cachedTokensTotal Int         @default(0) @map("cached_tokens_total")
+  wallClockMs      Int?         @map("wall_clock_ms")
+  errorLog         Json?        @map("error_log")
+
+  sourceGuide SourceGuide?           @relation(fields: [sourceGuideId], references: [id])
+  arenaRun    ArenaRun?              @relation(fields: [arenaRunId], references: [id])
+  steps       ReplStep[]
+  seqSteps    SequentialStep[]
+  artifacts   IntermediateArtifact[]
+
+  @@index([sourceGuideId])
+  @@index([arenaRunId])
+  @@index([pipelineType])
+  @@index([arenaRunId, pipelineType, runNumber])
+  @@map("extraction_runs")
+}
+
+enum PipelineType {
+  REPL
+  SEQUENTIAL
+}
+
+// ---------------------------------------------------------------------------
+// Intermediate artifacts (shared by both pipelines)
+// ---------------------------------------------------------------------------
+
+model IntermediateArtifact {
+  id              String   @id @default(uuid())
+  runId           String   @map("run_id")
+  artifactName    String   @map("artifact_name")
+  phase           Int
+  artifactJson    Json     @map("artifact_json")
+  validatorPassed Boolean  @map("validator_passed")
+  criticalIssues  Json?    @map("critical_issues")
+  warnings        Json?    @map("warnings")
+  catcherOutputs  Json?    @map("catcher_outputs")
+  emittedAtMs     Int?     @map("emitted_at_ms")          // wall-clock ms from run start
+  tokenCost       Int?     @map("token_cost")              // tokens consumed producing this artifact
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  run ExtractionRun @relation(fields: [runId], references: [runId])
+
+  @@index([runId, artifactName])
+  @@index([runId, createdAt])
+  @@map("intermediate_artifacts")
+}
+
+// ---------------------------------------------------------------------------
+// REPL steps (for REPL pipeline)
+// ---------------------------------------------------------------------------
+
+model ReplStep {
+  id           String   @id @default(uuid())
+  runId        String   @map("run_id")
+  stepNumber   Int      @map("step_number")
+  stepType     StepType @map("step_type")
+  code         String?
+  stdout       String?
+  stderr       String?
+  prompt       String?
+  response     String?
+  executionMs  Int?     @map("execution_ms")
+  inputTokens  Int?     @map("input_tokens")
+  outputTokens Int?     @map("output_tokens")
+  cachedTokens Int?     @map("cached_tokens")
+  modelUsed    String?  @map("model_used")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  run ExtractionRun @relation(fields: [runId], references: [runId])
+
+  @@index([runId])
+  @@map("repl_steps")
+}
+
+// ---------------------------------------------------------------------------
+// Sequential steps (for Sequential pipeline)
+// ---------------------------------------------------------------------------
+
+model SequentialStep {
+  id            String   @id @default(uuid())
+  runId         String   @map("run_id")
+  stageId       String   @map("stage_id")        // e.g., "B1_make", "B1_redteam", "B1_repair"
+  stageType     String   @map("stage_type")       // "maker" | "redteam" | "repair"
+  stepNumber    Int      @map("step_number")
+  retryNumber   Int      @default(0) @map("retry_number")
+  prompt        String?
+  response      String?
+  modelUsed     String   @map("model_used")
+  temperature   Float    @default(0)
+  inputTokens   Int?     @map("input_tokens")
+  outputTokens  Int?     @map("output_tokens")
+  cachedTokens  Int?     @map("cached_tokens")
+  executionMs   Int?     @map("execution_ms")
+  passed        Boolean? @map("passed")           // red team pass/fail
+  issuesFound   Json?    @map("issues_found")     // red team issues
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  run ExtractionRun @relation(fields: [runId], references: [runId])
+
+  @@index([runId])
+  @@index([runId, stageId])
+  @@map("sequential_steps")
+}
+
+// ---------------------------------------------------------------------------
+// Gate runs (legacy, kept for backward compat)
+// ---------------------------------------------------------------------------
+
+model GateRun {
+  id                  String   @id @default(uuid())
+  gateId              String   @unique @map("gate_id")
+  guideTitle          String   @map("guide_title")
+  sourceGuideId       String?  @map("source_guide_id")
+  manualName          String?  @map("manual_name")
+  nRuns               Int      @map("n_runs")
+  modes               Json
+  allAtOncePassRate   Float    @map("all_at_once_pass_rate")
+  hybridReplPassRate  Float    @map("hybrid_repl_pass_rate")
+  allAtOnceJaccard    Float    @map("all_at_once_jaccard")
+  hybridReplJaccard   Float    @map("hybrid_repl_jaccard")
+  allAtOnceZ3PassRate Float    @map("all_at_once_z3_pass_rate")
+  hybridReplZ3PassRate Float   @map("hybrid_repl_z3_pass_rate")
+  allAtOnceCostUsd    Float    @map("all_at_once_cost_usd")
+  hybridReplCostUsd   Float    @map("hybrid_repl_cost_usd")
+  allAtOnceMedianWall Float    @map("all_at_once_median_wall")
+  hybridReplMedianWall Float   @map("hybrid_repl_median_wall")
+  verdict             String
+  reportJson          Json     @map("report_json")
+  startedAt           DateTime @map("started_at")
+  completedAt         DateTime @default(now()) @map("completed_at")
+
+  @@index([gateId])
+  @@index([verdict])
+  @@index([completedAt])
+  @@map("gate_runs")
+}
+
+// ---------------------------------------------------------------------------
+// Enums
+// ---------------------------------------------------------------------------
+
+enum RunStatus {
+  RUNNING
+  PASSED
+  FAILED
+  HALTED
+}
+
+enum StepType {
+  EXEC
+  SUBCALL
+  VALIDATE
+  Z3
+  FINAL
+}

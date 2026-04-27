@@ -1,0 +1,5 @@
+SAFE ENDPOINT STANDARDS:
+- Every module table must end with a default/else row (all inputs "-") that provides a safe classification.
+- If no conditions match, the default must err toward the MORE cautious disposition (e.g., "possible <condition>, follow up" rather than "healthy").
+- Referral/escalation output fields must be boolean (e.g. ref_hospital_urgent = true/false), not conditional.
+- No rule may discharge a patient with an active alert / red-flag predicate. The router enforces this via the Row 0 high-priority short-circuit.

@@ -1,0 +1,88 @@
+{
+  "rules": [
+    {
+      "id": "ehr_documentation",
+      "modules_involved": [
+        "mod_initial_greeting",
+        "mod_emergency_escalation",
+        "mod_standard_assessment",
+        "mod_flag_chart",
+        "mod_administer_analgesic",
+        "mod_continue_monitoring",
+        "mod_treatment_plan",
+        "mod_surgical_consent_module",
+        "mod_pharmacy_coordination_module",
+        "mod_geriatric_pathway",
+        "mod_guardian_consent",
+        "mod_patient_education",
+        "mod_discharge_coordinator_role"
+      ],
+      "combine_rule": "Document all findings in the electronic health record using standardized terminology.",
+      "referral_priority": "routine",
+      "treatment_combination": "Document all findings in the electronic health record using standardized terminology"
+    },
+    {
+      "id": "care_summary_integration",
+      "modules_involved": [
+        "mod_initial_greeting",
+        "mod_emergency_escalation",
+        "mod_standard_assessment",
+        "mod_flag_chart",
+        "mod_administer_analgesic",
+        "mod_continue_monitoring",
+        "mod_treatment_plan",
+        "mod_surgical_consent_module",
+        "mod_pharmacy_coordination_module",
+        "mod_geriatric_pathway",
+        "mod_guardian_consent",
+        "mod_patient_education",
+        "mod_discharge_coordinator_role"
+      ],
+      "combine_rule": "Integrate all assessment data, treatment decisions, and patient preferences into a comprehensive care summary.",
+      "referral_priority": "priority",
+      "treatment_combination": "Integrate all assessment data, treatment decisions, and patient preferences into a comprehensive care summary"
+    },
+    {
+      "id": "verbal_confirmation",
+      "modules_involved": [
+        "mod_initial_greeting",
+        "mod_emergency_escalation",
+        "mod_standard_assessment",
+        "mod_flag_chart",
+        "mod_administer_analgesic",
+        "mod_continue_monitoring",
+        "mod_treatment_plan",
+        "mod_surgical_consent_module",
+        "mod_pharmacy_coordination_module",
+        "mod_geriatric_pathway",
+        "mod_guardian_consent",
+        "mod_patient_education",
+        "mod_discharge_coordinator_role"
+      ],
+      "combine_rule": "Ensure the patient verbally confirms understanding of their discharge instructions.",
+      "referral_priority": "routine",
+      "treatment_combination": "Ensure the patient verbally confirms understanding of their discharge instructions"
+    },
+    {
+      "id": "care_summary",
+      "modules_involved": [
+        "mod_initial_greeting",
+        "mod_emergency_escalation",
+        "mod_standard_assessment",
+        "mod_flag_chart",
+        "mod_administer_analgesic",
+        "mod_continue_monitoring",
+        "mod_treatment_plan",
+        "mod_surgical_consent_module",
+        "mod_pharmacy_coordination_module",
+        "mod_geriatric_pathway",
+        "mod_guardian_consent",
+        "mod_patient_education",
+        "mod_discharge_coordinator_role"
+      ],
+      "combine_rule": "into a comprehensive care summary.",
+      "referral_priority": "routine",
+      "treatment_combination": "comprehensive care summary"
+    }
+  ]
+}

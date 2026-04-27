@@ -1,0 +1,5 @@
+ANTI-GRAVITY DATA STANDARDS:
+- Information ONLY flows from the manual to the output JSON. Never invent clinical rules.
+- If the manual is ambiguous about a threshold, flag it with provenance "Inferred from [description]" and use the more conservative interpretation.
+- If two sections of the manual contradict each other, include BOTH with provenance and flag the conflict in a comment. Do not silently resolve contradictions.
+- Numeric thresholds come ONLY from the manual text. Do not round, adjust, or "improve" thresholds.

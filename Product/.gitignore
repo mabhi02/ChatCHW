@@ -1,0 +1,54 @@
+# Environment
+.env
+.env.*
+
+# Overnight loop artifacts
+overnight_loop_*/
+
+# Python
+__pycache__/
+*.py[codz]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# Node
+node_modules/
+.next/
+out/
+
+# Claude Code
+.claude/settings.local.json
+
+# IDE
+.vscode/
+.idea/
+
+# PDF to JSON reference (audit only, not for deploy)
+PDF to JSON/
+
+# Playwright
+.playwright/
+.playwright-mcp/
+
+# Run logs (local extraction run stats)
+log_runs/
+
+# RLM library per-run JSONL trace logs. Grow to 100MB+ on long extractions
+# (full prompt + response + REPL stdout per iteration). Useful locally for
+# debugging, exceeds GitHub 100MB push limit.
+backend/output/**/rlm_*.jsonl
+
+# Extraction run outputs — generated artifacts per run. Keep locally for
+# research reference but don't commit (50-800KB each, accumulates fast).
+# Force-add individual files with `git add -f path/to/file` if you want a
+# specific run's artifacts in the repo (e.g. the reference WHO run).
+backend/output/run_*/
+backend/output/arena-*/
+
+# OS
+.DS_Store
+Thumbs.db
+Interface_postmortem_tests/

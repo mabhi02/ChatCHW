@@ -1,0 +1,190 @@
+ ★ Insight ─────────────────────────────────────
+  - The agents agreed strongly on most findings — but they disagreed on confidence for two of vision.py's bugs (detail="original" and text={verbosity:
+  ...}). These involve OpenAI's Responses API parameter conventions, which evolved post my training cutoff. These specific findings need empirical
+  verification, not just static analysis — the smoke test should be designed to falsify or confirm them.
+  - The most dangerous bug isn't in the ingestion pipeline at all — it's rlm_runner.py:147 running the model-generated REPL with environment="local". A
+  clinically-malicious PDF could embed prompt-injection payloads in section headers that, after passing through ingestion and into the RLM extraction, get
+  the model to write os.system(...) in the REPL. That's a real RCE path from "user uploads PDF" to "shell on the server."
+  - Several of these bugs only manifest under specific runtime conditions (load, malformed input, GC timing). They wouldn't show up in unit tests. A real
+  smoke test exercising the production data path is the only way to catch them.
+  ─────────────────────────────────────────────────
+
+  Synthesized findings
+
+  BLOCKERS — must fix before any production traffic
+
+  ┌─────┬─────────────────────────────────┬────────────────────────────────────────────────────────────────────────────────────────────────────┬───────┐
+  │  #  │            File:line            │                                                Bug                                                 │ Found │
+  │     │                                 │                                                                                                    │   by  │
+  ├─────┼─────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────┼───────┤
+  │     │                                 │ No sandbox. RLM REPL runs arbitrary model-generated Python with environment="local" in the same    │ Agent │
+  │ B1  │ rlm_runner.py:147-164           │ process as FastAPI. A prompt-injected PDF can exfiltrate secrets / write files / spawn reverse     │  D    │
+  │     │                                 │ shells. RCE path from PDF upload.                                                                  │       │
+  ├─────┼─────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────┼───────┤
+  │     │                                 │ rlm.completion() called synchronously inside an async def. If the call is sync (likely — REPL      │ Agent │
+  │ B2  │ rlm_runner.py:172               │ loops typically use subprocess), it blocks the entire asyncio event loop for 10-30 min. Health     │  D    │
+  │     │                                 │ checks, SSE streams, cancel requests, ingestion polls all block.                                   │       │
+  ├─────┼─────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────┼───────┤
+  │     │                                 │ asyncio.create_task(...) discards the returned Task reference. Python's GC can collect tasks with  │ Agent │
+  │ B3  │ ingestion/router.py:75          │ no live references. Background extractions silently disappear mid-execution, Redis state stays at  │  C    │
+  │     │                                 │ "running", users poll forever.                                                                     │       │
+  ├─────┼─────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────┼───────┤
+  │     │ ingestion/vision.py (called     │ Unbounded asyncio.gather launches 120+ coroutines before any semaphore acquisition. Each calls     │ Agent │
+  │ B4  │ from pipeline.py)               │ render_page_region (PIL Image in thread pool) before reaching the OpenAI semaphore. Saturates      │  B    │
+  │     │                                 │ thread executor + holds many PDF bytes + PIL Images simultaneously → OOM on Render Standard.       │       │
+  ├─────┼─────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────┼───────┤
+  │     │                                 │ IngestionJobState.started_at is float Required (no default). pipeline.py::update_job_state         │ Agent │
+  │ B5  │ ingestion/schema.py:150-160     │ constructs a raw dict that never sets started_at. Any consumer parsing the Redis job state as      │  B    │
+  │     │                                 │ IngestionJobState crashes with ValidationError.                                                    │       │
+  ├─────┼─────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────┼───────┤
+  │     │                                 │ "detail": "original" is probably not a valid OpenAI vision detail value (Agent A claims only       │       │
+  │ B6  │ ingestion/vision.py:843         │ low/high/auto). If true, every vision call returns 400 → vision pass silently degrades to no-op.   │ Agent │
+  │     │                                 │ NEEDS EMPIRICAL VERIFICATION — Agent A's confidence is 92 but this involves post-cutoff API        │  A    │
+  │     │                                 │ behavior.                                                                                          │       │
+  ├─────┼─────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────┼───────┤
+  │ B7  │ ingestion/vision.py:849         │ text={"verbosity": "high", ...} may not be a valid key in the OpenAI Responses API text parameter. │ Agent │
+  │     │                                 │  Same caveat — confidence 85, needs empirical verification.                                        │  A    │
+  └─────┴─────────────────────────────────┴────────────────────────────────────────────────────────────────────────────────────────────────────┴───────┘
+
+  HIGH — would cause silent corruption or operational failures
+
+  ┌─────┬────────────────────────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┬──────────┐
+  │  #  │           File:line            │                                                Bug                                                │ Found by │
+  ├─────┼────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────┼──────────┤
+  │     │                                │ FastAPI/Starlette default body limit is 1 MB. The router's 50MB check at                          │ Agent C  │
+  │ H1  │ server.py:59                   │ ingestion/router.py:64-68 runs AFTER await file.read() — but Starlette rejects the request before │ + Agent  │
+  │     │                                │  the router even sees it. Every PDF >1 MB returns a generic 413 before the application code runs. │ D        │
+  ├─────┼────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────┼──────────┤
+  │ H2  │ ingestion/router.py:64-68      │ Even if H1 is fixed, await file.read() buffers the full upload into memory BEFORE the size check. │ Agent C  │
+  │     │                                │  A 500MB upload OOMs the process before the check fires.                                          │          │
+  ├─────┼────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────┼──────────┤
+  │ H3  │ session_manager.py:90          │ No concurrent session limit. Multiple simultaneous extractions (each ~200MB peak) exceed Render   │ Agent D  │
+  │     │                                │ Standard's 2GB budget. No 429, no throttle.                                                       │          │
+  ├─────┼────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────┼──────────┤
+  │ H4  │ session_manager.py:354         │ cancel_session() calls task.cancel(), but if rlm.completion() is sync (B2), the cancel never      │ Agent D  │
+  │     │                                │ propagates. User cancels, Anthropic quota keeps burning for the rest of the run.                  │          │
+  ├─────┼────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────┼──────────┤
+  │ H5  │ session_manager.py:266,281-300 │ _active_sessions[id]["events"] is unbounded. A 30-minute, 50-iteration extraction with full       │ Agent D  │
+  │     │                                │ Anthropic responses stored = 50-100 MB per session. No TTL eviction. Memory leaks indefinitely.   │          │
+  ├─────┼────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────┼──────────┤
+  │ H6  │ rlm_runner.py:119,137          │ asyncio.get_event_loop() in sync callbacks. If B2 is fixed by moving to asyncio.to_thread, these  │ Agent D  │
+  │     │                                │ callbacks run on a worker thread, and get_event_loop() raises in 3.12.                            │          │
+  ├─────┼────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────┼──────────┤
+  │     │                                │ page_end update gated on block is not None — for multi-page lists where blocks 2..N are merged    │          │
+  │ H7  │ ingestion/assembler.py:376-382 │ into block 1, current_page_end never advances. Sections containing multi-page lists report wrong  │ Agent B  │
+  │     │                                │ page ranges.                                                                                      │          │
+  ├─────┼────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────┼──────────┤
+  │     │                                │ Preamble section inserted last in the sections dict (after the titled-section loop completes).    │          │
+  │ H8  │ ingestion/assembler.py:397-406 │ Python dicts preserve insertion order, so the RLM iterates and sees front-matter LAST instead of  │ Agent B  │
+  │     │                                │ FIRST.                                                                                            │          │
+  ├─────┼────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────┼──────────┤
+  │ H9  │ ingestion/assembler.py:415     │ sorted(pages_dict.keys(), key=lambda k: int(k)) has no try/except. Safe in practice only by       │ Agent B  │
+  │     │                                │ upstream coincidence. Latent crash.                                                               │          │
+  ├─────┼────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────┼──────────┤
+  │ H10 │ ingestion/pipeline.py:195-213  │ Cache "lock" is plain SETEX with no NX semantics. Two concurrent requests for the same PDF both   │ Agent B  │
+  │     │                                │ miss, both run the full pipeline. Doubles cost on every double-submit.                            │          │
+  ├─────┼────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────┼──────────┤
+  │ H11 │ ingestion/config.py:24         │ UNSTRUCTURED_API_KEY silently defaults to "". The docstring claims missing keys raise at startup  │ Agent C  │
+  │     │                                │ but this one doesn't. Operator gets cryptic 401 mid-request instead of fail-fast.                 │          │
+  ├─────┼────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────┼──────────┤
+  │ H12 │ ingestion/warmup.py:50-55      │ Missing warmup.pdf becomes a silent no-op forever. Production cold-starts hit production traffic  │ Agent C  │
+  │     │                                │ with no operator signal.                                                                          │          │
+  └─────┴────────────────────────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┴──────────┘
+
+  MEDIUM — works but fragile
+
+  - server.py:52 — Redis httpx.AsyncClient not closed on shutdown (leaks on hot-reload).
+  - ingestion/router.py:27 — Pipeline singleton constructed at import time, outside lifespan. Errors don't surface as structured startup failures.
+  - ingestion/warmup.py — No lock against concurrent warmup runs. Two simultaneous uploads each fire 30 parallel Unstructured probes.
+  - ingestion/config.py:39-41 — Bare int() on env vars, no .strip(), opaque error doesn't name the variable.
+  - rlm_runner.py:102 — build_initial_user_message may serialize a 20MB guide synchronously, blocking the event loop for hundreds of ms.
+  - session_manager.py:276 — asyncio.ensure_future deprecated, raises on shutdown in 3.12. Use create_task.
+  - server.py:140 — guide_json passed by reference into the mutable REPL context. If the model mutates it in-place, it corrupts the shared session object.
+  - ingestion/pipeline.py:302 — No global ingestion concurrency limit. Combined with H3, OOM is easy.
+
+  What the audits found CLEAN — keep these as-is
+
+  ┌──────────────────────────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │            Component             │                                                      Verdict                                                      │
+  ├──────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │                                  │ Clean. All checklist items pass: coordinates=True, skip_infer_table_types=[], languages=["eng"],                  │
+  │ ingestion/unstructured_client.py │ asyncio.get_running_loop(), page_number coerced to int, element_id is monotonic across pages, raw_text joined     │
+  │                                  │ with space. The Stage 1 layer is solid.                                                                           │
+  ├──────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ ingestion/rendering.py           │ Clean. Correct pdf2image→pypdfium2 fallback, sensible 200 DPI default, on-demand rendering (no eager full-doc     │
+  │                                  │ load), correct coordinate scaling, padding clipping. The cropping math is right.                                  │
+  ├──────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ ingestion/cache.py               │ Clean. Prisma ORM (no raw SQL injection surface), SHA-256 content keys, Pydantic model_dump() serialization, no   │
+  │                                  │ pickle. Proper async.                                                                                             │
+  ├──────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ server.py CORS                   │ Configured correctly: allow_origins=["*"] + allow_credentials=False is the valid combo.                           │
+  ├──────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ Logging                          │ Both stages use logging.getLogger(__name__) consistently — single log stream traceable end-to-end.                │
+  ├──────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ Cache key consistency            │ Pipeline and cache.py use the same SHA-256 of raw bytes. No "hashed differently in two places" risk.              │
+  └──────────────────────────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+  ---
+  What the new smoke test should look like
+
+  The most important thing the smoke test must answer is: does the OpenAI Responses API actually accept the parameters vision.py builds. Two specific
+  findings (B6 detail=original, B7 text=verbosity) are model-and-version-specific and can ONLY be verified by hitting the live API. Static analysis is
+  insufficient because the OpenAI Python SDK's TypedDicts may have been updated post my training cutoff but Agent A's training cutoff is the same, so we
+  can't trust the static check alone.
+
+  ★ Insight ─────────────────────────────────────
+  - This is a case where the smoke test isn't validating what works — it's actively trying to falsify two specific bug claims. If the API returns 200 on
+  these exact parameters, Agent A was wrong and we save effort. If it returns 400, we have empirical proof and a clear fix.
+  - The cheapest way: synthesize the call with a tiny test image, NOT a real PDF. Skip Unstructured entirely. Just verify the OpenAI parameter contract.
+  - A SECOND smoke test (after the parameter check) should exercise the full vision.py path on a single real cropped table, to verify the integration
+  end-to-end.
+  ─────────────────────────────────────────────────
+
+  The proposed smoke test structure:
+
+  PART A — Falsify/confirm B6 + B7 (the OpenAI parameter contract questions)
+    1. Build a tiny test PNG (~100 KB, plain text "Hello world")
+    2. Call OpenAI Responses API with the EXACT kwargs vision.py builds at lines 843-849:
+         model="gpt-5.4"
+         text={"verbosity": "high", "format": {...}}
+         input=[{type: "input_image", image_url: ..., detail: "original"}]
+         max_completion_tokens=300
+    3. Capture the HTTP status + error body
+    4. If 400 with "Invalid value 'original'" -> B6 confirmed, fix to "high"
+    5. If 400 with "Unrecognized key 'verbosity'" -> B7 confirmed, remove key
+    6. If 200 -> both findings discounted, vision.py is fine
+
+  PART B — Verify the full vision.py code path on a real crop
+    Only run if Part A returns 200. Otherwise fix the bugs first.
+    1. Slice 5 pages from CHW Navigator PDF
+    2. Send to Unstructured hi_res via the existing unstructured_client module
+    3. Call vision.py's _refine_table on the first detected Table element
+    4. Verify the returned TableRefinement passes Pydantic validation
+    5. Print elapsed time + result summary
+
+  PART C — Verify B5 (IngestionJobState) by parsing a real Redis state write
+    1. Trigger pipeline.update_job_state("test-id", "running")
+    2. Read the value back from Redis
+    3. Try to parse as IngestionJobState
+    4. If ValidationError -> B5 confirmed, started_at needs to be Optional or always set
+
+  Total cost: ~1 image generation + 1 vision call (~$0.005) + ~5 pages of Unstructured quota (~free tier) + 1 Redis write/read
+
+  Total wall-clock: ~30-60 seconds
+
+  This smoke test is falsification-driven: we run it specifically to verify the highest-risk audit findings. It does NOT validate the cache, the assembler,
+  the RLM runner, or the FastAPI integration — those bugs are static-analysis-confirmable and don't need runtime testing.
+
+  ---
+  Recommended sequencing
+
+  Given the bug count and severity, I'd suggest this order:
+
+  1. Run the focused smoke test (Parts A + B above) to confirm/discount B6/B7 before writing any fixes. ~5 minutes.
+  2. Fix the BLOCKERS in this order: B5 (1 line), B3 (3 lines, classic asyncio create_task fix), B4 (move semaphore acquisition before render), B2 + H6 + B1
+   (the rlm_runner concurrency + sandbox triad — interrelated, fix together), then B6/B7 if confirmed by smoke test.
+  3. Then the HIGHs in any order — they're mostly localized.
+  4. MEDIUMs at port-time — they're real but won't bite you in the first week.
+
+  Want me to run the focused smoke test now? Or do you want to look at any specific finding more closely first (e.g., I could read the exact code at
+  rlm_runner.py:147-180 and vision.py:820-870 so we have concrete diff patches ready)?

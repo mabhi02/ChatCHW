@@ -1,0 +1,162 @@
+Subject: Re: REPL rationale, identification strategy, and hybrid scaffold
+
+David,
+
+I owe you the written rationale you asked for. From here forward, any architectural pivot will be preceded by a brief like this one. I should have sent this on March 31 when I sent ORCHESTRATOR.md.
+
+I owe you a postmortem on CHW-Chat-Interface that I never wrote. In March, when the team and I observed that CHW-Chat-Interface wasn't achieving test-retest reliability, my instinct was to build the RLM replacement faster rather than stop and explain the failure, because I thought RLMs had complex infrastructure work ahead and we were behind. That was a process mistake: you needed to see the empirical evidence of why the pivot was necessary, not just my conclusion from it. Below is the postmortem you should have received in March. I've attached both the database audit script (chwci_db_audit.py) that pulls the reliability-relevant numbers directly from the CHW-Chat-Interface Neon database, and the full failure analysis document (chwci_failure_analysis.md) with the complete evidence chain. You can run the audit script yourself or I can walk through the output with you on Friday.
+
+To be clear about the timeline: between pausing the Chat Interface and sending ORCHESTRATOR.md, I spent roughly 10 days researching alternative approaches. That research is how I came across Zhang, Kraska, and Khattab's RLM work (MIT CSAIL, January 2026). I built ORCHESTRATOR.md as the plan and outlined the basic failure cases of the prior approaches without writing up the full postmortem. In my March 31 email I wrote: "First, a note on scope: the chat interface I've been building (multi-model cross-validation, 6 parallel catchers, prompt caching, Haiku memory distillation, replay system) is overkill for what CHT needs to see. It's a powerful authoring environment but it's complex infrastructure that an open-source community wouldn't want to maintain. The attached spec is a fundamentally simpler approach that achieves the same goal with less moving parts." I thought that sufficed as evidence of the old system's problems and the rationale for the new one. In hindsight, it stated the conclusion without showing the data. The postmortem below is the data.
+
+I'm also genuinely uncertain what changed between your "Sounds good to me" on April 2 and the note you sent after our meeting today. If there's a specific concern from the meeting I'm not seeing, I'd appreciate you naming it so I can address it directly rather than guess.
+
+A note on framing: to try to get us on the same page about failure modes, I asked AI to help me translate the engineering failures into econometric terms. The translations may be a bit lossy or imprecise in places, but I think the exercise is worth it. Debating architecture preferences has not been productive; talking about identification, confounders, and treatment vectors might get us to the same diagnosis faster.
+
+
+1. THE PROBLEM STATEMENT
+
+The system we are building takes a CHW clinical manual (PDF) as input and produces a validated DMN decision model plus a CHT-deployable XLSForm (XLSX) as output, with full auditability of every intermediate artifact: supply list, variable definitions, predicates, decision tables, phrase bank. Every artifact must be traceable to a page and quote in the source manual. The system must be reproducible: same manual, same output, regardless of who runs it. The core engineering challenge is that there is a stochastic function (an LLM) in the middle of this pipeline. Perfect determinism is not achievable. What IS achievable is an architecture where any remaining variance is attributable solely to model stochasticity, not to confounders in the orchestration, the retrieval, the prompting strategy, or the human operator. That is the identification problem this memo is about.
+
+To make this concrete: imagine we run the system and get a wrong decision table. In a 9-prompt sequential pipeline, we can identify that the error originated in prompt 3 (say, the predicate extractor). We fix prompt 3. But now prompt 3's output has changed, which means prompt 5 (the decision table builder) receives different input, which means prompt 7 (the catcher) flags something new, which means prompt 8 (the fix generator) produces a different repair. We fix one thing and break another. This is whack-a-mole across coupled prompts, and it is the fundamental failure mode of multi-prompt architectures. With 2 prompts, the whack-a-mole is two-way: fixing prompt A can break prompt B and vice versa, but the interaction is tractable because there are only two directions to check. With 10 prompts, it is combinatorial: every fix propagates through every downstream prompt, and the interaction space is too large to search. In a 1-prompt REPL, the same error is fixed by editing one system prompt. We re-run. Either the intermediate artifacts all come out right (the fix worked) or they don't (iterate on the same prompt). There is no cascade because there is only one knob. This is what Recursive Language Models (Zhang et al., January 2026) proved is feasible at document scale, and it is why the 1-degree-of-freedom architecture is not just preferable but necessary for the project's identification constraint.
+
+In econometric terms: the multi-prompt pipeline is a system of simultaneous equations where each prompt's output is endogenous to the others. Editing prompt 3 does not produce an estimable partial effect on the DMN because its effect is mediated through every downstream prompt it feeds into. The total derivative of the output with respect to prompt 3 includes indirect pathways through prompts 5, 7, and 8 that we cannot hold constant. This scales badly: with k prompts, the number of indirect pathways grows combinatorially in k, so the gap between the partial effect we want to estimate and the total effect we actually observe widens with every prompt we add. With 2 prompts there is one indirect pathway (A through B); with 10 there are hundreds. The engineering goal is therefore to minimize k. In a 1-prompt system, the partial derivative and the total derivative are the same thing: there is only one equation, so there are no indirect pathways and no simultaneity. The effect of a prompt edit on the output is identified by construction. RLMs are the mechanism that makes k=1 technically feasible at our document scale.
+
+This is also, I think, a window into why generative AI in highly compliant industries (healthcare, finance, legal) has been so difficult broadly. Every serious attempt to deploy LLMs in these domains eventually hits the same wall: the system produces plausible output, but the variance cannot be attributed, which means failures cannot be systematically fixed, which means the system cannot be certified. Every architecture we have tried over the past two years on this project has been, in hindsight, a variance minimizer: RAG tried to minimize retrieval variance, the chat interface tried to minimize prompt variance via caching, the Chat Interface tried to minimize output variance via multi-agent validation. Each reduced one source of variance while introducing others. RLMs are the first empirical evidence that k=1 extraction works at unbounded document scale, which means they are the first mechanism that eliminates the confounders rather than trading them.
+
+
+2. THE IDENTIFICATION PROBLEM (YOUR MARCH 3 FRAMEWORK)
+
+In your March 3 email you wrote: "Reliability is necessary for validity, but not sufficient. For example, if one is consistently wrong in the same way, reliability = 100%, but validity < 100%."
+
+I accepted that framework then and still accept it. To measure validity we must first measure reliability. To measure reliability we must hold every variable constant except the treatment variable (the prompt). Any variable that varies between runs and is not the prompt is a confounder, producing omitted-variable bias that makes reliability estimates uninterpretable.
+
+That same March 3 thread ended with you accepting my argument to skip Hypothesis 1 because the chat interface had uncontrolled session-level confounders. Every architectural decision since has been downstream of that agreement.
+
+
+3. FOUR APPROACHES, ONE IDENTIFICATION STRATEGY
+
+Each approach we have tried can be evaluated on the same axis: how many uncontrolled variables sit between the prompt and the output?
+
+
+Approach A: RAG (pre-Fall 2025, scrapped)
+
+The standard retrieval-augmented generation approach: upload the PDF to a vector database, embed the chunks, and retrieve relevant passages at query time for each extraction step.
+
+Econometric diagnosis: RAG introduces measurement error in the treatment variable. The intended treatment is "prompt + full manual context," but the actual treatment the model receives is "prompt + whatever chunks the similarity search returns." The retrieval step is a noisy function of chunk size, embedding model, similarity threshold, and query formulation. Even holding the prompt constant, two runs can retrieve different chunks and therefore see different subsets of the manual. This is classical errors-in-variables bias: measurement error in the independent variable attenuates the estimated treatment effect and makes reliability estimates uninterpretable. Worse, the information loss is non-random. RAG systematically drops cross-reference context (a chunk about "fast breathing" may be retrieved without the surrounding age-dependent threshold table), biasing the model toward incomplete extraction in ways that are difficult to detect or correct.
+
+Standard econometric fix: eliminate the measurement error by observing the true treatment directly, rather than a noisy proxy of it. In AI terms: give the model the full document instead of retrieved chunks. This was not feasible at our document scale (100+ pages) until RLMs made it possible for a model to programmatically navigate a document loaded as a variable.
+
+In the terms of the problem statement: RAG introduces confounders in the retrieval. Remaining variance is not attributable solely to model stochasticity.
+
+
+Approach B: Manual prompting (Fall 2025)
+
+You and Zach each manually extracted DMN from the WHO 2012 manual via the Claude chat interface. Your paths diverged: 10 queries vs 5, different ordering, different intermediate reasoning. The final DMN artifacts converged on similar clinical content, but the paths were non-reproducible.
+
+Econometric diagnosis: The treatment is not identified. The chat interface bundles the user's prompt with hidden session state (system prompts, memory, conversational formatting) into a single unobservable treatment vector. We cannot decompose the variance in output DMN into "prompt effect" vs "session-state effect" vs "user-sequencing effect." This is classic omitted-variable bias: the causal effect of the prompt on the DMN is confounded by at least three unobserved variables. Reliability is unmeasurable because the treatment itself is non-stationary across runs.
+
+Standard econometric fix: either control for all confounders (include them in the model) or use a research design that eliminates them by construction (randomization, fixed effects). In AI terms: move from a chat interface where hidden state is an uncontrolled variable to an API where you specify all inputs explicitly. Better still: use a stateless execution environment (a REPL) where confounders cannot exist because there is no hidden state.
+
+In the terms of the problem statement: manual prompting introduces confounders in the prompting strategy and the human operator. Remaining variance is not attributable solely to model stochasticity.
+
+This is why we agreed to skip H1.
+
+
+Approach C: CHW-Chat-Interface (January to March 2026)
+
+To solve the identification problem, I designed and the team built a structured API pipeline: a Generator (Claude) plus six parallel Catcher validators (provenance, clinical review, consistency, completeness, DMN audit, boundary conditions) plus a Fix prompt plus a PDF Extractor, with Postgres versioning, Vercel Blob caching, and Anthropic prompt caching. This was my proposed solution to H2. The repo is in our GitHub.
+
+CHW-Chat-Interface did work in the sense that it produced DMN output. It did not work in the sense the project requires, which is producing DMN output that is reproducible across runs and attributable to its causes.
+
+I paused working on it after observing three identification failures. The attached audit script (chwci_db_audit.py) pulls the relevant evidence from the Postgres database, and the attached failure analysis (chwci_failure_analysis.md) contains the complete evidence chain with the full reasoning. The summary:
+
+(i) Treatment vector dimensionality. The pipeline contains 10 prompts (1 generator + 7 catchers + 1 fix + 1 PDF extractor). Each is a degree of freedom. To identify the marginal effect of editing any single prompt, we would need to hold the other 9 constant and run multiple trials per edit. With 10 independent variables and ~5 runs per iteration, the system is massively underidentified. Two engineers tuning the pipeline will diverge across all 10 prompts simultaneously, exactly as the manual prompting diverged across single-prompt walks in Fall 2025. The unit of variance moved one layer of abstraction down but did not shrink. (See audit queries 04-05 for the catcher run distribution.)
+
+(ii) Unobservable mediator. The catchers produce reports. The user then chooses [Auto-fix] or [Ignore] per report. This inserts an unobserved mediator (the user's fix decision) between the system's output and the final DMN. Mediation analysis with an unobservable mediator is fundamentally unidentified. We cannot decompose variance into "model error" vs "user choice error" and therefore cannot attribute reliability to the system itself. (See audit query 03: fix_applied true vs false counts.)
+
+(iii) Non-stationary baseline. Prompt caching stabilizes the environment within a single chat session but not across sessions. A new session with the same PDF rebuilds the cache from scratch and accumulates different conversational state. The stationarity assumption required for test-retest reliability is violated. Any reliability estimate is biased toward environment noise. (See audit query 02: multiple chats per guide; query 06: cache state fields; query 09: re-runs within the same chat producing different DMN versions.)
+
+Standard econometric fixes and their AI equivalents:
+- For simultaneity (i): reduce the system to a single-equation (recursive) model, eliminating endogeneity between equations. In AI terms: collapse to 1 prompt so there are no coupled equations to identify separately.
+- For the unobservable mediator (ii): either instrument the mediator or remove it from the causal pathway entirely. In AI terms: remove the human from the loop and replace with deterministic validators that the model calls programmatically.
+- For non-stationarity (iii): ensure identical initial conditions across observations (panel fixed effects, or design-based stationarity). In AI terms: content-hash the input PDF so the same hash guarantees the same starting state every run.
+
+In the terms of the problem statement: CHW-Chat-Interface introduces confounders in the orchestration (10 coupled prompts), the human operator (unobservable mediator decisions), and the baseline environment (non-stationary cache). Remaining variance is not attributable solely to model stochasticity.
+
+A natural reaction to these findings is "the team should have added more logging and observability." That reaction is correct as an engineering critique but wrong as an identification critique. Even with perfect logs of every variable in the system, a bad DMN comes out, and we have 10+ candidate causes with no way to isolate which one mattered. We cannot edit one prompt and observe the marginal effect on the output, because edits cascade: changing the generator prompt changes what the catchers flag, which changes what the fix prompt is asked to repair, which changes the final DMN. Just because we can see the environment variables does not mean they stop existing. Observability tells you what the system did. Identification tells you which knob to turn. Those are different problems and the first does not solve the second.
+
+The dimensionality also scales nonlinearly with prompt count. Going from 1 prompt (1 degree of freedom) to 2 prompts (~4 degrees of freedom, counting interactions) is acceptable: you can hold one constant while editing the other. Going from 2 to 10 is a phase change: the effective degrees of freedom become combinatorial because every prompt interacts with every other through the pipeline. Once you have more knobs than observations, identification is gone, and adding more knobs makes it strictly worse.
+
+The standard objection to the kill decision is: "CHW-Chat-Interface was not completed; you stopped before you had the full reliability data; how can you justify killing it on incomplete evidence?" The right question is not "did you collect enough data" but "was the architecture capable of producing the right kind of data, given the project's identification constraint?" By March we had four pieces of evidence sufficient to answer that question with no:
+
+1. Architectural dimensionality: 10 prompts puts the system past the phase change where identification is intractable. This is structural, independent of production data.
+2. Empirical 0% reliability where we did have data: across chat sessions on the same test guide, no two runs produced the same DMN artifact.
+3. Empty observability infrastructure: the fields designed for measuring reliability were not populated across the entire operating window.
+4. A single-prompt mechanism became available: the Zhang et al. RLM paper (January 2026) was the first published mechanism for single-prompt extraction on documents longer than the effective context window. Before that paper, single-prompt was technically infeasible at our document scale. After it, single-prompt became feasible, and once feasible, it became the only architecture that satisfies the project's identification constraint.
+
+The first three say the current architecture cannot be repaired in place. The fourth says a different architecture that can satisfy the constraint has just become technically feasible. Together they justified the pivot on the evidence available, without waiting for more data from a system that was structurally incapable of producing the right kind of data. (The full argument is in chwci_failure_analysis.md, Sections 4.5 through 4.7.)
+
+
+Approach D: RLM/REPL (March to present)
+
+The REPL approach addresses the identification failures from all three prior approaches by implementing the standard econometric fixes described above:
+
+(i) No retrieval noise. The full manual is loaded as a REPL variable. The model programmatically examines sections via code execution, not via similarity search. No embedding model, no chunk boundaries, no retrieval non-determinism. The model sees exactly the text it asks for, every time. This is the "observe the true treatment directly" fix for errors-in-variables bias. (Fixes Approach A.)
+
+(ii) Treatment vector collapse. One system prompt = one degree of freedom. To identify the effect of a prompt edit, I need 2 runs (before and after), not 18. The experimental power per run is dramatically higher. This is the "reduce to a single-equation model" fix for simultaneity. (Fixes Approaches B and C.)
+
+(iii) Mediator removal. The model calls deterministic validators (validate(), z3_check()) inside the REPL and self-corrects without human intervention. No unobservable mediator. The treatment pathway is fully manipulated by the system. This is the "remove the mediator from the causal pathway" fix for unobservable mediation. (Fixes Approach C.)
+
+(iv) Stationary baseline. The PDF is content-hashed. Same hash = same starting REPL state. Reliability across runs is well-defined: hold prompt constant, hold PDF constant, run twice, diff. Any difference is attributable to model stochasticity (which we can bound by reading the execution trace) or a bug. This is the "ensure identical initial conditions" fix for non-stationarity. (Fixes Approaches B and C.)
+
+In the terms of the problem statement: the REPL eliminates confounders in the retrieval, the orchestration, the prompting strategy, and the human operator. Remaining variance is attributable solely to model stochasticity. This is the only approach that satisfies the project's identification constraint by construction.
+
+
+4. THE SEQUENTIAL VS REPL DISTINCTION
+
+The sequential approach chains one API call per artifact: one call extracts the supply list, another the variable list, another the predicates, and so on. Each downstream call depends on upstream output, and issues at any stage cascade forward. Adding a new intermediate artifact requires a new pipeline stage, a new prompt, and new integration code.
+
+The REPL is a different shape. The model receives one frozen system prompt and a Python environment with the manual loaded as a variable. It produces all artifacts in one continuous session, with emit_artifact() checkpoints between phases. Adding a new intermediate artifact is a system prompt edit, not a code change.
+
+This is the most important practical property for our timeline: if you give me a list of intermediate artifacts you want surfaced, I can add each one by editing the system prompt. The iteration cycle is hours, not days.
+
+
+5. INTERNAL RED TEAM
+
+Following your April 7 memo format:
+
+Visibility flaw: A pure REPL with one final output hides intermediate artifacts inside transient state. Clinical reviewers cannot validate the supply list before approving the DMN built on top of it. You are right about this.
+
+Compounding errors flaw: A REPL session with no per-phase checkpoints lets early errors silently corrupt later phases.
+
+Iterative discovery flaw: My plan was to build the simplest working version and discover the missing intermediate artifacts by running it on a real manual. That is a legitimate research methodology (observe and iterate), but it requires running the demo before gaps become visible. Today's conversation reopened the architecture question before that demo could run.
+
+
+6. REPAIRS (SCAFFOLDED, TESTING BY FRIDAY)
+
+In response to your note today, I scaffolded the hybrid this evening. The code is written and the backend compiles. I'm debugging and testing it through the week and will have it ready to demonstrate on Friday. Here is what now exists:
+
+Per-phase emit_artifact() checkpoints. The system prompt now requires the model to call emit_artifact("supply_list", payload), then emit_artifact("variables", payload), then predicates, modules, router, integrative, phrase_bank, in strict order. The model cannot proceed to phase N+1 until phase N's emission passes validation. This is your "Red Team validates each artifact before freezing" requirement, implemented as mandatory gates inside the REPL.
+
+Seven phase validators ported from CHW-Chat-Interface. The six catcher prompts the team wrote for the Chat Interface (provenance, clinical review, consistency, completeness, DMN audit, boundary conditions) plus a new module architecture validator are wired as per-phase validation gates. Each runs via Claude Haiku when emit_artifact() is called and returns critical/major/minor issues. Critical issues block phase progression.
+
+Intermediate artifact persistence. Every emitted artifact is written to Neon (Postgres) via a new IntermediateArtifact model with its validator sidecar (the catcher report). Clinical reviewers can read supply_list.json and supply_list.validator.json independently without ever looking at REPL traces.
+
+Empirical gate harness. A gate_harness.py runs N extractions in each mode (REPL hybrid vs all-at-once), computes Jaccard reliability across runs, validator pass rates, and emits a verdict report. This will be ready to run on the WHO 2012 manual by Friday.
+
+Total new code: ~900 lines. The REPL substrate absorbed every concern from your April 7 note in one evening of scaffolding because adding artifacts and validators is a prompt edit plus a tool registration, not a pipeline rewrite. That is the property I am trying to preserve.
+
+
+7. WHAT I NEED FROM YOU
+
+A meeting on Friday where we do two things: first, review the CHW-Chat-Interface audit data together so you can evaluate the evidence yourself (this is the postmortem I should have delivered in March). Second, walk through the seven phase boundaries together so you can tell me every intermediate artifact you want surfaced, and I add each one as an emit_artifact() checkpoint.
+
+I expect a CHT-ready hand-off package (including deterministic DMN-to-Mermaid and DMN-to-XLSForm transpilers) by May 1.
+
+And the question from the top: what changed between April 2 and today? If there is a concern this memo does not address, I would rather hear it now.
+
+Attached:
+- chwci_db_audit.py (read-only database audit script for CHW-Chat-Interface Neon database)
+- chwci_failure_analysis.md (full failure analysis and postmortem, ~8,700 words)
+
+-- Atharva

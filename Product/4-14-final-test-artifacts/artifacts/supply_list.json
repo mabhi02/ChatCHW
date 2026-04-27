@@ -1,0 +1,107 @@
+[
+  {
+    "id": "equip_muac_strap",
+    "display_name": "MUAC strap",
+    "kind": "equipment",
+    "source_quote": "Measure the arm circumference with a MUAC strap",
+    "source_section_id": "course_objectives+child_1_siew_chin+give_ors_solution"
+  },
+  {
+    "id": "equip_recording_form",
+    "display_name": "Sick Child Recording Form",
+    "kind": "equipment",
+    "source_quote": "SICK CHILD RECORDING FORM",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "equip_referral_form",
+    "display_name": "Referral Note Form",
+    "kind": "equipment",
+    "source_quote": "Write a referral note",
+    "source_section_id": "contents+give_ors"
+  },
+  {
+    "id": "equip_thermometer",
+    "display_name": "Thermometer",
+    "kind": "equipment",
+    "source_quote": "ANNEX A. USING A THERMOMETER",
+    "source_section_id": "contents+give_ors"
+  },
+  {
+    "id": "equip_timer",
+    "display_name": "Timer (watch or 60-second timer)",
+    "kind": "equipment",
+    "source_quote": "Collect: Timer",
+    "source_section_id": "b_beauty+a_story+contents"
+  },
+  {
+    "id": "supply_al_artemether_lumefantrine",
+    "display_name": "AL (Artemether-Lumefantrine) tablets",
+    "kind": "consumable",
+    "source_quote": "give oral antimalarial AL (Artemether-Lumefantrine)",
+    "source_section_id": "child_3_karen_shah+checking_questions+exercise_2_optional"
+  },
+  {
+    "id": "supply_alcohol_swab",
+    "display_name": "Spirit (alcohol) swab",
+    "kind": "consumable",
+    "source_quote": "Spirit (alcohol) swab",
+    "source_section_id": "give_oral_amoxicillin+yellow_on_muac_strap+part_1_demonstration"
+  },
+  {
+    "id": "supply_amoxicillin_250mg",
+    "display_name": "Amoxicillin 250mg tablets",
+    "kind": "consumable",
+    "source_quote": "amoxicillin tablet - 250mg",
+    "source_section_id": "give_oral_amoxicillin+yellow_on_muac_strap+part_1_demonstration"
+  },
+  {
+    "id": "supply_disposable_gloves",
+    "display_name": "Disposable gloves",
+    "kind": "consumable",
+    "source_quote": "Collect: Disposable gloves",
+    "source_section_id": "b_beauty+a_story+contents"
+  },
+  {
+    "id": "supply_lancet",
+    "display_name": "Lancet (single-use)",
+    "kind": "consumable",
+    "source_quote": "Collect: Lancet",
+    "source_section_id": "b_beauty+a_story+contents"
+  },
+  {
+    "id": "supply_ors_packets",
+    "display_name": "ORS packets",
+    "kind": "consumable",
+    "source_quote": "Oral Rehydration Salts (ORS)",
+    "source_section_id": "contents+give_ors"
+  },
+  {
+    "id": "supply_rdt_buffer",
+    "display_name": "RDT buffer solution",
+    "kind": "consumable",
+    "source_quote": "Buffer",
+    "source_section_id": "b_beauty+a_story+contents"
+  },
+  {
+    "id": "supply_rdt_malaria",
+    "display_name": "RDT kit for malaria",
+    "kind": "consumable",
+    "source_quote": "RAPID DIAGNOSTIC TEST (RDT) FOR MALARIA",
+    "source_section_id": "contents+give_ors"
+  },
+  {
+    "id": "supply_rectal_artesunate_100mg",
+    "display_name": "Rectal artesunate suppository 100mg",
+    "kind": "consumable",
+    "source_quote": "rectal artesunate suppository (100 mg)",
+    "source_section_id": "course_objectives+child_1_siew_chin+give_ors_solution"
+  },
+  {
+    "id": "supply_zinc_tablets",
+    "display_name": "Zinc tablets",
+    "kind": "consumable",
+    "source_quote": "Give zinc supplement",
+    "source_section_id": "contents+give_ors"
+  }
+]

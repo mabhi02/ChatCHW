@@ -1,0 +1,106 @@
+{
+  "mod_initial_greeting": {
+    "module_id": "mod_initial_greeting",
+    "display_name": "greeting the patient and confirming their identity",
+    "hit_policy": "first",
+    "inputs": [],
+    "outputs": [],
+    "rules": []
+  },
+  "mod_emergency_escalation": {
+    "module_id": "mod_emergency_escalation",
+    "display_name": "immediately escalate to emergency protocol",
+    "hit_policy": "first",
+    "inputs": [],
+    "outputs": [],
+    "rules": []
+  },
+  "mod_standard_assessment": {
+    "module_id": "mod_standard_assessment",
+    "display_name": "proceed to standard assessment",
+    "hit_policy": "first",
+    "inputs": [],
+    "outputs": [],
+    "rules": []
+  },
+  "mod_flag_chart": {
+    "module_id": "mod_flag_chart",
+    "display_name": "flag the chart accordingly",
+    "hit_policy": "first",
+    "inputs": [],
+    "outputs": [],
+    "rules": []
+  },
+  "mod_administer_analgesic": {
+    "module_id": "mod_administer_analgesic",
+    "display_name": "administer analgesic per standing order",
+    "hit_policy": "first",
+    "inputs": [],
+    "outputs": [],
+    "rules": []
+  },
+  "mod_continue_monitoring": {
+    "module_id": "mod_continue_monitoring",
+    "display_name": "continue monitoring",
+    "hit_policy": "first",
+    "inputs": [],
+    "outputs": [],
+    "rules": []
+  },
+  "mod_treatment_plan": {
+    "module_id": "mod_treatment_plan",
+    "display_name": "treatment plan",
+    "hit_policy": "first",
+    "inputs": [],
+    "outputs": [],
+    "rules": []
+  },
+  "mod_surgical_consent_module": {
+    "module_id": "mod_surgical_consent_module",
+    "display_name": "surgical consent module",
+    "hit_policy": "first",
+    "inputs": [],
+    "outputs": [],
+    "rules": []
+  },
+  "mod_pharmacy_coordination_module": {
+    "module_id": "mod_pharmacy_coordination_module",
+    "display_name": "pharmacy coordination module",
+    "hit_policy": "first",
+    "inputs": [],
+    "outputs": [],
+    "rules": []
+  },
+  "mod_geriatric_pathway": {
+    "module_id": "mod_geriatric_pathway",
+    "display_name": "geriatric care coordination pathway",
+    "hit_policy": "first",
+    "inputs": [],
+    "outputs": [],
+    "rules": []
+  },
+  "mod_guardian_consent": {
+    "module_id": "mod_guardian_consent",
+    "display_name": "ensure guardian consent is obtained",
+    "hit_policy": "first",
+    "inputs": [],
+    "outputs": [],
+    "rules": []
+  },
+  "mod_patient_education": {
+    "module_id": "mod_patient_education",
+    "display_name": "Explain the treatment options using language the patient can understand",
+    "hit_policy": "first",
+    "inputs": [],
+    "outputs": [],
+    "rules": []
+  },
+  "mod_discharge_coordinator_role": {
+    "module_id": "mod_discharge_coordinator_role",
+    "display_name": "discharge coordinator",
+    "hit_policy": "first",
+    "inputs": [],
+    "outputs": [],
+    "rules": []
+  }
+}

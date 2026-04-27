@@ -1,0 +1,23 @@
+{
+  "hit_policy": "first",
+  "rows": [
+    {
+      "priority": 0,
+      "condition": "p_danger_signs == true",
+      "output_module": "mod_emergency_escalation",
+      "description": "Danger sign short-circuit"
+    },
+    {
+      "priority": 1,
+      "condition": "select the appropriate care pathway based on acuity: emergent, urgent, or routine.",
+      "output_module": "care_pathway_router",
+      "description": "emergent, urgent, or routine"
+    },
+    {
+      "priority": 2,
+      "condition": "route the patient to the appropriate follow-up: primary care, specialist referral, or home health services.",
+      "output_module": "followup_router",
+      "description": "primary care, specialist referral, or home health services"
+    }
+  ]
+}

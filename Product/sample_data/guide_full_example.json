@@ -1,0 +1,1475 @@
+{
+  "guide_metadata": {
+    "title": "Integrated Community Case Management (iCCM) — Modular CCM Rules for Children Age 2 Months up to 5 Years",
+    "version": "2024.2",
+    "source_pdf": "iccm_modular_ccm_guidelines_full.pdf",
+    "country": "Generic",
+    "language": "en",
+    "total_pages": 96,
+    "effective_date": "2024-01-01",
+    "revision_history": [
+      {
+        "version": "2024.1",
+        "date": "2024-01-01",
+        "changes": "Initial release based on WHO/UNICEF iCCM guidelines"
+      },
+      {
+        "version": "2024.2",
+        "date": "2024-06-15",
+        "changes": "Added ear problem module, expanded malnutrition assessment, refined aggregation logic"
+      }
+    ],
+    "applicable_age_range": {
+      "min_months": 2,
+      "max_months": 60,
+      "description": "Children aged 2 months up to 5 years (60 months)"
+    },
+    "training_notes": "This guide is intended for use by trained Community Health Workers (CHWs) operating under supervision of a health facility. CHWs must complete iCCM training before using this guide."
+  },
+  "sections": [
+    {
+      "id": "section_danger_signs",
+      "title": "Check for General Danger Signs",
+      "page_range": [6, 12],
+      "module": "danger_signs",
+      "instructions": "ASK and LOOK for all general danger signs before assessing specific symptoms. If ANY danger sign is present, the child must be referred URGENTLY to hospital. Complete pre-referral treatments before sending.",
+      "content": [
+        {
+          "type": "assessment_question",
+          "question": "Is the child having convulsions now or has the child had convulsions during this illness?",
+          "input_name": "convulsions_in_this_illness",
+          "input_type": "boolean",
+          "source_quote": "ASK: Is the child having convulsions NOW or has the child had convulsions during this illness? A convulsion is an uncontrolled, jerking movement of the body. The child may lose consciousness. LOOK: If the child is currently convulsing, note the type of movement and duration.",
+          "page": 6,
+          "line": "6-2"
+        },
+        {
+          "type": "assessment_question",
+          "question": "Is the child not able to drink or breastfeed?",
+          "input_name": "not_able_to_drink_or_feed",
+          "input_type": "boolean",
+          "source_quote": "ASK: Is the child able to drink or breastfeed? Offer the child water or breastmilk. LOOK: Watch whether the child is able to swallow. If the child is not able to drink or feed anything — this is a general danger sign.",
+          "page": 6,
+          "line": "6-3"
+        },
+        {
+          "type": "assessment_question",
+          "question": "Does the child vomit everything?",
+          "input_name": "vomits_everything",
+          "input_type": "boolean",
+          "source_quote": "ASK: Does the child vomit everything? A child who vomits everything is not able to hold down any food or liquid. If the child vomits everything he or she is given — this is a general danger sign. Note: a child who vomits only sometimes but can keep down some fluids does NOT have this danger sign.",
+          "page": 7,
+          "line": "7-1"
+        },
+        {
+          "type": "assessment_question",
+          "question": "Is the child unusually sleepy or unconscious?",
+          "input_name": "unusually_sleepy_or_unconscious",
+          "input_type": "boolean",
+          "source_quote": "LOOK: Is the child unusually sleepy or unconscious? An unusually sleepy child is difficult to wake. The child looks drowsy, does not show interest in surroundings, and does not look at the mother's face or watch what is happening. An unconscious child cannot be woken at all. If yes — this is a general danger sign.",
+          "page": 7,
+          "line": "7-2"
+        },
+        {
+          "type": "assessment_question",
+          "question": "Does the child have cough with fast breathing combined with a danger sign?",
+          "input_name": "cough_with_fast_breathing_danger",
+          "input_type": "boolean",
+          "source_quote": "ASK: Does the child have a cough? If YES, count the breaths in one minute. LOOK: Is the breathing fast? If the child has cough with fast breathing AND any general danger sign — this combination requires URGENT referral.",
+          "page": 8,
+          "line": "8-1"
+        },
+        {
+          "type": "assessment_question",
+          "question": "Does the child have a stiff neck?",
+          "input_name": "stiff_neck",
+          "input_type": "boolean",
+          "source_quote": "LOOK and FEEL: Does the child have a stiff neck? A stiff neck may indicate meningitis. With the child lying on their back, gently try to bend the head forward. If the neck is stiff and resists bending — this is a danger sign.",
+          "page": 8,
+          "line": "8-2"
+        },
+        {
+          "type": "assessment_question",
+          "question": "Does the child have a bulging fontanelle?",
+          "input_name": "bulging_fontanelle",
+          "input_type": "boolean",
+          "source_quote": "LOOK and FEEL: In an infant (under 18 months), is the fontanelle bulging? Feel the soft spot on the top of the head. If it is bulging outward when the child is sitting quietly and NOT crying — this may indicate increased pressure inside the head and is a danger sign.",
+          "page": 9,
+          "line": "9-1"
+        },
+        {
+          "type": "classification_rule",
+          "condition": "convulsions_in_this_illness = true",
+          "classification": "General Danger Sign — Convulsions",
+          "danger_sign": true,
+          "triage": "hospital",
+          "clinic_referral": true,
+          "reason": "convulsions_present",
+          "actions": [
+            "refer_urgently",
+            "give_first_dose_of_appropriate_treatment",
+            "keep_child_on_side_to_prevent_aspiration",
+            "protect_airway"
+          ],
+          "source_quote": "If the child is having or has had convulsions: REFER URGENTLY to hospital. Position the child on their side. Protect the airway. Give first dose of rectal diazepam if available and trained. Do NOT put anything in the mouth.",
+          "page": 10,
+          "line": "10-1",
+          "section_id": "ref_ds_001"
+        },
+        {
+          "type": "classification_rule",
+          "condition": "not_able_to_drink_or_feed = true",
+          "classification": "General Danger Sign — Unable to Drink or Feed",
+          "danger_sign": true,
+          "triage": "hospital",
+          "clinic_referral": true,
+          "reason": "unable_to_drink_or_feed",
+          "actions": [
+            "refer_urgently",
+            "give_first_dose_of_appropriate_treatment",
+            "keep_child_warm",
+            "give_sugar_water_if_conscious"
+          ],
+          "source_quote": "If the child is not able to drink or feed: REFER URGENTLY to hospital. If the child is conscious, give sugar water (4 teaspoons sugar in 200ml water) by mouth to prevent low blood sugar during transport.",
+          "page": 10,
+          "line": "10-2",
+          "section_id": "ref_ds_002"
+        },
+        {
+          "type": "classification_rule",
+          "condition": "vomits_everything = true",
+          "classification": "General Danger Sign — Vomits Everything",
+          "danger_sign": true,
+          "triage": "hospital",
+          "clinic_referral": true,
+          "reason": "vomits_everything",
+          "actions": [
+            "refer_urgently",
+            "give_first_dose_of_appropriate_treatment",
+            "give_ors_in_small_sips_during_transport"
+          ],
+          "source_quote": "If the child vomits everything: REFER URGENTLY to hospital. Give ORS solution in small frequent sips during transport if the child can keep down small amounts. Give first dose of appropriate treatment before referral.",
+          "page": 10,
+          "line": "10-3",
+          "section_id": "ref_ds_003"
+        },
+        {
+          "type": "classification_rule",
+          "condition": "unusually_sleepy_or_unconscious = true",
+          "classification": "General Danger Sign — Unusually Sleepy or Unconscious",
+          "danger_sign": true,
+          "triage": "hospital",
+          "clinic_referral": true,
+          "reason": "lethargic_or_unconscious",
+          "actions": [
+            "refer_urgently",
+            "give_first_dose_of_appropriate_treatment",
+            "keep_child_warm",
+            "position_on_side",
+            "protect_airway",
+            "give_sugar_water_if_able_to_swallow"
+          ],
+          "source_quote": "If the child is unusually sleepy or unconscious: REFER URGENTLY to hospital. Keep the child warm. Position the child on their side to protect airway. If the child can swallow, give sugar water to prevent low blood sugar. Give first dose of appropriate antibiotic.",
+          "page": 11,
+          "line": "11-1",
+          "section_id": "ref_ds_004"
+        },
+        {
+          "type": "classification_rule",
+          "condition": "stiff_neck = true OR bulging_fontanelle = true",
+          "classification": "General Danger Sign — Possible Meningitis",
+          "danger_sign": true,
+          "triage": "hospital",
+          "clinic_referral": true,
+          "reason": "possible_meningitis",
+          "actions": [
+            "refer_urgently",
+            "give_first_dose_intramuscular_antibiotic",
+            "keep_child_warm",
+            "protect_airway"
+          ],
+          "source_quote": "If the child has a stiff neck or bulging fontanelle: REFER URGENTLY to hospital. These signs may indicate meningitis. Give first dose of intramuscular antibiotic (if available and trained). Keep the child warm during transport.",
+          "page": 11,
+          "line": "11-2",
+          "section_id": "ref_ds_005"
+        },
+        {
+          "type": "classification_rule",
+          "condition": "ANY general danger sign present",
+          "classification": "Summary — Any General Danger Sign Requires Urgent Referral",
+          "danger_sign": true,
+          "triage": "hospital",
+          "clinic_referral": true,
+          "reason": "any_general_danger_sign",
+          "actions": [
+            "refer_urgently",
+            "give_first_dose_of_appropriate_treatment",
+            "explain_referral_to_mother",
+            "write_referral_note",
+            "arrange_transport"
+          ],
+          "source_quote": "If ANY general danger sign is present: REFER URGENTLY to hospital. Complete the pre-referral treatment checklist. Write a referral note including the danger sign(s) found, treatments given, and time of referral. Explain to the mother why the child needs urgent care. Help arrange transport.",
+          "page": 12,
+          "line": "12-1",
+          "section_id": "ref_ds_summary"
+        }
+      ]
+    },
+    {
+      "id": "section_module_a",
+      "title": "Module A: Assess and Classify Cough or Difficult Breathing",
+      "page_range": [14, 26],
+      "module": "cough_breathing",
+      "instructions": "If the child has a cough or difficult breathing, assess for how long and check for fast breathing and chest indrawing. Count breaths in one full minute. The child must be calm and quiet when you count. Fast breathing thresholds: 50+ breaths/min (2-11 months), 40+ breaths/min (12 months to 5 years).",
+      "content": [
+        {
+          "type": "assessment_question",
+          "question": "Does the child have a cough?",
+          "input_name": "cough_present",
+          "input_type": "boolean",
+          "source_quote": "ASK: Does the child have a cough? If the mother says yes, or if you hear the child coughing, proceed with the full respiratory assessment.",
+          "page": 14,
+          "line": "14-1"
+        },
+        {
+          "type": "assessment_question",
+          "question": "Does the child have difficult breathing?",
+          "input_name": "difficult_breathing",
+          "input_type": "boolean",
+          "source_quote": "ASK: Does the child have difficult breathing? Difficult breathing is any unusual pattern of breathing that the mother has noticed. The child may breathe fast, make unusual noises when breathing, or appear to struggle to breathe.",
+          "page": 14,
+          "line": "14-2"
+        },
+        {
+          "type": "assessment_question",
+          "question": "For how many days has the child had the cough or difficult breathing?",
+          "input_name": "cough_duration_days",
+          "input_type": "number",
+          "unit": "days",
+          "source_quote": "ASK: For how many days? _____ days. Record the number of days the child has had cough or difficult breathing. This is important for classification — cough lasting 14 days or more may indicate TB or another chronic condition.",
+          "page": 15,
+          "line": "15-1"
+        },
+        {
+          "type": "assessment_question",
+          "question": "Does the child have fast breathing?",
+          "input_name": "fast_breathing_present",
+          "input_type": "boolean",
+          "source_quote": "LOOK and LISTEN: Count the breaths in one minute. The child must be quiet and calm. Use a timer or watch with a second hand. Count the number of times the chest rises in one minute. Fast breathing is: 50 breaths per minute or more if the child is aged 2 months up to 12 months; 40 breaths per minute or more if the child is aged 12 months up to 5 years. If the count is borderline, count again.",
+          "page": 16,
+          "line": "16-1"
+        },
+        {
+          "type": "assessment_question",
+          "question": "What is the respiratory rate (breaths per minute)?",
+          "input_name": "respiratory_rate",
+          "input_type": "number",
+          "unit": "breaths_per_minute",
+          "source_quote": "COUNT: Record the exact respiratory rate (breaths per minute). This number will be used alongside age to determine if the child has fast breathing. If unsure, count a second time.",
+          "page": 16,
+          "line": "16-2"
+        },
+        {
+          "type": "assessment_question",
+          "question": "Does the child have chest indrawing?",
+          "input_name": "chest_indrawing_present",
+          "input_type": "boolean",
+          "source_quote": "LOOK: Does the child have chest indrawing? The child has chest indrawing if the lower chest wall goes IN when the child breathes IN. Chest indrawing is present when the effort to breathe in pulls the lower chest wall inward. Look at the child with the shirt lifted. Watch for several breathing cycles. Chest indrawing must be clearly visible and present ALL the time to be considered a positive sign.",
+          "page": 17,
+          "line": "17-1"
+        },
+        {
+          "type": "assessment_question",
+          "question": "Does the child have stridor when calm?",
+          "input_name": "stridor_when_calm",
+          "input_type": "boolean",
+          "source_quote": "LISTEN: Does the child have stridor? Stridor is a harsh noise made when the child breathes IN. It is caused by narrowing or swelling of the upper airway. Only record stridor if it is present when the child is CALM. A child who has stridor only when crying or upset does not have this sign.",
+          "page": 17,
+          "line": "17-2"
+        },
+        {
+          "type": "assessment_question",
+          "question": "Does the child have wheezing?",
+          "input_name": "wheezing_present",
+          "input_type": "boolean",
+          "source_quote": "LISTEN: Does the child have wheezing? Wheezing is a soft, musical sound when the child breathes OUT. It indicates narrowing of the lower airways. Wheezing may be heard without a stethoscope in severe cases.",
+          "page": 18,
+          "line": "18-1"
+        },
+        {
+          "type": "classification_rule",
+          "condition": "chest_indrawing_present = true",
+          "classification": "Severe Pneumonia or Very Severe Disease — Chest Indrawing",
+          "danger_sign": true,
+          "triage": "hospital",
+          "clinic_referral": true,
+          "reason": "chest_indrawing",
+          "actions": [
+            "refer_urgently",
+            "give_first_dose_oral_amoxicillin",
+            "advise_mother_keep_child_warm",
+            "treat_fever_if_present",
+            "give_breast_milk_or_sugar_water_on_way"
+          ],
+          "advice": [
+            "Keep child warm during transport",
+            "Continue breastfeeding if possible",
+            "Return immediately if child becomes worse"
+          ],
+          "source_quote": "If the child has chest indrawing: CLASSIFY as SEVERE PNEUMONIA OR VERY SEVERE DISEASE. REFER URGENTLY to hospital. Give first dose of oral amoxicillin. Advise the mother to keep the child warm on the way to hospital. If the child is breastfeeding, advise the mother to continue breastfeeding during transport.",
+          "page": 19,
+          "line": "19-1",
+          "section_id": "ref_a_001"
+        },
+        {
+          "type": "classification_rule",
+          "condition": "stridor_when_calm = true",
+          "classification": "Severe Pneumonia or Very Severe Disease — Stridor",
+          "danger_sign": true,
+          "triage": "hospital",
+          "clinic_referral": true,
+          "reason": "stridor_when_calm",
+          "actions": [
+            "refer_urgently",
+            "give_first_dose_oral_amoxicillin",
+            "keep_child_calm"
+          ],
+          "advice": [
+            "Keep child calm — do not agitate",
+            "Keep child upright or in comfortable position",
+            "Do not put anything in the mouth"
+          ],
+          "source_quote": "If the child has stridor when calm: CLASSIFY as SEVERE PNEUMONIA OR VERY SEVERE DISEASE. REFER URGENTLY to hospital. Keep the child calm and in a comfortable position. Give first dose of oral amoxicillin.",
+          "page": 20,
+          "line": "20-1",
+          "section_id": "ref_a_002"
+        },
+        {
+          "type": "classification_rule",
+          "condition": "fast_breathing_present = true AND chest_indrawing_present = false AND stridor_when_calm = false",
+          "classification": "Pneumonia — Fast Breathing",
+          "danger_sign": false,
+          "triage": "home",
+          "clinic_referral": false,
+          "reason": "fast_breathing_pneumonia",
+          "actions": [
+            "give_oral_amoxicillin_for_5_days",
+            "advise_mother_when_to_return",
+            "arrange_follow_up_in_3_days"
+          ],
+          "advice": [
+            "Give amoxicillin twice daily for 5 days",
+            "Return immediately if breathing becomes worse, unable to drink, or becomes sicker",
+            "Keep child warm",
+            "Continue feeding"
+          ],
+          "source_quote": "If the child has fast breathing but NO chest indrawing and NO stridor: CLASSIFY as PNEUMONIA. Give oral amoxicillin for 5 days. Soothe the throat and relieve the cough with a safe remedy such as breastmilk (for infants) or warm water with honey (children over 12 months). Advise mother when to return immediately. Arrange follow-up visit in 3 days.",
+          "page": 21,
+          "line": "21-1",
+          "section_id": "ref_a_003"
+        },
+        {
+          "type": "classification_rule",
+          "condition": "cough_present = true AND cough_duration_days >= 21",
+          "classification": "Chronic Cough — Possible Tuberculosis",
+          "danger_sign": false,
+          "triage": "clinic",
+          "clinic_referral": true,
+          "reason": "cough_21_days_or_more",
+          "actions": [
+            "refer_to_health_facility",
+            "do_not_give_antibiotic",
+            "advise_tb_screening"
+          ],
+          "advice": [
+            "Refer for TB screening and evaluation",
+            "Ask about contact with known TB patient",
+            "Ask about weight loss or failure to thrive"
+          ],
+          "source_quote": "If the child has had cough for 21 days or more: Refer to health facility for evaluation of possible tuberculosis (TB). Ask about contact with a known TB patient in the household. Do NOT give antibiotic at community level — the child needs evaluation at the health facility.",
+          "page": 22,
+          "line": "22-1",
+          "section_id": "ref_a_004"
+        },
+        {
+          "type": "classification_rule",
+          "condition": "cough_present = true AND cough_duration_days >= 14 AND cough_duration_days < 21",
+          "classification": "Cough for 14 Days or More — Refer",
+          "danger_sign": false,
+          "triage": "clinic",
+          "clinic_referral": true,
+          "reason": "cough_14_days_or_more",
+          "actions": [
+            "refer_to_health_facility",
+            "complete_antibiotic_course_if_started"
+          ],
+          "advice": [
+            "Cough lasting this long needs clinical evaluation",
+            "Continue any current treatments",
+            "Return immediately if danger signs develop"
+          ],
+          "source_quote": "If the child has had cough for 14 days or more but less than 21 days: Refer to health facility for further assessment. A persistent cough may indicate an underlying condition requiring investigation. If an antibiotic was started, complete the full course.",
+          "page": 23,
+          "line": "23-1",
+          "section_id": "ref_a_005"
+        },
+        {
+          "type": "classification_rule",
+          "condition": "cough_present = true AND fast_breathing_present = false AND chest_indrawing_present = false AND cough_duration_days < 14",
+          "classification": "Cough or Cold — No Pneumonia",
+          "danger_sign": false,
+          "triage": "home",
+          "clinic_referral": false,
+          "reason": "cough_or_cold_no_pneumonia",
+          "actions": [
+            "soothe_throat_with_safe_remedy",
+            "advise_mother_on_home_care",
+            "advise_mother_when_to_return"
+          ],
+          "advice": [
+            "No antibiotic needed",
+            "Soothe throat with breastmilk (infants) or warm water with honey (over 12 months)",
+            "Continue feeding and give extra fluids",
+            "Return in 5 days if not improving",
+            "Return immediately if fast breathing, difficult breathing, or unable to drink"
+          ],
+          "source_quote": "If the child has cough for less than 14 days AND no fast breathing AND no chest indrawing: CLASSIFY as COUGH OR COLD (NO PNEUMONIA). No antibiotic is needed. Soothe the throat and relieve the cough with a safe remedy. Advise the mother to watch for danger signs. Follow up in 5 days if not improving.",
+          "page": 24,
+          "line": "24-1",
+          "section_id": "ref_a_006"
+        },
+        {
+          "type": "treatment_action",
+          "action": "Amoxicillin dosing for pneumonia",
+          "input_name": "amoxicillin_dose_pneumonia",
+          "dosing_table": {
+            "age_2_to_11_months_weight_4_to_10kg": "250mg twice daily for 5 days",
+            "age_12_to_35_months_weight_10_to_14kg": "500mg twice daily for 5 days",
+            "age_36_to_59_months_weight_14_to_19kg": "750mg twice daily for 5 days"
+          },
+          "source_quote": "GIVE oral amoxicillin for 5 days. DOSE BY WEIGHT: 4–10 kg: 250mg twice daily. 10–14 kg: 500mg twice daily. 14–19 kg: 750mg twice daily. If amoxicillin dispersible tablets are used, dissolve in a small amount of clean water before giving. Advise the mother to give all doses for the full 5 days, even if the child improves.",
+          "page": 25,
+          "line": "25-1"
+        }
+      ]
+    },
+    {
+      "id": "section_module_b",
+      "title": "Module B: Assess and Classify Diarrhoea",
+      "page_range": [28, 40],
+      "module": "diarrhoea",
+      "instructions": "Ask the mother about diarrhoea. Diarrhoea is defined as three or more loose or watery stools in a 24-hour period. Assess for dehydration, duration, and blood in stool. Check for signs of dehydration: restless/irritable, sunken eyes, drinks eagerly/thirsty, skin pinch goes back slowly.",
+      "content": [
+        {
+          "type": "assessment_question",
+          "question": "Does the child have diarrhoea (3 or more loose stools in 24 hours)?",
+          "input_name": "has_diarrhoea",
+          "input_type": "boolean",
+          "source_quote": "ASK: Does the child have diarrhoea? Diarrhoea is three or more loose or watery stools in a 24-hour period. Ask the mother to describe the stools. If the mother says the child has more frequent or looser stools than usual, this counts as diarrhoea.",
+          "page": 28,
+          "line": "28-1"
+        },
+        {
+          "type": "assessment_question",
+          "question": "For how many days has the child had diarrhoea?",
+          "input_name": "diarrhoea_duration_days",
+          "input_type": "number",
+          "unit": "days",
+          "source_quote": "ASK: For how many days? _____ days. This is critical for classification. Diarrhoea lasting 14 days or more is classified as persistent diarrhoea and requires referral.",
+          "page": 28,
+          "line": "28-2"
+        },
+        {
+          "type": "assessment_question",
+          "question": "Is there blood in the stool?",
+          "input_name": "blood_in_stool",
+          "input_type": "boolean",
+          "source_quote": "ASK: Is there blood in the stool? Blood in the stool (dysentery) may indicate a bacterial infection requiring antibiotic treatment. The mother may describe red or dark stools, or blood mixed with mucus.",
+          "page": 29,
+          "line": "29-1"
+        },
+        {
+          "type": "assessment_question",
+          "question": "Is the child restless and irritable?",
+          "input_name": "restless_irritable",
+          "input_type": "boolean",
+          "source_quote": "LOOK: Is the child restless and irritable? A child who is restless and irritable and cannot be calmed may be showing signs of dehydration. The child may cry easily and be difficult to comfort.",
+          "page": 29,
+          "line": "29-2"
+        },
+        {
+          "type": "assessment_question",
+          "question": "Does the child have sunken eyes?",
+          "input_name": "sunken_eyes",
+          "input_type": "boolean",
+          "source_quote": "LOOK: Are the child's eyes sunken? The eyes of a dehydrated child look sunken — deeper than usual in the face. Ask the mother if she thinks the child's eyes look different from usual. Sunken eyes are a sign of dehydration.",
+          "page": 30,
+          "line": "30-1"
+        },
+        {
+          "type": "assessment_question",
+          "question": "Does the child drink eagerly or is the child thirsty?",
+          "input_name": "drinks_eagerly_thirsty",
+          "input_type": "boolean",
+          "source_quote": "OFFER the child water. LOOK: Does the child drink eagerly? Is the child thirsty? A child who drinks eagerly or appears very thirsty may be dehydrated. Offer the child clean water in a cup. Watch how the child drinks.",
+          "page": 30,
+          "line": "30-2"
+        },
+        {
+          "type": "assessment_question",
+          "question": "Does a skin pinch go back slowly (more than 2 seconds)?",
+          "input_name": "skin_pinch_slow",
+          "input_type": "boolean",
+          "source_quote": "FEEL: Pinch the skin of the abdomen. Does it go back very slowly (longer than 2 seconds)? Locate the area of the abdomen between the umbilicus (navel) and the side. Use your thumb and forefinger to pick up a fold of skin. Pinch for one second, then release. If the skin stays up for 2 seconds or more before returning to flat, the skin pinch goes back slowly — this is a sign of dehydration.",
+          "page": 31,
+          "line": "31-1"
+        },
+        {
+          "type": "assessment_question",
+          "question": "Is the child lethargic or unconscious?",
+          "input_name": "lethargic_with_diarrhoea",
+          "input_type": "boolean",
+          "source_quote": "LOOK: Is the child lethargic or unconscious? A lethargic child is drowsy and shows little interest in surroundings. Combined with diarrhoea, this indicates SEVERE dehydration and is a danger sign requiring urgent referral.",
+          "page": 31,
+          "line": "31-2"
+        },
+        {
+          "type": "classification_rule",
+          "condition": "(lethargic_with_diarrhoea = true OR skin_pinch_slow = true) AND has_diarrhoea = true",
+          "classification": "Severe Dehydration — Refer Urgently",
+          "danger_sign": true,
+          "triage": "hospital",
+          "clinic_referral": true,
+          "reason": "severe_dehydration",
+          "actions": [
+            "refer_urgently",
+            "start_ors_immediately",
+            "give_ors_frequently_during_transport",
+            "advise_mother_to_continue_breastfeeding"
+          ],
+          "advice": [
+            "Give ORS sips frequently on the way to hospital",
+            "Continue breastfeeding",
+            "Keep child warm"
+          ],
+          "source_quote": "If the child has TWO or more of the following signs: lethargic or unconscious, sunken eyes, not able to drink or drinks poorly, skin pinch goes back very slowly — CLASSIFY as SEVERE DEHYDRATION. REFER URGENTLY to hospital. If you can, start giving ORS on the way. Advise the mother to continue giving ORS solution in small sips during transport.",
+          "page": 32,
+          "line": "32-1",
+          "section_id": "ref_b_001"
+        },
+        {
+          "type": "classification_rule",
+          "condition": "(restless_irritable = true OR sunken_eyes = true OR drinks_eagerly_thirsty = true) AND has_diarrhoea = true AND lethargic_with_diarrhoea = false AND skin_pinch_slow = false",
+          "classification": "Some Dehydration — Give ORS, Monitor",
+          "danger_sign": false,
+          "triage": "clinic",
+          "clinic_referral": true,
+          "reason": "some_dehydration",
+          "actions": [
+            "give_ors_plan_b",
+            "give_zinc_supplement",
+            "monitor_for_4_hours",
+            "reassess_after_4_hours"
+          ],
+          "advice": [
+            "Give ORS solution: 75ml per kg body weight over 4 hours",
+            "Give zinc for 10 days",
+            "Continue breastfeeding",
+            "If child vomits, wait 10 minutes then continue more slowly"
+          ],
+          "source_quote": "If the child has TWO or more of the following: restless/irritable, sunken eyes, drinks eagerly/thirsty, skin pinch goes back slowly (but NOT lethargic/unconscious): CLASSIFY as SOME DEHYDRATION. Give ORS solution (Plan B: 75ml/kg over 4 hours). Give zinc supplement for 10 days. If unable to give ORS at the health post for 4 hours, refer to health facility.",
+          "page": 33,
+          "line": "33-1",
+          "section_id": "ref_b_002"
+        },
+        {
+          "type": "classification_rule",
+          "condition": "has_diarrhoea = true AND diarrhoea_duration_days >= 14",
+          "classification": "Persistent Diarrhoea — Refer to Health Facility",
+          "danger_sign": true,
+          "triage": "hospital",
+          "clinic_referral": true,
+          "reason": "persistent_diarrhoea_14_days_or_more",
+          "actions": [
+            "refer_urgently",
+            "give_ors_during_transport",
+            "give_zinc_supplement"
+          ],
+          "advice": [
+            "Persistent diarrhoea requires clinical evaluation",
+            "May indicate underlying condition (HIV, malabsorption)",
+            "Continue feeding during transport"
+          ],
+          "source_quote": "If the child has had diarrhoea for 14 days or more: CLASSIFY as PERSISTENT DIARRHOEA. REFER to health facility. Persistent diarrhoea may indicate serious underlying conditions. Give ORS. Give zinc. Refer for evaluation. Advise the mother to continue feeding.",
+          "page": 34,
+          "line": "34-1",
+          "section_id": "ref_b_003"
+        },
+        {
+          "type": "classification_rule",
+          "condition": "has_diarrhoea = true AND blood_in_stool = true",
+          "classification": "Dysentery (Blood in Stool) — Refer",
+          "danger_sign": true,
+          "triage": "hospital",
+          "clinic_referral": true,
+          "reason": "dysentery_blood_in_stool",
+          "actions": [
+            "refer_urgently",
+            "give_first_dose_oral_antibiotic",
+            "give_ors",
+            "give_zinc_supplement"
+          ],
+          "advice": [
+            "Blood in stool indicates possible bacterial dysentery",
+            "Child needs antibiotic treatment at health facility",
+            "Continue ORS and zinc during transport"
+          ],
+          "source_quote": "If there is blood in the stool: CLASSIFY as DYSENTERY. REFER URGENTLY to hospital. Give first dose of an appropriate oral antibiotic before referral. Give ORS to prevent or treat dehydration. Give zinc supplement for 10 days.",
+          "page": 35,
+          "line": "35-1",
+          "section_id": "ref_b_004"
+        },
+        {
+          "type": "classification_rule",
+          "condition": "has_diarrhoea = true AND diarrhoea_duration_days < 14 AND blood_in_stool = false AND NOT severe_dehydration AND NOT some_dehydration",
+          "classification": "Diarrhoea with No Dehydration — Home Care",
+          "danger_sign": false,
+          "triage": "home",
+          "clinic_referral": false,
+          "reason": "no_dehydration",
+          "actions": [
+            "give_ors_plan_a",
+            "give_zinc_for_10_days",
+            "advise_on_home_care",
+            "advise_when_to_return"
+          ],
+          "advice": [
+            "Give ORS after each loose stool",
+            "Give zinc for 10 days even after diarrhoea stops",
+            "Continue breastfeeding and give extra fluids",
+            "Continue feeding — give smaller, more frequent meals",
+            "Return if blood in stool, drinking poorly, fever, or not improving in 3 days"
+          ],
+          "source_quote": "If no signs of dehydration and diarrhoea less than 14 days and no blood: CLASSIFY as DIARRHOEA WITH NO DEHYDRATION. Give ORS (Plan A: give extra fluid). Give zinc supplement for 10 days. Advise when to return: if blood appears in stool, drinking poorly, fever develops, or not better in 3 days.",
+          "page": 36,
+          "line": "36-1",
+          "section_id": "ref_b_005"
+        },
+        {
+          "type": "treatment_action",
+          "action": "ORS preparation and administration",
+          "input_name": "ors_preparation",
+          "source_quote": "HOW TO PREPARE ORS SOLUTION: Wash hands with soap and water. Pour the entire packet of ORS into a clean container. Measure the correct amount of clean water (usually 1 litre — check the packet). Mix until the powder is completely dissolved. Taste the solution — it should taste like tears. GIVE: after each loose stool, give the child ORS to drink. For children under 2 years: 50-100 ml after each stool. For children 2-5 years: 100-200 ml after each stool.",
+          "page": 37,
+          "line": "37-1"
+        },
+        {
+          "type": "treatment_action",
+          "action": "Zinc supplementation for diarrhoea",
+          "input_name": "zinc_dosing",
+          "dosing_table": {
+            "age_2_to_5_months": "10mg (half tablet) once daily for 10 days",
+            "age_6_to_59_months": "20mg (one tablet) once daily for 10 days"
+          },
+          "source_quote": "GIVE zinc supplement for 10 days. Age 2–5 months: give half a 20mg zinc tablet (10mg) once daily. Age 6 months to 5 years: give one 20mg zinc tablet once daily. Dissolve the tablet in a small amount of breastmilk, ORS, or clean water in a small cup. Give the full 10-day course even if the diarrhoea stops earlier. Zinc reduces the duration and severity of diarrhoea and can prevent future episodes for 2–3 months.",
+          "page": 38,
+          "line": "38-1"
+        }
+      ]
+    },
+    {
+      "id": "section_module_c",
+      "title": "Module C: Assess and Classify Fever / Malaria",
+      "page_range": [42, 56],
+      "module": "fever_malaria",
+      "instructions": "FEEL for fever or measure body temperature. A child has fever if the body temperature is 37.5 degrees Celsius or above, or if the child feels hot to touch. In a malaria area, all children with fever should be tested with a Rapid Diagnostic Test (RDT) if available. Assess for duration of fever, stiff neck, and other danger signs.",
+      "content": [
+        {
+          "type": "assessment_question",
+          "question": "Is the child hot with fever (body temperature 37.5 degrees Celsius or above)?",
+          "input_name": "hot_with_fever",
+          "input_type": "boolean",
+          "source_quote": "FEEL: Is the child hot with fever? If a thermometer is available, measure the temperature. Fever is a body temperature of 37.5°C or above. If no thermometer is available, feel the child's abdomen or forehead. If the child feels hot, record as fever present.",
+          "page": 42,
+          "line": "42-1"
+        },
+        {
+          "type": "assessment_question",
+          "question": "What is the measured body temperature in degrees Celsius?",
+          "input_name": "body_temperature_celsius",
+          "input_type": "number",
+          "unit": "degrees_celsius",
+          "source_quote": "MEASURE: If a thermometer is available, record the body temperature: _____ °C. Axillary (armpit) temperature of 37.5°C or above indicates fever. Rectal temperature of 38.0°C or above indicates fever.",
+          "page": 42,
+          "line": "42-2"
+        },
+        {
+          "type": "assessment_question",
+          "question": "For how many days has the child had fever?",
+          "input_name": "fever_duration_days",
+          "input_type": "number",
+          "unit": "days",
+          "source_quote": "ASK: For how many days has the child had fever? _____ days. Fever lasting 7 days or more requires urgent referral. Fever lasting less than 7 days in a malaria area should be tested with RDT.",
+          "page": 43,
+          "line": "43-1"
+        },
+        {
+          "type": "assessment_question",
+          "question": "Is this a malaria risk area?",
+          "input_name": "malaria_area",
+          "input_type": "boolean",
+          "source_quote": "DETERMINE: Is this area classified as a malaria risk area? Check the national malaria control programme guidance for your district or area. If unsure, treat as a malaria area and test with RDT if available.",
+          "page": 44,
+          "line": "44-1"
+        },
+        {
+          "type": "assessment_question",
+          "question": "Is a malaria Rapid Diagnostic Test (RDT) available?",
+          "input_name": "rdt_available",
+          "input_type": "boolean",
+          "source_quote": "CHECK: Is a malaria rapid diagnostic test (RDT) available? The RDT detects malaria parasites in the blood. If an RDT is available, perform the test following the manufacturer's instructions. Record whether the RDT is available.",
+          "page": 44,
+          "line": "44-2"
+        },
+        {
+          "type": "assessment_question",
+          "question": "What is the RDT result?",
+          "input_name": "rdt_result",
+          "input_type": "string",
+          "enum_values": ["positive", "negative", "not_done"],
+          "source_quote": "DO the malaria rapid diagnostic test. Follow the instructions on the RDT kit. Wait the specified time (usually 15-20 minutes). Record the result: POSITIVE (test line AND control line visible), NEGATIVE (only control line visible), or NOT DONE (if RDT not available or test is invalid). An invalid test (no control line) must be repeated with a new RDT.",
+          "page": 45,
+          "line": "45-1"
+        },
+        {
+          "type": "assessment_question",
+          "question": "Has the child had measles within the last 3 months?",
+          "input_name": "recent_measles",
+          "input_type": "boolean",
+          "source_quote": "ASK: Has the child had measles within the last 3 months? A child with fever who has had measles recently may have complications of measles. Ask the mother if the child had a rash all over the body with fever in the past 3 months.",
+          "page": 46,
+          "line": "46-1"
+        },
+        {
+          "type": "classification_rule",
+          "condition": "hot_with_fever = true AND fever_duration_days >= 7",
+          "classification": "Fever for 7 Days or More — Refer Urgently",
+          "danger_sign": true,
+          "triage": "hospital",
+          "clinic_referral": true,
+          "reason": "fever_7_days_or_more",
+          "actions": [
+            "refer_urgently",
+            "give_first_dose_antimalarial_if_rdt_positive",
+            "give_paracetamol",
+            "advise_on_tepid_sponging"
+          ],
+          "advice": [
+            "Fever lasting 7 days or more may indicate serious illness",
+            "May indicate typhoid, abscess, or other infection"
+          ],
+          "source_quote": "If the child has had fever for 7 days or more: REFER URGENTLY to hospital. Prolonged fever may indicate a serious underlying condition such as typhoid, urinary tract infection, deep abscess, or HIV-related illness. Give first dose of antimalarial if RDT is positive. Give paracetamol for fever.",
+          "page": 47,
+          "line": "47-1",
+          "section_id": "ref_c_001"
+        },
+        {
+          "type": "classification_rule",
+          "condition": "hot_with_fever = true AND malaria_area = true AND rdt_result = 'positive' AND fever_duration_days < 7",
+          "classification": "Malaria (RDT Positive) — Treat with ACT",
+          "danger_sign": false,
+          "triage": "home",
+          "clinic_referral": false,
+          "reason": "confirmed_malaria_rdt_positive",
+          "actions": [
+            "give_act_artemisinin_combination_therapy",
+            "give_paracetamol_for_fever",
+            "advise_on_tepid_sponging",
+            "advise_when_to_return",
+            "follow_up_in_3_days"
+          ],
+          "advice": [
+            "Give full course of ACT for 3 days",
+            "Give paracetamol for fever above 38.5°C",
+            "Sponge child with lukewarm water if fever is high",
+            "Return immediately if not able to drink, vomiting, convulsions, or becomes sicker",
+            "Follow up in 3 days"
+          ],
+          "source_quote": "If RDT is POSITIVE: CLASSIFY as MALARIA. Give first-line antimalarial: Artemisinin-based Combination Therapy (ACT) for 3 days. Give paracetamol for high fever (38.5°C or above). Advise the mother on tepid sponging: use a cloth soaked in lukewarm (not cold) water. Advise when to return immediately. Follow up in 3 days.",
+          "page": 48,
+          "line": "48-1",
+          "section_id": "ref_c_002"
+        },
+        {
+          "type": "classification_rule",
+          "condition": "hot_with_fever = true AND malaria_area = true AND rdt_result = 'negative' AND fever_duration_days < 7",
+          "classification": "Fever, RDT Negative — Not Malaria",
+          "danger_sign": false,
+          "triage": "home",
+          "clinic_referral": false,
+          "reason": "fever_rdt_negative",
+          "actions": [
+            "give_paracetamol",
+            "advise_on_tepid_sponging",
+            "advise_when_to_return",
+            "follow_up_in_3_days"
+          ],
+          "advice": [
+            "Do NOT give antimalarial — RDT is negative",
+            "Give paracetamol for high fever",
+            "Sponge with lukewarm water",
+            "Return immediately if danger signs develop",
+            "Follow up in 3 days if fever persists"
+          ],
+          "source_quote": "If RDT is NEGATIVE: Do NOT give antimalarial. Give paracetamol for high fever. Advise the mother on when to return immediately. Follow up in 3 days if fever persists. If fever continues after 3 days with negative RDT, refer to health facility.",
+          "page": 49,
+          "line": "49-1",
+          "section_id": "ref_c_003"
+        },
+        {
+          "type": "classification_rule",
+          "condition": "hot_with_fever = true AND malaria_area = true AND rdt_available = false AND fever_duration_days < 7",
+          "classification": "Fever in Malaria Area, No RDT — Treat Presumptively",
+          "danger_sign": false,
+          "triage": "home",
+          "clinic_referral": false,
+          "reason": "fever_malaria_area_no_rdt",
+          "actions": [
+            "give_act_presumptive_treatment",
+            "give_paracetamol",
+            "advise_when_to_return",
+            "follow_up_in_3_days"
+          ],
+          "advice": [
+            "Give ACT presumptively since RDT is not available",
+            "Give paracetamol for fever",
+            "Return immediately if danger signs develop",
+            "Follow up in 3 days"
+          ],
+          "source_quote": "If RDT is NOT AVAILABLE and the child is in a malaria risk area with fever for less than 7 days: Give first-line antimalarial (ACT) presumptively. Give paracetamol for high fever. Advise the mother when to return. Follow up in 3 days.",
+          "page": 50,
+          "line": "50-1",
+          "section_id": "ref_c_004"
+        },
+        {
+          "type": "classification_rule",
+          "condition": "hot_with_fever = true AND malaria_area = false AND fever_duration_days < 7",
+          "classification": "Fever in Non-Malaria Area — Assess Other Causes",
+          "danger_sign": false,
+          "triage": "home",
+          "clinic_referral": false,
+          "reason": "fever_non_malaria_area",
+          "actions": [
+            "give_paracetamol",
+            "advise_on_tepid_sponging",
+            "assess_for_other_causes",
+            "advise_when_to_return",
+            "follow_up_in_3_days"
+          ],
+          "advice": [
+            "No antimalarial needed in non-malaria area",
+            "Give paracetamol for high fever",
+            "Look for other causes: ear infection, urinary tract infection, throat infection",
+            "Return if fever lasts more than 3 days or danger signs develop"
+          ],
+          "source_quote": "If the child has fever and is NOT in a malaria area: Do NOT give antimalarial. Give paracetamol for high fever. Look for other causes of fever such as ear infection or throat infection. Advise the mother on tepid sponging. Follow up in 3 days if fever persists.",
+          "page": 51,
+          "line": "51-1",
+          "section_id": "ref_c_005"
+        },
+        {
+          "type": "classification_rule",
+          "condition": "hot_with_fever = true AND recent_measles = true",
+          "classification": "Fever with Recent Measles — Refer for Complications",
+          "danger_sign": false,
+          "triage": "clinic",
+          "clinic_referral": true,
+          "reason": "fever_with_recent_measles",
+          "actions": [
+            "refer_to_health_facility",
+            "give_paracetamol",
+            "give_vitamin_a"
+          ],
+          "advice": [
+            "Measles complications can be serious",
+            "Child needs clinical evaluation",
+            "Give vitamin A if not already given"
+          ],
+          "source_quote": "If the child has fever and has had measles within the last 3 months: Refer to health facility. Measles can cause complications including pneumonia, diarrhoea, ear infection, and eye infection. Give vitamin A if not already given during measles illness. Give paracetamol for fever.",
+          "page": 52,
+          "line": "52-1",
+          "section_id": "ref_c_006"
+        },
+        {
+          "type": "treatment_action",
+          "action": "ACT dosing for malaria",
+          "input_name": "act_dosing_malaria",
+          "dosing_table": {
+            "weight_5_to_14kg": "1 tablet ACT twice daily for 3 days",
+            "weight_15_to_24kg": "2 tablets ACT twice daily for 3 days",
+            "weight_25kg_and_above": "3 tablets ACT twice daily for 3 days"
+          },
+          "source_quote": "GIVE Artemisinin-based Combination Therapy (ACT) for 3 days. Use the weight or age of the child to determine the dose. 5–14 kg (or 2 months–3 years): 1 tablet twice daily for 3 days. 15–24 kg (or 3–8 years): 2 tablets twice daily for 3 days. Give the first dose under observation. Advise the mother to give the second dose 8-12 hours later, then continue twice daily. Complete all 3 days even if the child feels better.",
+          "page": 53,
+          "line": "53-1"
+        },
+        {
+          "type": "treatment_action",
+          "action": "Paracetamol dosing for fever",
+          "input_name": "paracetamol_dosing",
+          "dosing_table": {
+            "weight_4_to_8kg_age_2_to_11_months": "60mg (quarter of 250mg tablet) every 6 hours as needed",
+            "weight_8_to_14kg_age_12_to_35_months": "125mg (half of 250mg tablet) every 6 hours as needed",
+            "weight_14_to_19kg_age_36_to_59_months": "250mg (one 250mg tablet) every 6 hours as needed"
+          },
+          "source_quote": "GIVE paracetamol for high fever (38.5°C or above). Give every 6 hours as needed, maximum 4 doses in 24 hours. 4–8 kg: 60mg. 8–14 kg: 125mg. 14–19 kg: 250mg. Do NOT give more than 4 doses in 24 hours. If fever is very high (39.5°C or above), also use tepid sponging.",
+          "page": 54,
+          "line": "54-1"
+        }
+      ]
+    },
+    {
+      "id": "section_module_d",
+      "title": "Module D: Check for Malnutrition",
+      "page_range": [58, 68],
+      "module": "malnutrition",
+      "instructions": "ALL children aged 6 months to 5 years should be assessed for malnutrition at every visit. Use the MUAC (Mid-Upper Arm Circumference) colour-coded strap and check for bilateral pitting oedema (swelling of both feet). Children under 6 months are assessed differently — refer to the infant assessment protocol.",
+      "content": [
+        {
+          "type": "assessment_question",
+          "question": "What is the child's age in months?",
+          "input_name": "age_months",
+          "input_type": "number",
+          "unit": "months",
+          "source_quote": "DETERMINE the child's age in months. MUAC measurement is used for children aged 6 months to 5 years. For children under 6 months, weight-for-length is the preferred assessment. Record age in completed months.",
+          "page": 58,
+          "line": "58-1"
+        },
+        {
+          "type": "assessment_question",
+          "question": "What is the MUAC strap colour result?",
+          "input_name": "muac_result",
+          "input_type": "string",
+          "enum_values": ["green", "yellow", "red"],
+          "source_quote": "MEASURE the mid-upper arm circumference (MUAC). Use the colour-coded MUAC strap on the LEFT arm, at the midpoint between the shoulder and the elbow. Wrap the strap firmly but not tightly. Read the colour where the tape meets the window: RED (less than 115mm) indicates severe acute malnutrition, YELLOW (115mm to less than 125mm) indicates moderate acute malnutrition, GREEN (125mm or more) indicates adequate nutritional status. If the reading falls on the boundary between two colours, use the more severe classification.",
+          "page": 59,
+          "line": "59-1"
+        },
+        {
+          "type": "assessment_question",
+          "question": "What is the exact MUAC measurement in millimetres?",
+          "input_name": "muac_mm",
+          "input_type": "number",
+          "unit": "millimetres",
+          "source_quote": "RECORD the exact MUAC measurement in millimetres if a numbered tape is used. This allows for more precise tracking over time. Less than 115mm = RED (severe acute malnutrition). 115mm to 124mm = YELLOW (moderate acute malnutrition). 125mm or more = GREEN (adequate).",
+          "page": 59,
+          "line": "59-2"
+        },
+        {
+          "type": "assessment_question",
+          "question": "Does the child have swelling (oedema) of both feet?",
+          "input_name": "swelling_of_both_feet",
+          "input_type": "boolean",
+          "source_quote": "LOOK and FEEL: Does the child have swelling of both feet (bilateral pitting oedema)? Press firmly with your thumb on the top of each foot for 3 seconds. If a pit (dent) remains after you lift your thumb on BOTH feet, the child has bilateral pitting oedema. This is a sign of severe acute malnutrition (kwashiorkor) and requires URGENT referral regardless of MUAC result. Check BOTH feet — oedema of only one foot may be due to injury.",
+          "page": 60,
+          "line": "60-1"
+        },
+        {
+          "type": "assessment_question",
+          "question": "Is the child visibly wasted (very thin)?",
+          "input_name": "visible_wasting",
+          "input_type": "boolean",
+          "source_quote": "LOOK: Is the child visibly wasted? Remove the child's clothing to look at the body. A visibly wasted child is very thin, with visible ribs, and loss of fat on the buttocks. The skin may appear loose. Compare with a well-nourished child of the same age. Visible wasting is a sign of severe malnutrition.",
+          "page": 60,
+          "line": "60-2"
+        },
+        {
+          "type": "assessment_question",
+          "question": "Is the child gaining weight appropriately (from growth chart if available)?",
+          "input_name": "weight_gain_appropriate",
+          "input_type": "boolean",
+          "source_quote": "CHECK: If the child has a growth monitoring card, check whether the child is gaining weight. Plot the weight on the growth curve. If the child's weight is going down or staying flat for 2 or more consecutive months, the child is not gaining weight appropriately.",
+          "page": 61,
+          "line": "61-1"
+        },
+        {
+          "type": "assessment_question",
+          "question": "Is the child currently enrolled in a supplementary feeding programme?",
+          "input_name": "enrolled_feeding_programme",
+          "input_type": "boolean",
+          "source_quote": "ASK: Is the child currently receiving supplementary food from a feeding programme? If yes, check whether the child is attending regularly and receiving the correct ration. If not enrolled but MUAC is yellow, refer for enrolment.",
+          "page": 61,
+          "line": "61-2"
+        },
+        {
+          "type": "classification_rule",
+          "condition": "muac_result = 'red' OR swelling_of_both_feet = true OR visible_wasting = true",
+          "classification": "Severe Acute Malnutrition (SAM) — Refer Urgently",
+          "danger_sign": true,
+          "triage": "hospital",
+          "clinic_referral": true,
+          "reason": "severe_acute_malnutrition",
+          "actions": [
+            "refer_urgently",
+            "give_sugar_water_to_prevent_hypoglycaemia",
+            "keep_child_warm",
+            "begin_feeding_if_conscious",
+            "give_vitamin_a_if_not_received",
+            "give_amoxicillin_first_dose"
+          ],
+          "advice": [
+            "This child has severe malnutrition and needs hospital care",
+            "Give sugar water (4 teaspoons in 200ml water) before transport",
+            "Keep child wrapped warmly — malnourished children lose heat fast",
+            "Continue breastfeeding during transport",
+            "Do not delay referral"
+          ],
+          "source_quote": "If RED on MUAC strap (less than 115mm) OR bilateral pitting oedema OR visible severe wasting: CLASSIFY as SEVERE ACUTE MALNUTRITION. REFER URGENTLY to hospital or therapeutic feeding centre. Give sugar water to prevent hypoglycaemia. Keep the child warm. Give first dose of amoxicillin. Give vitamin A (if not received in last 6 months). Start feeding if the child is conscious and able to eat.",
+          "page": 62,
+          "line": "62-1",
+          "section_id": "ref_d_001"
+        },
+        {
+          "type": "classification_rule",
+          "condition": "muac_result = 'yellow' AND swelling_of_both_feet = false AND visible_wasting = false",
+          "classification": "Moderate Acute Malnutrition (MAM) — Refer to Feeding Programme",
+          "danger_sign": false,
+          "triage": "clinic",
+          "clinic_referral": true,
+          "reason": "moderate_acute_malnutrition",
+          "actions": [
+            "refer_to_supplementary_feeding_programme",
+            "counsel_on_feeding",
+            "give_vitamin_a_if_not_received",
+            "give_deworming_if_due",
+            "follow_up_in_30_days"
+          ],
+          "advice": [
+            "Enrol in supplementary feeding programme",
+            "Feed the child at least 5 times per day",
+            "Give a variety of foods: grains, legumes, vegetables, fruits, animal foods",
+            "Add oil or fat to food to increase energy",
+            "Continue breastfeeding if under 24 months",
+            "Follow up in 30 days to re-measure MUAC"
+          ],
+          "source_quote": "If YELLOW on MUAC strap (115mm to less than 125mm) and no oedema: CLASSIFY as MODERATE ACUTE MALNUTRITION. Refer to supplementary feeding programme. Counsel the mother on appropriate feeding for the child's age. Give vitamin A if not received in the last 6 months. Give mebendazole if the child is over 12 months and has not been dewormed in the last 6 months. Follow up in 30 days.",
+          "page": 63,
+          "line": "63-1",
+          "section_id": "ref_d_002"
+        },
+        {
+          "type": "classification_rule",
+          "condition": "muac_result = 'green' AND swelling_of_both_feet = false AND weight_gain_appropriate = false",
+          "classification": "Inadequate Weight Gain — Counsel and Follow Up",
+          "danger_sign": false,
+          "triage": "home",
+          "clinic_referral": false,
+          "reason": "inadequate_weight_gain",
+          "actions": [
+            "counsel_on_feeding",
+            "assess_feeding_practices",
+            "follow_up_in_30_days"
+          ],
+          "advice": [
+            "MUAC is green but child is not growing well",
+            "Assess feeding practices in detail",
+            "Counsel on age-appropriate feeding",
+            "Follow up in 30 days to recheck weight"
+          ],
+          "source_quote": "If GREEN on MUAC and no oedema but weight faltering (flat or declining growth curve): Counsel the mother on appropriate feeding. Assess feeding practices in detail. Ask about meal frequency, food diversity, and feeding during illness. Follow up in 30 days.",
+          "page": 64,
+          "line": "64-1",
+          "section_id": "ref_d_003"
+        },
+        {
+          "type": "classification_rule",
+          "condition": "muac_result = 'green' AND swelling_of_both_feet = false AND weight_gain_appropriate = true",
+          "classification": "Adequate Nutritional Status — Counsel and Encourage",
+          "danger_sign": false,
+          "triage": "home",
+          "clinic_referral": false,
+          "reason": "adequate_nutrition",
+          "actions": [
+            "praise_mother_for_good_feeding",
+            "counsel_on_continued_feeding",
+            "give_vitamin_a_if_due",
+            "give_deworming_if_due"
+          ],
+          "advice": [
+            "Child is growing well — continue current feeding practices",
+            "Continue breastfeeding until 2 years or beyond",
+            "Give a variety of foods from all food groups",
+            "Feed 3 meals and 2 snacks per day",
+            "Return for routine growth monitoring"
+          ],
+          "source_quote": "If GREEN on MUAC strap (125mm or more) and no oedema and growing well: The child's nutritional status is adequate. Praise the mother for good feeding practices. Counsel on continued age-appropriate feeding. Give vitamin A if due (every 6 months). Give mebendazole if due (every 6 months for children over 12 months).",
+          "page": 65,
+          "line": "65-1",
+          "section_id": "ref_d_004"
+        },
+        {
+          "type": "treatment_action",
+          "action": "Vitamin A supplementation schedule",
+          "input_name": "vitamin_a_dosing",
+          "dosing_table": {
+            "age_6_to_11_months": "100,000 IU (blue capsule) — one dose",
+            "age_12_to_59_months": "200,000 IU (red capsule) — one dose"
+          },
+          "source_quote": "GIVE vitamin A every 6 months for children aged 6 months to 5 years. Age 6–11 months: give 100,000 IU (1 blue capsule). Cut the tip and squeeze the contents into the child's mouth. Age 12–59 months: give 200,000 IU (1 red capsule). Cut the tip and squeeze the contents into the child's mouth. Record the date of vitamin A supplementation on the child's health card.",
+          "page": 66,
+          "line": "66-1"
+        },
+        {
+          "type": "treatment_action",
+          "action": "Feeding counselling key messages by age",
+          "input_name": "feeding_counselling",
+          "source_quote": "COUNSEL on feeding. Key messages by age: 0-6 months: Exclusive breastfeeding — no other food or liquid, not even water. Breastfeed on demand, day and night. 6-8 months: Continue breastfeeding. Start complementary foods: thick porridge, mashed foods. 2-3 meals per day plus breastfeeds. 9-11 months: Continue breastfeeding. Finely chopped foods, finger foods. 3-4 meals per day plus snacks. 12-23 months: Continue breastfeeding. Family foods, cut up. 3-4 meals per day plus 1-2 snacks. 24-59 months: Family foods. 3 meals per day plus 2 snacks. Encourage variety.",
+          "page": 67,
+          "line": "67-1"
+        }
+      ]
+    },
+    {
+      "id": "section_module_e",
+      "title": "Module E: Check for Ear Problems",
+      "page_range": [70, 78],
+      "module": "ear_problems",
+      "instructions": "Ask the mother about ear problems. Ear pain and ear discharge are common in young children and can indicate infection. Ear discharge lasting 14 days or more may indicate chronic ear infection requiring referral. Untreated ear infections can lead to hearing loss.",
+      "content": [
+        {
+          "type": "assessment_question",
+          "question": "Does the child have an ear problem?",
+          "input_name": "ear_problem_present",
+          "input_type": "boolean",
+          "source_quote": "ASK: Does the child have an ear problem? Ask the mother if the child has ear pain, ear discharge, or if the child pulls at the ear or cries when the ear is touched. Infants may present with irritability, pulling at the ear, or difficulty feeding rather than reporting pain directly.",
+          "page": 70,
+          "line": "70-1"
+        },
+        {
+          "type": "assessment_question",
+          "question": "Does the child have ear pain?",
+          "input_name": "ear_pain",
+          "input_type": "boolean",
+          "source_quote": "ASK: Does the child have ear pain? The child may cry or say the ear hurts. Young infants may show ear pain by pulling at the ear, being irritable, or crying when the ear is touched. Ear pain may be worse at night or when lying down.",
+          "page": 70,
+          "line": "70-2"
+        },
+        {
+          "type": "assessment_question",
+          "question": "Is there discharge coming from the ear?",
+          "input_name": "ear_discharge",
+          "input_type": "boolean",
+          "source_quote": "LOOK: Is there discharge coming from the ear? Look at both ears. Ear discharge may be pus (thick yellow or green fluid), clear fluid, or blood-tinged fluid. Any visible discharge from the ear canal should be recorded. Clean the ear gently with a dry wick before examining.",
+          "page": 71,
+          "line": "71-1"
+        },
+        {
+          "type": "assessment_question",
+          "question": "For how many days has the ear been discharging?",
+          "input_name": "ear_discharge_duration_days",
+          "input_type": "number",
+          "unit": "days",
+          "source_quote": "ASK: For how many days has the ear been discharging? _____ days. Duration of discharge is important for classification. Discharge for less than 14 days is classified as acute ear infection. Discharge for 14 days or more is classified as chronic ear infection and requires referral.",
+          "page": 71,
+          "line": "71-2"
+        },
+        {
+          "type": "assessment_question",
+          "question": "Is there tender swelling behind the ear (mastoid tenderness)?",
+          "input_name": "tender_swelling_behind_ear",
+          "input_type": "boolean",
+          "source_quote": "LOOK and FEEL: Is there tender swelling behind the ear? Feel behind both ears. Compare the two sides. Tender swelling behind the ear may indicate mastoiditis — a serious complication of ear infection that requires urgent referral to hospital. The swelling may push the ear forward.",
+          "page": 72,
+          "line": "72-1"
+        },
+        {
+          "type": "assessment_question",
+          "question": "Does the child have difficulty hearing (as reported by mother)?",
+          "input_name": "difficulty_hearing",
+          "input_type": "boolean",
+          "source_quote": "ASK: Has the mother noticed that the child has difficulty hearing? Does the child respond to sounds or voices? Hearing loss may indicate chronic or recurrent ear infection. Ask the mother if the child turns to sounds, responds when called, or if speech development seems delayed for the child's age.",
+          "page": 72,
+          "line": "72-2"
+        },
+        {
+          "type": "classification_rule",
+          "condition": "tender_swelling_behind_ear = true",
+          "classification": "Mastoiditis — Refer Urgently to Hospital",
+          "danger_sign": true,
+          "triage": "hospital",
+          "clinic_referral": true,
+          "reason": "mastoiditis",
+          "actions": [
+            "refer_urgently",
+            "give_first_dose_oral_amoxicillin",
+            "give_first_dose_paracetamol_for_pain",
+            "dry_wick_the_ear"
+          ],
+          "advice": [
+            "Tender swelling behind the ear is a serious complication",
+            "Child needs urgent medical treatment",
+            "Give paracetamol for pain during transport"
+          ],
+          "source_quote": "If there is tender swelling behind the ear: CLASSIFY as MASTOIDITIS. REFER URGENTLY to hospital. Mastoiditis is a serious bacterial infection of the bone behind the ear. Give first dose of oral amoxicillin. Give paracetamol for pain. Dry the ear by wicking.",
+          "page": 73,
+          "line": "73-1",
+          "section_id": "ref_e_001"
+        },
+        {
+          "type": "classification_rule",
+          "condition": "ear_discharge = true AND ear_discharge_duration_days >= 14",
+          "classification": "Chronic Ear Infection — Refer to Health Facility",
+          "danger_sign": false,
+          "triage": "clinic",
+          "clinic_referral": true,
+          "reason": "chronic_ear_infection",
+          "actions": [
+            "dry_wick_the_ear",
+            "refer_to_health_facility",
+            "do_not_put_anything_in_ear"
+          ],
+          "advice": [
+            "Ear discharge for 14 days or more is chronic ear infection",
+            "Keep the ear dry — wick 3 times daily",
+            "Do NOT put oil, drops, or any substance in the ear",
+            "Refer for clinical evaluation — child may need ear drops or specialist referral",
+            "Untreated chronic ear infection can cause permanent hearing loss"
+          ],
+          "source_quote": "If ear discharge for 14 days or more: CLASSIFY as CHRONIC EAR INFECTION. Dry the ear by wicking 3 times daily. Do NOT instil anything into the ear at community level. Refer to health facility for treatment. Explain to the mother that chronic discharge can damage hearing if not treated.",
+          "page": 74,
+          "line": "74-1",
+          "section_id": "ref_e_002"
+        },
+        {
+          "type": "classification_rule",
+          "condition": "ear_discharge = true AND ear_discharge_duration_days < 14",
+          "classification": "Acute Ear Infection — Treat with Antibiotic",
+          "danger_sign": false,
+          "triage": "home",
+          "clinic_referral": false,
+          "reason": "acute_ear_infection",
+          "actions": [
+            "give_oral_amoxicillin_for_5_days",
+            "give_paracetamol_for_pain",
+            "dry_wick_the_ear",
+            "follow_up_in_5_days"
+          ],
+          "advice": [
+            "Give amoxicillin for 5 days — complete the full course",
+            "Give paracetamol for pain",
+            "Dry the ear by wicking 3 times daily",
+            "Do NOT put oil or drops in the ear",
+            "Follow up in 5 days",
+            "Return immediately if swelling behind ear, fever, or ear becomes worse"
+          ],
+          "source_quote": "If ear discharge for less than 14 days: CLASSIFY as ACUTE EAR INFECTION. Give oral amoxicillin for 5 days. Give paracetamol for ear pain. Dry the ear by wicking: roll a clean absorbent cloth into a wick. Place the wick in the ear until the wick is wet. Replace with a clean wick. Repeat until the wick stays dry. Do this 3 times daily. Follow up in 5 days.",
+          "page": 75,
+          "line": "75-1",
+          "section_id": "ref_e_003"
+        },
+        {
+          "type": "classification_rule",
+          "condition": "ear_pain = true AND ear_discharge = false",
+          "classification": "Ear Pain without Discharge — Treat and Monitor",
+          "danger_sign": false,
+          "triage": "home",
+          "clinic_referral": false,
+          "reason": "ear_pain_no_discharge",
+          "actions": [
+            "give_paracetamol_for_pain",
+            "advise_when_to_return",
+            "follow_up_in_3_days"
+          ],
+          "advice": [
+            "Give paracetamol for pain",
+            "Do NOT put anything in the ear",
+            "Return in 3 days if pain continues",
+            "Return immediately if discharge starts or swelling behind ear"
+          ],
+          "source_quote": "If ear pain but no discharge and no swelling behind the ear: Give paracetamol for pain. Do NOT instil anything in the ear. Advise the mother to return in 3 days if pain persists or sooner if discharge begins or the child becomes worse. If pain persists after 3 days, refer to health facility.",
+          "page": 76,
+          "line": "76-1",
+          "section_id": "ref_e_004"
+        },
+        {
+          "type": "classification_rule",
+          "condition": "ear_problem_present = false",
+          "classification": "No Ear Problem",
+          "danger_sign": false,
+          "triage": "home",
+          "clinic_referral": false,
+          "reason": "no_ear_problem",
+          "actions": [],
+          "advice": [
+            "No ear problem identified",
+            "Advise mother to return if child develops ear pain or discharge"
+          ],
+          "source_quote": "If no ear problem: No treatment needed for ear. Continue with assessment of other conditions. Advise the mother to bring the child back if ear problems develop.",
+          "page": 76,
+          "line": "76-2",
+          "section_id": "ref_e_005"
+        },
+        {
+          "type": "treatment_action",
+          "action": "Ear wicking technique",
+          "input_name": "ear_wicking_procedure",
+          "source_quote": "HOW TO DRY AN EAR BY WICKING: 1. Roll a piece of clean, absorbent cloth or soft tissue paper into a wick (like a thin cone). 2. Place the wick gently into the child's ear canal. Do not force it deep. 3. Leave the wick in the ear until it becomes wet from the discharge. 4. Remove the wet wick and replace with a clean, dry wick. 5. Repeat until the wick comes out dry. 6. Do this procedure at least 3 times daily until there is no more discharge. IMPORTANT: Do NOT use cotton buds (Q-tips), sticks, or sharp objects. Do NOT put oil, herbal preparations, or traditional medicines in the ear.",
+          "page": 77,
+          "line": "77-1"
+        },
+        {
+          "type": "treatment_action",
+          "action": "When to refer for hearing assessment",
+          "input_name": "hearing_referral_criteria",
+          "source_quote": "REFER for hearing assessment if: the child has had recurrent ear infections (3 or more episodes in 6 months), the mother reports difficulty hearing or speech delay, chronic ear discharge has been present for more than 3 months despite treatment, or the child does not respond to sounds appropriate for age. Early identification and management of hearing problems is essential for speech and language development.",
+          "page": 78,
+          "line": "78-1"
+        }
+      ]
+    },
+    {
+      "id": "section_aggregation",
+      "title": "Final Aggregation: Combine All Module Results for Triage Decision",
+      "page_range": [80, 96],
+      "module": "aggregation",
+      "instructions": "After completing ALL module assessments, combine the results to determine the final triage decision. The most severe classification from any module determines the overall triage level. Danger signs always take priority. Complete the pre-referral treatment checklist for all conditions identified. Document all findings on the assessment form.",
+      "content": [
+        {
+          "type": "aggregation_rule",
+          "rule_id": "agg_001",
+          "priority": 1,
+          "condition": "ANY general danger sign present (convulsions, unable to drink, vomits everything, unusually sleepy/unconscious, stiff neck, bulging fontanelle)",
+          "classification": "URGENT HOSPITAL REFERRAL — General Danger Sign",
+          "triage": "hospital",
+          "source_quote": "PRIORITY 1: If ANY general danger sign is present: REFER URGENTLY to hospital regardless of any other findings. General danger signs indicate life-threatening illness. Complete ALL pre-referral treatments for every condition identified. Write a detailed referral note. Arrange transport immediately.",
+          "page": 80,
+          "line": "80-1"
+        },
+        {
+          "type": "aggregation_rule",
+          "rule_id": "agg_002",
+          "priority": 2,
+          "condition": "ANY module classification = hospital triage AND danger_sign = true (chest indrawing, stridor, severe dehydration, persistent diarrhoea, blood in stool, fever >= 7 days, red MUAC, oedema, mastoiditis)",
+          "classification": "URGENT HOSPITAL REFERRAL — Severe Classification",
+          "triage": "hospital",
+          "source_quote": "PRIORITY 2: If any module has a severe classification requiring hospital referral (even without a general danger sign): REFER URGENTLY to hospital. Give pre-referral treatment for ALL conditions. This includes: chest indrawing, stridor, severe dehydration, persistent diarrhoea, dysentery, fever 7 days or more, severe acute malnutrition, mastoiditis. Complete the referral checklist.",
+          "page": 81,
+          "line": "81-1"
+        },
+        {
+          "type": "aggregation_rule",
+          "rule_id": "agg_003",
+          "priority": 3,
+          "condition": "ANY module classification = clinic triage AND NO hospital-level classifications (some dehydration, yellow MUAC, chronic ear infection, cough 14+ days, fever with recent measles)",
+          "classification": "HEALTH FACILITY REFERRAL — Non-urgent",
+          "triage": "clinic",
+          "source_quote": "PRIORITY 3: If any module has a classification requiring health facility referral but no hospital-level severity: Refer to health facility within 24 hours. Start treatment at community level for conditions that can be managed. Give first doses of all necessary treatments. Write a referral note with all findings. Examples: moderate malnutrition, chronic ear infection, persistent cough, some dehydration.",
+          "page": 82,
+          "line": "82-1"
+        },
+        {
+          "type": "aggregation_rule",
+          "rule_id": "agg_004",
+          "priority": 4,
+          "condition": "ALL modules classify as home care (pneumonia treated with amoxicillin, malaria treated with ACT, diarrhoea with no dehydration, acute ear infection, cough/cold, adequate nutrition)",
+          "classification": "HOME CARE — Treat and Advise",
+          "triage": "home",
+          "source_quote": "PRIORITY 4: If all conditions can be managed at home: Give all treatments as indicated by each module. Counsel the mother on home care for each condition. Advise when to return immediately for each condition. Schedule follow-up visits as indicated. Ensure the mother understands all danger signs.",
+          "page": 83,
+          "line": "83-1"
+        },
+        {
+          "type": "aggregation_rule",
+          "rule_id": "agg_005",
+          "priority": 5,
+          "condition": "Multiple conditions present — combined treatment",
+          "classification": "Combined Treatment Protocol",
+          "triage": "varies",
+          "source_quote": "WHEN MULTIPLE CONDITIONS ARE PRESENT: Treat ALL conditions identified, not just the most severe. A child may have pneumonia AND malaria AND diarrhoea — all three must be treated. Give amoxicillin for pneumonia, ACT for malaria, ORS and zinc for diarrhoea. Check for drug interactions: amoxicillin and ACT can be given together safely. ORS and zinc can be given alongside other treatments. Paracetamol may be needed for both fever and ear pain — use same dose, do not double.",
+          "page": 84,
+          "line": "84-1"
+        },
+        {
+          "type": "aggregation_rule",
+          "rule_id": "agg_006",
+          "condition": "Pre-referral treatment checklist",
+          "classification": "Pre-referral Treatment Requirements",
+          "triage": "hospital",
+          "source_quote": "BEFORE REFERRING TO HOSPITAL — complete ALL of the following that apply: 1. Give first dose of oral amoxicillin (if pneumonia or ear infection). 2. Give first dose of ACT (if malaria RDT positive or presumptive). 3. Give ORS (if dehydration or diarrhoea). 4. Give paracetamol (if fever above 38.5°C). 5. Give sugar water (if malnutrition or unable to feed — to prevent hypoglycaemia). 6. Treat convulsions (rectal diazepam if trained). 7. Position child on side if unconscious. 8. Keep child warm. 9. Write referral note. 10. Help arrange transport.",
+          "page": 85,
+          "line": "85-1"
+        },
+        {
+          "type": "aggregation_rule",
+          "rule_id": "agg_007",
+          "condition": "Referral note content",
+          "classification": "Documentation Requirements for Referral",
+          "triage": "hospital",
+          "source_quote": "WRITE A REFERRAL NOTE including: Child's name, age, sex, and weight. Mother/caregiver's name. Date and time of assessment. All danger signs found. All classifications made (from every module). All treatments given before referral (with time given). Reason for referral. Name of CHW and community health post. Distance to referral facility.",
+          "page": 86,
+          "line": "86-1"
+        },
+        {
+          "type": "aggregation_rule",
+          "rule_id": "agg_008",
+          "condition": "Follow-up schedule when multiple conditions",
+          "classification": "Follow-up Scheduling for Multiple Conditions",
+          "triage": "home",
+          "source_quote": "FOLLOW-UP SCHEDULE: When a child has multiple conditions, use the EARLIEST follow-up date. Pneumonia: follow up in 3 days. Malaria: follow up in 3 days. Diarrhoea with no dehydration: follow up in 3 days if not improving. Acute ear infection: follow up in 5 days. Moderate malnutrition: follow up in 30 days. If a child has pneumonia AND ear infection: follow up in 3 days (the earlier date). At each follow-up, reassess ALL conditions, not just the one due for follow-up.",
+          "page": 87,
+          "line": "87-1"
+        },
+        {
+          "type": "aggregation_rule",
+          "rule_id": "agg_009",
+          "condition": "When to return immediately",
+          "classification": "Immediate Return Advice for All Conditions",
+          "triage": "home",
+          "source_quote": "ADVISE THE MOTHER TO RETURN IMMEDIATELY IF THE CHILD: Cannot drink or breastfeed. Becomes sicker. Has fever (if did not have fever before). Has fast breathing (if did not have fast breathing before). Has difficult breathing. Has blood in stool. Is drinking poorly. Has convulsions. Is unusually sleepy. These are danger signs that indicate the child may need urgent hospital care. The mother should know these signs and return day or night.",
+          "page": 88,
+          "line": "88-1"
+        },
+        {
+          "type": "aggregation_rule",
+          "rule_id": "agg_010",
+          "condition": "Healthy child — no conditions identified",
+          "classification": "Well Child — Preventive Care",
+          "triage": "home",
+          "source_quote": "IF NO ILLNESS IS IDENTIFIED: Praise the mother for bringing the child for assessment. Check immunization status — refer for any missed vaccines. Check vitamin A supplementation — give if due. Check deworming status — give mebendazole if due (children over 12 months). Measure MUAC and counsel on feeding. Advise on sleeping under an insecticide-treated net. Give oral rehydration salts packet for the mother to keep at home. Advise when to return for routine follow-up or if the child becomes sick.",
+          "page": 90,
+          "line": "90-1"
+        },
+        {
+          "type": "aggregation_rule",
+          "rule_id": "agg_011",
+          "condition": "Community health register documentation",
+          "classification": "Record Keeping Requirements",
+          "triage": "home",
+          "source_quote": "RECORD IN THE COMMUNITY HEALTH REGISTER: Date of visit. Child's name, age, sex, and village. All symptoms assessed. All classifications made. All treatments given (name, dose, quantity). Referral: yes/no, and where referred. Follow-up date scheduled. Outcome of previous follow-up visits. This information is used for monthly reporting and supervision. Complete the register for EVERY child seen, whether sick or well.",
+          "page": 92,
+          "line": "92-1"
+        },
+        {
+          "type": "aggregation_rule",
+          "rule_id": "agg_012",
+          "condition": "Medication stock and supply management",
+          "classification": "Essential Medicine Inventory",
+          "triage": "home",
+          "source_quote": "ESSENTIAL MEDICINES FOR iCCM: The CHW should maintain stock of: 1. Amoxicillin dispersible tablets (250mg) — for pneumonia and ear infection. 2. ACT (artemisinin-based combination therapy) — for malaria. 3. ORS packets — for diarrhoea and dehydration. 4. Zinc tablets (20mg) — for diarrhoea. 5. Paracetamol tablets (250mg or 500mg) — for fever and pain. 6. Malaria RDT kits — for malaria testing. 7. MUAC tapes — for malnutrition screening. 8. Vitamin A capsules (100,000 IU and 200,000 IU). 9. Mebendazole tablets (500mg) — for deworming. 10. Rectal diazepam — for convulsions (if trained). Report stock-outs to supervisor immediately.",
+          "page": 94,
+          "line": "94-1"
+        },
+        {
+          "type": "aggregation_rule",
+          "rule_id": "agg_013",
+          "condition": "Supervision and quality assurance",
+          "classification": "Supervision Protocol",
+          "triage": "home",
+          "source_quote": "SUPERVISION AND QUALITY: The CHW should receive supervisory visits at least once per month. During supervision: review the community health register, check medication stocks, observe case management, discuss difficult cases, review referral outcomes, and provide feedback. Any child death or near-miss should be reported within 24 hours. The supervisor should verify that the CHW is correctly classifying and treating children according to this guide.",
+          "page": 96,
+          "line": "96-1"
+        }
+      ]
+    }
+  ]
+}

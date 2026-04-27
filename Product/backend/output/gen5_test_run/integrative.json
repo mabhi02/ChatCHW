@@ -1,0 +1,171 @@
+{
+  "integrative_rules": [
+    {
+      "id": "int_danger_signs_override_all",
+      "modules_involved": [
+        "mod_danger_sign_check",
+        "mod_classify_cough",
+        "mod_classify_fever",
+        "mod_classify_diarrhoea",
+        "mod_classify_malnutrition",
+        "mod_referral"
+      ],
+      "combine_rule": "highest_referral_wins",
+      "referral_priority": "urgent",
+      "treatment_combination": "Give first dose of any applicable treatment before referral (AL for positive RDT, ORS for diarrhoea, amoxicillin for fast breathing). Then refer immediately.",
+      "follow_up_rule": "No community follow-up; facility assumes care.",
+      "source_quote": "CHWs identify signs of illness, treat diarrhoea, confirmed malaria, and pneumonia (cough with fast breathing). The findings determine whether to refer or treat at home."
+    },
+    {
+      "id": "int_convulsion_urgent_referral",
+      "modules_involved": [
+        "mod_danger_sign_check",
+        "mod_referral"
+      ],
+      "combine_rule": "highest_referral_wins",
+      "referral_priority": "urgent",
+      "treatment_combination": "No community treatment. Pre-referral first doses of any co-occurring treatable conditions only. Refer immediately.",
+      "follow_up_rule": "No community follow-up; facility assumes care.",
+      "source_quote": "A convulsion during the current illness is a danger sign. The child needs urgent referral."
+    },
+    {
+      "id": "int_chest_indrawing_severe_pneumonia_referral",
+      "modules_involved": [
+        "mod_classify_cough",
+        "mod_referral"
+      ],
+      "combine_rule": "highest_referral_wins",
+      "referral_priority": "urgent",
+      "treatment_combination": "Give first dose of amoxicillin before referral if supply_amoxicillin_250mg available. Refer urgently. Do not treat as simple pneumonia at community level.",
+      "follow_up_rule": "No community follow-up; facility assumes care.",
+      "source_quote": "This is a danger sign indicating severe pneumonia."
+    },
+    {
+      "id": "int_severe_malnutrition_red_muac_referral",
+      "modules_involved": [
+        "mod_classify_malnutrition",
+        "mod_referral"
+      ],
+      "combine_rule": "highest_referral_wins",
+      "referral_priority": "urgent",
+      "treatment_combination": "Give first doses of any co-occurring treatable conditions (ORS, AL, amoxicillin) before referral. Refer urgently for malnutrition management.",
+      "follow_up_rule": "No community follow-up; facility assumes care.",
+      "source_quote": "- RED: severe malnutrition - DANGER SIGN - refer urgently"
+    },
+    {
+      "id": "int_severe_malnutrition_oedema_referral",
+      "modules_involved": [
+        "mod_classify_malnutrition",
+        "mod_referral"
+      ],
+      "combine_rule": "highest_referral_wins",
+      "referral_priority": "urgent",
+      "treatment_combination": "Give first doses of any co-occurring treatable conditions (ORS, AL, amoxicillin) before referral. Refer urgently for malnutrition management.",
+      "follow_up_rule": "No community follow-up; facility assumes care.",
+      "source_quote": "If dents remain on BOTH feet, the child has severe malnutrition. Refer urgently."
+    },
+    {
+      "id": "int_concurrent_treatable_conditions",
+      "modules_involved": [
+        "mod_tx_diarrhoea",
+        "mod_tx_pneumonia",
+        "mod_tx_malaria",
+        "mod_home_care_advice"
+      ],
+      "combine_rule": "additive",
+      "referral_priority": "none",
+      "treatment_combination": "When p_diarrhoea_treatable, p_pneumonia_treatable, and/or p_malaria_treatable are simultaneously true and p_any_referral_danger_sign is false, administer all applicable treatments concurrently: ORS + zinc for diarrhoea, amoxicillin for pneumonia, AL for malaria. All home care advice modules apply additively.",
+      "follow_up_rule": "Follow up ALL treated children in 3 days. Assess each condition independently at follow-up.",
+      "source_quote": "CHWs identify signs of illness, treat diarrhoea, confirmed malaria, and pneumonia (cough with fast breathing). The findings determine whether to refer or treat at home."
+    },
+    {
+      "id": "int_home_care_return_immediately_criteria",
+      "modules_involved": [
+        "mod_tx_diarrhoea",
+        "mod_tx_pneumonia",
+        "mod_tx_malaria",
+        "mod_home_care_advice"
+      ],
+      "combine_rule": "additive",
+      "referral_priority": "none",
+      "treatment_combination": "Advise caregiver to return immediately if child cannot drink or feed, becomes sicker, or has blood in stool, regardless of which conditions are being treated.",
+      "follow_up_rule": "Immediate return supersedes the scheduled 3-day follow-up. On immediate return, re-assess all danger signs and refer if any present.",
+      "source_quote": "- Return immediately if the child: cannot drink or feed, becomes sicker, or has blood in stool."
+    },
+    {
+      "id": "int_follow_up_not_better_refer",
+      "modules_involved": [
+        "mod_follow_up",
+        "mod_referral"
+      ],
+      "combine_rule": "highest_referral_wins",
+      "referral_priority": "routine",
+      "treatment_combination": "If at 3-day follow-up any treated condition is not improving or is worse, refer to facility. Continue current treatments until seen at facility.",
+      "follow_up_rule": "Refer if not better or worse at 3-day follow-up for any treated condition.",
+      "source_quote": "Follow up ALL children treated at home in 3 days. If the child is not better or is worse at follow-up, refer."
+    },
+    {
+      "id": "int_follow_up_diarrhoea_duration_check",
+      "modules_involved": [
+        "mod_follow_up",
+        "mod_tx_diarrhoea",
+        "mod_referral"
+      ],
+      "combine_rule": "highest_referral_wins",
+      "referral_priority": "routine",
+      "treatment_combination": "At 3-day follow-up: if q_follow_up_diarrhoea_still_present is true and total duration < 14 days, continue ORS and zinc. If total duration >= 14 days, refer.",
+      "follow_up_rule": "If diarrhoea continues but < 14 days, schedule another follow-up in 3 days. If >= 14 days, refer immediately.",
+      "source_quote": "After 3 days: Is the child still having diarrhoea? If yes and for less than 14 days, continue ORS and zinc. If 14 days or more, refer."
+    },
+    {
+      "id": "int_follow_up_fever_rdt_positive_still_febrile_refer",
+      "modules_involved": [
+        "mod_follow_up",
+        "mod_tx_malaria",
+        "mod_referral"
+      ],
+      "combine_rule": "highest_referral_wins",
+      "referral_priority": "routine",
+      "treatment_combination": "At 3-day follow-up: if q_follow_up_fever_still_present is true and prior p_rdt_positive was true and AL was given, refer to facility.",
+      "follow_up_rule": "Refer; do not repeat AL course at community level.",
+      "source_quote": "After 3 days: Does the child still have fever? If RDT was positive and antimalarial was given, the child needs referral."
+    },
+    {
+      "id": "int_follow_up_fever_rdt_negative_persists_refer",
+      "modules_involved": [
+        "mod_follow_up",
+        "mod_classify_fever",
+        "mod_referral"
+      ],
+      "combine_rule": "highest_referral_wins",
+      "referral_priority": "routine",
+      "treatment_combination": "At 3-day follow-up: if q_follow_up_fever_still_present is true and prior p_rdt_negative was true, refer to facility for further evaluation.",
+      "follow_up_rule": "Refer; fever of unknown origin beyond 3 days requires facility assessment.",
+      "source_quote": "If RDT was negative and fever persists, refer."
+    },
+    {
+      "id": "int_referral_travel_fever_keep_cool",
+      "modules_involved": [
+        "mod_referral",
+        "mod_classify_fever"
+      ],
+      "combine_rule": "additive",
+      "referral_priority": "urgent",
+      "treatment_combination": "When referring a child with p_fever_present true, advise caregiver to keep the child cool during travel to the facility.",
+      "follow_up_rule": "Not applicable; child is being referred.",
+      "source_quote": "If fever, keep the child cool during travel."
+    },
+    {
+      "id": "int_referral_travel_diarrhoea_give_ors",
+      "modules_involved": [
+        "mod_referral",
+        "mod_tx_diarrhoea"
+      ],
+      "combine_rule": "additive",
+      "referral_priority": "urgent",
+      "treatment_combination": "When referring a child with p_diarrhoea_present true, provide ORS solution to give during travel to the facility. Requires supply_ors_packet.",
+      "follow_up_rule": "Not applicable; child is being referred.",
+      "source_quote": "If diarrhoea, give ORS solution during travel."
+    }
+  ]
+}

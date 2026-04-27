@@ -1,0 +1,473 @@
+4-530 office hours would be perfect.
+
+thanks,
+
+- David
+
+David I. Levine
+Trefethen Professor of Business Administration
+Haas School of Business
+University of California
+Berkeley CA  94720-1900
+http://faculty.haas.berkeley.edu/levine
++1.925.899.5938
+
+David I. Levine
+2:59 PM (37 minutes ago)
+to Emett, me
+
+It is urgent we speak soon to address a technical problem, a process problem, and a scheduling problem. 
+
+When we met it was not clear to me the Zhang et al. method is poorly suited to CHW Navigator. 
+
+1. Technical problem
+A. I am unclear why your serious concerns with moving from the chat interface to the API means you have to throw out the sequential approach Zach & I each got working in the Fall.  Have you explored how big the problems are with the API and more incremental solutions? Did you ask LLMs for 10 ideas for memory mgt?  For all I know, we can have an agent pretend to be Zach and cut&paste prompts into the chat. (I am NOT recommending that approach; just saying we have to be creative before giving up on something that kind of worked by hand.)  What is your evidence the sequential approach will fail? I would have liked a 2-page memo outlining your evidence. 
+
+B. You should cease work on your version of recursion until you explain to me (A) how it works and (B) why it is better than the sequential approach.  And I prefer you not address those issues until you explore more incremental ways to solve the sequential approach.  The problem of moving from the JSON manual through intermediate artifacts (supply list, variable list, predicates, etc.) to DMN is fundamentally sequential, not recursive in the sense of Zhang et al.  I would have liked a 2-page memo outlining the new plan. 
+
+2. Process problem 
+You identified an important problem with the sequential approach.  You proposed an alternative solution.  Those are both great.  
+      But you did not pause before prioritizing recursion to convince me with evidence that there were not simpler ways to address the problem.  You did not pause to check if the recursive method fixes this problem. If you want to work with me (and, I suspect, most supervsiors), you have to follow these practices. 
+
+3. Schedule problem
+A. We have four weeks left in the semester.  
+B. CHT is looking at an AI-enabled no-code solution.  I want to position you to hand them a draft solution. 
+
+For both reasons, we need a deliverable. 
+
+thanks,
+- David
+
+
+To: ChatCHW Engineering Team
+From: David Levine
+
+Date: April 7, 2026
+
+Subject: Implementation of Cached, Multi-LLM Workflow for CHW Manual-to-DMN Conversion
+
+Overview
+To convert our Community Health Worker (CHW) manuals into Decision Model and Notation (DMN) files efficiently, we are moving away from stateless API calls. We will implement a Stateful "Maker-Checker" Pipeline using Context Caching. This reduces token costs by ~90%, ensures consistency across the ~24-prompt sequence, and utilizes a second "Red Team" LLM to validate clinical and logical accuracy.
+
+1. Architecture: The Maker & The Red Team
+We will utilize two distinct models to prevent "sycophancy" (where a model agrees with its own errors):
+
+Maker (Gemini 1.5 Pro): Handles the long-term project state. Chosen for its 2M token window and persistent CachedContent (TTL-based storage).
+
+Red Team (Claude 3.5 Sonnet): Acts as the validator. Chosen for its superior logical reasoning and "Prompt Caching" breakpoints.
+
+2. The Caching Strategy
+Instead of re-sending the manual with every prompt, we will use a Cumulative Freeze approach:
+
+The Foundation Layer: Both models will have the full CHW Manual and the Master Variable Code List (ex_temp_c, etc.) in their cache.
+
+The Progression: The Maker’s cache will be "refrozen" (updated) after each major artifact is finalized (e.g., Supply List → Variable Definitions → Decision Tables).
+
+The Loop: 1. Maker generates an artifact.
+
+2. Red Team compares the artifact against the cached Manual and DMN schema.
+
+3. Repair: If the Red Team finds a bug, the Maker repairs it before the state is frozen and added to the "Gold Standard" history.
+
+3. Implementation Details
+Gemini: Use vertexai.generative_models.CachingValue. Set a TTL (Time to Live) of 24 hours for active development sessions.
+
+Claude: Use the cache_control header in the messages API. Ensure the Manual is at the start of the block to maximize cache hits.
+
+Red Team Analysis of the Above Proposal
+Reviewer: Internal AI Auditor (Red Team Mode)
+
+The "Infinite Growth" Flaw: The proposal suggests "refreezing" context after every prompt. If we append every raw chat turn to the cache, we will eventually hit "context saturation" where the model gets confused by old, rejected versions of artifacts.
+
+The "Schema Blindness" Flaw: The Red Team is tasked with comparing the artifact to the manual, but DMN is an XML-based standard. If the Red Team doesn't have the DMN XML Schema (XSD) cached, it might approve a table that is clinically correct but technically "un-parseable" by our DMN engine.
+
+The "Variable Drift" Flaw: The proposal assumes the "Master Variable List" is static. In reality, as we convert new chapters, the Maker will need to invent new codes. There is no mechanism described to sync these new codes back to the Red Team’s cache.
+
+The "Cost Trap" Flaw: Gemini caches have a minimum charge (often 1 hour). If the script "refreezes" (creates a new cache object) after every prompt, we may inadvertently create 12–24 separate cached objects, spiking costs instead of lowering them.
+
+Repaired Version (The "Production-Ready" Plan)
+Refined Implementation Protocol
+State Management (The "Gold Standard" Buffer): Do not cache the full conversation history. Only cache the current "Gold Standard" state (the Manual + the latest approved version of all artifacts). When an artifact is repaired, overwrite the old version in the next cache update to prevent the model from seeing its own past mistakes.
+
+Schema Integration: Include the DMN 1.3/1.4 XML Schema definitions in the Foundation Layer for both the Maker and the Red Team to ensure all outputs are syntactically valid.
+
+Variable Sync Loop:
+
+Maker proposes a new variable code.
+
+Red Team checks code against the "Naming Convention Logic."
+
+Upon approval, the code is added to the Master Variable Registry which is updated in the next "Freeze" cycle.
+
+Cache Management: To optimize costs, we will use one persistent Gemini Cache ID. Instead of creating a new cache per prompt, we will update the "Context" in batches of 3–4 prompts or at major chapter milestones.
+
+Red Team Prompting: The Red Team will be explicitly prompted to "Look for what is MISSING," as models are historically better at seeing what is there than what has been omitted from the manual.
+
+Bibliography
+Google Cloud. (2024). Context Caching in Gemini. Vertex AI Documentation.
+
+Anthropic. (2024). Prompt Caching (Beta). Anthropic API Docs.
+
+Object Management Group. (2021). Decision Model and Notation (DMN) Specification, v1.4. OMG.org.
+
+
+
+
+
+
+
+
+OLD threads:
+
+
+David I. Levine
+Tue, Mar 3, 3:06 PM
+to me, Abhijith, Emett, Gigi
+
+Atharva,
+
+"Success" on our pipeline is the right DMN (what I call validity).  An easier test is if we get substantively identical DMN (reliability). 
+
+Note: Reliability is necessary for validity, but not sufficient. For example, if one is consistently wrong in the same way, reliability = 100%, but validity < 100%.
+
+The key deliverable we need in the next month is 2 tests.  Assume we have a manual read in.  
+I do not care if Gemini reads in flowcharts by hand, and that part of the pipeline is not automated and scalable yet. Or even write the flowchart as text by hand and add that text to the text file made from the PDF. 
+
+Hypothesis 1: A version of my prompts run through the chat interface will create consistent DMN tables.
+
+Test by hand: Walk through my (perhaps melded with Zach's) prompts (improving them as we go) for the same manual a few times and create DMN.  Are results substantively the same?
+
+
+You pointed out the API lacks the chat prompt and is stateless.  So we have to test how big a barrier those limitations are.
+
+Hypothesis 2: A version of my (+Zach) prompts with sensible memory mgt can run through the API will create consistent DMN tables.
+Read up on prompt / context caching , etc., so the API can work more like the chat interface in terms of memory without using infinite tokens.  Gemini notes on context caching are below.
+Write a little orchestrator program that runs the prompts.  
+Run the prompts a few times on the manual. 
+Are the DMN results substantively the same?
+
+What is the timeline on each?
+
+thanks,
+
+- David
+
+Gemini notes:  Transforming a Community Health Worker (CHW) manual into Decision Model and Notation (DMN) is a high-context task. If you are using APIs, sending the full manual and prior DMN artifacts with every call is both slow and expensive.To minimize re-entering context, you should use Prompt Caching (also known as Context Caching). This allows the model to "remember" the static parts of your request (the manual, the DMN schema, and previous steps) so you only pay for and process the new prompt.
+
++1
+1. Provider-Specific Solutions
+Each major AI provider handles context persistence differently via their APIs.
+
+Google Gemini (Context Caching)
+Gemini is particularly well-suited for your task because it supports very large caches (up to several million tokens) with a flexible "Time to Live" (TTL).
+
+
+How it works: You create a CachedContent object containing your CHW manual and the DMN conversion rules.
+
+Cost: You pay a small storage fee per hour, but you get a 75–90% discount on input tokens for every prompt that references that cache.
+
+
+Best for: Iterative DMN generation where the source manual remains the same for hours of work.
+
+Anthropic Claude (Prompt Caching)
+Claude allows you to designate "breakpoints" in your prompt to be cached.
+
+
+How it works: You use the cache_control block in the API. You can cache the manual and the first few generated DMN tables.
+
+Cost: Significant savings (up to 90% cheaper) for "cache hits."
+
+
+Constraint: Caches are generally shorter-lived (evicted after ~5 minutes of inactivity) compared to Gemini.
+
+OpenAI (Automatic Caching)
+OpenAI caches prompts automatically if they are over 1,024 tokens.
+
+
+How it works: If the prefix of your prompt (the manual + previous artifacts) is identical to a previous call, OpenAI will automatically use the cache.
+
+
+Constraint: You have less manual control; if you change even one word at the beginning of the prompt, the cache breaks.
+
+2. Strategic Context Layering
+To maximize cache hits, organize your API calls using a "layered" approach:
+
+Layer	Content	Status
+Layer 1: Static	The CHW Manual & DMN Specification	Always Cached
+Layer 2: Growing	Verified DMN tables from previous steps	Updated & Re-cached
+Layer 3: Dynamic	Current instruction (e.g., "Now convert Chapter 4")	New (Not Cached)
+3. Implementation Workflow
+Step A: The "Base" Cache
+Create a cache that contains the "Source of Truth."
+
+Content: The full CHW manual text + a "Style Guide" for how you want the DMN XML/JSON formatted.
+
+Benefit: This is your largest block of tokens. Caching it once means you don't pay to "read" it for every subsequent table you generate.
+
+Step B: The "State" Summary
+Instead of sending every prior DMN artifact, send a Summary of the State.
+
+If you are building a complex DMN with linked decisions, provide a list of existing Input Data and Decision names rather than the full XML of every previous table. This keeps the "Growing" layer small.
+
+Step C: Use System Instructions
+Place the "how-to convert to DMN" logic in the System Prompt rather than the User Prompt. System prompts are prioritized for caching in most architectures.
+
+
+Suggested Next Step
+Would you like me to provide a Python code snippet showing how to implement "Context Caching" specifically using the Gemini API for your CHW-to-DMN project?
+
+
+
+
+David I. Levine
+Trefethen Professor of Business Administration
+Haas School of Business
+University of California
+Berkeley CA  94720-1900
+http://faculty.haas.berkeley.edu/levine
++1.925.899.5938
+
+Atharva Jayesh Patel <atharvajpatel@berkeley.edu>
+Tue, Mar 3, 6:44 PM
+to David, Abhijith, Emett, Gigi
+
+Subject: Re: DMN Pipeline - Approach & Timelines
+
+Hi Professor,
+
+Understood on reliability vs. validity.
+
+I'd suggest we focus fully on H2 rather than testing H1 separately. The chat interface requires manually walking through prompts per PDF, which is unscalable by design, and the results are still only as good as our evaluation criteria. Since the whole point of the project is to not create DMNs manually, I think our time is better spent on the API path we'd actually deploy.
+
+More importantly, H1 isn't rigorously testable and we are not able to isolate all the variables. The chat interface has session-level variables we can't control: hidden system prompts, session memory, conversational formatting that varies between runs. If two runs produce different DMNs, we can't tell whether it's the prompts or the interface behavior causing the inconsistency. The same holds for the flip: if the DMN's are consistent and valid we can't say it's successful because our prompts are correct (it will collapse from Anthropic chat to Gemini chat). With H2, every variable is locked down (model, temperature, exact token sequence, no hidden state, what goes to memory), so inconsistencies are actually diagnosable. H2 is both the more controllable pipeline, helps us isolate failure modes, and the better long term product path. The only drawback is this is complex, arguably more so than RAG. But unlike RAG, where everything happens in one pass from PDF to options with the only controllable variables are prompts, we're going from fact sheet to DMN with granular control over how we extract modules and values. 
+
+Any insights about prompt quality that H1 would surface will come out naturally as we iterate on the API prompts, there is no testing from H1 that correlates over to H2 development. The only advantage to H1 is if we need a DMN done quickly, and if we do we can always construct one via the chat interface once patientbot is up, but systematically auditing and harmonizing chat-created DMNs is not as productive as developing a robust H2. 
+
+Once the fact sheet is reliable, the architecture uses prompt caching to keep the fact sheet + DMN formatting rules cached as a static layer. Each call in the orchestrator references that cached context plus a lightweight state summary of what's already been extracted, plus the specific instruction (extract the "what brings you here" module, then follow ups, then tests, etc.) --> this is the real litmus test of your an Zach's prompts NOT in the chat interface because the environment around it is controlled by us. If the entire fact sheet is cached, the model has full understanding over the entire document on every call, which is strictly better than vector search since there's no lossy retrieval step (ironically caching would have been far superior than vector search when we developed RAG but that's a problem we put behind us). So this creates three cases:
+
+1. Easy case: The entire fact sheet fits in the cache. Every call has access to all the information, so we make one call per DMN module. No splitting, no dedup, no reconciliation. We hardcode the first 2-3 modules (metadata, what brings you here, initial follow ups) and then the model extracts the rest directly from cached context.
+2. Hard case A: The fact sheet doesn't fit in cache as-is, but it's close enough that we can trim it to fit. If we remove fluff (json already whittles it down to a lot) and keep only clinically necessary content, we may be able to collapse back into the easy case. This is worth exploring because it eliminates the entire class of splitting/reconciliation problems. The downside is we have to be ultra precise to make sure we don't trim anything important (this is the problem we faced in RAG in terms of confidence of whether it's treatable or refer to a clinic just translated to keep or trim terms BUT this time trimming has to be done fully from human expert judgement). We may want to pivot to Gemini because it has the highest token limit and can cache somewhere in the ballpark of a 50-200 page pdf so it may be worth exploring.
+3. Hard case B: The fact sheet genuinely doesn't fit even after trimming. Now we have to split it across calls, which means a call over one portion, another call over another, and then reconciliation calls just to figure out all the cases for a given condition. That's where real complexity lives.
+
+Within the hard case there are multiple sub-approaches, but here's the key issue. Any of them can be tuned to produce a DMN that passes patient bot. You could realistically end up with 10 different DMNs from 5 sub-approaches that all pass. Downstream additions like traffic cop and comorbidity handling don't actually eliminate any of them either because you are just going back through the DMN. So the question becomes: are we happy shipping any of the 10?
+
+An analogy from the LLM world: 10 models might score perfectly on a single benchmark, but we don't consider them equivalent. What distinguishes the "top" model is performance across other benchmarks plus additional factors like latency, safety, edge cases, etc. We need to figure out what those additional factors are for our DMNs. Right now our evaluation tells us what passes, but not what's best. 
+
+Some initial ideas for additional evaluation criteria: negative cases, where if the DMN engages on an out-of-scope query, it means it pulled irrelevant information or the model used pretraining knowledge to add modules it thought were appropriate. This would flag DMNs that are too broad. Another is consensus via repetition: run the same prompt N times, diff the outputs, and whatever is consistent across all runs is high-confidence. Whatever diverges tells us exactly where the prompt is ambiguous or the fact sheet is underspecified. A third option is the red-teaming you mentioned, which is essentially a human expert validating the DMNs that passed patient bot, acting as a final filter, but no part of that system can be AI-fied its full human judgement. But regardless, I think we need a deeper conversation about evaluation criteria at the next meeting, because the sub-approach selection is downstream of that. Any sub-approach can be made to work, but we need to know what "work" fully means first.
+
+On the team side: half the product team is already working on automating the PDF-to-fact-sheet extraction using VLMs + industry parsers. Testing team is working on turning patient bot into dictionaries and actual values a bot can use against a DMN. Zach and I will start building the H2 scaffolding now so that when the fact sheet is ready we can iterate quickly. That means setting up the orchestrator and writing prompts that follow the clinical architecture: what brings you here, followup questions, tests, etc. We should have the fact sheet completed by the end of next week, and hopefully the patient bot the week after. For the H2 test itself, I agree we should use a manually verified fact sheet so we're isolating one problem at a time. 
+
+Let's have a full discussion about this approach at the next navigators meeting on both the evaluation and caching front.
+
+Best,
+Atharva
+
+David I. LEVINE
+Tue, Mar 3, 10:17 PM
+to me, Abhijith, Emett, Gigi
+
+Atharva,
+
+Fine to skip hypothesis 1.  When can we get hypothesis 2 tested ? 
+
+If the DMN are equivalent, then we do not worry about which is best.  They should all treat all patients the same (including edge cases like stockouts, illegal values, etc.).  That is precisely what makes measuring reliability easier than validity.  
+
+- David
+
+
+Atharva,
+
+We are getting CHT excited about our approach. It is plausible that folks from that open source community will take over CHW Navigator, if we can show our approach works. 
+
+I would love to show them
+1. A minimal Python orchestrator + series of prompts can move from Manual text => DMN (using only booleans) (as well as phrase bank, table of logical variables explaining "rr_ge_40 = true iff  resp_rate_min>=40, "Respiration rate >= 40 / min." ), etc.)
+2. A minimal Python transpiler can convert DMN to Mermaid and to XLSForm 
+
+When do you expect to have evidence for either piece of that process?  I am glad to meet with whomever is working on #2 and clarify some of the assumptions and tasks. 
+
+thanks,
+
+- David
+
+David I. Levine
+Trefethen Professor of Business Administration
+Haas School of Business
+University of California
+Berkeley CA  94720-1900
+http://faculty.haas.berkeley.edu/levine
++1.925.899.5938
+
+Atharva Jayesh Patel <atharvajpatel@berkeley.edu>
+Attachments
+Tue, Mar 31, 4:52 PM (7 days ago)
+to David, Emett
+
+Hi Professor,
+
+I put together a full architecture spec for both pieces you described. It's attached as ORCHESTRATOR.md. Here's the summary and the two things I need.
+
+First, a note on scope: the chat interface I've been building (multi-model cross-validation, 6 parallel catchers, prompt caching, Haiku memory distillation, replay system) is overkill for what CHT needs to see. It's a powerful authoring environment but it's complex infrastructure that an open-source community wouldn't want to maintain. The attached spec is a fundamentally simpler approach that achieves the same goal with less moving parts.
+
+The core idea: instead of the traffic cop checker pipeline with multi-agent red-team loops, we use a Recursive Language Model (RLM) approach. The key paper is "Recursive Language Models" by Zhang, Kraska, and Khattab at MIT CSAIL (January 2026, https://github.com/alexzhang13/rlm). I'd strongly recommend reading it. The short version: instead of feeding an entire manual into the model's context window (where quality degrades on longer documents), or relying on prompt caching (which also breaks down on longer manuals that exceed cache limits), we load the manual as a variable in a REPL (Read-Eval-Print Loop) programming environment and let the model programmatically examine, decompose, and extract from it through code execution and recursive sub-calls. The model never sees the full manual in its context window. It writes Python code to slice into sections, launch sub-calls per module, and build up the output incrementally. This scales to manuals of any length using the same architecture, and the model self-validates by calling deterministic checkers inside the REPL before returning its output. I attached the paper if you want to take a quick skim.
+
+The input is the JSON guide (from the PDF extraction pipeline), and the final output is a validated JSON containing all clinical decision logic: Activator/Router tables, per-module decision tables (boolean-only), predicates with fail-safe defaults, and the full phrase bank. That JSON then gets deterministically converted to DMN XML, Mermaid, and XLSForm. The model never produces XML or XLSX directly.
+
+Importantly, nothing in the system prompt or any prompt is specific to WHO 2012 or any particular manual. The prompts define the extraction architecture (Activator/Router pattern, boolean-only DMN, predicate conventions, variable naming, provenance requirements) but the actual clinical content: which danger signs exist, what thresholds apply, which modules the manual covers all comes from whatever JSON guide is loaded into the REPL. The same prompts should work on any CHW manual.
+
+The whole thing runs through a basic web interface where the user pastes their own Anthropic API key to start a session --> no auth system, the API key is the auth. The team (and eventually CHT developers) can each use their own key, see the full REPL trajectory in real time, inspect every sub-call, and download the output artifacts. I've built this BYOK (bring your own key) session pattern before in another project and it works well for dev tooling where you want zero friction but full visibility.
+
+Two things I need:
+
+1. THE SYSTEM PROMPT
+
+The system prompt is the single most important artifact in this pipeline. It defines the extraction conventions and architecture but must remain fully manual-agnostic --> no hardcoded danger sign lists, no specific thresholds, no module names. The model discovers all of that from the guide itself.
+
+Two options for how we create this:
+
+Option A: The medical team drafts the full system prompt + guidance from you, the doctors, and other CHT folks. They know the clinical conventions well: what the Activator/Router pattern should look like, what "conservative default" means clinically, how fail-safes should be assigned, what provenance standards are sufficient for MOH sign-off. I'll provide the technical scaffolding (output format, naming conventions, REPL instructions) and the medical team fills in the clinical extraction logic.
+
+Option B: My team drafts the full prompt and the medical team reviews, edits, and approves. We write the first pass based on the conventions in the spec (Section 5), test it against WHO 2012 as our validation manual, and send it to you & medical team for clinical review. You and the team add, correct, or veto anything that's clinically wrong or insufficient.
+
+Either way works. The faster we converge on a prompt, the faster I can iterate against the validators. Let me know which you'd prefer. And the length of the prompt can basically be 50K tokens which is roughly 38K words which is half the length of the first Harry Potter Book. 
+
+2. VALIDATORS: ARE THESE SUFFICIENT?
+
+The spec includes four validator modules that run inside the REPL (the model calls validate() and sees errors in real time). Here's what they check:
+
+- Architecture: Activator exists (COLLECT policy), Router exists (FIRST policy), Router row 0 is the emergency short-circuit, every module in the Activator has a Router entry and a decision table, no module ID collisions, Integrative table exists
+- Completeness: Every predicate referenced in DMN tables exists in the predicates array, every message ID in DMN outputs exists in the phrase bank, a composite danger sign predicate exists, all fields have provenance
+- Clinical: Every table has a default/else row, all rule inputs are boolean only (no numeric thresholds in cells), rule array lengths match column definitions, fail-safe sanity (equipment-dependent predicates should default to high-risk)
+- Naming: All variables follow the prefix convention (q_, ex_, v_, p_, dx_, tx_, ref_, m_, mod_, etc.)
+
+Plus Z3 verification for exhaustiveness (no input combination falls through a gap), reachability (no dead rules), and mutual exclusivity where applicable.
+
+These validators are also fully manual-agnostic. They check structural properties, not clinical content.
+
+Are there additional checks you'd want? The one thing validators fundamentally cannot catch is clinically plausible but wrong thresholds (e.g., the model writes >= 45 instead of >= 40 for fast breathing). That requires either clinician review of the predicates table or the external test harness.
+
+3. PIECE #2: THE CONVERTERS
+
+The DMN XML, Mermaid, and XLSForm conversions are baked into this pipeline: they're deterministic Python that runs on the validated JSON at the end. They're not a separate system. If you have an existing DMN you'd like me to convert to Mermaid as a standalone exercise, that's trivial and I can do it anytime. But the full converter suite (especially the XLSForm compiler with predicate fail-safes and module state management) makes more sense to build as part of this pipeline rather than independently, since it consumes the JSON schema this pipeline defines.
+
+If this approach seems like the right direction, we can pivot from the prompt-caching chat interface and start building towards this. Happy to discuss in person or over a call. The pdf to json still stays and is a function we need to continue building but we consolidate everything to one prompt.
+Best,
+Atharva
+ 2 Attachments
+  •  Scanned by Gmail
+
+  ATTACHMENT WAS THEE RLM paper and ORCHESTRATOR.md which is in root.
+
+Emett Levin Mendel
+Tue, Mar 31, 5:14 PM (7 days ago)
+to me, David
+
+Great stuff, seems like a very solid approach. Two concerns, however:
+
+1) Timing. We’re looking to build something quick here to prove to CHT that our approach is viable. Taking a 180 on what we’ve been working on, which has already been delayed, seems like the opposite of delivering a timely proof of concept. This approach is strong, but can we get it working before the semester ends?
+
+2) Functionality with traffic cop DMN structure. Is there a way to encode the decision tree logic of the validated JSON into the traffic cop DMN structure that David suggested at the beginning of the semester? Is this even needed with this approach? This is important to note, since our testing and medical teams are working on parsing and creating multiple DMNs modules with traffic cops.
+
+Let me know what you guys think about these concerns.
+
+- Emett
+
+David I. LEVINE
+Tue, Mar 31, 7:05 PM (7 days ago)
+to Emett, me
+
+Atharva,
+
+1. The system prompts for the all-at-once pipeline are in the document I shared.  Emett: Can you provide the current link? 
+
+For the all-at-once  pipeline, those prompts are decent first drafts. Has anyone on the product team been working with these prompts to see how well they work? 
+
+For your REPL pipeline, I think these prompts will be decent raw materials.  But you have to study the existing prompts to see how close they are.  I assume the REPL pipeline will require multiple passes through the document, which is not a problem.  
+
+2. Pipeline style:  I am happy to believe the REPL pipeline is better than the all-at-once.  But, as Emett said, timing matters.  How long to get REPL working?  If the old pipeline is a lot faster to prototype, I lean towards the existing framework.  I need a prototype to show CHT — ideally this month!  
+
+3. Transpilers DMN to XLSForm, etc.
+
+I do not understand why you want to wait for part 1 to work to start part 2.  We can take any DMN and transpile it to XLSForm. Just decide rules for creating the DMN such as 
+* DMN uses only Booleans + AND/OR/NOT.   Each DMN has a list of needed inputs. 
+* Before executing the XLSForm version of the  DMN decision, 
+    ** make sure input data exist or ask / observe/ test 
+   **  transform non-Boolean data into Booleans using a subset of operations (e.g., FEEL subset)
+* DMN decisions often point to the next table (e.g., dosing table for a drug, traffic cop modules, etc.).
+* etc.
+
+Emett: Please share a few DMNs so the product team can get started on writing and testing a transpiler. 
+
+Thanks,
+ -David
+
+
+
+David Levine
+Trefethen Professor
+Haas School of Business 
+University of California, Berkeley 
++1.925.899.5938
+(Sent from my mobile, so please excuse typos)
+
+On Mar 31, 2026, at 5:14 PM, Emett Levin Mendel <emettmendel@berkeley.edu> wrote:
+
+Emett Levin Mendel
+Attachments
+Tue, Mar 31, 8:23 PM (7 days ago)
+to David, me
+
+Here is the doc I think you're talking about, specifically the prompts tab: https://docs.google.com/document/d/1uCquXMLVgbzMlU8QIaaeBB0vjfYPdQKzozgulXf_hHA/edit?tab=t.7odcuruu628s. David, let me know if that's the wrong doc. 
+
+For the DMNs, Zach should know where the most recent ones are stored (in GitHub) since he worked on creating them last semester. I will attach the DMN that Zach told me was the most recent one for the time being, though.
+ 2 Attachments
+  •  Scanned by Gmail
+
+David I. Levine
+Wed, Apr 1, 2:57 PM (6 days ago)
+to Emett, me
+
+Emett,
+
+Thanks for providing the right link. 
+
+Atharva: Upon reflection, I'd like to try the all-at-once approach first.  If we can get a prototype this month, that is better than a better approach in August. 
+
+Thanks,
+
+- David
+
+
+David I. Levine
+Trefethen Professor of Business Administration
+Haas School of Business
+University of California
+Berkeley CA  94720-1900
+http://faculty.haas.berkeley.edu/levine
++1.925.899.5938
+
+Atharva Jayesh Patel <atharvajpatel@berkeley.edu>
+Wed, Apr 1, 6:36 PM (6 days ago)
+to David, Emett
+
+Hi Professor,
+
+I actually looked into it and the REPL approach has a lot of scaffolding and infrastructure work already open sourced and in a github. So my estimates are drastically reduced because this already exists. The older chat interface is now arguably more complicated. I think a full transition to REPL and all at once allows us to focus our efforts on a long singular prompt and then a long singular checker prompt. And adding all at once on the system prompt would not be too hard to add so we can run both modes. Can have a demo end of next week or early the following week with both modes.
+
+Best,
+Atharva
+
+David I. Levine
+Thu, Apr 2, 2:34 PM (5 days ago)
+to me, Emett
+
+Sounds good to me. 
+David I. Levine
+Trefethen Professor of Business Administration
+Haas School of Business
+University of California
+Berkeley CA  94720-1900
+http://faculty.haas.berkeley.edu/levine
++1.925.899.5938
+
+
+

@@ -1,0 +1,161 @@
+[
+  {
+    "id": "p_danger_sign_present",
+    "threshold_expression": "ex_convulsions == true OR ex_not_able_to_drink_or_feed == true OR ex_vomits_everything == true OR ex_unusually_sleepy_or_unconscious == true",
+    "fail_safe": 0,
+    "source_vars": [
+      "ex_convulsions",
+      "ex_not_able_to_drink_or_feed",
+      "ex_vomits_everything",
+      "ex_unusually_sleepy_or_unconscious"
+    ],
+    "human_label": "Any general danger sign is present",
+    "source_quote": "Check for general danger signs: convulsions, not able to drink or feed, vomits everything, unusually sleepy or unconscious",
+    "source_section_id": "convulsions"
+  },
+  {
+    "id": "p_fast_breathing",
+    "threshold_expression": "(demo_age_months >= 2 AND demo_age_months < 12 AND v_respiratory_rate_per_min >= 50) OR (demo_age_months >= 12 AND demo_age_months <= 59 AND v_respiratory_rate_per_min >= 40)",
+    "fail_safe": 1,
+    "source_vars": [
+      "demo_age_months",
+      "v_respiratory_rate_per_min"
+    ],
+    "human_label": "Child has fast breathing for age",
+    "source_quote": "Fast breathing: 50 or more breaths per minute for child 2 months up to 12 months; 40 or more breaths per minute for child 12 months up to 5 years",
+    "source_section_id": "fast_breathing"
+  },
+  {
+    "id": "p_cough_pneumonia",
+    "threshold_expression": "q_cough == true AND p_fast_breathing == true AND ex_chest_indrawing == false",
+    "fail_safe": 0,
+    "source_vars": [
+      "q_cough",
+      "p_fast_breathing",
+      "ex_chest_indrawing"
+    ],
+    "human_label": "Cough with fast breathing (pneumonia) without chest indrawing",
+    "source_quote": "If the child has cough with fast breathing, classify as PNEUMONIA",
+    "source_section_id": "cough"
+  },
+  {
+    "id": "p_chest_indrawing_present",
+    "threshold_expression": "q_cough == true AND ex_chest_indrawing == true",
+    "fail_safe": 0,
+    "source_vars": [
+      "q_cough",
+      "ex_chest_indrawing"
+    ],
+    "human_label": "Cough with chest indrawing (severe pneumonia)",
+    "source_quote": "If chest indrawing: refer urgently to hospital",
+    "source_section_id": "chest_indrawing"
+  },
+  {
+    "id": "p_cough_no_pneumonia",
+    "threshold_expression": "q_cough == true AND p_fast_breathing == false AND ex_chest_indrawing == false",
+    "fail_safe": 0,
+    "source_vars": [
+      "q_cough",
+      "p_fast_breathing",
+      "ex_chest_indrawing"
+    ],
+    "human_label": "Cough or cold with no fast breathing (no pneumonia)",
+    "source_quote": "If no fast breathing and no chest indrawing: cough or cold, no pneumonia",
+    "source_section_id": "cough"
+  },
+  {
+    "id": "p_fever_malaria_positive",
+    "threshold_expression": "q_fever == true AND lab_rdt_result == 'positive'",
+    "fail_safe": 0,
+    "source_vars": [
+      "q_fever",
+      "lab_rdt_result"
+    ],
+    "human_label": "Fever with positive RDT (malaria)",
+    "source_quote": "If RDT is positive, classify as MALARIA",
+    "source_section_id": "5_2_fever_less_than_7_days_in_a_malaria_area"
+  },
+  {
+    "id": "p_fever_malaria_negative",
+    "threshold_expression": "q_fever == true AND lab_rdt_result == 'negative'",
+    "fail_safe": 0,
+    "source_vars": [
+      "q_fever",
+      "lab_rdt_result"
+    ],
+    "human_label": "Fever with negative RDT (fever, no malaria)",
+    "source_quote": "If RDT is negative, classify as FEVER, NO MALARIA",
+    "source_section_id": "5_2_fever_less_than_7_days_in_a_malaria_area"
+  },
+  {
+    "id": "p_fever_prolonged",
+    "threshold_expression": "q_fever == true AND q_fever_duration_days >= 7",
+    "fail_safe": 0,
+    "source_vars": [
+      "q_fever",
+      "q_fever_duration_days"
+    ],
+    "human_label": "Fever lasting 7 days or more",
+    "source_quote": "If fever for 7 days or more, refer to hospital",
+    "source_section_id": "fever"
+  },
+  {
+    "id": "p_diarrhoea_present",
+    "threshold_expression": "q_diarrhoea == true",
+    "fail_safe": 0,
+    "source_vars": [
+      "q_diarrhoea"
+    ],
+    "human_label": "Child has diarrhoea",
+    "source_quote": "Does the child have diarrhoea?",
+    "source_section_id": "diarrhoea"
+  },
+  {
+    "id": "p_diarrhoea_prolonged",
+    "threshold_expression": "q_diarrhoea == true AND q_diarrhoea_duration_days >= 14",
+    "fail_safe": 0,
+    "source_vars": [
+      "q_diarrhoea",
+      "q_diarrhoea_duration_days"
+    ],
+    "human_label": "Diarrhoea lasting 14 days or more",
+    "source_quote": "If diarrhoea for 14 days or more, refer",
+    "source_section_id": "diarrhoea"
+  },
+  {
+    "id": "p_bloody_diarrhoea",
+    "threshold_expression": "q_diarrhoea == true AND q_blood_in_stool == true",
+    "fail_safe": 0,
+    "source_vars": [
+      "q_diarrhoea",
+      "q_blood_in_stool"
+    ],
+    "human_label": "Diarrhoea with blood in stool (dysentery)",
+    "source_quote": "If blood in stool, refer",
+    "source_section_id": "diarrhoea"
+  },
+  {
+    "id": "p_severe_malnutrition",
+    "threshold_expression": "v_muac_mm < 115 OR ex_oedema_both_feet == true",
+    "fail_safe": 1,
+    "source_vars": [
+      "v_muac_mm",
+      "ex_oedema_both_feet"
+    ],
+    "human_label": "Severe acute malnutrition (MUAC < 115 mm or oedema of both feet)",
+    "source_quote": "Red on MUAC tape or oedema of both feet: severe acute malnutrition, refer urgently",
+    "source_section_id": "3_3_look_for_signs_of_severe_malnutrition"
+  },
+  {
+    "id": "p_moderate_malnutrition",
+    "threshold_expression": "v_muac_mm >= 115 AND v_muac_mm < 125 AND ex_oedema_both_feet == false",
+    "fail_safe": 1,
+    "source_vars": [
+      "v_muac_mm",
+      "ex_oedema_both_feet"
+    ],
+    "human_label": "Moderate acute malnutrition (MUAC 115-124 mm)",
+    "source_quote": "Yellow on MUAC tape: moderate acute malnutrition",
+    "source_section_id": "3_3_look_for_signs_of_severe_malnutrition"
+  }
+]

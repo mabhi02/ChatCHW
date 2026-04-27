@@ -1,0 +1,537 @@
+{
+  "supply_list": [
+    {
+      "id": "supply_intake_form",
+      "display_name": "standard intake form",
+      "kind": "consumable",
+      "source_quote": "Use the standard intake form and ensure all fields are completed.",
+      "source_section_id": "chunk_1"
+    },
+    {
+      "id": "supply_comfort_kit_items",
+      "display_name": "tissues, water cup, blanket, and pillow",
+      "kind": "consumable",
+      "source_quote": "Provide the patient with a comfort kit containing tissues, water cup, blanket, and pillow.",
+      "source_section_id": "chunk_1"
+    },
+    {
+      "id": "supply_discharge_packet_items",
+      "display_name": "aftercare instructions, prescription forms, follow-up appointment card, and patient satisfaction survey",
+      "kind": "consumable",
+      "source_quote": "Gather the discharge packet including aftercare instructions, prescription forms, follow-up appointment card, and patient satisfaction survey.",
+      "source_section_id": "chunk_2"
+    },
+    {
+      "id": "supply_discharge_packet",
+      "display_name": "discharge packet",
+      "kind": "consumable",
+      "source_quote": "Gather the discharge packet including aftercare instructions",
+      "source_section_id": "chunk_2"
+    }
+  ],
+  "variables": [
+    {
+      "id": "q_chief_complaint",
+      "display_name": "chief complaint",
+      "kind": "input",
+      "unit": "",
+      "data_type": "boolean",
+      "source_quote": "Check the patient's chief complaint and current symptoms.",
+      "source_section_id": "chunk_1"
+    },
+    {
+      "id": "q_current_symptoms",
+      "display_name": "current symptoms",
+      "kind": "input",
+      "unit": "",
+      "data_type": "boolean",
+      "source_quote": "Check the patient's chief complaint and current symptoms.",
+      "source_section_id": "chunk_1"
+    },
+    {
+      "id": "v_blood_pressure",
+      "display_name": "blood pressure",
+      "kind": "input",
+      "unit": "",
+      "data_type": "numeric",
+      "source_quote": "Document the patient's vital signs including blood pressure, heart rate, temperature, and oxygen saturation.",
+      "source_section_id": "chunk_1"
+    },
+    {
+      "id": "v_heart_rate",
+      "display_name": "heart rate",
+      "kind": "input",
+      "unit": "",
+      "data_type": "numeric",
+      "source_quote": "Document the patient's vital signs including blood pressure, heart rate, temperature, and oxygen saturation.",
+      "source_section_id": "chunk_1"
+    },
+    {
+      "id": "v_temperature",
+      "display_name": "temperature",
+      "kind": "input",
+      "unit": "",
+      "data_type": "numeric",
+      "source_quote": "Document the patient's vital signs including blood pressure, heart rate, temperature, and oxygen saturation.",
+      "source_section_id": "chunk_1"
+    },
+    {
+      "id": "v_oxygen_saturation",
+      "display_name": "oxygen saturation",
+      "kind": "input",
+      "unit": "",
+      "data_type": "numeric",
+      "source_quote": "Document the patient's vital signs including blood pressure, heart rate, temperature, and oxygen saturation.",
+      "source_section_id": "chunk_1"
+    },
+    {
+      "id": "hx_medication_history",
+      "display_name": "medication history",
+      "kind": "input",
+      "unit": "",
+      "data_type": "boolean",
+      "source_quote": "Ask the patient about their medication history, allergies, and previous hospitalizations.",
+      "source_section_id": "chunk_1"
+    },
+    {
+      "id": "q_allergies",
+      "display_name": "allergies",
+      "kind": "input",
+      "unit": "",
+      "data_type": "boolean",
+      "source_quote": "Ask the patient about their medication history, allergies, and previous hospitalizations.",
+      "source_section_id": "chunk_1"
+    },
+    {
+      "id": "hx_previous_hospitalizations",
+      "display_name": "previous hospitalizations",
+      "kind": "input",
+      "unit": "",
+      "data_type": "boolean",
+      "source_quote": "Ask the patient about their medication history, allergies, and previous hospitalizations.",
+      "source_section_id": "chunk_1"
+    },
+    {
+      "id": "q_pain_level",
+      "display_name": "pain level",
+      "kind": "input",
+      "unit": "",
+      "data_type": "boolean",
+      "source_quote": "Rate the pain level on a scale of 1 to 10.",
+      "source_section_id": "chunk_1"
+    },
+    {
+      "id": "q_diagnosis",
+      "display_name": "diagnosis",
+      "kind": "input",
+      "unit": "",
+      "data_type": "boolean",
+      "source_quote": "The treatment plan should include diagnosis, proposed interventions, expected outcomes, and follow-up schedule.",
+      "source_section_id": "chunk_2"
+    },
+    {
+      "id": "q_proposed_interventions",
+      "display_name": "proposed interventions",
+      "kind": "input",
+      "unit": "",
+      "data_type": "boolean",
+      "source_quote": "The treatment plan should include diagnosis, proposed interventions, expected outcomes, and follow-up schedule.",
+      "source_section_id": "chunk_2"
+    },
+    {
+      "id": "q_expected_outcomes",
+      "display_name": "expected outcomes",
+      "kind": "input",
+      "unit": "",
+      "data_type": "boolean",
+      "source_quote": "The treatment plan should include diagnosis, proposed interventions, expected outcomes, and follow-up schedule.",
+      "source_section_id": "chunk_2"
+    },
+    {
+      "id": "q_followup_schedule",
+      "display_name": "follow-up schedule",
+      "kind": "input",
+      "unit": "",
+      "data_type": "boolean",
+      "source_quote": "The treatment plan should include diagnosis, proposed interventions, expected outcomes, and follow-up schedule.",
+      "source_section_id": "chunk_2"
+    },
+    {
+      "id": "q_preferred_pharmacy",
+      "display_name": "preferred pharmacy",
+      "kind": "input",
+      "unit": "",
+      "data_type": "boolean",
+      "source_quote": "Confirm the patient's preferred pharmacy and emergency contact number.",
+      "source_section_id": "chunk_2"
+    },
+    {
+      "id": "q_emergency_contact",
+      "display_name": "emergency contact number",
+      "kind": "input",
+      "unit": "",
+      "data_type": "boolean",
+      "source_quote": "Confirm the patient's preferred pharmacy and emergency contact number.",
+      "source_section_id": "chunk_2"
+    },
+    {
+      "id": "q_insurance_info",
+      "display_name": "insurance information",
+      "kind": "input",
+      "unit": "",
+      "data_type": "boolean",
+      "source_quote": "Verify insurance information and prior authorization status before finalizing the plan.",
+      "source_section_id": "chunk_2"
+    },
+    {
+      "id": "q_prior_auth_status",
+      "display_name": "prior authorization status",
+      "kind": "input",
+      "unit": "",
+      "data_type": "boolean",
+      "source_quote": "Verify insurance information and prior authorization status before finalizing the plan.",
+      "source_section_id": "chunk_2"
+    }
+  ],
+  "predicates": [
+    {
+      "id": "p_chest_pain_check",
+      "threshold_expression": "If the patient reports chest pain, immediately escalate to emergency protocol.",
+      "fail_safe": true,
+      "source_vars": [],
+      "human_label": "the patient reports chest pain",
+      "source_quote": "If the patient reports chest pain, immediately escalate to emergency protocol.",
+      "source_section_id": "chunk_1"
+    },
+    {
+      "id": "p_mild_headache_check",
+      "threshold_expression": "If the patient reports mild headache, proceed to standard assessment.",
+      "fail_safe": true,
+      "source_vars": [],
+      "human_label": "the patient reports mild headache",
+      "source_quote": "If the patient reports mild headache, proceed to standard assessment.",
+      "source_section_id": "chunk_1"
+    },
+    {
+      "id": "p_penicillin_allergy_check",
+      "threshold_expression": "If the patient has a known allergy to penicillin, flag the chart accordingly.",
+      "fail_safe": true,
+      "source_vars": [],
+      "human_label": "the patient has a known allergy to penicillin",
+      "source_quote": "If the patient has a known allergy to penicillin, flag the chart accordingly.",
+      "source_section_id": "chunk_1"
+    },
+    {
+      "id": "p_high_pain_check",
+      "threshold_expression": "If pain level is greater than 7, administer analgesic per standing order.",
+      "fail_safe": true,
+      "source_vars": [
+        "q_pain_level"
+      ],
+      "human_label": "pain level is greater than 7",
+      "source_quote": "If pain level is greater than 7, administer analgesic per standing order.",
+      "source_section_id": "chunk_1"
+    },
+    {
+      "id": "p_moderate_pain_check",
+      "threshold_expression": "If pain level is between 4 and 6, offer over-the-counter options.",
+      "fail_safe": true,
+      "source_vars": [
+        "q_pain_level"
+      ],
+      "human_label": "pain level is between 4 and 6",
+      "source_quote": "If pain level is between 4 and 6, offer over-the-counter options.",
+      "source_section_id": "chunk_1"
+    },
+    {
+      "id": "p_low_pain_check",
+      "threshold_expression": "If pain level is less than 4, continue monitoring.",
+      "fail_safe": true,
+      "source_vars": [
+        "q_pain_level"
+      ],
+      "human_label": "pain level is less than 4",
+      "source_quote": "If pain level is less than 4, continue monitoring.",
+      "source_section_id": "chunk_1"
+    },
+    {
+      "id": "p_surgical_intervention_check",
+      "threshold_expression": "If the patient requires surgical intervention, refer to the surgical consent module.",
+      "fail_safe": true,
+      "source_vars": [],
+      "human_label": "the patient requires surgical intervention",
+      "source_quote": "If the patient requires surgical intervention, refer to the surgical consent module.",
+      "source_section_id": "chunk_2"
+    },
+    {
+      "id": "p_medication_management_check",
+      "threshold_expression": "If the patient requires only medication management, proceed to the pharmacy coordination module.",
+      "fail_safe": true,
+      "source_vars": [],
+      "human_label": "the patient requires only medication management",
+      "source_quote": "If the patient requires only medication management, proceed to the pharmacy coordination module.",
+      "source_section_id": "chunk_2"
+    },
+    {
+      "id": "p_geriatric_check",
+      "threshold_expression": "If the patient is over 65 years old and has multiple comorbidities, initiate the geriatric care coordination pathway.",
+      "fail_safe": true,
+      "source_vars": [],
+      "human_label": "the patient is over 65 years old and has multiple comorbidities",
+      "source_quote": "If the patient is over 65 years old and has multiple comorbidities, initiate the geriatric care coordination pathway.",
+      "source_section_id": "chunk_2"
+    },
+    {
+      "id": "p_minor_check",
+      "threshold_expression": "If the patient is under 18, ensure guardian consent is obtained.",
+      "fail_safe": true,
+      "source_vars": [],
+      "human_label": "the patient is under 18",
+      "source_quote": "If the patient is under 18, ensure guardian consent is obtained.",
+      "source_section_id": "chunk_2"
+    }
+  ],
+  "modules": {
+    "mod_initial_greeting": {
+      "module_id": "mod_initial_greeting",
+      "display_name": "greeting the patient and confirming their identity",
+      "hit_policy": "first",
+      "inputs": [],
+      "outputs": [],
+      "rules": []
+    },
+    "mod_emergency_escalation": {
+      "module_id": "mod_emergency_escalation",
+      "display_name": "immediately escalate to emergency protocol",
+      "hit_policy": "first",
+      "inputs": [],
+      "outputs": [],
+      "rules": []
+    },
+    "mod_standard_assessment": {
+      "module_id": "mod_standard_assessment",
+      "display_name": "proceed to standard assessment",
+      "hit_policy": "first",
+      "inputs": [],
+      "outputs": [],
+      "rules": []
+    },
+    "mod_flag_chart": {
+      "module_id": "mod_flag_chart",
+      "display_name": "flag the chart accordingly",
+      "hit_policy": "first",
+      "inputs": [],
+      "outputs": [],
+      "rules": []
+    },
+    "mod_administer_analgesic": {
+      "module_id": "mod_administer_analgesic",
+      "display_name": "administer analgesic per standing order",
+      "hit_policy": "first",
+      "inputs": [],
+      "outputs": [],
+      "rules": []
+    },
+    "mod_continue_monitoring": {
+      "module_id": "mod_continue_monitoring",
+      "display_name": "continue monitoring",
+      "hit_policy": "first",
+      "inputs": [],
+      "outputs": [],
+      "rules": []
+    },
+    "mod_treatment_plan": {
+      "module_id": "mod_treatment_plan",
+      "display_name": "treatment plan",
+      "hit_policy": "first",
+      "inputs": [],
+      "outputs": [],
+      "rules": []
+    },
+    "mod_surgical_consent_module": {
+      "module_id": "mod_surgical_consent_module",
+      "display_name": "surgical consent module",
+      "hit_policy": "first",
+      "inputs": [],
+      "outputs": [],
+      "rules": []
+    },
+    "mod_pharmacy_coordination_module": {
+      "module_id": "mod_pharmacy_coordination_module",
+      "display_name": "pharmacy coordination module",
+      "hit_policy": "first",
+      "inputs": [],
+      "outputs": [],
+      "rules": []
+    },
+    "mod_geriatric_pathway": {
+      "module_id": "mod_geriatric_pathway",
+      "display_name": "geriatric care coordination pathway",
+      "hit_policy": "first",
+      "inputs": [],
+      "outputs": [],
+      "rules": []
+    },
+    "mod_guardian_consent": {
+      "module_id": "mod_guardian_consent",
+      "display_name": "ensure guardian consent is obtained",
+      "hit_policy": "first",
+      "inputs": [],
+      "outputs": [],
+      "rules": []
+    },
+    "mod_patient_education": {
+      "module_id": "mod_patient_education",
+      "display_name": "Explain the treatment options using language the patient can understand",
+      "hit_policy": "first",
+      "inputs": [],
+      "outputs": [],
+      "rules": []
+    },
+    "mod_discharge_coordinator_role": {
+      "module_id": "mod_discharge_coordinator_role",
+      "display_name": "discharge coordinator",
+      "hit_policy": "first",
+      "inputs": [],
+      "outputs": [],
+      "rules": []
+    }
+  },
+  "router": {
+    "hit_policy": "first",
+    "rows": [
+      {
+        "priority": 0,
+        "condition": "p_danger_signs == true",
+        "output_module": "mod_emergency_escalation",
+        "description": "Danger sign short-circuit"
+      },
+      {
+        "priority": 1,
+        "condition": "select the appropriate care pathway based on acuity: emergent, urgent, or routine.",
+        "output_module": "care_pathway_router",
+        "description": "emergent, urgent, or routine"
+      },
+      {
+        "priority": 2,
+        "condition": "route the patient to the appropriate follow-up: primary care, specialist referral, or home health services.",
+        "output_module": "followup_router",
+        "description": "primary care, specialist referral, or home health services"
+      }
+    ]
+  },
+  "phrase_bank": [
+    {
+      "id": "m_otc_options",
+      "category": "general",
+      "text": "offer over-the-counter options",
+      "module_context": "",
+      "source_quote": "If pain level is between 4 and 6, offer over-the-counter options.",
+      "source_section_id": "chunk_1"
+    },
+    {
+      "id": "m_low_dose_phrase",
+      "category": "general",
+      "text": "We recommend starting with a low dose and gradually increasing",
+      "module_context": "",
+      "source_quote": "such as 'We recommend starting with a low dose and gradually increasing'",
+      "source_section_id": "chunk_2"
+    },
+    {
+      "id": "m_procedure_success_phrase",
+      "category": "general",
+      "text": "This procedure has a high success rate and minimal recovery time",
+      "module_context": "",
+      "source_quote": "or 'This procedure has a high success rate and minimal recovery time.'",
+      "source_section_id": "chunk_2"
+    }
+  ],
+  "integrative": {
+    "rules": [
+      {
+        "id": "ehr_documentation",
+        "modules_involved": [
+          "mod_initial_greeting",
+          "mod_emergency_escalation",
+          "mod_standard_assessment",
+          "mod_flag_chart",
+          "mod_administer_analgesic",
+          "mod_continue_monitoring",
+          "mod_treatment_plan",
+          "mod_surgical_consent_module",
+          "mod_pharmacy_coordination_module",
+          "mod_geriatric_pathway",
+          "mod_guardian_consent",
+          "mod_patient_education",
+          "mod_discharge_coordinator_role"
+        ],
+        "combine_rule": "Document all findings in the electronic health record using standardized terminology.",
+        "referral_priority": "routine",
+        "treatment_combination": "Document all findings in the electronic health record using standardized terminology"
+      },
+      {
+        "id": "care_summary_integration",
+        "modules_involved": [
+          "mod_initial_greeting",
+          "mod_emergency_escalation",
+          "mod_standard_assessment",
+          "mod_flag_chart",
+          "mod_administer_analgesic",
+          "mod_continue_monitoring",
+          "mod_treatment_plan",
+          "mod_surgical_consent_module",
+          "mod_pharmacy_coordination_module",
+          "mod_geriatric_pathway",
+          "mod_guardian_consent",
+          "mod_patient_education",
+          "mod_discharge_coordinator_role"
+        ],
+        "combine_rule": "Integrate all assessment data, treatment decisions, and patient preferences into a comprehensive care summary.",
+        "referral_priority": "priority",
+        "treatment_combination": "Integrate all assessment data, treatment decisions, and patient preferences into a comprehensive care summary"
+      },
+      {
+        "id": "verbal_confirmation",
+        "modules_involved": [
+          "mod_initial_greeting",
+          "mod_emergency_escalation",
+          "mod_standard_assessment",
+          "mod_flag_chart",
+          "mod_administer_analgesic",
+          "mod_continue_monitoring",
+          "mod_treatment_plan",
+          "mod_surgical_consent_module",
+          "mod_pharmacy_coordination_module",
+          "mod_geriatric_pathway",
+          "mod_guardian_consent",
+          "mod_patient_education",
+          "mod_discharge_coordinator_role"
+        ],
+        "combine_rule": "Ensure the patient verbally confirms understanding of their discharge instructions.",
+        "referral_priority": "routine",
+        "treatment_combination": "Ensure the patient verbally confirms understanding of their discharge instructions"
+      },
+      {
+        "id": "care_summary",
+        "modules_involved": [
+          "mod_initial_greeting",
+          "mod_emergency_escalation",
+          "mod_standard_assessment",
+          "mod_flag_chart",
+          "mod_administer_analgesic",
+          "mod_continue_monitoring",
+          "mod_treatment_plan",
+          "mod_surgical_consent_module",
+          "mod_pharmacy_coordination_module",
+          "mod_geriatric_pathway",
+          "mod_guardian_consent",
+          "mod_patient_education",
+          "mod_discharge_coordinator_role"
+        ],
+        "combine_rule": "into a comprehensive care summary.",
+        "referral_priority": "routine",
+        "treatment_combination": "comprehensive care summary"
+      }
+    ]
+  }
+}

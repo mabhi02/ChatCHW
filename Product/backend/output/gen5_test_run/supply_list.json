@@ -1,0 +1,149 @@
+[
+  {
+    "id": "supply_recording_form",
+    "display_name": "Sick Child Recording Form",
+    "kind": "consumable",
+    "source_quote": "Sick Child Recording Forms",
+    "source_section_id": "both"
+  },
+  {
+    "id": "supply_ors_packet",
+    "display_name": "ORS packets",
+    "kind": "consumable",
+    "source_quote": "ORS packets",
+    "source_section_id": "both"
+  },
+  {
+    "id": "supply_zinc_20mg",
+    "display_name": "Zinc tablets (20 mg dispersible)",
+    "kind": "consumable",
+    "source_quote": "Zinc tablets (20 mg dispersible)",
+    "source_section_id": "both"
+  },
+  {
+    "id": "supply_al_tablets",
+    "display_name": "Artemether-Lumefantrine (AL) tablets",
+    "kind": "consumable",
+    "source_quote": "Antimalarial AL (Artemether-Lumefantrine)",
+    "source_section_id": "both"
+  },
+  {
+    "id": "supply_amoxicillin_250mg",
+    "display_name": "Amoxicillin tablets (250 mg)",
+    "kind": "consumable",
+    "source_quote": "Amoxicillin tablets (250 mg)",
+    "source_section_id": "both"
+  },
+  {
+    "id": "supply_gloves",
+    "display_name": "Gloves (new pair for each RDT)",
+    "kind": "consumable",
+    "source_quote": "Gloves (new pair for each RDT)",
+    "source_section_id": "both"
+  },
+  {
+    "id": "supply_lancets",
+    "display_name": "Lancets",
+    "kind": "consumable",
+    "source_quote": "Lancets",
+    "source_section_id": "both"
+  },
+  {
+    "id": "supply_alcohol_swabs",
+    "display_name": "Spirit swabs (alcohol swabs)",
+    "kind": "consumable",
+    "source_quote": "Spirit swabs (alcohol swabs)",
+    "source_section_id": "both"
+  },
+  {
+    "id": "supply_referral_form",
+    "display_name": "Referral note forms",
+    "kind": "consumable",
+    "source_quote": "Write a referral note including: child's name, age, date, reason for referral, danger signs found, t",
+    "source_section_id": "both"
+  },
+  {
+    "id": "supply_rdt_buffer",
+    "display_name": "Buffer solution (for RDTs)",
+    "kind": "consumable",
+    "source_quote": "Buffer solution (for RDTs)",
+    "source_section_id": "both"
+  },
+  {
+    "id": "equip_nonsharps_container",
+    "display_name": "Non-sharps waste container",
+    "kind": "equipment",
+    "source_quote": "Non-sharps waste container",
+    "source_section_id": "both"
+  },
+  {
+    "id": "supply_rdt_malaria",
+    "display_name": "Rapid Diagnostic Test (RDT) for malaria",
+    "kind": "consumable",
+    "source_quote": "Do a Rapid Diagnostic Test (RDT) for malaria before treating.",
+    "source_section_id": "both"
+  },
+  {
+    "id": "equip_muac_strap",
+    "display_name": "MUAC (Mid-Upper Arm Circumference) strap",
+    "kind": "equipment",
+    "source_quote": "MUAC (Mid-Upper Arm Circumference) strap",
+    "source_section_id": "both"
+  },
+  {
+    "id": "equip_timer",
+    "display_name": "Timer or watch with second hand",
+    "kind": "equipment",
+    "source_quote": "Timer or watch with second hand (for counting breaths)",
+    "source_section_id": "both"
+  },
+  {
+    "id": "equip_thermometer",
+    "display_name": "Thermometer (optional)",
+    "kind": "equipment",
+    "source_quote": "Thermometer (optional)",
+    "source_section_id": "both"
+  },
+  {
+    "id": "equip_spoon",
+    "display_name": "Spoon",
+    "kind": "equipment",
+    "source_quote": "spoon",
+    "source_section_id": "both"
+  },
+  {
+    "id": "supply_soap",
+    "display_name": "Soap",
+    "kind": "consumable",
+    "source_quote": "soap",
+    "source_section_id": "both"
+  },
+  {
+    "id": "equip_clean_container",
+    "display_name": "Clean container",
+    "kind": "equipment",
+    "source_quote": "clean container",
+    "source_section_id": "both"
+  },
+  {
+    "id": "equip_cup",
+    "display_name": "Cup",
+    "kind": "equipment",
+    "source_quote": "cup",
+    "source_section_id": "both"
+  },
+  {
+    "id": "equip_covered_container",
+    "display_name": "Covered container",
+    "kind": "equipment",
+    "source_quote": "covered container",
+    "source_section_id": "both"
+  },
+  {
+    "id": "supply_itn",
+    "display_name": "Insecticide-treated bednet (ITN)",
+    "kind": "consumable",
+    "source_quote": "insecticide-treated bednet (ITN)",
+    "source_section_id": "both"
+  }
+]

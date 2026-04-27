@@ -1,0 +1,26 @@
+[
+  {
+    "id": "m_otc_options",
+    "category": "general",
+    "text": "offer over-the-counter options",
+    "module_context": "",
+    "source_quote": "If pain level is between 4 and 6, offer over-the-counter options.",
+    "source_section_id": "chunk_1"
+  },
+  {
+    "id": "m_low_dose_phrase",
+    "category": "general",
+    "text": "We recommend starting with a low dose and gradually increasing",
+    "module_context": "",
+    "source_quote": "such as 'We recommend starting with a low dose and gradually increasing'",
+    "source_section_id": "chunk_2"
+  },
+  {
+    "id": "m_procedure_success_phrase",
+    "category": "general",
+    "text": "This procedure has a high success rate and minimal recovery time",
+    "module_context": "",
+    "source_quote": "or 'This procedure has a high success rate and minimal recovery time.'",
+    "source_section_id": "chunk_2"
+  }
+]

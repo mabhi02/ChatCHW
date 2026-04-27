@@ -1,0 +1,12 @@
+frontend/
+rlm/docs/
+rlm/media/
+rlm/visualizer/
+rlm/tests/
+rlm/examples/
+*.md
+*.pdf
+.git/
+__pycache__/
+*.pyc
+backend/.venv/

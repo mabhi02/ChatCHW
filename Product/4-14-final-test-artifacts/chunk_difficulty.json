@@ -1,0 +1,138 @@
+{
+  "total_chunks": 21,
+  "distribution": {
+    "trivial": 7,
+    "easy": 13,
+    "medium": 1,
+    "hard": 0,
+    "extreme": 0
+  },
+  "chunks": [
+    {
+      "index": 0,
+      "section": "b_beauty+a_story+contents",
+      "difficulty": "easy",
+      "score": 0.1979
+    },
+    {
+      "index": 1,
+      "section": "contents+give_ors",
+      "difficulty": "easy",
+      "score": 0.1808
+    },
+    {
+      "index": 2,
+      "section": "a_story_p53+a_mary_ellen+give_ors",
+      "difficulty": "easy",
+      "score": 0.1799
+    },
+    {
+      "index": 3,
+      "section": "assist_referral+invalid_result+begin_treatment",
+      "difficulty": "trivial",
+      "score": 0.1556
+    },
+    {
+      "index": 4,
+      "section": "course_objectives+child_1_siew_chin+give_ors_solution",
+      "difficulty": "easy",
+      "score": 0.1718
+    },
+    {
+      "index": 5,
+      "section": "child_3_karen_shah+checking_questions+exercise_2_optional",
+      "difficulty": "easy",
+      "score": 0.1729
+    },
+    {
+      "index": 6,
+      "section": "exercise_2_optional+child_juanita_vald_z+child_1_jackie_marks",
+      "difficulty": "trivial",
+      "score": 0.1595
+    },
+    {
+      "index": 7,
+      "section": "give_oral_amoxicillin+yellow_on_muac_strap+part_1_demonstration",
+      "difficulty": "medium",
+      "score": 0.2275
+    },
+    {
+      "index": 8,
+      "section": "part_2_role_play_practice+child_2_comfort_green_p50+during_the_follow_up_visit",
+      "difficulty": "easy",
+      "score": 0.1784
+    },
+    {
+      "index": 9,
+      "section": "exercise_decide_to_refer_2+record_the_child_s_problems+discussion_severe_malnutrition",
+      "difficulty": "easy",
+      "score": 0.1896
+    },
+    {
+      "index": 10,
+      "section": "unusually_sleepy_or_unconscious+child_2_wilson_man_age_5_months+any_danger_sign_refer_the_child",
+      "difficulty": "easy",
+      "score": 0.1835
+    },
+    {
+      "index": 11,
+      "section": "exercise_identify_fast_breathing+child_3_jocelyn_tan_age_12_weeks+unusually_sleepy_or_unconscious",
+      "difficulty": "easy",
+      "score": 0.1742
+    },
+    {
+      "index": 12,
+      "section": "look_for_signs_of_illness_continued+practise_your_skills_in_the_community+take_home_messages_for_this_section",
+      "difficulty": "easy",
+      "score": 0.1721
+    },
+    {
+      "index": 13,
+      "section": "follow_up_the_sick_child_treated_at_home+take_home_messages_for_this_section_p39+take_home_messages_for_this_section_p64",
+      "difficulty": "trivial",
+      "score": 0.1637
+    },
+    {
+      "index": 14,
+      "section": "give_oral_medicine_and_advise_the_caregiver+any_danger_sign_refer_the_child_continued+discussion_select_a_pre_referral_treatment",
+      "difficulty": "trivial",
+      "score": 0.1694
+    },
+    {
+      "index": 15,
+      "section": "annex_b_rapid_diagnostic_test_rdt_for_malaria+record_the_treatments_given_and_other_actions+give_oral_medicine_and_advise_the_caregiver",
+      "difficulty": "trivial",
+      "score": 0.1612
+    },
+    {
+      "index": 16,
+      "section": "look_for_signs_of_severe_malnutrition_continued+part_1_read_the_result_of_the_demonstration_rdt+introduction_caring_for_children_in_the_community",
+      "difficulty": "easy",
+      "score": 0.1899
+    },
+    {
+      "index": 17,
+      "section": "advise_the_caregiver_on_how_to_treat_the_child_at_home+exercise_use_the_recording_form_to_identify_problems_2+what_is_the_dose_for_a_child_age_3_years_up_to_5_years",
+      "difficulty": "easy",
+      "score": 0.1746
+    },
+    {
+      "index": 18,
+      "section": "exercise_decide_on_the_dose_of_amoxicillin_to_give_a_child+demonstration_and_practice_decide_on_treatment_for_the_child+how_much_zinc_do_you_give_a_child_age_6_months_up_to_5_years",
+      "difficulty": "trivial",
+      "score": 0.1617
+    },
+    {
+      "index": 19,
+      "section": "what_do_we_know_about_grace_from_the_information_on_her_recording_form_below+follow_up_the_child_on_return_at_least_once_a_week_until_child_is_well+exercise_decide_on_the_dose_of_an_antimalarial_to_give_a_child",
+      "difficulty": "easy",
+      "score": 0.175
+    },
+    {
+      "index": 20,
+      "section": "what_do_we_know_about_grace_from_the_information_on_her_recording_form_below+annex_c_giving_rectal_artesunate_suppository_for_pre_referral_treatment_of_fever",
+      "difficulty": "trivial",
+      "score": 0.16
+    }
+  ]
+}
