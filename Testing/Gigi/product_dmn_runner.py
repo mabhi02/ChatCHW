@@ -302,44 +302,43 @@ def _muac_category_to_mm(category: Any) -> int:
 
 def adapt_angelina_inputs_for_product_logic(inputs: Dict[str, Any]) -> Dict[str, Any]:
     """Map Angelina preprocessor keys to this product clinical_logic key shape."""
-    age_months = int(inputs.get("age_months", 0))
-    fast = bool(inputs.get("fast_breathing_present", False))
-    rr_estimate = 0
-    if fast:
-        rr_estimate = 50 if 2 <= age_months < 12 else 40 if 12 <= age_months < 60 else 30
-    q_able = True
-    ex_not_able = not q_able
-    q_vomit = False
-    cough_days = int(inputs.get("cough_duration_days", 0) or 0)
-    diarrhoea_days = int(inputs.get("diarrhoea_duration_days", 0) or 0)
-    fever_days = int(inputs.get("fever_duration_days", 0) or 0)
-    malaria = bool(inputs.get("malaria_area", False))
-    rdt_result = str(inputs.get("rdt_result", "not_done"))
-    muac_category = str(inputs.get("muac_result", "green"))
-    swelling = bool(inputs.get("swelling_of_both_feet", False))
+    age_months = int(inputs.get("demo_child_age_months", 0))
+    rr_estimate = int(inputs.get("v_respiratory_rate_per_min", 0))
+    ex_not_able = bool(inputs.get("q_not_able_to_drink_or_feed", False))
+    q_able = not ex_not_able
+    q_vomit = bool(inputs.get("q_vomits_everything", False))
+    cough_days = int(inputs.get("q_cough_duration_days", 0) or 0)
+    diarrhoea_days = int(inputs.get("q_diarrhoea_duration_days", 0) or 0)
+    fever_days = int(inputs.get("q_fever_duration_days", 0) or 0)
+    malaria = bool(inputs.get("hx_malaria_area", False))
+    rdt_result = str(inputs.get("lab_rdt_malaria_result", "not_done"))
+    muac_category = str(inputs.get("v_muac_strap_colour", "green"))
+    swelling = bool(inputs.get("ex_swelling_both_feet", False))
+    sleepy = bool(inputs.get("ex_unusually_sleepy_or_unconscious", False))
+    convulsions = bool(inputs.get("q_convulsions", False))
     mapped = {
         "demo_age_months": age_months,
-        "q_cough_present": bool(inputs.get("cough_present", False)),
+        "q_cough_present": bool(inputs.get("q_has_cough", False)),
         "q_cough_duration_days": cough_days,
         "q_cough_days": cough_days,
-        "q_has_diarrhoea": bool(inputs.get("has_diarrhoea", False)),
-        "q_diarrhoea_present": bool(inputs.get("has_diarrhoea", False)),
+        "q_has_diarrhoea": bool(inputs.get("q_has_diarrhoea", False)),
+        "q_diarrhoea_present": bool(inputs.get("q_has_diarrhoea", False)),
         "q_diarrhoea_duration_days": diarrhoea_days,
         "q_diarrhoea_days": diarrhoea_days,
-        "q_blood_in_stool": bool(inputs.get("blood_in_stool", False)),
-        "q_has_fever": bool(inputs.get("hot_with_fever", False)),
-        "q_fever_present": bool(inputs.get("hot_with_fever", False)),
+        "q_blood_in_stool": bool(inputs.get("q_blood_in_stool", False)),
+        "q_has_fever": bool(inputs.get("q_has_fever", False)),
+        "q_fever_present": bool(inputs.get("q_has_fever", False)),
         "q_fever_duration_days": fever_days,
         "q_fever_days": fever_days,
-        "q_convulsions_present": False,
-        "hx_convulsions": False,
+        "q_convulsions_present": convulsions,
+        "hx_convulsions": convulsions,
         "q_able_to_drink_feed": q_able,
         "ex_not_able_to_drink_or_feed": ex_not_able,
         "q_vomits_everything": q_vomit,
         "ex_vomits_everything": q_vomit,
-        "ex_chest_indrawing": bool(inputs.get("chest_indrawing", False)),
-        "ex_unusually_sleepy_unconscious": False,
-        "ex_unusually_sleepy_or_unconscious": False,
+        "ex_chest_indrawing": bool(inputs.get("ex_chest_indrawing", False)),
+        "ex_unusually_sleepy_unconscious": sleepy,
+        "ex_unusually_sleepy_or_unconscious": sleepy,
         "ex_bilateral_foot_oedema": swelling,
         "ex_swelling_both_feet": swelling,
         "ex_respiratory_rate_bpm": rr_estimate,

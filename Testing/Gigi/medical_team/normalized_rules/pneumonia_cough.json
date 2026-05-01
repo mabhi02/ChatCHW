@@ -1,0 +1,356 @@
+{
+  "source_file": "Pneumonia (Cough) Module.xlsx",
+  "normalized_at_iso": "2026-05-01T04:38:35.565648+00:00",
+  "modules": [
+    {
+      "module_id": "pneumonia_cough_module_diagnosis_table",
+      "source_file": "Pneumonia (Cough) Module.xlsx",
+      "source_sheet": "Diagnosis Table",
+      "kind": "rule_grid",
+      "sheet_context_detected": "diagnosis",
+      "rules": [
+        {
+          "rule_index": 1,
+          "raw_row_index": 2,
+          "conditions": {
+            "q_cough_duration_days": "≥14 days",
+            "v_resp_rate_per_min": "ANY",
+            "demo_age_months": "2–59 months",
+            "ex_chest_indrawing": "ANY",
+            "q_convulsions_this_illness": "ANY",
+            "q_not_able_drink_or_eat": "ANY",
+            "q_vomits_everything": "ANY",
+            "ex_unusually_sleepy_or_unconscious": "ANY",
+            "ex_muac_color_result": "ANY",
+            "ex_feet_swelling_bilateral": "ANY",
+            "q_fever_days_since_start_days": "ANY",
+            "q_diarrhea_duration_days": "ANY",
+            "q_blood_in_stool": "ANY"
+          },
+          "outputs": {
+            "p_fast_breathing": "N/A",
+            "p_danger_sign_present": "YES",
+            "dx_pneumonia": "NO",
+            "dx_pneumonia_severe": "NO",
+            "ref_health_facility_urgent": "YES",
+            "Citation": "WHO 2012 p14 (ask duration); WHO 2012 p38 (cough ≥14 days danger sign)"
+          },
+          "notes": "Danger sign: cough for ≥14 days → urgent referral (possible TB/asthma/whooping cough/other).",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "1.0",
+            "spreadsheet_rule_value": 1,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Danger sign: cough for ≥14 days → urgent referral (possible TB/asthma/whooping cough/other)."
+          }
+        },
+        {
+          "rule_index": 2,
+          "raw_row_index": 3,
+          "conditions": {
+            "q_cough_duration_days": "<14 days or ANY",
+            "v_resp_rate_per_min": "ANY",
+            "demo_age_months": "2–59 months",
+            "ex_chest_indrawing": "YES",
+            "q_convulsions_this_illness": "ANY",
+            "q_not_able_drink_or_eat": "ANY",
+            "q_vomits_everything": "ANY",
+            "ex_unusually_sleepy_or_unconscious": "ANY",
+            "ex_muac_color_result": "ANY",
+            "ex_feet_swelling_bilateral": "ANY",
+            "q_fever_days_since_start_days": "ANY",
+            "q_diarrhea_duration_days": "ANY",
+            "q_blood_in_stool": "ANY"
+          },
+          "outputs": {
+            "p_fast_breathing": "N/A",
+            "p_danger_sign_present": "YES",
+            "dx_pneumonia": "NO",
+            "dx_pneumonia_severe": "YES",
+            "ref_health_facility_urgent": "YES",
+            "Citation": "WHO 2012 p22–25 (how to assess chest indrawing); WHO 2012 p41 (chest indrawing danger sign)"
+          },
+          "notes": "Danger sign: chest indrawing present → severe pneumonia → urgent referral.",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "2.0",
+            "spreadsheet_rule_value": 2,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Danger sign: chest indrawing present → severe pneumonia → urgent referral."
+          }
+        },
+        {
+          "rule_index": 3,
+          "raw_row_index": 4,
+          "conditions": {
+            "q_cough_duration_days": "<14 days",
+            "v_resp_rate_per_min": "AGE-THRESHOLD",
+            "demo_age_months": "2–59 months",
+            "ex_chest_indrawing": "NO",
+            "q_convulsions_this_illness": "NO",
+            "q_not_able_drink_or_eat": "NO",
+            "q_vomits_everything": "NO",
+            "ex_unusually_sleepy_or_unconscious": "NO",
+            "ex_muac_color_result": "not red",
+            "ex_feet_swelling_bilateral": "NO",
+            "q_fever_days_since_start_days": "<7 or ANY",
+            "q_diarrhea_duration_days": "<14 or ANY",
+            "q_blood_in_stool": "NO/ANY"
+          },
+          "outputs": {
+            "p_fast_breathing": "YES",
+            "p_danger_sign_present": "NO",
+            "dx_pneumonia": "YES",
+            "dx_pneumonia_severe": "NO",
+            "ref_health_facility_urgent": "NO",
+            "Citation": "WHO 2012 p26–27 (fast breathing thresholds; pneumonia); WHO 2012 p43 (treat with amoxicillin if no chest indrawing/other danger sign)"
+          },
+          "notes": "Pneumonia: cough with fast breathing (no chest indrawing or other danger signs) → pneumonia diagnosis (treatable at home).",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "3.0",
+            "spreadsheet_rule_value": 3,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Pneumonia: cough with fast breathing (no chest indrawing or other danger signs) → pneumonia diagnosis (treatable at home)."
+          }
+        },
+        {
+          "rule_index": 4,
+          "raw_row_index": 5,
+          "conditions": {
+            "q_cough_duration_days": "<14 days",
+            "v_resp_rate_per_min": "BELOW THRESHOLD",
+            "demo_age_months": "2–59 months",
+            "ex_chest_indrawing": "NO",
+            "q_convulsions_this_illness": "NO",
+            "q_not_able_drink_or_eat": "NO",
+            "q_vomits_everything": "NO",
+            "ex_unusually_sleepy_or_unconscious": "NO",
+            "ex_muac_color_result": "not red",
+            "ex_feet_swelling_bilateral": "NO",
+            "q_fever_days_since_start_days": "<7 or ANY",
+            "q_diarrhea_duration_days": "<14 or ANY",
+            "q_blood_in_stool": "NO/ANY"
+          },
+          "outputs": {
+            "p_fast_breathing": "NO",
+            "p_danger_sign_present": "NO",
+            "dx_pneumonia": "NO",
+            "dx_pneumonia_severe": "NO",
+            "ref_health_facility_urgent": "NO",
+            "Citation": "WHO 2012 p43–44 (cough <14 days without danger sign AND without fast breathing = cough/cold; supportive care; follow-up)"
+          },
+          "notes": "Not pneumonia: cough <14 days, no danger sign, and NOT fast breathing → simple cough/cold (supportive care).",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "4.0",
+            "spreadsheet_rule_value": 4,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Not pneumonia: cough <14 days, no danger sign, and NOT fast breathing → simple cough/cold (supportive care)."
+          }
+        },
+        {
+          "rule_index": 5,
+          "raw_row_index": 6,
+          "conditions": {
+            "q_cough_duration_days": "ANY",
+            "v_resp_rate_per_min": "ANY",
+            "demo_age_months": "ANY",
+            "ex_chest_indrawing": "NO/ANY",
+            "q_convulsions_this_illness": "YES/ANY",
+            "q_not_able_drink_or_eat": "YES/ANY",
+            "q_vomits_everything": "YES/ANY",
+            "ex_unusually_sleepy_or_unconscious": "YES/ANY",
+            "ex_muac_color_result": "red/ANY",
+            "ex_feet_swelling_bilateral": "YES/ANY",
+            "q_fever_days_since_start_days": "≥7 or ANY",
+            "q_diarrhea_duration_days": "≥14 or ANY",
+            "q_blood_in_stool": "YES/ANY"
+          },
+          "outputs": {
+            "p_fast_breathing": "N/A",
+            "p_danger_sign_present": "YES",
+            "dx_pneumonia": "NO",
+            "dx_pneumonia_severe": "NO",
+            "ref_health_facility_urgent": "YES",
+            "Citation": "WHO 2012 p38–41, p50 (danger signs; referral overrides community treatment)"
+          },
+          "notes": "Other danger sign present (convulsions, unable to drink/eat, vomits everything, unusually sleepy/unconscious, severe malnutrition, swelling feet, fever ≥7 days, diarrhoea ≥14 days, blood in stool) → urgent referral overrides cough pathway.",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "5.0",
+            "spreadsheet_rule_value": 5,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Other danger sign present (convulsions, unable to drink/eat, vomits everything, unusually sleepy/unconscious, severe malnutrition, swelling feet, fever ≥7 days, diarrhoea ≥14 days, blood in stool) → urgent referral overrides cough pathway."
+          }
+        },
+        {
+          "rule_index": 6,
+          "raw_row_index": 7,
+          "conditions": {
+            "q_cough_duration_days": "ANY",
+            "v_resp_rate_per_min": "COUNT 60s",
+            "demo_age_months": "2–59 months",
+            "ex_chest_indrawing": "N/A",
+            "q_convulsions_this_illness": "N/A",
+            "q_not_able_drink_or_eat": "N/A",
+            "q_vomits_everything": "N/A",
+            "ex_unusually_sleepy_or_unconscious": "N/A",
+            "ex_muac_color_result": "N/A",
+            "ex_feet_swelling_bilateral": "N/A",
+            "q_fever_days_since_start_days": "N/A",
+            "q_diarrhea_duration_days": "N/A",
+            "q_blood_in_stool": "N/A"
+          },
+          "outputs": {
+            "p_fast_breathing": "If 2–11 mo: ≥50/min; if 12–59 mo: ≥40/min",
+            "p_danger_sign_present": "N/A",
+            "dx_pneumonia": "N/A",
+            "dx_pneumonia_severe": "N/A",
+            "ref_health_facility_urgent": "N/A",
+            "Citation": "WHO 2012 p26–27 (count breaths for 60s; thresholds by age)"
+          },
+          "notes": "Fast breathing predicate definition (age-specific): compute p_fast_breathing from respiratory rate and age.",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "6.0",
+            "spreadsheet_rule_value": 6,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Fast breathing predicate definition (age-specific): compute p_fast_breathing from respiratory rate and age."
+          }
+        }
+      ]
+    },
+    {
+      "module_id": "pneumonia_cough_module_treatment_table",
+      "source_file": "Pneumonia (Cough) Module.xlsx",
+      "source_sheet": "Treatment Table",
+      "kind": "rule_grid",
+      "sheet_context_detected": "clinical_treatment",
+      "rules": [
+        {
+          "rule_index": 1,
+          "raw_row_index": 2,
+          "conditions": {
+            "dx_pneumonia": "YES",
+            "dx_pneumonia_severe": "NO",
+            "demo_age_months": "2–11 months",
+            "fu_in_days": 3
+          },
+          "outputs": {
+            "p_danger_sign_present": "NO",
+            "tx_antibiotic_oral": "YES",
+            "rx_amoxicillin_tablets_per_dose": 1,
+            "rx_amoxicillin_frequency_per_day": 2,
+            "rx_amoxicillin_duration_days": 5,
+            "adv_give_first_dose_now": "YES",
+            "ref_health_facility_urgent": "NO",
+            "adv_return_immediately_if_worse": "YES",
+            "adv_return_immediately_if_cannot_drink": "YES",
+            "adv_supportive_cough_remedy": "N/A",
+            "adv_avoid_cough_medicines": "N/A",
+            "out_disposition": "treated_home",
+            "Citation": "WHO 2012 p43 (pneumonia treatable at home if no chest indrawing/other danger sign); WHO 2012 p87–88 (amoxicillin dosing, first dose now, complete 5 days)"
+          },
+          "notes": "Treat pneumonia at home: give oral amoxicillin (250 mg tablets) twice daily for 5 days; help caregiver give first dose now.",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "1.0",
+            "spreadsheet_rule_value": 1,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Treat pneumonia at home: give oral amoxicillin (250 mg tablets) twice daily for 5 days; help caregiver give first dose now."
+          }
+        },
+        {
+          "rule_index": 2,
+          "raw_row_index": 3,
+          "conditions": {
+            "dx_pneumonia": "YES",
+            "dx_pneumonia_severe": "NO",
+            "demo_age_months": "12–59 months",
+            "fu_in_days": 3
+          },
+          "outputs": {
+            "p_danger_sign_present": "NO",
+            "tx_antibiotic_oral": "YES",
+            "rx_amoxicillin_tablets_per_dose": 2,
+            "rx_amoxicillin_frequency_per_day": 2,
+            "rx_amoxicillin_duration_days": 5,
+            "adv_give_first_dose_now": "YES",
+            "ref_health_facility_urgent": "NO",
+            "adv_return_immediately_if_worse": "YES",
+            "adv_return_immediately_if_cannot_drink": "YES",
+            "adv_supportive_cough_remedy": "N/A",
+            "adv_avoid_cough_medicines": "N/A",
+            "out_disposition": "treated_home",
+            "Citation": "WHO 2012 p43; WHO 2012 p87–88"
+          },
+          "notes": "Treat pneumonia at home: give oral amoxicillin (250 mg tablets) twice daily for 5 days; help caregiver give first dose now.",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "2.0",
+            "spreadsheet_rule_value": 2,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Treat pneumonia at home: give oral amoxicillin (250 mg tablets) twice daily for 5 days; help caregiver give first dose now."
+          }
+        },
+        {
+          "rule_index": 3,
+          "raw_row_index": 4,
+          "conditions": {
+            "dx_pneumonia": "ANY",
+            "dx_pneumonia_severe": "YES",
+            "demo_age_months": "ANY",
+            "fu_in_days": "N/A"
+          },
+          "outputs": {
+            "p_danger_sign_present": "YES/ANY",
+            "tx_antibiotic_oral": "NO",
+            "rx_amoxicillin_tablets_per_dose": "N/A",
+            "rx_amoxicillin_frequency_per_day": "N/A",
+            "rx_amoxicillin_duration_days": "N/A",
+            "adv_give_first_dose_now": "N/A",
+            "ref_health_facility_urgent": "YES",
+            "adv_return_immediately_if_worse": "N/A",
+            "adv_return_immediately_if_cannot_drink": "N/A",
+            "adv_supportive_cough_remedy": "N/A",
+            "adv_avoid_cough_medicines": "N/A",
+            "out_disposition": "referred",
+            "Citation": "WHO 2012 p41 (chest indrawing severe pneumonia → refer); WHO 2012 p38–41, p50 (danger signs → refer)"
+          },
+          "notes": "Severe pneumonia or any danger sign: urgent referral (oxygen/advanced care at facility).",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "3.0",
+            "spreadsheet_rule_value": 3,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Severe pneumonia or any danger sign: urgent referral (oxygen/advanced care at facility)."
+          }
+        },
+        {
+          "rule_index": 4,
+          "raw_row_index": 5,
+          "conditions": {
+            "dx_pneumonia": "NO",
+            "dx_pneumonia_severe": "NO",
+            "demo_age_months": "ANY",
+            "fu_in_days": 3
+          },
+          "outputs": {
+            "p_danger_sign_present": "NO",
+            "tx_antibiotic_oral": "NO",
+            "rx_amoxicillin_tablets_per_dose": "N/A",
+            "rx_amoxicillin_frequency_per_day": "N/A",
+            "rx_amoxicillin_duration_days": "N/A",
+            "adv_give_first_dose_now": "N/A",
+            "ref_health_facility_urgent": "NO",
+            "adv_return_immediately_if_worse": "YES",
+            "adv_return_immediately_if_cannot_drink": "YES",
+            "adv_supportive_cough_remedy": "Honey in warm water if not exclusively breastfed (local safe remedy).",
+            "adv_avoid_cough_medicines": "YES",
+            "out_disposition": "treated_home",
+            "Citation": "WHO 2012 p43–44 (supportive care; avoid cough meds; return if worse/cannot drink; follow-up in 3 days)"
+          },
+          "notes": "Simple cough/cold (no fast breathing, no danger signs): no antibiotic. Supportive care; follow-up in 3 days even if improved.",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "4.0",
+            "spreadsheet_rule_value": 4,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Simple cough/cold (no fast breathing, no danger signs): no antibiotic. Supportive care; follow-up in 3 days even if improved."
+          }
+        }
+      ]
+    }
+  ]
+}

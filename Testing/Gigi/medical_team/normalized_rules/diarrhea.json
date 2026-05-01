@@ -1,0 +1,389 @@
+{
+  "source_file": "Diarrhea Module.xlsx",
+  "normalized_at_iso": "2026-05-01T04:38:35.558078+00:00",
+  "modules": [
+    {
+      "module_id": "diarrhea_module_sheet1_diagnosis_routing",
+      "source_file": "Diarrhea Module.xlsx",
+      "source_sheet": "Sheet1",
+      "kind": "rule_grid",
+      "sheet_context_detected": "diagnosis",
+      "rules": [
+        {
+          "rule_index": 1,
+          "raw_row_index": 2,
+          "conditions": {
+            "q_stools_loose_or_watery": "YES",
+            "q_blood_in_stool": "NO",
+            "q_duration_loos_stools_days": "<14 days",
+            "ex_convulsions": "NO",
+            "q_vomits_everything?": "NO",
+            "ex_chest_indrawing": "NO",
+            "lab_muac_is_red?": "NO (pp.41)",
+            "ex_swelling_on_feet": "NO (pp.38–44)",
+            "ex_sleepy_unconcious": "NO",
+            "ex_fever_present": "ANY",
+            "q_duration_fever_days": "<7",
+            "ex_able_to_drink_eat": "YES",
+            "demo_age_months": "2–5 months"
+          },
+          "outputs": {
+            "p_danger_sign": "NO (pp.38–44)",
+            "ref_health_facility": "NO",
+            "tx_ors": "YES (p.66)",
+            "tx_zinc_supplement": "YES (p.66)",
+            "rx_ors": "“Give ORS after each loose stool” (p.66)",
+            "rx_zinc_tablets": "“½ tablet once daily for 10 days” (p.66)"
+          },
+          "notes": "Acute diarrhoea, age 2–5 months",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "1.0",
+            "spreadsheet_rule_value": 1,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Acute diarrhoea, age 2–5 months"
+          }
+        },
+        {
+          "rule_index": 2,
+          "raw_row_index": 3,
+          "conditions": {
+            "q_stools_loose_or_watery": "YES",
+            "q_blood_in_stool": "NO",
+            "q_duration_loos_stools_days": "<14 days",
+            "ex_convulsions": "NO",
+            "q_vomits_everything?": "NO",
+            "ex_chest_indrawing": "NO",
+            "lab_muac_is_red?": "NO (pp.41)",
+            "ex_swelling_on_feet": "NO (pp.38–44)",
+            "ex_sleepy_unconcious": "NO",
+            "ex_fever_present": "ANY",
+            "q_duration_fever_days": "<7",
+            "ex_able_to_drink_eat": "YES",
+            "demo_age_months": "6–59 months"
+          },
+          "outputs": {
+            "p_danger_sign": "NO (pp.38–44)",
+            "ref_health_facility": "NO",
+            "tx_ors": "YES (p.66)",
+            "tx_zinc_supplement": "YES (p.66)",
+            "rx_ors": "“Give ORS after each loose stool” (p.66)",
+            "rx_zinc_tablets": "“1 tablet once daily for 10 days” (p.66)"
+          },
+          "notes": "Acute diarrhoea, age 6–59 months",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "2.0",
+            "spreadsheet_rule_value": 2,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Acute diarrhoea, age 6–59 months"
+          }
+        },
+        {
+          "rule_index": 3,
+          "raw_row_index": 4,
+          "conditions": {
+            "q_stools_loose_or_watery": "YES",
+            "q_blood_in_stool": "YES",
+            "q_duration_loos_stools_days": "ANY",
+            "ex_convulsions": "ANY",
+            "q_vomits_everything?": "ANY",
+            "ex_chest_indrawing": "ANY",
+            "lab_muac_is_red?": "ANY",
+            "ex_swelling_on_feet": "ANY",
+            "ex_sleepy_unconcious": "ANY",
+            "ex_fever_present": "ANY",
+            "q_duration_fever_days": "ANY",
+            "ex_able_to_drink_eat": "ANY",
+            "demo_age_months": "ANY"
+          },
+          "outputs": {
+            "p_danger_sign": "YES (p.38-44)",
+            "ref_health_facility": "YES",
+            "tx_ors": "NO (refer) (p.66)",
+            "tx_zinc_supplement": "NO (refer) (p. 38)",
+            "rx_ors": "N/A",
+            "rx_zinc_tablets": "N/A"
+          },
+          "notes": "Child has blood in stool",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "3.0",
+            "spreadsheet_rule_value": 3,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Child has blood in stool"
+          }
+        },
+        {
+          "rule_index": 4,
+          "raw_row_index": 5,
+          "conditions": {
+            "q_stools_loose_or_watery": "YES",
+            "q_blood_in_stool": "ANY",
+            "q_duration_loos_stools_days": "≥14 days",
+            "ex_convulsions": "ANY",
+            "q_vomits_everything?": "ANY",
+            "ex_chest_indrawing": "ANY",
+            "lab_muac_is_red?": "ANY",
+            "ex_swelling_on_feet": "ANY",
+            "ex_sleepy_unconcious": "ANY",
+            "ex_fever_present": "ANY",
+            "q_duration_fever_days": "ANY",
+            "ex_able_to_drink_eat": "ANY",
+            "demo_age_months": "ANY"
+          },
+          "outputs": {
+            "p_danger_sign": "YES (p.38-44)",
+            "ref_health_facility": "YES",
+            "tx_ors": "NO (refer) (pp.38–44)",
+            "tx_zinc_supplement": "NO (refer) (p. 38)",
+            "rx_ors": "N/A",
+            "rx_zinc_tablets": "N/A"
+          },
+          "notes": "Child has persistent diarrhoea (more than 14 days)",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "4.0",
+            "spreadsheet_rule_value": 4,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Child has persistent diarrhoea (more than 14 days)"
+          }
+        },
+        {
+          "rule_index": 5,
+          "raw_row_index": 6,
+          "conditions": {
+            "q_stools_loose_or_watery": "YES",
+            "q_blood_in_stool": "ANY",
+            "q_duration_loos_stools_days": "ANY",
+            "ex_convulsions": "YES",
+            "q_vomits_everything?": "ANY",
+            "ex_chest_indrawing": "ANY",
+            "lab_muac_is_red?": "ANY",
+            "ex_swelling_on_feet": "ANY",
+            "ex_sleepy_unconcious": "ANY",
+            "ex_fever_present": "ANY",
+            "q_duration_fever_days": "ANY",
+            "ex_able_to_drink_eat": "ANY",
+            "demo_age_months": "ANY"
+          },
+          "outputs": {
+            "p_danger_sign": "YES (pp.38–44)",
+            "ref_health_facility": "YES",
+            "tx_ors": "NO (refer) (pp.38–44)",
+            "tx_zinc_supplement": "NO (refer) (p. 38)",
+            "rx_ors": "N/A",
+            "rx_zinc_tablets": "N/A"
+          },
+          "notes": "Child has convulsions and diarrhea",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "5.0",
+            "spreadsheet_rule_value": 5,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Child has convulsions and diarrhea"
+          }
+        },
+        {
+          "rule_index": 6,
+          "raw_row_index": 7,
+          "conditions": {
+            "q_stools_loose_or_watery": "YES",
+            "q_blood_in_stool": "ANY",
+            "q_duration_loos_stools_days": "ANY",
+            "ex_convulsions": "ANY",
+            "q_vomits_everything?": "YES",
+            "ex_chest_indrawing": "ANY",
+            "lab_muac_is_red?": "ANY",
+            "ex_swelling_on_feet": "ANY",
+            "ex_sleepy_unconcious": "ANY",
+            "ex_fever_present": "ANY",
+            "q_duration_fever_days": "ANY",
+            "ex_able_to_drink_eat": "ANY",
+            "demo_age_months": "ANY"
+          },
+          "outputs": {
+            "p_danger_sign": "YES (pp.38–44)",
+            "ref_health_facility": "YES",
+            "tx_ors": "NO (refer) (pp.38–44)",
+            "tx_zinc_supplement": "NO (refer) (p. 38)",
+            "rx_ors": "N/A",
+            "rx_zinc_tablets": "N/A"
+          },
+          "notes": "Child presents with vomiting and diarrhea",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "6.0",
+            "spreadsheet_rule_value": 6,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Child presents with vomiting and diarrhea"
+          }
+        },
+        {
+          "rule_index": 7,
+          "raw_row_index": 8,
+          "conditions": {
+            "q_stools_loose_or_watery": "YES",
+            "q_blood_in_stool": "ANY",
+            "q_duration_loos_stools_days": "ANY",
+            "ex_convulsions": "ANY",
+            "q_vomits_everything?": "ANY",
+            "ex_chest_indrawing": "ANY",
+            "lab_muac_is_red?": "YES (pp.41)",
+            "ex_swelling_on_feet": "YES (pp.41)",
+            "ex_sleepy_unconcious": "ANY",
+            "ex_fever_present": "ANY",
+            "q_duration_fever_days": "ANY",
+            "ex_able_to_drink_eat": "ANY",
+            "demo_age_months": "ANY"
+          },
+          "outputs": {
+            "p_danger_sign": "YES (pp.38–44)",
+            "ref_health_facility": "YES",
+            "tx_ors": "NO (refer) (pp.38–44)",
+            "tx_zinc_supplement": "NO (refer) (p. 38)",
+            "rx_ors": "N/A",
+            "rx_zinc_tablets": "N/A"
+          },
+          "notes": "Severe malnutrition (red MUAC or swelling) and diarrhea",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "7.0",
+            "spreadsheet_rule_value": 7,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Severe malnutrition (red MUAC or swelling) and diarrhea"
+          }
+        },
+        {
+          "rule_index": 8,
+          "raw_row_index": 9,
+          "conditions": {
+            "q_stools_loose_or_watery": "YES",
+            "q_blood_in_stool": "ANY",
+            "q_duration_loos_stools_days": "ANY",
+            "ex_convulsions": "ANY",
+            "q_vomits_everything?": "ANY",
+            "ex_chest_indrawing": "YES",
+            "lab_muac_is_red?": "ANY",
+            "ex_swelling_on_feet": "ANY",
+            "ex_sleepy_unconcious": "ANY",
+            "ex_fever_present": "ANY",
+            "q_duration_fever_days": "ANY",
+            "ex_able_to_drink_eat": "ANY",
+            "demo_age_months": "ANY"
+          },
+          "outputs": {
+            "p_danger_sign": "YES (pp.38–44)",
+            "ref_health_facility": "YES",
+            "tx_ors": "NO (refer) (pp.38–44)",
+            "tx_zinc_supplement": "NO (refer) (p. 38)",
+            "rx_ors": "N/A",
+            "rx_zinc_tablets": "N/A"
+          },
+          "notes": "Chest indrawing (possible severe pneumonia) and diarrhea",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "8.0",
+            "spreadsheet_rule_value": 8,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Chest indrawing (possible severe pneumonia) and diarrhea"
+          }
+        },
+        {
+          "rule_index": 9,
+          "raw_row_index": 10,
+          "conditions": {
+            "q_stools_loose_or_watery": "YES",
+            "q_blood_in_stool": "ANY",
+            "q_duration_loos_stools_days": "ANY",
+            "ex_convulsions": "ANY",
+            "q_vomits_everything?": "ANY",
+            "ex_chest_indrawing": "ANY",
+            "lab_muac_is_red?": "ANY",
+            "ex_swelling_on_feet": "ANY",
+            "ex_sleepy_unconcious": "YES",
+            "ex_fever_present": "ANY",
+            "q_duration_fever_days": "ANY",
+            "ex_able_to_drink_eat": "ANY",
+            "demo_age_months": "ANY"
+          },
+          "outputs": {
+            "p_danger_sign": "YES (pp.38–44)",
+            "ref_health_facility": "YES",
+            "tx_ors": "NO (refer) (pp.38–44)",
+            "tx_zinc_supplement": "NO (refer) (p. 38)",
+            "rx_ors": "N/A",
+            "rx_zinc_tablets": "N/A"
+          },
+          "notes": "Child is unusually sleepy and has diarrhea",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "9.0",
+            "spreadsheet_rule_value": 9,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Child is unusually sleepy and has diarrhea"
+          }
+        },
+        {
+          "rule_index": 10,
+          "raw_row_index": 11,
+          "conditions": {
+            "q_stools_loose_or_watery": "YES",
+            "q_blood_in_stool": "ANY",
+            "q_duration_loos_stools_days": "ANY",
+            "ex_convulsions": "ANY",
+            "q_vomits_everything?": "ANY",
+            "ex_chest_indrawing": "ANY",
+            "lab_muac_is_red?": "ANY",
+            "ex_swelling_on_feet": "ANY",
+            "ex_sleepy_unconcious": "ANY",
+            "ex_fever_present": "YES",
+            "q_duration_fever_days": ">=7",
+            "ex_able_to_drink_eat": "ANY",
+            "demo_age_months": "ANY"
+          },
+          "outputs": {
+            "p_danger_sign": "YES (pp.38–44)",
+            "ref_health_facility": "YES",
+            "tx_ors": "NO (refer) (pp.38–44)",
+            "tx_zinc_supplement": "NO (refer) (p. 38)",
+            "rx_ors": "N/A",
+            "rx_zinc_tablets": "N/A"
+          },
+          "notes": "Child has a fever and diarrhea",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "10.0",
+            "spreadsheet_rule_value": 10,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Child has a fever and diarrhea"
+          }
+        },
+        {
+          "rule_index": 11,
+          "raw_row_index": 12,
+          "conditions": {
+            "q_stools_loose_or_watery": "YES",
+            "q_blood_in_stool": "ANY",
+            "q_duration_loos_stools_days": "ANY",
+            "ex_convulsions": "ANY",
+            "q_vomits_everything?": "ANY",
+            "ex_chest_indrawing": "ANY",
+            "lab_muac_is_red?": "ANY",
+            "ex_swelling_on_feet": "ANY",
+            "ex_sleepy_unconcious": "ANY",
+            "ex_fever_present": "ANY",
+            "q_duration_fever_days": "ANY",
+            "ex_able_to_drink_eat": "NO",
+            "demo_age_months": "ANY"
+          },
+          "outputs": {
+            "p_danger_sign": "YES (pp.38–44)",
+            "ref_health_facility": "YES",
+            "tx_ors": "NO (refer) (pp.38–44)",
+            "tx_zinc_supplement": "NO (refer) (p. 38)",
+            "rx_ors": "N/A",
+            "rx_zinc_tablets": "N/A"
+          },
+          "notes": "Child is unable to eat or drink and has diarrhea",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "11.0",
+            "spreadsheet_rule_value": 11,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Child is unable to eat or drink and has diarrhea"
+          }
+        }
+      ]
+    }
+  ]
+}

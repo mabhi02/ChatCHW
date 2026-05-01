@@ -1,0 +1,1608 @@
+{
+  "source_file": "Navigator Modules.xlsx",
+  "normalized_at_iso": "2026-05-01T04:38:35.549892+00:00",
+  "modules": [
+    {
+      "module_id": "navigator_modules_opening_module",
+      "source_file": "Navigator Modules.xlsx",
+      "source_sheet": "Opening module",
+      "kind": "opening_branching",
+      "sections": [
+        {
+          "section_id": "opening_ask_questions",
+          "rules": [
+            {
+              "rule_index": 1,
+              "rule_index_in_section": 1,
+              "raw_row_index": 2,
+              "conditions": {},
+              "outputs": {
+                "YES": "REFER (pp. 38)",
+                "NO": "next",
+                "DON’T KNOW": "REFER",
+                "ACTION": "STOP if YES"
+              },
+              "notes": "",
+              "metadata": {
+                "opening_section": "opening_ask_questions",
+                "opening_row_index": 2,
+                "#": 1,
+                "description_cell": "Question",
+                "description_value": "Cough ≥ 14 days?"
+              }
+            },
+            {
+              "rule_index": 2,
+              "rule_index_in_section": 2,
+              "raw_row_index": 3,
+              "conditions": {},
+              "outputs": {
+                "YES": "REFER (pp. 39)",
+                "NO": "next",
+                "DON’T KNOW": "REFER",
+                "ACTION": "STOP if YES"
+              },
+              "notes": "",
+              "metadata": {
+                "opening_section": "opening_ask_questions",
+                "opening_row_index": 3,
+                "#": 2,
+                "description_cell": "Question",
+                "description_value": "Diarrhoea ≥ 14 days?"
+              }
+            },
+            {
+              "rule_index": 3,
+              "rule_index_in_section": 3,
+              "raw_row_index": 4,
+              "conditions": {},
+              "outputs": {
+                "YES": "REFER (pp. 39)",
+                "NO": "next",
+                "DON’T KNOW": "REFER",
+                "ACTION": "STOP if YES"
+              },
+              "notes": "",
+              "metadata": {
+                "opening_section": "opening_ask_questions",
+                "opening_row_index": 4,
+                "#": 3,
+                "description_cell": "Question",
+                "description_value": "Blood in stool?"
+              }
+            },
+            {
+              "rule_index": 4,
+              "rule_index_in_section": 4,
+              "raw_row_index": 5,
+              "conditions": {},
+              "outputs": {
+                "YES": "REFER (pp. 39)",
+                "NO": "next",
+                "DON’T KNOW": "REFER",
+                "ACTION": "STOP if YES"
+              },
+              "notes": "",
+              "metadata": {
+                "opening_section": "opening_ask_questions",
+                "opening_row_index": 5,
+                "#": 4,
+                "description_cell": "Question",
+                "description_value": "Fever ≥ 7 days (any pattern)?"
+              }
+            },
+            {
+              "rule_index": 5,
+              "rule_index_in_section": 5,
+              "raw_row_index": 6,
+              "conditions": {},
+              "outputs": {
+                "YES": "REFER (pp. 39)",
+                "NO": "next",
+                "DON’T KNOW": "REFER",
+                "ACTION": "STOP if YES"
+              },
+              "notes": "",
+              "metadata": {
+                "opening_section": "opening_ask_questions",
+                "opening_row_index": 6,
+                "#": 5,
+                "description_cell": "Question",
+                "description_value": "Any convulsions during illness?"
+              }
+            },
+            {
+              "rule_index": 6,
+              "rule_index_in_section": 6,
+              "raw_row_index": 7,
+              "conditions": {},
+              "outputs": {
+                "YES": "REFER (pp. 39)",
+                "NO": "next",
+                "DON’T KNOW": "REFER",
+                "ACTION": "STOP if YES"
+              },
+              "notes": "",
+              "metadata": {
+                "opening_section": "opening_ask_questions",
+                "opening_row_index": 7,
+                "#": 6,
+                "description_cell": "Question",
+                "description_value": "Not able to drink or eat anything?"
+              }
+            },
+            {
+              "rule_index": 7,
+              "rule_index_in_section": 7,
+              "raw_row_index": 8,
+              "conditions": {},
+              "outputs": {
+                "YES": "REFER (pp. 39)",
+                "NO": "next",
+                "DON’T KNOW": "REFER",
+                "ACTION": "STOP if YES"
+              },
+              "notes": "",
+              "metadata": {
+                "opening_section": "opening_ask_questions",
+                "opening_row_index": 8,
+                "#": 7,
+                "description_cell": "Question",
+                "description_value": "Vomits everything (cannot retain fluids/food)?"
+              }
+            }
+          ]
+        },
+        {
+          "section_id": "opening_observations",
+          "rules": [
+            {
+              "rule_index": 8,
+              "rule_index_in_section": 1,
+              "raw_row_index": 11,
+              "conditions": {},
+              "outputs": {
+                "YES": "REFER (pp. 39)",
+                "NO": "next",
+                "DON’T KNOW": "REFER",
+                "ACTION": "STOP if YES"
+              },
+              "notes": "",
+              "metadata": {
+                "opening_section": "opening_observations",
+                "opening_row_index": 11,
+                "#": 8,
+                "description_cell": "Observation",
+                "description_value": "Chest indrawing?"
+              }
+            },
+            {
+              "rule_index": 9,
+              "rule_index_in_section": 2,
+              "raw_row_index": 12,
+              "conditions": {},
+              "outputs": {
+                "YES": "REFER (pp. 39)",
+                "NO": "next",
+                "DON’T KNOW": "REFER",
+                "ACTION": "STOP if YES"
+              },
+              "notes": "",
+              "metadata": {
+                "opening_section": "opening_observations",
+                "opening_row_index": 12,
+                "#": 9,
+                "description_cell": "Observation",
+                "description_value": "Unusually sleepy or unconscious?"
+              }
+            },
+            {
+              "rule_index": 10,
+              "rule_index_in_section": 3,
+              "raw_row_index": 13,
+              "conditions": {},
+              "outputs": {
+                "YES": "REFER (pp. 39)",
+                "NO": "next",
+                "DON’T KNOW": "REFER",
+                "ACTION": "STOP if YES"
+              },
+              "notes": "",
+              "metadata": {
+                "opening_section": "opening_observations",
+                "opening_row_index": 13,
+                "#": 10,
+                "description_cell": "Observation",
+                "description_value": "MUAC red (severe malnutrition)?"
+              }
+            },
+            {
+              "rule_index": 11,
+              "rule_index_in_section": 4,
+              "raw_row_index": 14,
+              "conditions": {},
+              "outputs": {
+                "YES": "REFER (pp. 39)",
+                "NO": "next",
+                "DON’T KNOW": "REFER",
+                "ACTION": "STOP if YES"
+              },
+              "notes": "",
+              "metadata": {
+                "opening_section": "opening_observations",
+                "opening_row_index": 14,
+                "#": 11,
+                "description_cell": "Observation",
+                "description_value": "Swelling of both feet?"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "module_id": "navigator_modules_traffic_cop_1",
+      "source_file": "Navigator Modules.xlsx",
+      "source_sheet": "Traffic cop 1",
+      "kind": "rule_grid",
+      "sheet_context_detected": "traffic_cop_grid",
+      "rules": [
+        {
+          "rule_index": 1,
+          "raw_row_index": 15,
+          "conditions": {
+            "Has fever?": "any",
+            "Done fever module": "any",
+            "Has cough?": "any",
+            "Done cough module": "any",
+            "Has diarrhea?": "any",
+            "Done diarrhea module": "any",
+            "Very thin?": "any",
+            "Done thin module": "any",
+            "Swollen both feet?": "any",
+            "Done swollen module": "any"
+          },
+          "outputs": {
+            "Results": "Add Opening Danger Signs Module + Integrative Module → Set Start = false"
+          },
+          "notes": "",
+          "metadata": {
+            "route_scenario": "At start",
+            "spreadsheet_anchor_col_a": "At start",
+            "spreadsheet_rule_value": null,
+            "spreadsheet_description_header": null,
+            "spreadsheet_description": null
+          }
+        },
+        {
+          "rule_index": 2,
+          "raw_row_index": 16,
+          "conditions": {
+            "Has fever?": "yes",
+            "Done fever module": "no",
+            "Has cough?": "no",
+            "Done cough module": "any",
+            "Has diarrhea?": "any",
+            "Done diarrhea module": "any",
+            "Very thin?": "any",
+            "Done thin module": "any",
+            "Swollen both feet?": "any",
+            "Done swollen module": "any"
+          },
+          "outputs": {
+            "Results": "Add Fever Module (before Integrative)"
+          },
+          "notes": "",
+          "metadata": {
+            "route_scenario": "Fever path",
+            "spreadsheet_anchor_col_a": "Fever path",
+            "spreadsheet_rule_value": null,
+            "spreadsheet_description_header": null,
+            "spreadsheet_description": null
+          }
+        },
+        {
+          "rule_index": 3,
+          "raw_row_index": 17,
+          "conditions": {
+            "Has fever?": "no",
+            "Done fever module": "any",
+            "Has cough?": "yes",
+            "Done cough module": "no",
+            "Has diarrhea?": "any",
+            "Done diarrhea module": "any",
+            "Very thin?": "any",
+            "Done thin module": "any",
+            "Swollen both feet?": "any",
+            "Done swollen module": "any"
+          },
+          "outputs": {
+            "Results": "Add Cough Module (before Integrative)"
+          },
+          "notes": "",
+          "metadata": {
+            "route_scenario": "Cough path",
+            "spreadsheet_anchor_col_a": "Cough path",
+            "spreadsheet_rule_value": null,
+            "spreadsheet_description_header": null,
+            "spreadsheet_description": null
+          }
+        },
+        {
+          "rule_index": 4,
+          "raw_row_index": 18,
+          "conditions": {
+            "Has fever?": "no",
+            "Done fever module": "any",
+            "Has cough?": "any",
+            "Done cough module": "any",
+            "Has diarrhea?": "yes",
+            "Done diarrhea module": "no",
+            "Very thin?": "any",
+            "Done thin module": "any",
+            "Swollen both feet?": "any",
+            "Done swollen module": "any"
+          },
+          "outputs": {
+            "Results": "Add Diarrhea Module (before Integrative)"
+          },
+          "notes": "",
+          "metadata": {
+            "route_scenario": "Diarrhea path",
+            "spreadsheet_anchor_col_a": "Diarrhea path",
+            "spreadsheet_rule_value": null,
+            "spreadsheet_description_header": null,
+            "spreadsheet_description": null
+          }
+        },
+        {
+          "rule_index": 5,
+          "raw_row_index": 19,
+          "conditions": {
+            "Has fever?": "no",
+            "Done fever module": "any",
+            "Has cough?": "any",
+            "Done cough module": "any",
+            "Has diarrhea?": "any",
+            "Done diarrhea module": "any",
+            "Very thin?": "yes",
+            "Done thin module": "no",
+            "Swollen both feet?": "any",
+            "Done swollen module": "any"
+          },
+          "outputs": {
+            "Results": "Add Thin Module (before Integrative)"
+          },
+          "notes": "",
+          "metadata": {
+            "route_scenario": "Thin path",
+            "spreadsheet_anchor_col_a": "Thin path",
+            "spreadsheet_rule_value": null,
+            "spreadsheet_description_header": null,
+            "spreadsheet_description": null
+          }
+        },
+        {
+          "rule_index": 6,
+          "raw_row_index": 20,
+          "conditions": {
+            "Has fever?": "no",
+            "Done fever module": "any",
+            "Has cough?": "any",
+            "Done cough module": "any",
+            "Has diarrhea?": "any",
+            "Done diarrhea module": "any",
+            "Very thin?": "any",
+            "Done thin module": "any",
+            "Swollen both feet?": "yes",
+            "Done swollen module": "no"
+          },
+          "outputs": {
+            "Results": "Add Swollen Module (before Integrative)"
+          },
+          "notes": "",
+          "metadata": {
+            "route_scenario": "Swollen path",
+            "spreadsheet_anchor_col_a": "Swollen path",
+            "spreadsheet_rule_value": null,
+            "spreadsheet_description_header": null,
+            "spreadsheet_description": null
+          }
+        },
+        {
+          "rule_index": 7,
+          "raw_row_index": 21,
+          "conditions": {
+            "Has fever?": "no",
+            "Done fever module": "any",
+            "Has cough?": "yes",
+            "Done cough module": "any",
+            "Has diarrhea?": "yes",
+            "Done diarrhea module": "any",
+            "Very thin?": "yes",
+            "Done thin module": "any",
+            "Swollen both feet?": "yes",
+            "Done swollen module": "any"
+          },
+          "outputs": {
+            "Results": "Add all relevant modules before Integrative"
+          },
+          "notes": "",
+          "metadata": {
+            "route_scenario": "Multi-condition",
+            "spreadsheet_anchor_col_a": "Multi-condition",
+            "spreadsheet_rule_value": null,
+            "spreadsheet_description_header": null,
+            "spreadsheet_description": null
+          }
+        },
+        {
+          "rule_index": 8,
+          "raw_row_index": 22,
+          "conditions": {
+            "Has fever?": "no",
+            "Done fever module": "no",
+            "Has cough?": "no",
+            "Done cough module": "no",
+            "Has diarrhea?": "no",
+            "Done diarrhea module": "no",
+            "Very thin?": "no",
+            "Done thin module": "no",
+            "Swollen both feet?": "no",
+            "Done swollen module": "no"
+          },
+          "outputs": {
+            "Results": "Run Integrative Module only"
+          },
+          "notes": "",
+          "metadata": {
+            "route_scenario": "No symptoms",
+            "spreadsheet_anchor_col_a": "No symptoms",
+            "spreadsheet_rule_value": null,
+            "spreadsheet_description_header": null,
+            "spreadsheet_description": null
+          }
+        }
+      ]
+    },
+    {
+      "module_id": "navigator_modules_traffic_cop_2",
+      "source_file": "Navigator Modules.xlsx",
+      "source_sheet": "Traffic cop 2",
+      "kind": "rule_grid",
+      "sheet_context_detected": "traffic_cop_grid",
+      "rules": [
+        {
+          "rule_index": 1,
+          "raw_row_index": 2,
+          "conditions": {
+            "Queue Empty?": "YES",
+            "Danger signs from opening module?": "ANY",
+            "Next Module Already Done?": "ANY"
+          },
+          "outputs": {
+            "Result": "End visit"
+          },
+          "notes": "",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "YES",
+            "spreadsheet_rule_value": null,
+            "spreadsheet_description_header": null,
+            "spreadsheet_description": null
+          }
+        },
+        {
+          "rule_index": 2,
+          "raw_row_index": 3,
+          "conditions": {
+            "Queue Empty?": "NO",
+            "Danger signs from opening module?": "YES",
+            "Next Module Already Done?": "ANY"
+          },
+          "outputs": {
+            "Result": "REFER (skip remaining modules)"
+          },
+          "notes": "",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "NO",
+            "spreadsheet_rule_value": null,
+            "spreadsheet_description_header": null,
+            "spreadsheet_description": null
+          }
+        },
+        {
+          "rule_index": 3,
+          "raw_row_index": 4,
+          "conditions": {
+            "Queue Empty?": "NO",
+            "Danger signs from opening module?": "NO",
+            "Next Module Already Done?": "YES"
+          },
+          "outputs": {
+            "Result": "Remove module from queue & restart table"
+          },
+          "notes": "",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "NO",
+            "spreadsheet_rule_value": null,
+            "spreadsheet_description_header": null,
+            "spreadsheet_description": null
+          }
+        },
+        {
+          "rule_index": 4,
+          "raw_row_index": 5,
+          "conditions": {
+            "Queue Empty?": "NO",
+            "Danger signs from opening module?": "NO",
+            "Next Module Already Done?": "NO"
+          },
+          "outputs": {
+            "Result": "Do next module in queue"
+          },
+          "notes": "",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "NO",
+            "spreadsheet_rule_value": null,
+            "spreadsheet_description_header": null,
+            "spreadsheet_description": null
+          }
+        }
+      ]
+    },
+    {
+      "module_id": "navigator_modules_thin_module",
+      "source_file": "Navigator Modules.xlsx",
+      "source_sheet": "Thin module",
+      "kind": "rule_grid",
+      "sheet_context_detected": "nutrition_screen_diagnosis",
+      "rules": [
+        {
+          "rule_index": 1,
+          "raw_row_index": 2,
+          "conditions": {
+            "demo_age_months_6-59?": "YES (p. 34)",
+            "ex_convulsions": "ANY",
+            "q_vomits_everything?": "ANY",
+            "ex_chest_indrawing": "ANY",
+            "lab_muac_is_red?": "YES (p. 41)",
+            "lab_muac_is_yellow?": "NO",
+            "lab_muac_is_green?": "NO",
+            "ex_swelling_on_feet_dent_on_both_feet": "ANY",
+            "ex_sleepy_unconcious": "ANY",
+            "ex_fever_present": "ANY",
+            "q_duration_fever_duration_>7": "ANY",
+            "ex_able_to_drink_eat": "ANY",
+            "ref_feeding_program": "N/A",
+            "ref_feeding_program__dup_2": "N/A"
+          },
+          "outputs": {
+            "p_danger_sign": "YES (pp.38–44)",
+            "ref_health_facility": "YES (p. 38)",
+            "adv_continue_feeding_giving_fluids": "N/A"
+          },
+          "notes": "Child looks very thin with red MUAC",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "1.0",
+            "spreadsheet_rule_value": 1,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Child looks very thin with red MUAC"
+          }
+        },
+        {
+          "rule_index": 2,
+          "raw_row_index": 3,
+          "conditions": {
+            "demo_age_months_6-59?": "YES (p. 34)",
+            "ex_convulsions": "NO",
+            "q_vomits_everything?": "NO",
+            "ex_chest_indrawing": "NO",
+            "lab_muac_is_red?": "NO",
+            "lab_muac_is_yellow?": "YES",
+            "lab_muac_is_green?": "NO",
+            "ex_swelling_on_feet_dent_on_both_feet": "NO",
+            "ex_sleepy_unconcious": "NO",
+            "ex_fever_present": "YES",
+            "q_duration_fever_duration_>7": "NO (p. 39)",
+            "ex_able_to_drink_eat": "YES",
+            "ref_feeding_program": "YES (p. 44)",
+            "ref_feeding_program__dup_2": "YES (p. 44)"
+          },
+          "outputs": {
+            "p_danger_sign": "NO",
+            "ref_health_facility": "NO (p. 38)",
+            "adv_continue_feeding_giving_fluids": "YES (p. 44)"
+          },
+          "notes": "Child looks very thin but no danger sign (yellow MUAC)",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "2.0",
+            "spreadsheet_rule_value": 2,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Child looks very thin but no danger sign (yellow MUAC)"
+          }
+        },
+        {
+          "rule_index": 3,
+          "raw_row_index": 4,
+          "conditions": {
+            "demo_age_months_6-59?": "YES (p. 34)",
+            "ex_convulsions": "NO",
+            "q_vomits_everything?": "NO",
+            "ex_chest_indrawing": "NO",
+            "lab_muac_is_red?": "NO",
+            "lab_muac_is_yellow?": "YES",
+            "lab_muac_is_green?": "NO",
+            "ex_swelling_on_feet_dent_on_both_feet": "NO",
+            "ex_sleepy_unconcious": "NO",
+            "ex_fever_present": "NO",
+            "q_duration_fever_duration_>7": "N/A",
+            "ex_able_to_drink_eat": "YES",
+            "ref_feeding_program": "YES (p. 44)",
+            "ref_feeding_program__dup_2": "YES (p. 44)"
+          },
+          "outputs": {
+            "p_danger_sign": "NO",
+            "ref_health_facility": "NO (p. 38)",
+            "adv_continue_feeding_giving_fluids": "YES (p. 44)"
+          },
+          "notes": "Child looks very thin but no danger sign (yellow MUAC)",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "3.0",
+            "spreadsheet_rule_value": 3,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Child looks very thin but no danger sign (yellow MUAC)"
+          }
+        },
+        {
+          "rule_index": 4,
+          "raw_row_index": 5,
+          "conditions": {
+            "demo_age_months_6-59?": "YES (p. 34)",
+            "ex_convulsions": "NO",
+            "q_vomits_everything?": "NO",
+            "ex_chest_indrawing": "NO",
+            "lab_muac_is_red?": "NO",
+            "lab_muac_is_yellow?": "NO",
+            "lab_muac_is_green?": "YES",
+            "ex_swelling_on_feet_dent_on_both_feet": "NO",
+            "ex_sleepy_unconcious": "NO",
+            "ex_fever_present": "YES",
+            "q_duration_fever_duration_>7": "NO (p. 39)",
+            "ex_able_to_drink_eat": "YES",
+            "ref_feeding_program": "NO",
+            "ref_feeding_program__dup_2": "NO"
+          },
+          "outputs": {
+            "p_danger_sign": "NO",
+            "ref_health_facility": "NO (p. 38)",
+            "adv_continue_feeding_giving_fluids": "NO"
+          },
+          "notes": "Child looks very thin but no danger sign (green MUAC)",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "4.0",
+            "spreadsheet_rule_value": 4,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Child looks very thin but no danger sign (green MUAC)"
+          }
+        },
+        {
+          "rule_index": 5,
+          "raw_row_index": 6,
+          "conditions": {
+            "demo_age_months_6-59?": "YES (p. 34)",
+            "ex_convulsions": "NO",
+            "q_vomits_everything?": "NO",
+            "ex_chest_indrawing": "NO",
+            "lab_muac_is_red?": "NO",
+            "lab_muac_is_yellow?": "NO",
+            "lab_muac_is_green?": "YES",
+            "ex_swelling_on_feet_dent_on_both_feet": "NO",
+            "ex_sleepy_unconcious": "NO",
+            "ex_fever_present": "NO",
+            "q_duration_fever_duration_>7": "N/A",
+            "ex_able_to_drink_eat": "YES",
+            "ref_feeding_program": "No",
+            "ref_feeding_program__dup_2": "No"
+          },
+          "outputs": {
+            "p_danger_sign": "NO",
+            "ref_health_facility": "NO (p. 38)",
+            "adv_continue_feeding_giving_fluids": "No"
+          },
+          "notes": "Child looks very thin but no danger sign (green MUAC)",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "5.0",
+            "spreadsheet_rule_value": 5,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Child looks very thin but no danger sign (green MUAC)"
+          }
+        },
+        {
+          "rule_index": 6,
+          "raw_row_index": 7,
+          "conditions": {
+            "demo_age_months_6-59?": "ERROR: Manual does not include this case"
+          },
+          "outputs": {},
+          "notes": "Child looks very thin but not 6-59 months old",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "6.0",
+            "spreadsheet_rule_value": 6,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Child looks very thin but not 6-59 months old"
+          }
+        }
+      ]
+    },
+    {
+      "module_id": "navigator_modules_swollen_module",
+      "source_file": "Navigator Modules.xlsx",
+      "source_sheet": "Swollen module",
+      "kind": "rule_grid",
+      "sheet_context_detected": "nutrition_screen_diagnosis",
+      "rules": [
+        {
+          "rule_index": 1,
+          "raw_row_index": 2,
+          "conditions": {
+            "demo_age_months_6-59?": "YES (p. 34)",
+            "ex_convulsions": "ANY",
+            "q_vomits_everything?": "ANY",
+            "ex_chest_indrawing": "ANY",
+            "lab_muac_is_red?": "ANY",
+            "lab_muac_is_yellow?": "ANY",
+            "lab_muac_is_green?": "ANY",
+            "ex_swelling_on_feet_dent_on_both_feet": "YES",
+            "ex_sleepy_unconcious": "ANY",
+            "ex_fever_present": "ANY",
+            "q_duration_fever_duration_>7": "ANY",
+            "ex_able_to_drink_eat": "ANY",
+            "ref_feeding_program": "N/A"
+          },
+          "outputs": {
+            "p_danger_sign": "YES (pp.38–44)",
+            "ref_health_facility": "YES (p. 38)",
+            "adv_continue_feeding_giving_fluids": "N/A"
+          },
+          "notes": "Child looks round/swollen and swelling on feet",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "1.0",
+            "spreadsheet_rule_value": 1,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Child looks round/swollen and swelling on feet"
+          }
+        },
+        {
+          "rule_index": 2,
+          "raw_row_index": 3,
+          "conditions": {
+            "demo_age_months_6-59?": "YES (p. 34)",
+            "ex_convulsions": "ANY",
+            "q_vomits_everything?": "ANY",
+            "ex_chest_indrawing": "ANY",
+            "lab_muac_is_red?": "YES (p. 41)",
+            "lab_muac_is_yellow?": "NO",
+            "lab_muac_is_green?": "NO",
+            "ex_swelling_on_feet_dent_on_both_feet": "ANY",
+            "ex_sleepy_unconcious": "ANY",
+            "ex_fever_present": "ANY",
+            "q_duration_fever_duration_>7": "ANY",
+            "ex_able_to_drink_eat": "ANY",
+            "ref_feeding_program": "N/A"
+          },
+          "outputs": {
+            "p_danger_sign": "YES (pp.38–44)",
+            "ref_health_facility": "YES (p. 38)",
+            "adv_continue_feeding_giving_fluids": "N/A"
+          },
+          "notes": "Child looks round/swollen and red MUAC",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "2.0",
+            "spreadsheet_rule_value": 2,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Child looks round/swollen and red MUAC"
+          }
+        },
+        {
+          "rule_index": 3,
+          "raw_row_index": 4,
+          "conditions": {
+            "demo_age_months_6-59?": "YES (p. 34)",
+            "ex_convulsions": "NO",
+            "q_vomits_everything?": "NO",
+            "ex_chest_indrawing": "NO",
+            "lab_muac_is_red?": "NO",
+            "lab_muac_is_yellow?": "YES",
+            "lab_muac_is_green?": "NO",
+            "ex_swelling_on_feet_dent_on_both_feet": "NO",
+            "ex_sleepy_unconcious": "NO",
+            "ex_fever_present": "YES",
+            "q_duration_fever_duration_>7": "NO (p. 39)",
+            "ex_able_to_drink_eat": "YES",
+            "ref_feeding_program": "YES (p. 44)"
+          },
+          "outputs": {
+            "p_danger_sign": "NO",
+            "ref_health_facility": "NO (p. 38)",
+            "adv_continue_feeding_giving_fluids": "YES (p. 44)"
+          },
+          "notes": "Child looks round/swollen but no danger sign (yellow MUAC and no swelling of feet)",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "3.0",
+            "spreadsheet_rule_value": 3,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Child looks round/swollen but no danger sign (yellow MUAC and no swelling of feet)"
+          }
+        },
+        {
+          "rule_index": 4,
+          "raw_row_index": 5,
+          "conditions": {
+            "demo_age_months_6-59?": "YES (p. 34)",
+            "ex_convulsions": "NO",
+            "q_vomits_everything?": "NO",
+            "ex_chest_indrawing": "NO",
+            "lab_muac_is_red?": "NO",
+            "lab_muac_is_yellow?": "YES",
+            "lab_muac_is_green?": "NO",
+            "ex_swelling_on_feet_dent_on_both_feet": "NO",
+            "ex_sleepy_unconcious": "NO",
+            "ex_fever_present": "NO",
+            "q_duration_fever_duration_>7": "N/A",
+            "ex_able_to_drink_eat": "YES",
+            "ref_feeding_program": "YES (p. 44)"
+          },
+          "outputs": {
+            "p_danger_sign": "NO",
+            "ref_health_facility": "NO (p. 38)",
+            "adv_continue_feeding_giving_fluids": "YES (p. 44)"
+          },
+          "notes": "Child looks round/swollen but no danger sign (yellow MUAC and no swelling of feet)",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "4.0",
+            "spreadsheet_rule_value": 4,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Child looks round/swollen but no danger sign (yellow MUAC and no swelling of feet)"
+          }
+        },
+        {
+          "rule_index": 5,
+          "raw_row_index": 6,
+          "conditions": {
+            "demo_age_months_6-59?": "YES (p. 34)",
+            "ex_convulsions": "NO",
+            "q_vomits_everything?": "NO",
+            "ex_chest_indrawing": "NO",
+            "lab_muac_is_red?": "NO",
+            "lab_muac_is_yellow?": "NO",
+            "lab_muac_is_green?": "YES",
+            "ex_swelling_on_feet_dent_on_both_feet": "NO",
+            "ex_sleepy_unconcious": "NO",
+            "ex_fever_present": "YES",
+            "q_duration_fever_duration_>7": "NO (p. 39)",
+            "ex_able_to_drink_eat": "YES",
+            "ref_feeding_program": "NO"
+          },
+          "outputs": {
+            "p_danger_sign": "NO",
+            "ref_health_facility": "NO (p. 38)",
+            "adv_continue_feeding_giving_fluids": "NO (p. 44)"
+          },
+          "notes": "Child looks round/swollen but no danger sign (green MUAC and no swelling of feet)",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "5.0",
+            "spreadsheet_rule_value": 5,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Child looks round/swollen but no danger sign (green MUAC and no swelling of feet)"
+          }
+        },
+        {
+          "rule_index": 6,
+          "raw_row_index": 7,
+          "conditions": {
+            "demo_age_months_6-59?": "YES (p. 34)",
+            "ex_convulsions": "NO",
+            "q_vomits_everything?": "NO",
+            "ex_chest_indrawing": "NO",
+            "lab_muac_is_red?": "NO",
+            "lab_muac_is_yellow?": "NO",
+            "lab_muac_is_green?": "YES",
+            "ex_swelling_on_feet_dent_on_both_feet": "NO",
+            "ex_sleepy_unconcious": "NO",
+            "ex_fever_present": "NO",
+            "q_duration_fever_duration_>7": "N/A",
+            "ex_able_to_drink_eat": "YES",
+            "ref_feeding_program": "No"
+          },
+          "outputs": {
+            "p_danger_sign": "NO",
+            "ref_health_facility": "NO (p. 38)",
+            "adv_continue_feeding_giving_fluids": "NO (p. 44)"
+          },
+          "notes": "Child looks round/swollen but no danger sign (green MUAC and no swelling of feet)",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "6.0",
+            "spreadsheet_rule_value": 6,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Child looks round/swollen but no danger sign (green MUAC and no swelling of feet)"
+          }
+        },
+        {
+          "rule_index": 7,
+          "raw_row_index": 8,
+          "conditions": {
+            "demo_age_months_6-59?": "YES (p. 34)",
+            "ex_convulsions": "NO",
+            "q_vomits_everything?": "NO",
+            "ex_chest_indrawing": "NO",
+            "lab_muac_is_red?": "NO",
+            "lab_muac_is_yellow?": "NO",
+            "lab_muac_is_green?": "YES",
+            "ex_swelling_on_feet_dent_on_both_feet": "NO",
+            "ex_sleepy_unconcious": "NO",
+            "ex_fever_present": "NO",
+            "q_duration_fever_duration_>7": "N/A",
+            "ex_able_to_drink_eat": "YES",
+            "ref_feeding_program": "No"
+          },
+          "outputs": {
+            "p_danger_sign": "NO",
+            "ref_health_facility": "NO (p. 38)",
+            "adv_continue_feeding_giving_fluids": "NO (p. 44)"
+          },
+          "notes": "Child looks round/swollen but no danger sign (green MUAC and no swelling of feet)",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "7.0",
+            "spreadsheet_rule_value": 7,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Child looks round/swollen but no danger sign (green MUAC and no swelling of feet)"
+          }
+        },
+        {
+          "rule_index": 8,
+          "raw_row_index": 9,
+          "conditions": {
+            "demo_age_months_6-59?": "NO (p. 34)",
+            "ex_convulsions": "NO",
+            "q_vomits_everything?": "NO",
+            "ex_chest_indrawing": "NO",
+            "lab_muac_is_red?": "N/A",
+            "lab_muac_is_yellow?": "N/A",
+            "lab_muac_is_green?": "N/A",
+            "ex_swelling_on_feet_dent_on_both_feet": "NO",
+            "ex_sleepy_unconcious": "NO",
+            "ex_fever_present": "NO",
+            "q_duration_fever_duration_>7": "NO",
+            "ex_able_to_drink_eat": "N/A",
+            "ref_feeding_program": "No"
+          },
+          "outputs": {
+            "p_danger_sign": "NO",
+            "ref_health_facility": "NO (p. 38)",
+            "adv_continue_feeding_giving_fluids": "NO (p. 44)"
+          },
+          "notes": "Child not 6-59 months old looks round/swollen but no danger sign (no swelling of feet)",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "8.0",
+            "spreadsheet_rule_value": 8,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Child not 6-59 months old looks round/swollen but no danger sign (no swelling of feet)"
+          }
+        },
+        {
+          "rule_index": 9,
+          "raw_row_index": 10,
+          "conditions": {
+            "demo_age_months_6-59?": "NO (p. 34)",
+            "ex_convulsions": "ANY",
+            "q_vomits_everything?": "ANY",
+            "ex_chest_indrawing": "ANY",
+            "lab_muac_is_red?": "N/A",
+            "lab_muac_is_yellow?": "N/A",
+            "lab_muac_is_green?": "N/A",
+            "ex_swelling_on_feet_dent_on_both_feet": "YES",
+            "ex_sleepy_unconcious": "ANY",
+            "ex_fever_present": "ANY",
+            "q_duration_fever_duration_>7": "ANY",
+            "ex_able_to_drink_eat": "ANY",
+            "ref_feeding_program": "N/A"
+          },
+          "outputs": {
+            "p_danger_sign": "YES (pp.38–44)",
+            "ref_health_facility": "YES (p. 38)",
+            "adv_continue_feeding_giving_fluids": "N/A"
+          },
+          "notes": "Child not 6-59 months old looks round/swollen with swelling of feet",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "9.0",
+            "spreadsheet_rule_value": 9,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Child not 6-59 months old looks round/swollen with swelling of feet"
+          }
+        }
+      ]
+    },
+    {
+      "module_id": "navigator_modules_diarrhea_diagnosis_module",
+      "source_file": "Navigator Modules.xlsx",
+      "source_sheet": "Diarrhea diagnosis module",
+      "kind": "rule_grid",
+      "sheet_context_detected": "diagnosis",
+      "rules": [
+        {
+          "rule_index": 1,
+          "raw_row_index": 2,
+          "conditions": {
+            "q_stools_loose_or_watery": "YES",
+            "q_blood_in_stool": "NO",
+            "q_is_duration_loose_stools_days>_14?": "NO",
+            "ex_convulsions": "NO",
+            "q_vomits_everything?": "NO",
+            "ex_chest_indrawing": "NO",
+            "lab_muac_is_red?": "NO (pp.41)",
+            "ex_swelling_on_feet": "NO (pp.38–44)",
+            "ex_sleepy_unconcious": "NO",
+            "ex_fever_present": "ANY",
+            "q_is_duration_fever_days_>_7?": "NO",
+            "ex_able_to_drink_eat": "YES",
+            "demo_is_age_2-5_months": "YES",
+            "demo_is_age_6-59_months": "NO"
+          },
+          "outputs": {
+            "p_danger_sign": "NO (pp.38–44)",
+            "ref_health_facility": "NO",
+            "tx_ors": "YES (p.66)",
+            "tx_zinc_supplement": "YES (p.66)"
+          },
+          "notes": "Acute diarrhoea with no danger sign, age 2–5 months",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "1.0",
+            "spreadsheet_rule_value": 1,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Acute diarrhoea with no danger sign, age 2–5 months"
+          }
+        },
+        {
+          "rule_index": 2,
+          "raw_row_index": 3,
+          "conditions": {
+            "q_stools_loose_or_watery": "YES",
+            "q_blood_in_stool": "NO",
+            "q_is_duration_loose_stools_days>_14?": "NO",
+            "ex_convulsions": "NO",
+            "q_vomits_everything?": "NO",
+            "ex_chest_indrawing": "NO",
+            "lab_muac_is_red?": "NO (pp.41)",
+            "ex_swelling_on_feet": "NO (pp.38–44)",
+            "ex_sleepy_unconcious": "NO",
+            "ex_fever_present": "ANY",
+            "q_is_duration_fever_days_>_7?": "NO",
+            "ex_able_to_drink_eat": "YES",
+            "demo_is_age_2-5_months": "NO",
+            "demo_is_age_6-59_months": "YES"
+          },
+          "outputs": {
+            "p_danger_sign": "NO (pp.38–44)",
+            "ref_health_facility": "NO",
+            "tx_ors": "YES (p.66)",
+            "tx_zinc_supplement": "YES (p.66)"
+          },
+          "notes": "Acute diarrhoea with no danger sign, age 6–59 months",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "2.0",
+            "spreadsheet_rule_value": 2,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Acute diarrhoea with no danger sign, age 6–59 months"
+          }
+        },
+        {
+          "rule_index": 3,
+          "raw_row_index": 4,
+          "conditions": {
+            "q_stools_loose_or_watery": "YES",
+            "q_blood_in_stool": "YES",
+            "q_is_duration_loose_stools_days>_14?": "ANY",
+            "ex_convulsions": "ANY",
+            "q_vomits_everything?": "ANY",
+            "ex_chest_indrawing": "ANY",
+            "lab_muac_is_red?": "ANY",
+            "ex_swelling_on_feet": "ANY",
+            "ex_sleepy_unconcious": "ANY",
+            "ex_fever_present": "ANY",
+            "q_is_duration_fever_days_>_7?": "ANY",
+            "ex_able_to_drink_eat": "ANY",
+            "demo_is_age_2-5_months": "ANY"
+          },
+          "outputs": {
+            "p_danger_sign": "YES (p.38-44)",
+            "ref_health_facility": "YES",
+            "tx_ors": "NO (refer) (p.66)",
+            "tx_zinc_supplement": "NO (refer) (p. 38)"
+          },
+          "notes": "Diarrhea with danger sign (blood in stool)",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "3.0",
+            "spreadsheet_rule_value": 3,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Diarrhea with danger sign (blood in stool)"
+          }
+        },
+        {
+          "rule_index": 4,
+          "raw_row_index": 5,
+          "conditions": {
+            "q_stools_loose_or_watery": "YES",
+            "q_blood_in_stool": "ANY",
+            "q_is_duration_loose_stools_days>_14?": "YES",
+            "ex_convulsions": "ANY",
+            "q_vomits_everything?": "ANY",
+            "ex_chest_indrawing": "ANY",
+            "lab_muac_is_red?": "ANY",
+            "ex_swelling_on_feet": "ANY",
+            "ex_sleepy_unconcious": "ANY",
+            "ex_fever_present": "ANY",
+            "q_is_duration_fever_days_>_7?": "ANY",
+            "ex_able_to_drink_eat": "ANY",
+            "demo_is_age_2-5_months": "ANY"
+          },
+          "outputs": {
+            "p_danger_sign": "YES (p.38-44)",
+            "ref_health_facility": "YES",
+            "tx_ors": "NO (refer) (pp.38–44)",
+            "tx_zinc_supplement": "NO (refer) (p. 38)"
+          },
+          "notes": "Child has persistent diarrhoea (more than 14 days)",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "4.0",
+            "spreadsheet_rule_value": 4,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Child has persistent diarrhoea (more than 14 days)"
+          }
+        },
+        {
+          "rule_index": 5,
+          "raw_row_index": 6,
+          "conditions": {
+            "q_stools_loose_or_watery": "YES",
+            "q_blood_in_stool": "ANY",
+            "q_is_duration_loose_stools_days>_14?": "ANY",
+            "ex_convulsions": "YES",
+            "q_vomits_everything?": "ANY",
+            "ex_chest_indrawing": "ANY",
+            "lab_muac_is_red?": "ANY",
+            "ex_swelling_on_feet": "ANY",
+            "ex_sleepy_unconcious": "ANY",
+            "ex_fever_present": "ANY",
+            "q_is_duration_fever_days_>_7?": "ANY",
+            "ex_able_to_drink_eat": "ANY",
+            "demo_is_age_2-5_months": "ANY"
+          },
+          "outputs": {
+            "p_danger_sign": "YES (pp.38–44)",
+            "ref_health_facility": "YES",
+            "tx_ors": "NO (refer) (pp.38–44)",
+            "tx_zinc_supplement": "NO (refer) (p. 38)"
+          },
+          "notes": "Diarrhea with danger sign (child has convulsions)",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "5.0",
+            "spreadsheet_rule_value": 5,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Diarrhea with danger sign (child has convulsions)"
+          }
+        },
+        {
+          "rule_index": 6,
+          "raw_row_index": 7,
+          "conditions": {
+            "q_stools_loose_or_watery": "YES",
+            "q_blood_in_stool": "ANY",
+            "q_is_duration_loose_stools_days>_14?": "ANY",
+            "ex_convulsions": "ANY",
+            "q_vomits_everything?": "YES",
+            "ex_chest_indrawing": "ANY",
+            "lab_muac_is_red?": "ANY",
+            "ex_swelling_on_feet": "ANY",
+            "ex_sleepy_unconcious": "ANY",
+            "ex_fever_present": "ANY",
+            "q_is_duration_fever_days_>_7?": "ANY",
+            "ex_able_to_drink_eat": "ANY",
+            "demo_is_age_2-5_months": "ANY"
+          },
+          "outputs": {
+            "p_danger_sign": "YES (pp.38–44)",
+            "ref_health_facility": "YES",
+            "tx_ors": "NO (refer) (pp.38–44)",
+            "tx_zinc_supplement": "NO (refer) (p. 38)"
+          },
+          "notes": "Diarrhea with danger sign (child is vomiting everything)",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "6.0",
+            "spreadsheet_rule_value": 6,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Diarrhea with danger sign (child is vomiting everything)"
+          }
+        },
+        {
+          "rule_index": 7,
+          "raw_row_index": 8,
+          "conditions": {
+            "q_stools_loose_or_watery": "YES",
+            "q_blood_in_stool": "ANY",
+            "q_is_duration_loose_stools_days>_14?": "ANY",
+            "ex_convulsions": "ANY",
+            "q_vomits_everything?": "ANY",
+            "ex_chest_indrawing": "ANY",
+            "lab_muac_is_red?": "NO",
+            "ex_swelling_on_feet": "YES (pp.41)",
+            "ex_sleepy_unconcious": "ANY",
+            "ex_fever_present": "ANY",
+            "q_is_duration_fever_days_>_7?": "ANY",
+            "ex_able_to_drink_eat": "ANY",
+            "demo_is_age_2-5_months": "ANY"
+          },
+          "outputs": {
+            "p_danger_sign": "YES (pp.38–44)",
+            "ref_health_facility": "YES",
+            "tx_ors": "NO (refer) (pp.38–44)",
+            "tx_zinc_supplement": "NO (refer) (p. 38)"
+          },
+          "notes": "Diarrhea with danger sign (swelling on feet)",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "7.0",
+            "spreadsheet_rule_value": 7,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Diarrhea with danger sign (swelling on feet)"
+          }
+        },
+        {
+          "rule_index": 8,
+          "raw_row_index": 9,
+          "conditions": {
+            "q_stools_loose_or_watery": "YES",
+            "q_blood_in_stool": "ANY",
+            "q_is_duration_loose_stools_days>_14?": "ANY",
+            "ex_convulsions": "ANY",
+            "q_vomits_everything?": "ANY",
+            "ex_chest_indrawing": "ANY",
+            "lab_muac_is_red?": "ANY",
+            "ex_swelling_on_feet": "ANY",
+            "ex_sleepy_unconcious": "ANY",
+            "ex_fever_present": "ANY",
+            "q_is_duration_fever_days_>_7?": "ANY",
+            "ex_able_to_drink_eat": "ANY",
+            "demo_is_age_2-5_months": "ANY"
+          },
+          "outputs": {
+            "p_danger_sign": "YES (pp.38–44)",
+            "ref_health_facility": "YES",
+            "tx_ors": "NO (refer) (pp.38–44)",
+            "tx_zinc_supplement": "NO (refer) (p. 38)"
+          },
+          "notes": "Diarrhea with danger sign (red MUAC)",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "8.0",
+            "spreadsheet_rule_value": 8,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Diarrhea with danger sign (red MUAC)"
+          }
+        },
+        {
+          "rule_index": 9,
+          "raw_row_index": 10,
+          "conditions": {
+            "q_stools_loose_or_watery": "YES",
+            "q_blood_in_stool": "ANY",
+            "q_is_duration_loose_stools_days>_14?": "ANY",
+            "ex_convulsions": "ANY",
+            "q_vomits_everything?": "ANY",
+            "ex_chest_indrawing": "YES",
+            "lab_muac_is_red?": "ANY",
+            "ex_swelling_on_feet": "ANY",
+            "ex_sleepy_unconcious": "ANY",
+            "ex_fever_present": "ANY",
+            "q_is_duration_fever_days_>_7?": "ANY",
+            "ex_able_to_drink_eat": "ANY",
+            "demo_is_age_2-5_months": "ANY"
+          },
+          "outputs": {
+            "p_danger_sign": "YES (pp.38–44)",
+            "ref_health_facility": "YES",
+            "tx_ors": "NO (refer) (pp.38–44)",
+            "tx_zinc_supplement": "NO (refer) (p. 38)"
+          },
+          "notes": "Diarrhea with danger sign (chest indrawing)",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "9.0",
+            "spreadsheet_rule_value": 9,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Diarrhea with danger sign (chest indrawing)"
+          }
+        },
+        {
+          "rule_index": 10,
+          "raw_row_index": 11,
+          "conditions": {
+            "q_stools_loose_or_watery": "YES",
+            "q_blood_in_stool": "ANY",
+            "q_is_duration_loose_stools_days>_14?": "ANY",
+            "ex_convulsions": "ANY",
+            "q_vomits_everything?": "ANY",
+            "ex_chest_indrawing": "ANY",
+            "lab_muac_is_red?": "ANY",
+            "ex_swelling_on_feet": "ANY",
+            "ex_sleepy_unconcious": "YES",
+            "ex_fever_present": "ANY",
+            "q_is_duration_fever_days_>_7?": "ANY",
+            "ex_able_to_drink_eat": "ANY",
+            "demo_is_age_2-5_months": "ANY"
+          },
+          "outputs": {
+            "p_danger_sign": "YES (pp.38–44)",
+            "ref_health_facility": "YES",
+            "tx_ors": "NO (refer) (pp.38–44)",
+            "tx_zinc_supplement": "NO (refer) (p. 38)"
+          },
+          "notes": "Diarrhea with danger sign (unusually sleepy)",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "10.0",
+            "spreadsheet_rule_value": 10,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Diarrhea with danger sign (unusually sleepy)"
+          }
+        },
+        {
+          "rule_index": 11,
+          "raw_row_index": 12,
+          "conditions": {
+            "q_stools_loose_or_watery": "YES",
+            "q_blood_in_stool": "ANY",
+            "q_is_duration_loose_stools_days>_14?": "ANY",
+            "ex_convulsions": "ANY",
+            "q_vomits_everything?": "ANY",
+            "ex_chest_indrawing": "ANY",
+            "lab_muac_is_red?": "ANY",
+            "ex_swelling_on_feet": "ANY",
+            "ex_sleepy_unconcious": "ANY",
+            "ex_fever_present": "YES",
+            "q_is_duration_fever_days_>_7?": "YES",
+            "ex_able_to_drink_eat": "ANY",
+            "demo_is_age_2-5_months": "ANY"
+          },
+          "outputs": {
+            "p_danger_sign": "YES (pp.38–44)",
+            "ref_health_facility": "YES",
+            "tx_ors": "NO (refer) (pp.38–44)",
+            "tx_zinc_supplement": "NO (refer) (p. 38)"
+          },
+          "notes": "Diarrhea with danger sign (fever more than 7 days)",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "11.0",
+            "spreadsheet_rule_value": 11,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Diarrhea with danger sign (fever more than 7 days)"
+          }
+        },
+        {
+          "rule_index": 12,
+          "raw_row_index": 13,
+          "conditions": {
+            "q_stools_loose_or_watery": "YES",
+            "q_blood_in_stool": "ANY",
+            "q_is_duration_loose_stools_days>_14?": "ANY",
+            "ex_convulsions": "ANY",
+            "q_vomits_everything?": "ANY",
+            "ex_chest_indrawing": "ANY",
+            "lab_muac_is_red?": "ANY",
+            "ex_swelling_on_feet": "ANY",
+            "ex_sleepy_unconcious": "ANY",
+            "ex_fever_present": "ANY",
+            "q_is_duration_fever_days_>_7?": "ANY",
+            "ex_able_to_drink_eat": "NO",
+            "demo_is_age_2-5_months": "ANY"
+          },
+          "outputs": {
+            "p_danger_sign": "YES (pp.38–44)",
+            "ref_health_facility": "YES",
+            "tx_ors": "NO (refer) (pp.38–44)",
+            "tx_zinc_supplement": "NO (refer) (p. 38)"
+          },
+          "notes": "Diarrhea with danger sign (child is unable to eat or drink)",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "12.0",
+            "spreadsheet_rule_value": 12,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Diarrhea with danger sign (child is unable to eat or drink)"
+          }
+        }
+      ]
+    },
+    {
+      "module_id": "navigator_modules_diarrhea_treatment_table",
+      "source_file": "Navigator Modules.xlsx",
+      "source_sheet": "Diarrhea treatment table",
+      "kind": "rule_grid",
+      "sheet_context_detected": "clinical_treatment",
+      "rules": [
+        {
+          "rule_index": 1,
+          "raw_row_index": 2,
+          "conditions": {
+            "CHW Has ORS/Zinc": "YES (pp. 66)"
+          },
+          "outputs": {
+            "tx_zinc_supplement": "YES (pp. 66)",
+            "tx_ors": "YES (pp. 66)"
+          },
+          "notes": "Acute Diarrhea (2–5 months)",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "Acute Diarrhea (2–5 months)",
+            "spreadsheet_rule_value": null,
+            "spreadsheet_description_header": "Diagnosis",
+            "spreadsheet_description": "Acute Diarrhea (2–5 months)"
+          }
+        },
+        {
+          "rule_index": 2,
+          "raw_row_index": 3,
+          "conditions": {
+            "CHW Has ORS/Zinc": "NO"
+          },
+          "outputs": {
+            "tx_zinc_supplement": "NO",
+            "tx_ors": "NO"
+          },
+          "notes": "Acute Diarrhea (2–5 months)",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "Acute Diarrhea (2–5 months)",
+            "spreadsheet_rule_value": null,
+            "spreadsheet_description_header": "Diagnosis",
+            "spreadsheet_description": "Acute Diarrhea (2–5 months)"
+          }
+        },
+        {
+          "rule_index": 3,
+          "raw_row_index": 4,
+          "conditions": {
+            "CHW Has ORS/Zinc": "YES (pp. 66)"
+          },
+          "outputs": {
+            "tx_zinc_supplement": "YES (pp. 66)",
+            "tx_ors": "YES (pp. 66)"
+          },
+          "notes": "Acute Diarrhea (6–59 months)",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "Acute Diarrhea (6–59 months)",
+            "spreadsheet_rule_value": null,
+            "spreadsheet_description_header": "Diagnosis",
+            "spreadsheet_description": "Acute Diarrhea (6–59 months)"
+          }
+        },
+        {
+          "rule_index": 4,
+          "raw_row_index": 5,
+          "conditions": {
+            "CHW Has ORS/Zinc": "NO"
+          },
+          "outputs": {
+            "tx_zinc_supplement": "NO",
+            "tx_ors": "NO"
+          },
+          "notes": "Acute Diarrhea (6–59 months)",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "Acute Diarrhea (6–59 months)",
+            "spreadsheet_rule_value": null,
+            "spreadsheet_description_header": "Diagnosis",
+            "spreadsheet_description": "Acute Diarrhea (6–59 months)"
+          }
+        },
+        {
+          "rule_index": 5,
+          "raw_row_index": 6,
+          "conditions": {
+            "CHW Has ORS/Zinc": "ANY"
+          },
+          "outputs": {
+            "tx_zinc_supplement": "NO (refer) (pp. 39)",
+            "tx_ors": "NO (refer) (pp. 39)"
+          },
+          "notes": "Severe Diarrhea (ANY danger sign / blood / persistent)",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "Severe Diarrhea (ANY danger sign / blood / persistent)",
+            "spreadsheet_rule_value": null,
+            "spreadsheet_description_header": "Diagnosis",
+            "spreadsheet_description": "Severe Diarrhea (ANY danger sign / blood / persistent)"
+          }
+        }
+      ]
+    },
+    {
+      "module_id": "navigator_modules_diarrhea_dosing_table",
+      "source_file": "Navigator Modules.xlsx",
+      "source_sheet": "Diarrhea dosing table",
+      "kind": "embedded_dosing_rule_blocks",
+      "tables_found": 2,
+      "rules": [
+        {
+          "rule_index": 1,
+          "raw_row_index": 8,
+          "conditions": {
+            "Age_between_2-6_months": true,
+            "Age_between_6-59_months": false
+          },
+          "outputs": {
+            "tablets_per_dose": 0.5,
+            "doses_per_day": 1,
+            "treatment_days": 10
+          },
+          "notes": "",
+          "metadata": {
+            "dosing_header_row": 7,
+            "dosing_section_hint": "tx_zinc_supplement:",
+            "rule_spreadsheet_anchor": 1,
+            "block_first_data_row": 8,
+            "embedded_table_order": 1
+          },
+          "rule_index_global": 1
+        },
+        {
+          "rule_index": 2,
+          "raw_row_index": 9,
+          "conditions": {
+            "Age_between_2-6_months": false,
+            "Age_between_6-59_months": true
+          },
+          "outputs": {
+            "tablets_per_dose": 1,
+            "doses_per_day": 1,
+            "treatment_days": 10
+          },
+          "notes": "",
+          "metadata": {
+            "dosing_header_row": 7,
+            "dosing_section_hint": "tx_zinc_supplement:",
+            "rule_spreadsheet_anchor": 2,
+            "block_first_data_row": 8,
+            "embedded_table_order": 1
+          },
+          "rule_index_global": 2
+        },
+        {
+          "rule_index": 3,
+          "raw_row_index": 13,
+          "conditions": {},
+          "outputs": {},
+          "notes": "",
+          "metadata": {
+            "dosing_header_row": 7,
+            "dosing_section_hint": null,
+            "rule_spreadsheet_anchor": "tx_ors:",
+            "block_first_data_row": 8,
+            "embedded_table_order": 1
+          },
+          "rule_index_global": 3
+        },
+        {
+          "rule_index": 1,
+          "raw_row_index": 15,
+          "conditions": {},
+          "outputs": {
+            "ors_after_each_stool": true,
+            "ors_min_amount_per_stool": "0.5 cup",
+            "ors_packets_to_take_home": 2,
+            "give_first_dose_now": true
+          },
+          "notes": "",
+          "metadata": {
+            "dosing_header_row": 14,
+            "dosing_section_hint": "tx_ors:",
+            "rule_spreadsheet_anchor": 1,
+            "block_first_data_row": 15,
+            "embedded_table_order": 2
+          },
+          "rule_index_global": 4
+        }
+      ]
+    }
+  ]
+}

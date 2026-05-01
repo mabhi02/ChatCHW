@@ -1,0 +1,780 @@
+{
+  "source_file": "Fever (Malaria) Module.xlsx",
+  "normalized_at_iso": "2026-05-01T04:38:35.562360+00:00",
+  "modules": [
+    {
+      "module_id": "fever_malaria_module_diagnosis_table",
+      "source_file": "Fever (Malaria) Module.xlsx",
+      "source_sheet": "Diagnosis Table",
+      "kind": "rule_grid",
+      "sheet_context_detected": "diagnosis",
+      "rules": [
+        {
+          "rule_index": 1,
+          "raw_row_index": 2,
+          "conditions": {
+            "q_fever_now_or_last_3d": "NO",
+            "q_fever_days_since_start_days": "ANY",
+            "q_malaria_area": "ANY",
+            "q_convulsions_this_illness": "ANY",
+            "q_not_able_drink_or_eat": "ANY",
+            "q_vomits_everything": "ANY",
+            "ex_unusually_sleepy_or_unconscious": "ANY",
+            "ex_chest_indrawing": "ANY",
+            "ex_muac_color_result": "ANY",
+            "ex_feet_swelling_bilateral": "ANY"
+          },
+          "outputs": {
+            "p_danger_sign_present": "NO",
+            "lab_malaria_rdt_result": "NOT DONE",
+            "dx_malaria_confirmed": "NO",
+            "ref_health_facility_urgent": "NO",
+            "ref_health_facility_immediate": "NO",
+            "Citation": "WHO 2012 p15"
+          },
+          "notes": "No fever for this encounter",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "1.0",
+            "spreadsheet_rule_value": 1,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "No fever for this encounter"
+          }
+        },
+        {
+          "rule_index": 2,
+          "raw_row_index": 3,
+          "conditions": {
+            "q_fever_now_or_last_3d": "YES",
+            "q_fever_days_since_start_days": "≥7 days",
+            "q_malaria_area": "ANY",
+            "q_convulsions_this_illness": "ANY",
+            "q_not_able_drink_or_eat": "ANY",
+            "q_vomits_everything": "ANY",
+            "ex_unusually_sleepy_or_unconscious": "ANY",
+            "ex_chest_indrawing": "ANY",
+            "ex_muac_color_result": "ANY",
+            "ex_feet_swelling_bilateral": "ANY"
+          },
+          "outputs": {
+            "p_danger_sign_present": "YES",
+            "lab_malaria_rdt_result": "NOT DONE",
+            "dx_malaria_confirmed": "NO",
+            "ref_health_facility_urgent": "YES",
+            "ref_health_facility_immediate": "NO",
+            "Citation": "WHO 2012 p38"
+          },
+          "notes": "Fever ≥7 days = danger sign",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "2.0",
+            "spreadsheet_rule_value": 2,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Fever ≥7 days = danger sign"
+          }
+        },
+        {
+          "rule_index": 3,
+          "raw_row_index": 4,
+          "conditions": {
+            "q_fever_now_or_last_3d": "YES",
+            "q_fever_days_since_start_days": "<7 days or ANY",
+            "q_malaria_area": "ANY",
+            "q_convulsions_this_illness": "YES",
+            "q_not_able_drink_or_eat": "YES or NO",
+            "q_vomits_everything": "YES",
+            "ex_unusually_sleepy_or_unconscious": "YES",
+            "ex_chest_indrawing": "ANY",
+            "ex_muac_color_result": "ANY",
+            "ex_feet_swelling_bilateral": "ANY"
+          },
+          "outputs": {
+            "p_danger_sign_present": "YES",
+            "lab_malaria_rdt_result": "NOT DONE",
+            "dx_malaria_confirmed": "NO",
+            "ref_health_facility_urgent": "YES",
+            "ref_health_facility_immediate": "YES",
+            "Citation": "WHO 2012 p50; WHO 2012 p107"
+          },
+          "notes": "Immediate-risk danger sign with fever",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "3.0",
+            "spreadsheet_rule_value": 3,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Immediate-risk danger sign with fever"
+          }
+        },
+        {
+          "rule_index": 4,
+          "raw_row_index": 5,
+          "conditions": {
+            "q_fever_now_or_last_3d": "YES",
+            "q_fever_days_since_start_days": "<7 days or ANY",
+            "q_malaria_area": "ANY",
+            "q_convulsions_this_illness": "NO",
+            "q_not_able_drink_or_eat": "YES",
+            "q_vomits_everything": "NO",
+            "ex_unusually_sleepy_or_unconscious": "NO",
+            "ex_chest_indrawing": "YES",
+            "ex_muac_color_result": "RED or ANY",
+            "ex_feet_swelling_bilateral": "YES"
+          },
+          "outputs": {
+            "p_danger_sign_present": "YES",
+            "lab_malaria_rdt_result": "NOT DONE",
+            "dx_malaria_confirmed": "NO",
+            "ref_health_facility_urgent": "YES",
+            "ref_health_facility_immediate": "NO",
+            "Citation": "WHO 2012 p38–41; WHO 2012 p50"
+          },
+          "notes": "Other danger sign with fever",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "4.0",
+            "spreadsheet_rule_value": 4,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Other danger sign with fever"
+          }
+        },
+        {
+          "rule_index": 5,
+          "raw_row_index": 6,
+          "conditions": {
+            "q_fever_now_or_last_3d": "YES",
+            "q_fever_days_since_start_days": "<7 days",
+            "q_malaria_area": "YES",
+            "q_convulsions_this_illness": "NO",
+            "q_not_able_drink_or_eat": "NO",
+            "q_vomits_everything": "NO",
+            "ex_unusually_sleepy_or_unconscious": "NO",
+            "ex_chest_indrawing": "NO",
+            "ex_muac_color_result": "green/yellow/unknown",
+            "ex_feet_swelling_bilateral": "NO"
+          },
+          "outputs": {
+            "p_danger_sign_present": "NO",
+            "lab_malaria_rdt_result": "NOT DONE",
+            "dx_malaria_confirmed": "NO",
+            "ref_health_facility_urgent": "NO",
+            "ref_health_facility_immediate": "NO",
+            "Citation": "WHO 2012 p43; WHO 2012 p59"
+          },
+          "notes": "Eligible for malaria RDT",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "5.0",
+            "spreadsheet_rule_value": 5,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Eligible for malaria RDT"
+          }
+        },
+        {
+          "rule_index": 6,
+          "raw_row_index": 7,
+          "conditions": {
+            "q_fever_now_or_last_3d": "YES",
+            "q_fever_days_since_start_days": "<7 days",
+            "q_malaria_area": "YES",
+            "q_convulsions_this_illness": "NO",
+            "q_not_able_drink_or_eat": "NO",
+            "q_vomits_everything": "NO",
+            "ex_unusually_sleepy_or_unconscious": "NO",
+            "ex_chest_indrawing": "NO",
+            "ex_muac_color_result": "green/yellow/unknown",
+            "ex_feet_swelling_bilateral": "NO"
+          },
+          "outputs": {
+            "p_danger_sign_present": "NO",
+            "lab_malaria_rdt_result": "POSITIVE",
+            "dx_malaria_confirmed": "YES",
+            "ref_health_facility_urgent": "NO",
+            "ref_health_facility_immediate": "NO",
+            "Citation": "WHO 2012 p78"
+          },
+          "notes": "RDT positive = confirmed malaria",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "6.0",
+            "spreadsheet_rule_value": 6,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "RDT positive = confirmed malaria"
+          }
+        },
+        {
+          "rule_index": 7,
+          "raw_row_index": 8,
+          "conditions": {
+            "q_fever_now_or_last_3d": "YES",
+            "q_fever_days_since_start_days": "<7 days",
+            "q_malaria_area": "YES",
+            "q_convulsions_this_illness": "NO",
+            "q_not_able_drink_or_eat": "NO",
+            "q_vomits_everything": "NO",
+            "ex_unusually_sleepy_or_unconscious": "NO",
+            "ex_chest_indrawing": "NO",
+            "ex_muac_color_result": "green/yellow/unknown",
+            "ex_feet_swelling_bilateral": "NO"
+          },
+          "outputs": {
+            "p_danger_sign_present": "NO",
+            "lab_malaria_rdt_result": "NEGATIVE",
+            "dx_malaria_confirmed": "NO",
+            "ref_health_facility_urgent": "NO",
+            "ref_health_facility_immediate": "NO",
+            "Citation": "WHO 2012 p78"
+          },
+          "notes": "RDT negative = no malaria",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "7.0",
+            "spreadsheet_rule_value": 7,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "RDT negative = no malaria"
+          }
+        },
+        {
+          "rule_index": 8,
+          "raw_row_index": 9,
+          "conditions": {
+            "q_fever_now_or_last_3d": "YES",
+            "q_fever_days_since_start_days": "<7 days",
+            "q_malaria_area": "YES",
+            "q_convulsions_this_illness": "NO",
+            "q_not_able_drink_or_eat": "NO",
+            "q_vomits_everything": "NO",
+            "ex_unusually_sleepy_or_unconscious": "NO",
+            "ex_chest_indrawing": "NO",
+            "ex_muac_color_result": "green/yellow/unknown",
+            "ex_feet_swelling_bilateral": "NO"
+          },
+          "outputs": {
+            "p_danger_sign_present": "NO",
+            "lab_malaria_rdt_result": "INVALID",
+            "dx_malaria_confirmed": "NO",
+            "ref_health_facility_urgent": "NO",
+            "ref_health_facility_immediate": "NO",
+            "Citation": "WHO 2012 p78"
+          },
+          "notes": "RDT invalid",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "8.0",
+            "spreadsheet_rule_value": 8,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "RDT invalid"
+          }
+        },
+        {
+          "rule_index": 9,
+          "raw_row_index": 10,
+          "conditions": {
+            "q_fever_now_or_last_3d": "YES",
+            "q_fever_days_since_start_days": "<7 days",
+            "q_malaria_area": "YES",
+            "q_convulsions_this_illness": "NO",
+            "q_not_able_drink_or_eat": "NO",
+            "q_vomits_everything": "NO",
+            "ex_unusually_sleepy_or_unconscious": "NO",
+            "ex_chest_indrawing": "NO",
+            "ex_muac_color_result": "green/yellow/unknown",
+            "ex_feet_swelling_bilateral": "NO"
+          },
+          "outputs": {
+            "p_danger_sign_present": "NO",
+            "lab_malaria_rdt_result": "NOT DONE",
+            "dx_malaria_confirmed": "N/A",
+            "ref_health_facility_urgent": "N/A",
+            "ref_health_facility_immediate": "N/A",
+            "Citation": "WHO 2012 p43; NOT SPECIFIED in provided manual text beyond 'follow local policy'"
+          },
+          "notes": "RDT unavailable / local policy needed",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "9.0",
+            "spreadsheet_rule_value": 9,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "RDT unavailable / local policy needed"
+          }
+        }
+      ]
+    },
+    {
+      "module_id": "fever_malaria_module_treatment_table",
+      "source_file": "Fever (Malaria) Module.xlsx",
+      "source_sheet": "Treatment Table",
+      "kind": "rule_grid",
+      "sheet_context_detected": "clinical_treatment",
+      "rules": [
+        {
+          "rule_index": 1,
+          "raw_row_index": 2,
+          "conditions": {
+            "demo_age_months": "2–35 months",
+            "q_can_drink": "NO"
+          },
+          "outputs": {
+            "Clinical condition": "Fever + immediate-risk danger sign + oral medicine not possible",
+            "tx_prereferral_rectal_artesunate": "YES",
+            "rx_rectal_artesunate_suppositories_count": 1,
+            "tx_malaria_antimalarial_oral": "NO",
+            "rx_al_tablets_per_dose": "N/A",
+            "rx_al_doses_per_day": "N/A",
+            "rx_al_duration_days": "N/A",
+            "adv_give_second_al_dose_in_8_hours": "NO",
+            "out_disposition": "emergency_refer",
+            "Citation": "WHO 2012 p107"
+          },
+          "notes": "Prereferral rectal artesunate",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "1.0",
+            "spreadsheet_rule_value": 1,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Prereferral rectal artesunate"
+          }
+        },
+        {
+          "rule_index": 2,
+          "raw_row_index": 3,
+          "conditions": {
+            "demo_age_months": "36–59 months",
+            "q_can_drink": "NO"
+          },
+          "outputs": {
+            "Clinical condition": "Fever + immediate-risk danger sign + oral medicine not possible",
+            "tx_prereferral_rectal_artesunate": "YES",
+            "rx_rectal_artesunate_suppositories_count": 2,
+            "tx_malaria_antimalarial_oral": "NO",
+            "rx_al_tablets_per_dose": "N/A",
+            "rx_al_doses_per_day": "N/A",
+            "rx_al_duration_days": "N/A",
+            "adv_give_second_al_dose_in_8_hours": "NO",
+            "out_disposition": "emergency_refer",
+            "Citation": "WHO 2012 p107"
+          },
+          "notes": "Prereferral rectal artesunate",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "2.0",
+            "spreadsheet_rule_value": 2,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Prereferral rectal artesunate"
+          }
+        },
+        {
+          "rule_index": 3,
+          "raw_row_index": 4,
+          "conditions": {
+            "demo_age_months": "2–35 months",
+            "q_can_drink": "YES"
+          },
+          "outputs": {
+            "Clinical condition": "Fever + danger sign present + child can drink",
+            "tx_prereferral_rectal_artesunate": "NO",
+            "rx_rectal_artesunate_suppositories_count": "N/A",
+            "tx_malaria_antimalarial_oral": "YES",
+            "rx_al_tablets_per_dose": 1,
+            "rx_al_doses_per_day": 2,
+            "rx_al_duration_days": 3,
+            "adv_give_second_al_dose_in_8_hours": "YES",
+            "out_disposition": "referred",
+            "Citation": "WHO 2012 p107; WHO 2012 p74"
+          },
+          "notes": "Prereferral oral AL first dose before referral",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "3.0",
+            "spreadsheet_rule_value": 3,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Prereferral oral AL first dose before referral"
+          }
+        },
+        {
+          "rule_index": 4,
+          "raw_row_index": 5,
+          "conditions": {
+            "demo_age_months": "36–59 months",
+            "q_can_drink": "YES"
+          },
+          "outputs": {
+            "Clinical condition": "Fever + danger sign present + child can drink",
+            "tx_prereferral_rectal_artesunate": "NO",
+            "rx_rectal_artesunate_suppositories_count": "N/A",
+            "tx_malaria_antimalarial_oral": "YES",
+            "rx_al_tablets_per_dose": 2,
+            "rx_al_doses_per_day": 2,
+            "rx_al_duration_days": 3,
+            "adv_give_second_al_dose_in_8_hours": "YES",
+            "out_disposition": "referred",
+            "Citation": "WHO 2012 p107; WHO 2012 p74"
+          },
+          "notes": "Prereferral oral AL first dose before referral",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "4.0",
+            "spreadsheet_rule_value": 4,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Prereferral oral AL first dose before referral"
+          }
+        },
+        {
+          "rule_index": 5,
+          "raw_row_index": 6,
+          "conditions": {
+            "demo_age_months": "2–35 months",
+            "q_can_drink": "YES"
+          },
+          "outputs": {
+            "Clinical condition": "RDT positive, no danger sign",
+            "tx_prereferral_rectal_artesunate": "NO",
+            "rx_rectal_artesunate_suppositories_count": "N/A",
+            "tx_malaria_antimalarial_oral": "YES",
+            "rx_al_tablets_per_dose": 1,
+            "rx_al_doses_per_day": 2,
+            "rx_al_duration_days": 3,
+            "adv_give_second_al_dose_in_8_hours": "YES",
+            "out_disposition": "treated_home",
+            "Citation": "WHO 2012 p74; WHO 2012 p83"
+          },
+          "notes": "Treat confirmed malaria at home with AL",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "5.0",
+            "spreadsheet_rule_value": 5,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Treat confirmed malaria at home with AL"
+          }
+        },
+        {
+          "rule_index": 6,
+          "raw_row_index": 7,
+          "conditions": {
+            "demo_age_months": "36–59 months",
+            "q_can_drink": "YES"
+          },
+          "outputs": {
+            "Clinical condition": "RDT positive, no danger sign",
+            "tx_prereferral_rectal_artesunate": "NO",
+            "rx_rectal_artesunate_suppositories_count": "N/A",
+            "tx_malaria_antimalarial_oral": "YES",
+            "rx_al_tablets_per_dose": 2,
+            "rx_al_doses_per_day": 2,
+            "rx_al_duration_days": 3,
+            "adv_give_second_al_dose_in_8_hours": "YES",
+            "out_disposition": "treated_home",
+            "Citation": "WHO 2012 p74; WHO 2012 p83"
+          },
+          "notes": "Treat confirmed malaria at home with AL",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "6.0",
+            "spreadsheet_rule_value": 6,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Treat confirmed malaria at home with AL"
+          }
+        },
+        {
+          "rule_index": 7,
+          "raw_row_index": 8,
+          "conditions": {
+            "demo_age_months": "2–59 months",
+            "q_can_drink": "ANY"
+          },
+          "outputs": {
+            "Clinical condition": "Fever <7 days in malaria area, RDT negative",
+            "tx_prereferral_rectal_artesunate": "NO",
+            "rx_rectal_artesunate_suppositories_count": "N/A",
+            "tx_malaria_antimalarial_oral": "NO",
+            "rx_al_tablets_per_dose": "N/A",
+            "rx_al_doses_per_day": "N/A",
+            "rx_al_duration_days": "N/A",
+            "adv_give_second_al_dose_in_8_hours": "NO",
+            "out_disposition": "followup_scheduled",
+            "Citation": "WHO 2012 p85"
+          },
+          "notes": "RDT negative: no antimalarial",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "7.0",
+            "spreadsheet_rule_value": 7,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "RDT negative: no antimalarial"
+          }
+        },
+        {
+          "rule_index": 8,
+          "raw_row_index": 9,
+          "conditions": {
+            "demo_age_months": "<2 or >59 months",
+            "q_can_drink": "ANY"
+          },
+          "outputs": {
+            "Clinical condition": "Any malaria treatment decision outside 2–59 months",
+            "tx_prereferral_rectal_artesunate": "N/A",
+            "rx_rectal_artesunate_suppositories_count": "N/A",
+            "tx_malaria_antimalarial_oral": "N/A",
+            "rx_al_tablets_per_dose": "N/A",
+            "rx_al_doses_per_day": "N/A",
+            "rx_al_duration_days": "N/A",
+            "adv_give_second_al_dose_in_8_hours": "N/A",
+            "out_disposition": "other",
+            "Citation": "NOT SPECIFIED in provided manual text (outside 2–59 months dosing bands)"
+          },
+          "notes": "Age outside provided dosing bands",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "8.0",
+            "spreadsheet_rule_value": 8,
+            "spreadsheet_description_header": "Description",
+            "spreadsheet_description": "Age outside provided dosing bands"
+          }
+        }
+      ]
+    },
+    {
+      "module_id": "fever_malaria_module_integrative_table",
+      "source_file": "Fever (Malaria) Module.xlsx",
+      "source_sheet": "Integrative Table",
+      "kind": "rule_grid",
+      "sheet_context_detected": "integrative_routing",
+      "rules": [
+        {
+          "rule_index": 1,
+          "raw_row_index": 2,
+          "conditions": {
+            "fu_in_days": "N/A"
+          },
+          "outputs": {
+            "need_malaria_module": "YES",
+            "need_referral_module": "NO",
+            "need_prereferral_severe_malaria": "NO",
+            "dx_malaria_confirmed": "N/A",
+            "lab_malaria_rdt_result": "NOT DONE",
+            "tx_malaria_antimalarial_oral": "N/A",
+            "rx_al_tablets_per_dose": "N/A",
+            "rx_al_doses_per_day": "N/A",
+            "rx_al_duration_days": "N/A",
+            "tx_prereferral_rectal_artesunate": "NO",
+            "rx_rectal_artesunate_suppositories_count": "N/A",
+            "ref_health_facility_urgent": "NO",
+            "ref_health_facility_immediate": "NO",
+            "adv_continue_feeding": "N/A",
+            "adv_return_immediately_if_cannot_drink": "N/A",
+            "adv_return_immediately_if_worse": "N/A",
+            "adv_return_immediately_if_blood_in_stool": "N/A",
+            "adv_sleep_under_itn": "N/A",
+            "out_disposition": "other",
+            "Citation": "WHO 2012 p43; WHO 2012 p59 (RDT required for fever in malaria area; treat if positive, follow-up if negative)."
+          },
+          "notes": "Traffic Cop trigger: Fever present, malaria area, fever <7 days, no danger sign → queue Malaria module (RDT-first treat-at-home pathway).",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "1.0",
+            "spreadsheet_rule_value": 1,
+            "spreadsheet_description_header": "Purpose / Scenario",
+            "spreadsheet_description": "Traffic Cop trigger: Fever present, malaria area, fever <7 days, no danger sign → queue Malaria module (RDT-first treat-at-home pathway)."
+          }
+        },
+        {
+          "rule_index": 2,
+          "raw_row_index": 3,
+          "conditions": {
+            "fu_in_days": "N/A"
+          },
+          "outputs": {
+            "need_malaria_module": "NO",
+            "need_referral_module": "YES",
+            "need_prereferral_severe_malaria": "N/A",
+            "dx_malaria_confirmed": "N/A",
+            "lab_malaria_rdt_result": "N/A",
+            "tx_malaria_antimalarial_oral": "N/A",
+            "rx_al_tablets_per_dose": "N/A",
+            "rx_al_doses_per_day": "N/A",
+            "rx_al_duration_days": "N/A",
+            "tx_prereferral_rectal_artesunate": "N/A",
+            "rx_rectal_artesunate_suppositories_count": "N/A",
+            "ref_health_facility_urgent": "YES",
+            "ref_health_facility_immediate": "NO",
+            "adv_continue_feeding": "N/A",
+            "adv_return_immediately_if_cannot_drink": "N/A",
+            "adv_return_immediately_if_worse": "N/A",
+            "adv_return_immediately_if_blood_in_stool": "N/A",
+            "adv_sleep_under_itn": "N/A",
+            "out_disposition": "referred",
+            "Citation": "WHO 2012 p38–41; WHO 2012 p50 (danger signs require urgent referral)."
+          },
+          "notes": "Traffic Cop trigger: Any danger sign present → queue Referral module; do not use routine treat-at-home malaria pathway.",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "2.0",
+            "spreadsheet_rule_value": 2,
+            "spreadsheet_description_header": "Purpose / Scenario",
+            "spreadsheet_description": "Traffic Cop trigger: Any danger sign present → queue Referral module; do not use routine treat-at-home malaria pathway."
+          }
+        },
+        {
+          "rule_index": 3,
+          "raw_row_index": 4,
+          "conditions": {
+            "fu_in_days": "N/A"
+          },
+          "outputs": {
+            "need_malaria_module": "NO",
+            "need_referral_module": "YES",
+            "need_prereferral_severe_malaria": "YES",
+            "dx_malaria_confirmed": "N/A",
+            "lab_malaria_rdt_result": "N/A",
+            "tx_malaria_antimalarial_oral": "NO",
+            "rx_al_tablets_per_dose": "N/A",
+            "rx_al_doses_per_day": "N/A",
+            "rx_al_duration_days": "N/A",
+            "tx_prereferral_rectal_artesunate": "YES",
+            "rx_rectal_artesunate_suppositories_count": "Age-band dependent (1 or 2)",
+            "ref_health_facility_urgent": "YES",
+            "ref_health_facility_immediate": "YES",
+            "adv_continue_feeding": "N/A",
+            "adv_return_immediately_if_cannot_drink": "N/A",
+            "adv_return_immediately_if_worse": "N/A",
+            "adv_return_immediately_if_blood_in_stool": "N/A",
+            "adv_sleep_under_itn": "N/A",
+            "out_disposition": "emergency_refer",
+            "Citation": "WHO 2012 p107; WHO 2012 p50 (immediate-risk subset; rectal artesunate prereferral)."
+          },
+          "notes": "Severe malaria prereferral routing: Fever + immediate-risk danger sign + cannot drink → prereferral rectal artesunate and immediate referral.",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "3.0",
+            "spreadsheet_rule_value": 3,
+            "spreadsheet_description_header": "Purpose / Scenario",
+            "spreadsheet_description": "Severe malaria prereferral routing: Fever + immediate-risk danger sign + cannot drink → prereferral rectal artesunate and immediate referral."
+          }
+        },
+        {
+          "rule_index": 4,
+          "raw_row_index": 5,
+          "conditions": {
+            "fu_in_days": 3
+          },
+          "outputs": {
+            "need_malaria_module": "NO",
+            "need_referral_module": "NO",
+            "need_prereferral_severe_malaria": "NO",
+            "dx_malaria_confirmed": "YES",
+            "lab_malaria_rdt_result": "POSITIVE",
+            "tx_malaria_antimalarial_oral": "YES",
+            "rx_al_tablets_per_dose": "Age-band dependent (1 or 2)",
+            "rx_al_doses_per_day": 2,
+            "rx_al_duration_days": 3,
+            "tx_prereferral_rectal_artesunate": "NO",
+            "rx_rectal_artesunate_suppositories_count": "N/A",
+            "ref_health_facility_urgent": "NO",
+            "ref_health_facility_immediate": "NO",
+            "adv_continue_feeding": "YES",
+            "adv_return_immediately_if_cannot_drink": "YES",
+            "adv_return_immediately_if_worse": "YES",
+            "adv_return_immediately_if_blood_in_stool": "YES",
+            "adv_sleep_under_itn": "YES",
+            "out_disposition": "treated_home",
+            "Citation": "WHO 2012 p78 (RDT positive); WHO 2012 p74, p83 (AL dosing; start quickly, 2nd dose after 8 hours); WHO 2012 p59, p90–91 (home care); WHO 2012 p98 (follow-up)."
+          },
+          "notes": "Treat at home: RDT positive AND no danger sign → malaria confirmed → oral AL with age-band dosing + counseling + follow-up set.",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "4.0",
+            "spreadsheet_rule_value": 4,
+            "spreadsheet_description_header": "Purpose / Scenario",
+            "spreadsheet_description": "Treat at home: RDT positive AND no danger sign → malaria confirmed → oral AL with age-band dosing + counseling + follow-up set."
+          }
+        },
+        {
+          "rule_index": 5,
+          "raw_row_index": 6,
+          "conditions": {
+            "fu_in_days": 3
+          },
+          "outputs": {
+            "need_malaria_module": "NO",
+            "need_referral_module": "NO",
+            "need_prereferral_severe_malaria": "NO",
+            "dx_malaria_confirmed": "NO",
+            "lab_malaria_rdt_result": "NEGATIVE",
+            "tx_malaria_antimalarial_oral": "NO",
+            "rx_al_tablets_per_dose": "N/A",
+            "rx_al_doses_per_day": "N/A",
+            "rx_al_duration_days": "N/A",
+            "tx_prereferral_rectal_artesunate": "NO",
+            "rx_rectal_artesunate_suppositories_count": "N/A",
+            "ref_health_facility_urgent": "NO",
+            "ref_health_facility_immediate": "NO",
+            "adv_continue_feeding": "YES",
+            "adv_return_immediately_if_cannot_drink": "YES",
+            "adv_return_immediately_if_worse": "YES",
+            "adv_return_immediately_if_blood_in_stool": "YES",
+            "adv_sleep_under_itn": "YES",
+            "out_disposition": "followup_scheduled",
+            "Citation": "WHO 2012 p78 (RDT negative); WHO 2012 p85 (follow-up in 3 days or sooner if sicker); WHO 2012 p59, p90–91 (home care)."
+          },
+          "notes": "No antimalarial: RDT negative AND fever <7 days in malaria area → follow-up in 3 days; return sooner if sicker.",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "5.0",
+            "spreadsheet_rule_value": 5,
+            "spreadsheet_description_header": "Purpose / Scenario",
+            "spreadsheet_description": "No antimalarial: RDT negative AND fever <7 days in malaria area → follow-up in 3 days; return sooner if sicker."
+          }
+        },
+        {
+          "rule_index": 6,
+          "raw_row_index": 7,
+          "conditions": {
+            "fu_in_days": "N/A"
+          },
+          "outputs": {
+            "need_malaria_module": "NO",
+            "need_referral_module": "MAYBE",
+            "need_prereferral_severe_malaria": "MAYBE",
+            "dx_malaria_confirmed": "N/A",
+            "lab_malaria_rdt_result": "INVALID or NOT DONE",
+            "tx_malaria_antimalarial_oral": "N/A",
+            "rx_al_tablets_per_dose": "N/A",
+            "rx_al_doses_per_day": "N/A",
+            "rx_al_duration_days": "N/A",
+            "tx_prereferral_rectal_artesunate": "N/A",
+            "rx_rectal_artesunate_suppositories_count": "N/A",
+            "ref_health_facility_urgent": "N/A",
+            "ref_health_facility_immediate": "N/A",
+            "adv_continue_feeding": "N/A",
+            "adv_return_immediately_if_cannot_drink": "N/A",
+            "adv_return_immediately_if_worse": "N/A",
+            "adv_return_immediately_if_blood_in_stool": "N/A",
+            "adv_sleep_under_itn": "N/A",
+            "out_disposition": "other",
+            "Citation": "WHO 2012 p78 (invalid → repeat); WHO 2012 p43 ('follow local policy' if RDTs unavailable); NOT SPECIFIED beyond excerpts for max repeats/escalation."
+          },
+          "notes": "RDT invalid: repeat with new kit. If repeated invalid or RDT unavailable → escalation/local policy required (not specified in provided excerpts).",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "6.0",
+            "spreadsheet_rule_value": 6,
+            "spreadsheet_description_header": "Purpose / Scenario",
+            "spreadsheet_description": "RDT invalid: repeat with new kit. If repeated invalid or RDT unavailable → escalation/local policy required (not specified in provided excerpts)."
+          }
+        },
+        {
+          "rule_index": 7,
+          "raw_row_index": 8,
+          "conditions": {
+            "fu_in_days": "N/A"
+          },
+          "outputs": {
+            "need_malaria_module": "NO",
+            "need_referral_module": "YES",
+            "need_prereferral_severe_malaria": "MAYBE",
+            "dx_malaria_confirmed": "N/A",
+            "lab_malaria_rdt_result": "N/A",
+            "tx_malaria_antimalarial_oral": "N/A",
+            "rx_al_tablets_per_dose": "N/A",
+            "rx_al_doses_per_day": "N/A",
+            "rx_al_duration_days": "N/A",
+            "tx_prereferral_rectal_artesunate": "N/A",
+            "rx_rectal_artesunate_suppositories_count": "N/A",
+            "ref_health_facility_urgent": "YES",
+            "ref_health_facility_immediate": "NO",
+            "adv_continue_feeding": "N/A",
+            "adv_return_immediately_if_cannot_drink": "N/A",
+            "adv_return_immediately_if_worse": "N/A",
+            "adv_return_immediately_if_blood_in_stool": "N/A",
+            "adv_sleep_under_itn": "N/A",
+            "out_disposition": "referred",
+            "Citation": "WHO 2012 p98 (if not better or danger sign develops → refer urgently)."
+          },
+          "notes": "Follow-up outcome rule: If child not better at follow-up OR develops danger sign → urgent referral.",
+          "metadata": {
+            "spreadsheet_anchor_col_a": "7.0",
+            "spreadsheet_rule_value": 7,
+            "spreadsheet_description_header": "Purpose / Scenario",
+            "spreadsheet_description": "Follow-up outcome rule: If child not better at follow-up OR develops danger sign → urgent referral."
+          }
+        }
+      ]
+    }
+  ]
+}

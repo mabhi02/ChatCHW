@@ -1,0 +1,11 @@
+=== PRODUCT VS MEDICAL TRIAGE COMPARISON ===
+Total Patients: 1000
+Matches: 948
+Mismatches: 52
+
+Mismatch Examples (up to 5):
+- Patient: row_43 | Product: hospital | Medical: home | Rules Matched: 2
+- Patient: row_63 | Product: hospital | Medical: home | Rules Matched: 2
+- Patient: row_80 | Product: hospital | Medical: home | Rules Matched: 2
+- Patient: row_85 | Product: hospital | Medical: home | Rules Matched: 2
+- Patient: row_133 | Product: hospital | Medical: home | Rules Matched: 2
